@@ -85,7 +85,7 @@ std::shared_ptr<CliModel> CliModel::getInstance() {
 // FIXME: Do not accept args without value like: cmd toto.
 // In the future `toto` could be a boolean argument.
 QRegularExpression
-    CliModel::mRegExpArgs("(?:(?:([\\w-]+)\\s*)=\\s*(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
+    CliModel::mRegExpArgs("(?:(?:([\\w-]+)\\s*)(?:=|\\s)(?:\"([^\"\\\\]*(?:\\\\.[^\"\\\\]*)*)\"|([^\\s]+)\\s*))");
 QRegularExpression CliModel::mRegExpFunctionName("^\\s*([a-z-]+)\\s*");
 
 QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
@@ -106,6 +106,7 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 		return QString("");
 	}
 
+	lDebug() << QStringLiteral("Function parsed : %1").arg(functionName);
 	return functionName;
 }
 
@@ -249,11 +250,11 @@ void CliModel::Command::execute(QHash<QString, QString> &args, CliModel *parent)
 	// Check missing arguments.
 	for (const auto &argName : mArgsScheme.keys()) {
 		if (!mArgsScheme[argName].isOptional && (!args.contains(argName) || args[argName].isEmpty())) {
-			qWarning() << QStringLiteral("Missing argument for command: `%1 (%2)`.").arg(mFunctionName).arg(argName);
+			qWarning() << QStringLiteral("Missing argument for command: '%1' (%2).").arg(mFunctionName).arg(argName);
 			return;
 		}
 	}
-	qDebug() << "Execute";
+	qDebug() << "Execute" << mFunctionName;
 	(parent->*mFunction)(args);
 	/*
 	    // Execute!
@@ -280,10 +281,11 @@ void CliModel::Command::execute(QHash<QString, QString> &args, CliModel *parent)
 void CliModel::Command::executeUri(QString address, QHash<QString, QString> args, CliModel *parent) {
 	QUrl url(address);
 	QString query = url.query();
-
+	lDebug() << QStringLiteral("CliModel : execute uri : %1").arg(query);
 	QStringList parameters = query.split('&');
 	for (int i = 0; i < parameters.size(); ++i) {
 		QStringList parameter = parameters[i].split('=');
+		lDebug() << QStringLiteral("CliModel : Detecting parameter : %1").arg(parameter[0]);
 		if (parameter[0] != "" && parameter[0] != "method") {
 			if (parameter.size() > 1) args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8());
 			else args[parameter[0]] = "";
@@ -373,7 +375,10 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			     {QString("sip"), "sip-" + QString(EXECUTABLE_NAME).toLower(), QString("sips"),
 			      "sips-" + QString(EXECUTABLE_NAME).toLower(), QString(EXECUTABLE_NAME).toLower() + "-sip",
 			      QString(EXECUTABLE_NAME).toLower() + "-sips", QString("tel"), QString("callto"), configURI})
-				if (scheme == validScheme) ok = true;
+				if (scheme == validScheme) {
+					ok = true;
+					break;
+				}
 			if (!ok) {
 				qWarning()
 				    << QStringLiteral("Not a valid URI: `%1` Unsupported scheme: `%2`.").arg(command).arg(scheme);
@@ -399,16 +404,18 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			addProcess(ProcessCommand(mCommands["fetch-config"], arg, 5, this));
 		} else {
 			std::shared_ptr<linphone::Address> address;
-			QString qAddress = transformedCommand;
+			QString qAddress = transformedCommand.left(transformedCommand.indexOf('?'));
 			if (Utils::isUsername(transformedCommand)) {
 				address = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(transformedCommand + "@to.remove"));
 				address->setDomain("");
 				qAddress = Utils::coreStringToAppString(address->asString());
 				if (address && qAddress.isEmpty()) qAddress = transformedCommand;
-			} else
+			} else {
 				address = linphone::Factory::get()->createAddress(
-				    Utils::appStringToCoreString(transformedCommand)); // Test if command is an address
+				    Utils::appStringToCoreString(qAddress)); // Test if command is an address
+				qAddress = Utils::coreStringToAppString(address->asStringUriOnly());
+			}
 			// if (format) *format = UriFormat;
 			lInfo() << log().arg("Detecting URI command: `%1`…").arg(command);
 			QString functionName;
@@ -427,6 +434,21 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 					if (functionName.isEmpty()) functionName = "call";
 				}
 			}
+			QStringList fields = command.split('&');
+			for (int i = 0; i < fields.size(); ++i) {
+				QHash<QString, QString> args = parseArgs(fields[i]);
+				QHash<QString, QString> argsToProcess;
+				for (auto it = args.begin(); it != args.end(); ++it) {
+					auto subfonction = parseFunctionName(it.key(), true);
+					if (!subfonction.isEmpty()) {
+						QHash<QString, QString> arg;
+						arg[it.key()] = it.value();
+						// qAddress.remove(fields[i]);
+						addProcess(ProcessCommand(mCommands[it.key()], arg, 1, this));
+					}
+				}
+			}
+
 			functionName = functionName.toLower();
 			if (functionName.isEmpty()) {
 				lWarning() << log().arg("There is no method set in `%1`.").arg(command);
@@ -438,7 +460,6 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			QHash<QString, QString> headers;
 			if (address) {
 				// TODO: check if there is too much headers.
-
 				for (const auto &argName : mCommands[functionName].mArgsScheme.keys()) {
 					const std::string header = address->getHeader(Utils::appStringToCoreString(argName));
 					headers[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));

@@ -785,30 +785,30 @@
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1564"/>
+        <location filename="../../core/App.cpp" line="1575"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1564"/>
+        <location filename="../../core/App.cpp" line="1575"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1579"/>
+        <location filename="../../core/App.cpp" line="1590"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1597"/>
+        <location filename="../../core/App.cpp" line="1608"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Auf Updates prüfen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1720"/>
+        <location filename="../../core/App.cpp" line="1731"/>
         <source>mark_all_read_action</source>
         <translation>Alle als gelesen markieren</translation>
     </message>

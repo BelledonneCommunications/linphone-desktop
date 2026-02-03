@@ -803,7 +803,7 @@ void App::initCore() {
 						        }
 					        }
 					        checkForUpdate();
-					        mIsRestarting = false;
+					        setIsRestarting(false);
 					        window->show();
 					        window->requestActivate();
 
@@ -1043,7 +1043,7 @@ void App::restart() {
 		FriendsManager::getInstance()->clearMaps();
 		CoreModel::getInstance()->getCore()->stop();
 		mCoreModelConnection->invokeToCore([this]() {
-			mIsRestarting = true;
+			setIsRestarting(true);
 			if (mAccountList) mAccountList->resetData();
 			if (mCallList) mCallList->resetData();
 			if (mCallHistoryList) mCallHistoryList->resetData();
@@ -1146,6 +1146,17 @@ void App::setCoreStarted(bool started) {
 	if (mCoreStarted != started) {
 		mCoreStarted = started;
 		emit coreStartedChanged(mCoreStarted);
+	}
+}
+
+bool App::isRestarting() const {
+	return mIsRestarting;
+}
+
+void App::setIsRestarting(bool restarting) {
+	if (mIsRestarting != restarting) {
+		mIsRestarting = restarting;
+		emit isRestartingChanged(mIsRestarting);
 	}
 }
 
