@@ -147,6 +147,9 @@ public:
 	bool getCoreStarted() const;
 	void setCoreStarted(bool started);
 
+	bool isRestarting() const;
+	void setIsRestarting(bool restarting);
+
 	QQuickWindow *getCallsWindow();
 	void handleAccountActivity(QSharedPointer<AccountCore> accountCore);
 	Q_INVOKABLE void handleAppActivity();
@@ -212,6 +215,7 @@ public:
 signals:
 	void mainWindowChanged();
 	void coreStartedChanged(bool coreStarted);
+	void isRestartingChanged(bool restarting);
 	void accountsChanged();
 	void defaultAccountChanged();
 	void callsChanged();
