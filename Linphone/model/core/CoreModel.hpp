@@ -60,6 +60,7 @@ public:
 
 	void start();
 	void setConfigPath(QString path);
+	void setPathsAfterCreation();
 
 	void refreshOidcRemainingTime();
 
@@ -112,7 +113,6 @@ private:
 	bool mCheckVersionRequestedByUser = false;
 
 	void setPathBeforeCreation();
-	void setPathsAfterCreation();
 	void setPathAfterStart();
 
 	static std::shared_ptr<CoreModel> gCoreModel;

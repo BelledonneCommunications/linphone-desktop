@@ -174,12 +174,17 @@ void CoreModel::setPathBeforeCreation() {
 }
 
 void CoreModel::setPathsAfterCreation() {
-	auto friendsPath = Paths::getFriendsListFilePath();
-	if (!friendsPath.isEmpty() && QFileInfo(friendsPath).exists()) {
-		lInfo() << log().arg("Using old friends database at %1").arg(friendsPath);
-		std::shared_ptr<linphone::Config> config = mCore->getConfig();
-		config->setString("storage", "friends_db_uri", Utils::appStringToCoreString(friendsPath));
-	}
+	// auto friendsPath = Paths::getFriendsListFilePath();
+	// if (!friendsPath.isEmpty() && QFileInfo(friendsPath).exists()) {
+	// 	lInfo() << log().arg("Using old friends database at %1").arg(friendsPath);
+	// 	std::shared_ptr<linphone::Config> config = mCore->getConfig();
+	// 	config->setString("storage", "friends_db_uri", Utils::appStringToCoreString(friendsPath));
+	// }
+	std::shared_ptr<linphone::Factory> factory = linphone::Factory::get();
+	QString downloadFolder = SettingsModel::getInstance()->getDownloadFolder();
+	if (downloadFolder.isEmpty()) downloadFolder = Paths::getDownloadDirPath();
+	if (!downloadFolder.endsWith(QDir::separator())) downloadFolder.append(QDir::separator());
+	SET_FACTORY_PATH(Download, (downloadFolder));
 }
 
 void CoreModel::setPathAfterStart() {
