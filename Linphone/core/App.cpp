@@ -647,6 +647,8 @@ void App::initCore() {
 		    SettingsModel::create();
 		    lDebug() << log().arg("Creating SettingsCore");
 		    settings = SettingsCore::create();
+		    // Update the download folder if set in the configuration file
+		    CoreModel::getInstance()->setPathsAfterCreation();
 		    lDebug() << log().arg("Checking downloaded codecs updates");
 		    Utils::checkDownloadedCodecsUpdates();
 		    lDebug() << log().arg("Setting Video Codec Priority Policy");
