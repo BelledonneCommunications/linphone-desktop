@@ -297,7 +297,7 @@ ListView {
                         imageSource: AppIcons.clockCountDown
                     }
 					EffectImage {
-						visible: modelData != undefined && modelData?.core.isBasic
+						visible: modelData != undefined && !modelData.core.isEncrypted && AppCpp.currentAccount && AppCpp.currentAccount.core.limeServerUrl !== "" && AppCpp.currentAccount.core.conferenceFactoryAddress !== ""
                         Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         colorizationColor: DefaultStyle.warning_700

@@ -23,6 +23,8 @@ FocusScope {
     property bool replyingToMessage: false
     property bool editingMessage: false
     property string lastChar
+    property AccountGui currentAccount: AppCpp.currentAccount
+    property bool showEncryptedInfo: currentAccount && currentAccount.core.limeServerUrl !== "" && currentAccount.core.conferenceFactoryAddress !== ""
     enum PanelType { MessageReactions, SharedFiles, Medias, ImdnStatus, ForwardToList, ManageParticipants, EphemeralSettings, None}
     
     signal oneOneCall(bool video)
@@ -128,7 +130,7 @@ FocusScope {
                             }
                         }
                         RowLayout {
-                            visible: mainItem.chat != undefined && mainItem.chat.core.isBasic
+                            visible: mainItem.showEncryptedInfo && mainItem.chat != undefined && !mainItem.chat.core.isEncrypted
                             spacing: Utils.getSizeWithScreenRatio(8)
                             EffectImage {
                                 Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
@@ -136,17 +138,18 @@ FocusScope {
                                 colorizationColor: DefaultStyle.warning_700
                                 imageSource: AppIcons.lockSimpleOpen
                             }
-                            Text {
-                                // hiding text if in call cause te view
-                                // has smaller width
-                                visible: !mainItem.call
-                                Layout.fillWidth: true
-                                color: DefaultStyle.warning_700
-                                //: This conversation is not encrypted !
-                                text: qsTr("unencrypted_conversation_warning")
-                                font: Typography.p2
-                            }
+                            // Text {
+                            //     // hiding text if in call cause te view
+                            //     // has smaller width
+                            //     visible: !mainItem.call
+                            //     Layout.fillWidth: true
+                            //     color: DefaultStyle.warning_700
+                            //     //: This conversation is not encrypted !
+                            //     text: qsTr("unencrypted_conversation_warning")
+                            //     font: Typography.p2
+                            // }
                         }
+
                         EffectImage {
                             visible: mainItem.chat?.core.muted || false
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
