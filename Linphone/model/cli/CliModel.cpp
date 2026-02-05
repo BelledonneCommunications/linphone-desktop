@@ -282,17 +282,25 @@ void CliModel::Command::executeUri(QString address, QHash<QString, QString> args
 	QUrl url(address);
 	QString query = url.query();
 	lDebug() << QStringLiteral("CliModel : execute uri : %1").arg(query);
+
 	QStringList parameters = query.split('&');
 	for (int i = 0; i < parameters.size(); ++i) {
 		QStringList parameter = parameters[i].split('=');
 		lDebug() << QStringLiteral("CliModel : Detecting parameter : %1").arg(parameter[0]);
-		if (parameter[0] != "" && parameter[0] != "method") {
-			if (parameter.size() > 1) args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8());
-			else args[parameter[0]] = "";
+		QHash<QString, QString> args = parent->parseArgs(parameters[i]);
+		for (auto it = args.begin(); it != args.end(); ++it) {
+			auto subfonction = parent->parseFunctionName(it.key(), true);
+			if (!subfonction.isEmpty()) {
+				QHash<QString, QString> arg;
+				arg[it.key()] = QByteArray::fromBase64(it.value().toUtf8());
+				lDebug() << "parsing parameters" << it.key() << it.value();
+				parent->addProcess(ProcessCommand(mCommands[it.key()], arg, 1, parent));
+			}
 		}
 	}
 
-	args["sip-address"] = address;
+	args["sip-address"] = address.left(address.indexOf('?'));
+	lDebug() << "CliModel: getting sip address " << args["sip-address"];
 	parent->addProcess(ProcessCommand(*this, args, 0, parent));
 }
 
@@ -404,7 +412,7 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			addProcess(ProcessCommand(mCommands["fetch-config"], arg, 5, this));
 		} else {
 			std::shared_ptr<linphone::Address> address;
-			QString qAddress = transformedCommand.left(transformedCommand.indexOf('?'));
+			QString qAddress = transformedCommand; //.left(transformedCommand.indexOf('?'));
 			if (Utils::isUsername(transformedCommand)) {
 				address = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(transformedCommand + "@to.remove"));
@@ -414,7 +422,6 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			} else {
 				address = linphone::Factory::get()->createAddress(
 				    Utils::appStringToCoreString(qAddress)); // Test if command is an address
-				qAddress = Utils::coreStringToAppString(address->asStringUriOnly());
 			}
 			// if (format) *format = UriFormat;
 			lInfo() << log().arg("Detecting URI command: `%1`…").arg(command);
@@ -432,20 +439,6 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 						if (data[0] == "method" && data.size() > 1) functionName = data[1];
 					}
 					if (functionName.isEmpty()) functionName = "call";
-				}
-			}
-			QStringList fields = command.split('&');
-			for (int i = 0; i < fields.size(); ++i) {
-				QHash<QString, QString> args = parseArgs(fields[i]);
-				QHash<QString, QString> argsToProcess;
-				for (auto it = args.begin(); it != args.end(); ++it) {
-					auto subfonction = parseFunctionName(it.key(), true);
-					if (!subfonction.isEmpty()) {
-						QHash<QString, QString> arg;
-						arg[it.key()] = it.value();
-						// qAddress.remove(fields[i]);
-						addProcess(ProcessCommand(mCommands[it.key()], arg, 1, this));
-					}
 				}
 			}
 

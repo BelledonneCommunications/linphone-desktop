@@ -782,17 +782,20 @@ void App::initCore() {
 					        if (mIsRestarting) {
 						        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
 							        QMetaObject::invokeMethod(thread(), [this]() {
+								        mustBeInMainThread(log().arg(Q_FUNC_INFO));
 								        auto message = CoreModel::getInstance()->mConfigMessage;
 								        //: not reachable
 								        if (message.isEmpty()) message = tr("configuration_error_detail");
-								        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+								        lWarning() << log().arg("Configuration failed (reason: %1)").arg(message);
 								        //: Error
 								        Utils::showInformationPopup(
 								            tr("info_popup_error_title"),
 								            //: Remote provisioning failed : %1
 								            tr("info_popup_configuration_failed_message").arg(message), false);
 							        });
-						        } else {
+						        } else if (CoreModel::getInstance()->mConfigStatus ==
+						                   linphone::ConfiguringState::Successful) {
+							        lInfo() << log().arg("Configuration succeed");
 							        mPossiblyLookForAddedAccount = true;
 							        if (mAccountList && mAccountList->getCount() > 0) {
 								        auto defaultConnected =

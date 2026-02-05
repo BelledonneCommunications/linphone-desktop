@@ -30,13 +30,16 @@
 
 class ChatProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(QAbstractItemModel *model WRITE setSourceModel NOTIFY modelChanged)
+	Q_PROPERTY(QAbstractItemModel *model READ getSourceModel WRITE setSourceModel NOTIFY modelChanged)
 
 public:
 	ChatProxy(QObject *parent = Q_NULLPTR);
 	~ChatProxy();
 
 	void setSourceModel(QAbstractItemModel *sourceModel) override;
+	QAbstractItemModel *getSourceModel() const {
+		return sourceModel();
+	}
 
 	bool lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const override;
 
