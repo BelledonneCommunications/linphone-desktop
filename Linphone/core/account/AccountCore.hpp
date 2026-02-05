@@ -240,6 +240,7 @@ signals:
 	void lSetRegisterEnabled(bool enabled);
 	void lSetNotificationsAllowed(bool value);
 	void lSetPresence(LinphoneEnums::Presence presence, bool userInitiated = true, bool resetToAuto = false);
+	void lResetToAutomaticPresence(bool userInitiated = true, bool resetToAuto = false);
 
 protected:
 	void writeIntoModel(std::shared_ptr<AccountModel> model) const;
