@@ -292,6 +292,16 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 			        mAccountModel->setPresence(presence, userInitiated, resetToAuto, presenceNote);
 		        });
 	    });
+	mAccountModelConnection->makeConnectToCore(
+	    &AccountCore::lResetToAutomaticPresence, [this](bool userInitiated, bool resetToAuto) {
+		    mAccountModelConnection->invokeToModel([this, userInitiated, resetToAuto, presenceNote = mPresenceNote]() {
+			    auto core = CoreModel::getInstance()->getCore();
+			    if (!core) return;
+			    mAccountModel->setPresence(core->getCallsNb() == 0 ? LinphoneEnums::Presence::Online
+			                                                       : LinphoneEnums::Presence::Busy,
+			                               userInitiated, resetToAuto, presenceNote);
+		    });
+	    });
 
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
@@ -876,7 +886,7 @@ QString AccountCore::getPresenceStatus() {
 }
 
 void AccountCore::resetToAutomaticPresence() {
-	emit lSetPresence(LinphoneEnums::Presence::Online, false, true);
+	emit lResetToAutomaticPresence(false, true);
 }
 
 LinphoneEnums::Presence AccountCore::getExplicitPresence() {
