@@ -4426,7 +4426,7 @@ Expirace : %1</translation>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4440,6 +4440,31 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
         <translation>Účastníci</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <translation type="unfinished">Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Hotovo</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
+        <source>info_popup_manage_participant_updated_message</source>
+        <translation type="unfinished">Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
 </context>
 <context>

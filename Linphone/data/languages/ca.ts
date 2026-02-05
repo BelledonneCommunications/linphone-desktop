@@ -4318,6 +4318,11 @@ Error</extracomment>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Error</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>

@@ -1664,7 +1664,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1052"/>
         <source>Merger tous les appels</source>
         <extracomment>call_action_merge_calls</extracomment>
-        <translation>Merger tous les appels</translation>
+        <translation>Fusionner tous les appels</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="760"/>
@@ -4451,7 +4451,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation>Tentative de connexion distante ...</translation>
+        <translation type="unfinished">Tentative de connexion distante ...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4501,18 +4501,18 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <extracomment>Error while setting participants !</extracomment>
-        <translation>Erreur lors de la modification des participants !</translation>
+        <translation type="unfinished">Erreur lors de la modification des participants !</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
         <source>info_popup_success_title</source>
-        <translation>Enregistré</translation>
+        <translation>Succès</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
         <source>info_popup_manage_participant_updated_message</source>
         <extracomment>Participants updated</extracomment>
-        <translation>Participants mis à jour</translation>
+        <translation type="unfinished">Participants mis à jour</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
@@ -4523,7 +4523,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <extracomment>Apply</extracomment>
-        <translation>Appliquer</translation>
+        <translation type="unfinished">Appliquer</translation>
     </message>
 </context>
 <context>

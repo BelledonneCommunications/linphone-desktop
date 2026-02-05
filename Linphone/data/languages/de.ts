@@ -4578,7 +4578,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation>Kein Token gefunden</translation>
+        <translation type="unfinished">Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4626,24 +4626,24 @@ Ablauf: %1</translation>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
         <source>info_popup_error_title</source>
-        <translation type="unfinished">Fehler</translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <extracomment>Error while setting participants !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
         <source>info_popup_success_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Erfolg</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
         <source>info_popup_manage_participant_updated_message</source>
         <extracomment>Participants updated</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
@@ -4654,7 +4654,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <extracomment>Apply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Kein Token gefunden</translation>
     </message>
 </context>
 <context>

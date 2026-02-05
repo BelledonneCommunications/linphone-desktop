@@ -4302,6 +4302,16 @@ Error</extracomment>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Помилка</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Успіх</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>

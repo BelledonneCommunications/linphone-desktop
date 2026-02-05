@@ -4289,7 +4289,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation> </translation>
+        <translation type="unfinished"> </translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4303,6 +4303,31 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>错误</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <translation type="unfinished"> </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>成功</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
+        <source>info_popup_manage_participant_updated_message</source>
+        <translation type="unfinished"> </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <translation type="unfinished"> </translation>
     </message>
 </context>
 <context>
