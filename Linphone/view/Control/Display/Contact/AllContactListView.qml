@@ -97,6 +97,20 @@ Flickable {
         return index != -1
     }
 
+    function getFirstContact() {
+        if (mainItem.showFavorites) {
+            var firstContact = favoritesList.itemAtIndex(0)
+            if (firstContact !== null) return firstContact
+        }
+        var firstContact = contactsList.itemAtIndex(0)
+        if (firstContact !== null) return firstContact
+        if (!mainItem.hideSuggestions) {
+            var firstContact = suggestionsList.itemAtIndex(0)
+            if (firstContact !== null) return firstContact
+        }
+        return null
+    }
+
     function resetSelections() {
         mainItem.highlightedContact = null
         favoritesList.currentIndex = -1

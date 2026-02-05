@@ -243,7 +243,14 @@ Item {
                         }
                         KeyNavigation.down: contactList //contactLoader.item?.count > 0 || !contactLoader.item?.footerItem? contactLoader.item : contactLoader.item?.footerItem
                         KeyNavigation.up: contactList //contactLoader.item?.footerItem ? contactLoader.item?.footerItem : contactLoader.item
-
+                        Keys.onPressed: (event) => {
+                            event.accepted = false
+                            var firstContact = contactList.getFirstContact()
+                            if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return && firstContact.searchResultItem) {
+                                console.log("Enter pressed from magic search bar, calling", firstContact.searchResultItem.core.defaultAddress)
+                                mainWindow.startCallWithContact(firstContact.searchResultItem, false)
+                            }
+                        }
                         Popup {
                             id: listPopup
                             width: magicSearchBar.width
