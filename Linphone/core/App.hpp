@@ -47,6 +47,7 @@ class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
+	Q_PROPERTY(AccountGui *currentAccount READ getCurrentAccount NOTIFY currentAccountChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
 	Q_PROPERTY(ChatList *chats READ getChats NOTIFY chatsChanged)
 	Q_PROPERTY(QString shortApplicationVersion READ getShortApplicationVersion CONSTANT)
@@ -175,6 +176,10 @@ public:
 	QSharedPointer<ChatList> getChatList() const;
 	ChatList *getChats() const;
 	void setChatList(QSharedPointer<ChatList> data);
+	ChatGui *getCurrentChat() const;
+	void setCurrentChat(ChatGui *chat);
+
+	AccountGui *getCurrentAccount() const;
 
 	QSharedPointer<CallList> getCallList() const;
 	void setCallList(QSharedPointer<CallList> data);
@@ -192,8 +197,6 @@ public:
 	QString getQtVersion() const;
 
 	Q_INVOKABLE void checkForUpdate(bool requestedByUser = false);
-	ChatGui *getCurrentChat() const;
-	void setCurrentChat(ChatGui *chat);
 
 	float getScreenRatio() const;
 	Q_INVOKABLE void setScreenRatio(float ratio);
@@ -227,6 +230,7 @@ signals:
 	void localeChanged();
 	void lForceOidcTimeout();
 	void remainingTimeBeforeOidcTimeoutChanged();
+	void currentAccountChanged();
 	// void executeCommand(QString command);
 
 private:

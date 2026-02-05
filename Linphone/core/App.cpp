@@ -711,6 +711,8 @@ void App::initCore() {
 						    mAccountList->setInitialized(false);
 						    mAccountList->lUpdate(true);
 					    }
+					    connect(mAccountList.get(), &AccountList::defaultAccountChanged, this,
+					            &App::currentAccountChanged);
 					    // Update global unread Notifications when an account updates his unread Notifications
 					    connect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, [this]() {
 						    lDebug() << "unreadNotificationsChanged of AccountList";
@@ -1722,6 +1724,10 @@ void App::setCurrentChat(ChatGui *chat) {
 		mCurrentChat = chat;
 		emit currentChatChanged();
 	}
+}
+
+AccountGui *App::getCurrentAccount() const {
+	return mAccountList ? mAccountList->getDefaultAccount() : nullptr;
 }
 
 float App::getScreenRatio() const {

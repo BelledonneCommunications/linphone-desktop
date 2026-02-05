@@ -18,6 +18,7 @@ ListView {
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
     property bool loading: false
     property bool isEncrypted: chat && chat.core.isEncrypted
+    property bool showEncryptedInfo: AppCpp.currentAccount !== null && AppCpp.currentAccount.core.limeServerUrl !== "" && AppCpp.currentAccount.core.conferenceFactoryAddress !== ""
     highlightFollowsCurrentItem: true
 
     verticalLayoutDirection: ListView.BottomToTop
@@ -134,6 +135,7 @@ ListView {
         anchors.horizontalCenter: parent.horizontalCenter
         Control.Control {
             id: headerMessage
+            visible: mainItem.showEncryptedInfo
             property int topMargin: Utils.getSizeWithScreenRatio(mainItem.contentHeight > mainItem.height ? 30 : 50)
             property int bottomMargin: Utils.getSizeWithScreenRatio(30)
             anchors.topMargin: topMargin
