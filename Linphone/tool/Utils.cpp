@@ -445,6 +445,7 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 	VariantObject *data = new VariantObject("findAvatarByAddress", "");
 	if (!data) return nullptr;
 	data->makeRequest([address]() -> QVariant {
+		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) return QVariant();
 		QString avatar;
 		auto defaultFriendList = ToolModel::getAppFriendList();
 		if (!defaultFriendList) return QVariant();
@@ -469,6 +470,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 	VariantObject *data = new VariantObject("findFriendByAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
+		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) return QVariant();
 		auto linFriend = ToolModel::findFriendByAddress(address);
 		if (!linFriend) return QVariant();
 		auto friendCore = FriendCore::create(linFriend);
@@ -490,6 +492,7 @@ VariantObject *Utils::getFriendSecurityLevel(const QString &address) {
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
+		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) return QVariant();
 		auto defaultFriendList = ToolModel::getAppFriendList();
 		if (!defaultFriendList) return QVariant();
 		auto linphoneAddr = ToolModel::interpretUrl(address);
@@ -509,6 +512,7 @@ VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
+		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) return QVariant();
 		auto defaultFriendList = ToolModel::getAppFriendList();
 		if (!defaultFriendList) return QVariant();
 		auto linphoneAddr = ToolModel::interpretUrl(address);

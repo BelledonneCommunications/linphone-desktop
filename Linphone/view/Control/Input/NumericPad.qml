@@ -90,7 +90,7 @@ FocusScope {
 			mainItem.buttonPressed("+")
 			event.accepted = true
 		}
-		if (event.key === Qt.Key_Enter) {
+		if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
 			mainItem.launchCall()
 			event.accepted = true
 		}
@@ -98,7 +98,7 @@ FocusScope {
 
 	Keys.onPressed: (event) => {
 		event.accepted = false
-		if (event.modifiers & Qt.KeypadModifier) {
+		if (event.modifiers & Qt.KeypadModifier || event.key === Qt.Key_Return) {
 			handleKeyPadEvent(event)
 		}
 		if (event.key === Qt.Key_Backspace) {

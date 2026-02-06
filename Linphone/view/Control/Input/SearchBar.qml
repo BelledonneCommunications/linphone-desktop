@@ -106,7 +106,7 @@ FocusScope {
 		}
 		Keys.onPressed: (event) => {
 			event.accepted = false
-			if (mainItem.numericPadPopup && mainItem.numericPadPopup.opened && (event.modifiers & Qt.KeypadModifier)) {
+			if (mainItem.numericPadPopup && mainItem.numericPadPopup.opened && (event.modifiers & Qt.KeypadModifier || event.key === Qt.Key_Return)) {
 				mainItem.numericPadPopup.keyPadKeyPressed(event)
 				event.accepted = true
 			}

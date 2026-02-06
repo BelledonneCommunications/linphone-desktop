@@ -219,6 +219,11 @@ AbstractMainPage {
                         when: searchBar.text.length != 0
                         value: false
                     }
+                    Keys.onPressed: (event) => {
+                        if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                            mainItem.createCallFromSearchBarRequested()
+                        }
+                    }
                 }
 				Rectangle {
 					visible: SettingsCpp.callForwardToAddress.length > 0
