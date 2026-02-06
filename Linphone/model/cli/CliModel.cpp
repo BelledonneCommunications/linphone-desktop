@@ -133,7 +133,7 @@ void CliModel::cliFetchConfig(QHash<QString, QString> args) {
 			connect(
 			    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this,
 			    [this, args]() { cliFetchConfig(args); }, Qt::SingleShotConnection);
-		else CoreModel::getInstance()->useFetchConfig(args["fetch-config"]);
+		else CoreModel::getInstance()->useFetchConfig(args["fetch-config"], false);
 	}
 }
 
@@ -310,13 +310,21 @@ void CliModel::Command::executeUrl(const QString &pUrl, CliModel *parent) {
 	QStringList urlParts = pUrl.split('?');
 	QString query = (urlParts.size() > 1 ? urlParts[1] : urlParts[0]);
 	QString authority = (urlParts.size() > 1 && urlParts[0].contains(':') ? urlParts[0].split(':')[1] : "");
+	lDebug() << QStringLiteral("CliModel : execute url : %1").arg(query);
 
 	QStringList parameters = query.split('&');
 	for (int i = 0; i < parameters.size(); ++i) {
 		QStringList parameter = parameters[i].split('=');
-		if (parameter[0] != "method") {
-			if (parameter.size() > 1) args[parameter[0]] = QByteArray::fromBase64(parameter[1].toUtf8());
-			else args[parameter[0]] = "";
+		lDebug() << QStringLiteral("CliModel : Detecting parameter : %1").arg(parameter[0]);
+		QHash<QString, QString> args = parent->parseArgs(parameters[i]);
+		for (auto it = args.begin(); it != args.end(); ++it) {
+			auto subfonction = parent->parseFunctionName(it.key(), true);
+			if (!subfonction.isEmpty()) {
+				QHash<QString, QString> arg;
+				arg[it.key()] = QByteArray::fromBase64(it.value().toUtf8());
+				lDebug() << "parsing parameters" << it.key() << it.value();
+				parent->addProcess(ProcessCommand(mCommands[it.key()], arg, 1, parent));
+			}
 		}
 	}
 	if (!authority.isEmpty()) args["sip-address"] = authority;

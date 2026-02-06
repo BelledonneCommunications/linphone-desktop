@@ -361,9 +361,13 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			restart();
 		});
 	});
-	mCoreModelConnection->makeConnectToModel(&CoreModel::requestFetchConfig, [this](QString path) {
-		mCoreModelConnection->invokeToCore([this, path]() {
-			auto callback = [this, path]() {
+	mCoreModelConnection->makeConnectToModel(&CoreModel::requestFetchConfig, [this](QString path,
+	                                                                                bool askForConfirmation) {
+		mCoreModelConnection->invokeToCore([this, path, askForConfirmation]() {
+			auto apply = [this, path] {
+				mCoreModelConnection->invokeToModel([this, path]() { CoreModel::getInstance()->setFetchConfig(path); });
+			};
+			auto callback = [this, path, askForConfirmation]() {
 				//: Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?
 				RequestDialog *obj = new RequestDialog(tr("remote_provisioning_dialog"), path);
 				connect(obj, &RequestDialog::result, this, [this, obj, path](int result) {
@@ -378,9 +382,12 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				QMetaObject::invokeMethod(getMainWindow(), "showConfirmationPopup", QVariant::fromValue(obj));
 			};
 			if (!getMainWindow()) { // Delay
-				connect(this, &App::mainWindowChanged, this, callback, Qt::SingleShotConnection);
+				if (askForConfirmation)
+					connect(this, &App::mainWindowChanged, this, callback, Qt::SingleShotConnection);
+				else connect(this, &App::mainWindowChanged, this, apply, Qt::SingleShotConnection);
 			} else {
-				callback();
+				if (askForConfirmation) callback();
+				else apply();
 			}
 		});
 	});
