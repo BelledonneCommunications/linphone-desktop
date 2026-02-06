@@ -229,7 +229,7 @@ QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 	return filePath;
 }
 
-void CoreModel::useFetchConfig(QString filePath) {
+void CoreModel::useFetchConfig(QString filePath, bool askForConfirmation) {
 	bool error = false;
 	filePath = getFetchConfig(filePath, &error);
 	if (!error && !filePath.isEmpty()) {
@@ -237,7 +237,7 @@ void CoreModel::useFetchConfig(QString filePath) {
 		if (mCore && mCore->getGlobalState() == linphone::GlobalState::On) {
 			// TODO
 			// if (mSettings->getAutoApplyProvisioningConfigUriHandlerEnabled()) setFetchConfig(filePath); else
-			emit requestFetchConfig(filePath);
+			emit requestFetchConfig(filePath, askForConfirmation);
 		} else {
 			connect(
 			    this, &CoreModel::globalStateChanged, this, [filePath, this]() { useFetchConfig(filePath); },

@@ -65,7 +65,7 @@ public:
 	void refreshOidcRemainingTime();
 
 	QString getFetchConfig(QString filePath, bool *error);
-	void useFetchConfig(QString filePath);
+	void useFetchConfig(QString filePath, bool askForConfirmation = true);
 	bool setFetchConfig(QString filePath);
 	void migrate();
 
@@ -94,7 +94,7 @@ signals:
 	void friendUpdated(const std::shared_ptr<linphone::Friend> &f);
 	void bearerAccountAdded();
 	void unreadNotificationsChanged();
-	void requestFetchConfig(QString path);
+	void requestFetchConfig(QString path, bool askForConfirmation);
 	void requestRestart();
 	void enabledLdapAddressBookSaved();
 	void magicSearchResultReceived(QString filter);
