@@ -31,7 +31,7 @@
         <translation>Telefonnummer oder SIP-Adresse wählen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/AbstractWindow.qml" line="309"/>
+        <location filename="../../view/Page/Window/AbstractWindow.qml" line="331"/>
         <source>fps_counter</source>
         <translation>%1 FPS</translation>
     </message>

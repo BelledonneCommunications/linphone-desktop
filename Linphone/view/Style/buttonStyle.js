@@ -168,6 +168,10 @@
             pressed: "#00000000",
 			checked: "#00000000"
 		},
+		borderColor: {
+			normal: "#00000000",
+			keybaordFocused: Linphone.DefaultStyle.main2_900
+		},
 		text: {
 			normal: Linphone.DefaultStyle.main2_200,
 			hovered: Linphone.DefaultStyle.main2_300,
@@ -189,6 +193,10 @@
 			hovered: "#00000000",
             pressed: "#00000000",
 			checked: "#00000000"
+		},
+		borderColor: {
+			normal: "#00000000",
+			keybaordFocused: Linphone.DefaultStyle.main2_900
 		},
 		text: {
 			normal: Linphone.DefaultStyle.main2_600,

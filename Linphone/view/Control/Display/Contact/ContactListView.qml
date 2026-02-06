@@ -178,6 +178,13 @@ ListView {
                         Layout.rightMargin: mainItem.itemsRightMargin
 						focus: true
 						onClicked: mainItem.expanded = !mainItem.expanded
+						Rectangle {
+							anchors.fill: headerExpandButton
+							radius: headerExpandButton.width/2
+							visible: headerExpandButton.activeFocus
+							opacity: 0.5
+							color: DefaultStyle.main2_200
+						}
 						Accessible.name: (mainItem.expanded ?
 							//: Shrink %1
 							qsTr("shrink_accessible_name") :
