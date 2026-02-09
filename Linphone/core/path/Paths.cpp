@@ -290,7 +290,16 @@ QString Paths::getLogsDirPath() {
 QString Paths::getCrashpadDirPath() {
 #ifdef HAVE_CRASH_HANDLER
 	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
-							  Constants::PathCrashpad);
+	                          Constants::PathCrashpad);
+#else
+	return "";
+#endif
+}
+
+QString Paths::getCrashpadAttachmentsPath() {
+#ifdef HAVE_CRASH_HANDLER
+	return getWritableDirPath(QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation) +
+	                          Constants::PathCrashpadAttachments);
 #else
 	return "";
 #endif

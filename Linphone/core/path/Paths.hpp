@@ -44,6 +44,7 @@ QString getFriendsListFilePath();
 QString getLimeDatabasePath();
 QString getLogsDirPath();
 QString getCrashpadDirPath();
+QString getCrashpadAttachmentsPath();
 QString getMetricsDirPath();
 QString getMessageHistoryFilePath();
 QString getPackageDataDirPath();

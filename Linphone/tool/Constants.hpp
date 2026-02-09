@@ -158,8 +158,9 @@ public:
 	static constexpr char PathUserCertificates[] = "/usr-crt/";
 #ifdef HAVE_CRASH_HANDLER
 	static constexpr char PathCrashpad[] = "/crashpad/";
+	static constexpr char PathCrashpadAttachments[] = "/crashpad/attachments/";
 	static constexpr char PathCrashpadHandler[] = CRASHPAD_EXECUTABLE_NAME;
-	static constexpr char BugsplatUrl[] = "https://Linphone.bugsplat.com/post/bp/crash/crashpad.php";
+	static constexpr char BugsplatUrl[] = "https://" BUGSPLAT_DATABASE ".bugsplat.com/post/bp/crash/crashpad.php";
 #endif
 
 	static constexpr char PathCallHistoryList[] = "/call-history.db";

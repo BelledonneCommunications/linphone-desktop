@@ -312,8 +312,11 @@ App::App(int &argc, char *argv[])
 	mLinphoneThread = new Thread(this);
 
 	init();
-	lInfo() << QStringLiteral("Starting application " APPLICATION_NAME " (bin: " EXECUTABLE_NAME
-	                          "). Version:%1 Os:%2 Qt:%3")
+	lInfo() << QStringLiteral("Starting application %1 %2 %3 %4")
+	               .arg(APPLICATION_NAME)
+	               .arg("(bin:")
+	               .arg(EXECUTABLE_NAME)
+	               .arg("). Version:%1 Os:%2 Qt:%3")
 	               .arg(applicationVersion())
 	               .arg(Utils::getOsProduct())
 	               .arg(qVersion());
@@ -664,6 +667,17 @@ void App::initCore() {
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.
 			    DesktopTools::init();
+
+			// CrashReporter must be call after app initialization like names.
+#ifdef HAVE_CRASH_HANDLER
+			    lInfo() << log().arg("Start CrashReporter.");
+			    bool status = CrashReporter::start();
+			    if (!status) {
+				    lWarning() << log().arg("CrashReporter could not start.");
+			    }
+#else
+	lWarning() << "[Main] The application doesn't support the CrashReporter.";
+#endif
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    assert(mEngine);

@@ -568,6 +568,23 @@ Item {
                                     }
                                 }
                             }
+
+                            MouseArea {
+                                z: parent.z + 1
+                                anchors.fill: parent
+                                acceptedButtons: Qt.RightButton
+                                onPressAndHold: (mouse) => {
+                                    debugPopup.open()
+                                }
+                                PopupButton {
+                                    id: debugPopup
+                                    visible: false
+                                    popup.contentItem: Button {
+                                        text: "debug: force crash"
+                                        onClicked: UtilsCpp.forceCrash()
+                                    }
+                                }
+                            }
                         }
                     }
                 }

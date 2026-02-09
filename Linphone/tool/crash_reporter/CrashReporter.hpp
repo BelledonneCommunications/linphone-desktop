@@ -21,21 +21,21 @@
 #ifndef CRASH_REPORTER_H_
 #define CRASH_REPORTER_H_
 
-#include <QObject>
 #include <QMap>
+#include <QObject>
 #include <QVector>
 #include <string>
 
 #include "client/crashpad_client.h"
 
 // =============================================================================
-class CrashReporter : public QObject{
+class CrashReporter : public QObject {
 public:
-	CrashReporter(QObject * parent = nullptr);
+	CrashReporter(QObject *parent = nullptr);
 
-	static void start();
-	static void enable(const bool& on);
-	void run();
+	static bool start();
+	static bool enable(const bool &on);
+	bool run();
 
 	crashpad::CrashpadClient mClient;
 	std::vector<base::FilePath> mAttachments;
@@ -46,7 +46,7 @@ public:
 	base::FilePath mMetricsPath;
 	base::FilePath mLogsPath;
 	QString mBugsplatUrl;
-	static CrashReporter* gHandler;
+	static CrashReporter *gHandler;
 };
 
 #endif
