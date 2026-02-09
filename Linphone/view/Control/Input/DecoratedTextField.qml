@@ -15,7 +15,7 @@ FormItemLayout {
 	property var propertyOwner: new Array
 	property var propertyOwnerGui
 	property var title
-	property var placeHolder
+	property var placeHolder: ""
 	property bool useTitleAsPlaceHolder: true
 	property bool canBeEmpty: true
 	property bool toValidate: false
@@ -29,6 +29,10 @@ FormItemLayout {
 	
     property alias hidden: textField.hidden
 	property alias validator: textField.validator
+
+	property alias customButtonIcon: textField.customButtonIcon
+    property alias customCallback: textField.customCallback
+    property alias customButtonAccessibleName: textField.customButtonAccessibleName
 
 	property var isValid: function(text) {
         return true

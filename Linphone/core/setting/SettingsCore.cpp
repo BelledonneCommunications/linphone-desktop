@@ -409,6 +409,11 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setDisplayNotificationContent(enabled); });
 	    });
 
+	// Download folder
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::downloadFolderChanged, [this](const QString &folder) {
+		mSettingsModelConnection->invokeToCore([this, folder]() { setDownloadFolder(folder); });
+	});
+
 	// Auto recording
 	mSettingsModelConnection->makeConnectToModel(
 	    &SettingsModel::automaticallyRecordCallsEnabledChanged, [this](const bool enabled) {
@@ -1244,6 +1249,14 @@ QString SettingsCore::getDownloadFolder() const {
 	QString cleanPath = QDir::cleanPath(path);
 	if (!cleanPath.endsWith(QDir::separator())) cleanPath.append(QDir::separator());
 	return cleanPath;
+}
+
+void SettingsCore::setDownloadFolder(QString folder) {
+	if (mDownloadFolder != folder) {
+		mDownloadFolder = folder;
+		emit downloadFolderChanged();
+		setIsSaved(false);
+	}
 }
 
 void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {

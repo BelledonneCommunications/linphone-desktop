@@ -57,6 +57,11 @@ Control.TextField {
     property real pixelSize: Typography.p1.pixelSize
     property real weight: Typography.p1.weight
 
+    // Custom button on the right
+    property string customButtonIcon
+    property var customCallback
+    property string customButtonAccessibleName
+
     // fill propertyName and propertyOwner to check text validity
     property string propertyName
     property var propertyOwner
@@ -207,5 +212,23 @@ Control.TextField {
             //: Show %1
             qsTr("show_accessible_name")
         ).arg(mainItem.Accessible.name)
+    }
+    Button {
+        id: customButton
+        KeyNavigation.left: mainItem
+        z: 1
+        visible: mainItem.customButtonIcon !== undefined && mainItem.customButtonIcon !== ""
+        style: ButtonStyle.noBackground
+        icon.source: mainItem.customButtonIcon
+        width: visible ? Utils.getSizeWithScreenRatio(20) : 0
+        height: Utils.getSizeWithScreenRatio(20)
+        icon.width: width
+        icon.height: height
+        anchors.verticalCenter: parent.verticalCenter
+        anchors.right: parent.right
+        anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
+        onClicked: mainItem.customCallback()
+        //: %1 button on %2
+        Accessible.name: qsTr("textfield_custom_button_accessible_name").arg(mainItem.customButtonAccessibleName).arg(mainItem.Accessible.name)
     }
 }

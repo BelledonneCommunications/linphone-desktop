@@ -2670,37 +2670,49 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>ChatSettingsLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="14"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="16"/>
         <source>settings_chat_attached_files_title</source>
         <extracomment>Attached files</extracomment>
         <translation>Attached files</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="23"/>
         <source>settings_chat_notifications_title</source>
         <extracomment>Notifications</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="32"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="48"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
         <translation>Automatic download</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="34"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Automatically download transferred or received files in conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
+        <source>settings_chat_download_folder_title</source>
+        <extracomment>&quot;Dossier de téléchargement des fichiers&quot;</extracomment>
+        <translation>Files download folder</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
+        <source>settings_chat_download_folder_browse_button</source>
+        <extracomment>Browse folders</extracomment>
+        <translation>Browse folders</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
         <source>settings_chat_display_notification_content_title</source>
         <extracomment>&quot;Display notification content&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="82"/>
         <source>settings_chat_display_notification_content_subtitle</source>
         <extracomment>&quot;Display the content of the received message&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -3666,13 +3678,13 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>DecoratedTextField</name>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="57"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="61"/>
         <source>textfield_error_message_cannot_be_empty</source>
         <extracomment>&quot;ne peut être vide&quot;</extracomment>
         <translation>can not be empty</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="60"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="64"/>
         <source>textfield_error_message_unknown_format</source>
         <extracomment>&quot;Format non reconnu&quot;</extracomment>
         <translation>Unknown format</translation>
@@ -6006,13 +6018,25 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="208"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="213"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
         <translation>Show %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="206"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source>textfield_custom_button_accessible_name</source>
+        <extracomment>%1 button on %2</extracomment>
+        <translation>%1 button on %2</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source></source>
+        <extracomment>%1 button on %2</extracomment>
+        <translation>from %1 to %2 (UTC%3)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation>Hide %1</translation>
