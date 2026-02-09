@@ -137,11 +137,11 @@ AbstractMainPage {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
-                FlexboxLayout {
+                RowLayout {
                     id: titleCallLayout
-                    direction: FlexboxLayout.Row
-                    gap: Utils.getSizeWithScreenRatio(16)
-                    alignItems: FlexboxLayout.AlignCenter
+                    // direction: FlexboxLayout.Row
+                    spacing: Utils.getSizeWithScreenRatio(16)
+                    // alignItems: FlexboxLayout.AlignCenter
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {

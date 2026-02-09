@@ -119,10 +119,10 @@ AbstractMainPage {
             ColumnLayout {
                 anchors.fill: parent
                 spacing: 0
-                FlexboxLayout {
-                    direction: FlexboxLayout.Row
-                    gap: Utils.getSizeWithScreenRatio(16)
-                    alignItems: FlexboxLayout.AlignCenter
+                RowLayout {
+                    // direction: FlexboxLayout.Row
+                    // alignItems: FlexboxLayout.AlignCenter
+                    spacing: Utils.getSizeWithScreenRatio(16)
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {

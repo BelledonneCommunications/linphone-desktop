@@ -96,8 +96,8 @@ else()
 	set(MSPLUGINS_DIR "${CMAKE_INSTALL_LIBDIR}/mediastreamer/plugins")
 endif()
 
-if(${Qt6_VERSION} VERSION_LESS "6.10.0")
-	message( FATAL_ERROR "Linphone requires Qt 6.10.0 or newer. Exiting CMake." )
+if(${Qt6_VERSION} VERSION_LESS "6.8.0")
+	message( FATAL_ERROR "Linphone requires Qt 6.8.0 or newer. Exiting CMake." )
 endif()
 
 qt6_standard_project_setup()

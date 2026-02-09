@@ -218,11 +218,11 @@ AbstractMainPage {
         Layout.fillHeight: true
         Layout.fillWidth: true
 
-        FlexboxLayout {
+        RowLayout {
             id: title
-            direction: FlexboxLayout.Row
-            gap: Utils.getSizeWithScreenRatio(16)
-            alignItems: FlexboxLayout.AlignCenter
+            // direction: FlexboxLayout.Row
+            spacing: Utils.getSizeWithScreenRatio(16)
+            // alignItems: FlexboxLayout.AlignCenter
             anchors.top: leftPanel.top
             anchors.right: leftPanel.right
             anchors.left: leftPanel.left

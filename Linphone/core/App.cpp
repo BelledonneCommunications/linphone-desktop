@@ -517,14 +517,16 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				    case linphone::VersionUpdateCheckResult::NewVersionAvailable: {
 					    QString downloadLink =
 					        QStringLiteral("<a href='%1'><font color='DefaultStyle.main2_600'>%2</a>")
-					            .arg(url)
+					            .arg(Utils::coreStringToAppString(url))
 					            //: Download it !
 					            .arg(tr("info_popup_new_version_download_label"));
 					    Utils::showInformationPopup(
 					        //: New version available !
 					        tr("info_popup_new_version_available_title"),
 					        //: A new version of Linphone (%1) is available. %2
-					        tr("info_popup_new_version_available_message").arg(version).arg(downloadLink));
+					        tr("info_popup_new_version_available_message")
+					            .arg(Utils::coreStringToAppString(version))
+					            .arg(downloadLink));
 					    break;
 				    }
 				    case linphone::VersionUpdateCheckResult::UpToDate:
