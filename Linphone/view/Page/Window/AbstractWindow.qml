@@ -90,8 +90,6 @@ ApplicationWindow {
                     RoundButton {
                         Layout.alignment: Qt.AlignVCenter
                         style: ButtonStyle.noBackground
-                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                         icon.source:AppIcons.closeX
                         onClicked: addressChooserPopup.close()
                     }
@@ -101,12 +99,25 @@ ApplicationWindow {
                     model: VariantList {
                         model: addressChooserPopup.contact && addressChooserPopup.contact.core.allAddresses || []
                     }
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: contentHeight
                     spacing: Utils.getSizeWithScreenRatio(10)
-                    delegate: Item {
+                    keyNavigationEnabled: true
+                    Layout.fillWidth: true
+                    activeFocusOnTab: true
+                    onVisibleChanged: if (visible) forceActiveFocus()
+                    onActiveFocusChanged: {
+                        if (activeFocus) currentIndex = 0
+                        else currentIndex = -1
+                    }
+                    Keys.onPressed: event => {
+                        if (event.key == Qt.Key_Return || event.key == Qt.Key_Enter || event.key == Qt.Key_Space) {
+                            addressChooserPopup.addressChosen(itemAtIndex(popuplist.currentIndex).address)
+                        }
+                    }
+                    Layout.preferredHeight: contentHeight
+                    delegate: FocusScope {
                         width: popuplist.width
                         height: Utils.getSizeWithScreenRatio(56)
+                        property string address: modelData.address
                         ColumnLayout {
                             width: popuplist.width
                             anchors.verticalCenter: parent.verticalCenter
@@ -137,9 +148,18 @@ ApplicationWindow {
                                 color: DefaultStyle.main2_200
                             }
                         }
+                        Rectangle {
+                            anchors.fill: parent
+                            opacity: 0.7
+                            visible: index === popuplist.currentIndex
+                            color: DefaultStyle.main2_100
+                            radius: Utils.getSizeWithScreenRatio(8)
+                        }
                         MouseArea {
+                            id: delegateMouseArea
                             anchors.fill: parent
                             hoverEnabled: true
+                            focus: true
                             cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
                             onClicked: {
                                 addressChooserPopup.addressChosen(modelData.address)
