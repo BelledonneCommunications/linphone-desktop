@@ -109,6 +109,6 @@ void SortFilterProxy::invalidateFilter() {
 	QSortFilterProxyModel::beginFilterChange();
 	QSortFilterProxyModel::endFilterChange();
 #else
-	invalidateFilter();
+	QSortFilterProxyModel::invalidateFilter();
 #endif
 }

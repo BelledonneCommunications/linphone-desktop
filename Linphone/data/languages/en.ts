@@ -31,7 +31,7 @@
         <translation>Choose a SIP number or address</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/AbstractWindow.qml" line="331"/>
+        <location filename="../../view/Page/Window/AbstractWindow.qml" line="329"/>
         <source>fps_counter</source>
         <translation>%1 FPS</translation>
     </message>
@@ -663,14 +663,14 @@
     <message>
         <location filename="../../core/App.cpp" line="432"/>
         <location filename="../../core/App.cpp" line="510"/>
-        <location filename="../../core/App.cpp" line="801"/>
+        <location filename="../../core/App.cpp" line="803"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="433"/>
-        <location filename="../../core/App.cpp" line="803"/>
+        <location filename="../../core/App.cpp" line="805"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
@@ -699,97 +699,97 @@
         <translation>A new version of Linphone (%1) is available at %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="531"/>
+        <location filename="../../core/App.cpp" line="533"/>
         <source>info_popup_version_up_to_date_title</source>
         <translation>Up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="533"/>
+        <location filename="../../core/App.cpp" line="535"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Up to date Your version is up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="797"/>
+        <location filename="../../core/App.cpp" line="799"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1090"/>
+        <location filename="../../core/App.cpp" line="1092"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1092"/>
+        <location filename="../../core/App.cpp" line="1094"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1096"/>
+        <location filename="../../core/App.cpp" line="1098"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1101"/>
+        <location filename="../../core/App.cpp" line="1103"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1109"/>
+        <location filename="../../core/App.cpp" line="1111"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1111"/>
+        <location filename="../../core/App.cpp" line="1113"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1116"/>
+        <location filename="../../core/App.cpp" line="1118"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1119"/>
+        <location filename="../../core/App.cpp" line="1121"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1122"/>
+        <location filename="../../core/App.cpp" line="1124"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1589"/>
+        <location filename="../../core/App.cpp" line="1591"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1589"/>
+        <location filename="../../core/App.cpp" line="1591"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1604"/>
+        <location filename="../../core/App.cpp" line="1606"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1622"/>
+        <location filename="../../core/App.cpp" line="1624"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1749"/>
+        <location filename="../../core/App.cpp" line="1751"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>

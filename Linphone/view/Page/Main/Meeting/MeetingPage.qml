@@ -148,10 +148,10 @@ AbstractMainPage {
 			ColumnLayout {
 				anchors.fill: parent
 				spacing: 0
-				FlexboxLayout {
-					direction: FlexboxLayout.Row
-					gap: Utils.getSizeWithScreenRatio(16)
-					alignItems: FlexboxLayout.AlignCenter
+				RowLayout {
+					// direction: FlexboxLayout.Row
+					// alignItems: FlexboxLayout.AlignCenter
+					spacing: Utils.getSizeWithScreenRatio(16)
 					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
 					Layout.alignment: Qt.AlignTop
 					Layout.fillHeight: false
@@ -621,7 +621,7 @@ AbstractMainPage {
 		FocusScope{
 			width: Utils.getSizeWithScreenRatio(393)
 			anchors.horizontalCenter: parent?.horizontalCenter
-			FlexboxLayout {
+			RowLayout {
 				id: meetingDetailsLayout
 				visible: mainItem.selectedConference
 				anchors.top: parent.top
@@ -629,9 +629,9 @@ AbstractMainPage {
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.bottomMargin: Utils.getSizeWithScreenRatio(30)
 				width: Utils.getSizeWithScreenRatio(393)
-				direction: FlexboxLayout.Column
-				alignContent: FlexboxLayout.AlignSpaceBetween
-				gap: Utils.getSizeWithScreenRatio(16)
+				// direction: FlexboxLayout.Column
+				// alignContent: FlexboxLayout.AlignSpaceBetween
+				spacing: Utils.getSizeWithScreenRatio(16)
 				Section {
 					visible: mainItem.selectedConference
 					Layout.fillWidth: true
