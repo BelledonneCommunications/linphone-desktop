@@ -33,9 +33,9 @@ class CrashReporter : public QObject {
 public:
 	CrashReporter(QObject *parent = nullptr);
 
-	static void start();
-	static void enable(const bool &on);
-	void run();
+	static bool start();
+	static bool enable(const bool &on);
+	bool run();
 
 	crashpad::CrashpadClient mClient;
 	std::vector<base::FilePath> mAttachments;

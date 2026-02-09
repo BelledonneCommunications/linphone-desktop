@@ -58,13 +58,24 @@ CrashReporter::CrashReporter(QObject *parent) : QObject(parent) {
 	mAttachments.push_back(base::FilePath(Utils::getNativeString(logFiles + "2.log")));
 }
 
-void CrashReporter::start() {
+bool CrashReporter::start() {
+	lInfo() << "[CrashReporter] Starting CrashReporter";
 	auto config =
 	    linphone::Factory::get()->createConfig(Utils::appStringToCoreString(Paths::getConfigFilePath("", true)));
-	CrashReporter::enable(SettingsModel::getCrashReporterEnabled(config));
+	return CrashReporter::enable(SettingsModel::getCrashReporterEnabled(config));
 }
 
-void CrashReporter::run() {
+bool CrashReporter::run() {
+
+	// Attachments to be uploaded alongside the crash - default bundle size limit is 20MB
+	base::FilePath attachment(Utils::getNativeString(Paths::getCrashpadAttachmentsPath()));
+#if defined(Q_OS_WINDOWS) || defined(Q_OS_LINUX)
+	// Crashpad hasn't implemented attachments on OS X yet
+	mAttachments.push_back(attachment);
+#endif
+	lInfo() << "[CrashReporter] Start handler, handler path =" << Paths::getCrashpadHandlerFilePath()
+	        << "| database path =" << Paths::getCrashpadDirPath() << "| metrics path =" << Paths::getMetricsDirPath()
+	        << "bugsplat url =" << mBugsplatUrl;
 	// crashpad::CrashpadClient *client = new crashpad::CrashpadClient();
 	bool status = mClient.StartHandler(mHandlerPath, mDatabasePath, mMetricsPath, mBugsplatUrl.toStdString(),
 	                                   mAnnotations.toStdMap(), mArguments, true, true, mAttachments);
@@ -72,20 +83,33 @@ void CrashReporter::run() {
 	if (!status) {
 		lWarning() << "[CrashReporter] Failed to start Crashpad handler. Crashes will not be logged.";
 	} else {
-		lInfo() << "[CrashReporter] Started Crashpad handler. Database at " << Paths::getCrashpadDirPath();
+		lInfo() << "[CrashReporter] Started Crashpad handler. Database at" << Paths::getCrashpadDirPath();
+		lInfo() << "[CrashReporter] Crashes upload url :" << mBugsplatUrl;
 	}
+	return status;
 }
 
-void CrashReporter::enable(const bool &on) {
+bool CrashReporter::enable(const bool &on) {
 	if (!gHandler) gHandler = new CrashReporter();
+	lInfo() << "[CrashReporter] Enable CrashReporter" << on;
 	std::unique_ptr<crashpad::CrashReportDatabase> database =
 	    crashpad::CrashReportDatabase::Initialize(gHandler->mDatabasePath);
-	if (database == NULL) return;
+	if (database == NULL) {
+		lInfo() << "[CrashReporter] No Crashpad database, return";
+		return false;
+	}
 	crashpad::Settings *settings = database->GetSettings();
-	if (settings == NULL) return;
+	if (settings == NULL) {
+		lInfo() << "[CrashReporter] No Crashpad settings, return";
+		return false;
+	}
 	settings->SetUploadsEnabled(on);
-	if (on) gHandler->run();
-	else {
+
+	if (on) {
+		lInfo() << "[CrashReporter] Run Crashpad";
+		return gHandler->run();
+	} else {
 		lInfo() << "[CrashReporter] Crashpad has been deactivated by user.";
+		return false;
 	}
 }

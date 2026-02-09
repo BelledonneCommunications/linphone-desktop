@@ -39,6 +39,7 @@
 #include "tool/providers/AvatarProvider.hpp"
 
 #include <limits.h>
+#include <signal.h>
 
 #include <QClipboard>
 #include <QCryptographicHash>
@@ -2259,4 +2260,10 @@ bool Utils::stringMatchFormat(QString toMatch, QRegularExpression regExp) {
 	if (!regExp.isValid()) return false;
 	auto match = regExp.match(toMatch);
 	return match.hasMatch();
+}
+
+// Debug
+void Utils::forceCrash() {
+	lInfo() << "throwing segmentation fault for debug";
+	raise(SIGSEGV);
 }

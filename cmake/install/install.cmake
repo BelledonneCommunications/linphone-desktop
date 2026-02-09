@@ -168,6 +168,8 @@ if(HAVE_CRASH_HANDLER)
 			endif()
 		endif()
 	endif()
+else()
+	message(DEBUG "No Crash handler, do not configure Crashpad")
 endif()
 
 # ==============================================================================
