@@ -26,7 +26,7 @@
 
 .macosx-desktop:
   stage: build
-  tags: [ "macmini-m1-xcode15-flat" ]
+  tags: [ "macosx-min-xcode12.2-flat" ]
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
     - if: $CI_PIPELINE_SOURCE == "schedule" && $DOCKER_UPDATE == null && $SKIP_MACOSX == null
@@ -93,7 +93,7 @@ macosx-ninja-novideo:
 # WAIT for QT6 for arm64
 macosx-ninja-package:
   stage: package
-  tags: [ "macmini-m1-xcode15-flat" ]
+  tags: [ "macosx-min-xcode12.2-flat" ]
   needs: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
@@ -117,7 +117,7 @@ macosx-ninja-package:
 
 macosx-codesigning:
   stage: signing
-  tags: [ "macmini-m1-xcode15-flat" ]
+  tags: [ "macosx-min-xcode12.2-flat" ]
   needs:
     - macosx-ninja-package
   rules:
@@ -142,7 +142,7 @@ macosx-codesigning:
 
 macosx-deploy:
  stage: deploy
- tags: [ "macmini-m1-xcode15-flat" ]
+ tags: [ "macosx-min-xcode12.2-flat" ]
  needs:
    - macosx-codesigning
  only:
@@ -160,7 +160,7 @@ macosx-deploy:
 
 macosx-makefile-plugins-deploy:
  stage: deploy
- tags: [ "macmini-m1-xcode15-flat" ]
+ tags: [ "macosx-min-xcode12.2-flat" ]
  needs:
    - macosx-makefile
  only:

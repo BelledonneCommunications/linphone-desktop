@@ -87,6 +87,8 @@ RUN sudo apt install -y python3-py7zr
 RUN sudo pip3 install --upgrade aqtinstall
 RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource
 RUN sudo python3 -m aqt install-qt linux desktop 5.15.2 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d
+RUN sudo python3 -m aqt install-qt linux desktop 6.8.3 -O /opt/Qt/opensource
+RUN sudo python3 -m aqt install-qt linux desktop 6.8.3 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qt5compat qtshadertools
 RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource
 RUN sudo python3 -m aqt install-qt linux desktop 6.9.1 -O /opt/Qt/opensource --noarchives -m qtnetworkauth qtquick3d qt5compat qtshadertools
 RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource
@@ -95,6 +97,7 @@ RUN sudo python3 -m aqt install-qt linux desktop 6.10.0 -O /opt/Qt/opensource --
 RUN sudo chown -R bc:bc /opt/Qt/
 
 RUN qtchooser -install "5.15.2-opensource" /opt/Qt/opensource/5.15.2/gcc_64/bin/qmake
+RUN qtchooser -install "6.8.3-opensource" /opt/Qt/opensource/6.8.3/gcc_64/bin/qmake
 RUN qtchooser -install "6.9.1-opensource" /opt/Qt/opensource/6.9.1/gcc_64/bin/qmake
 RUN qtchooser -install "6.10.0-opensource" /opt/Qt/opensource/6.10.0/gcc_64/bin/qmake
 
