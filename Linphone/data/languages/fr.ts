@@ -2596,37 +2596,49 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>ChatSettingsLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="14"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="16"/>
         <source>settings_chat_attached_files_title</source>
         <extracomment>Attached files</extracomment>
         <translation>Fichiers joints</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="23"/>
         <source>settings_chat_notifications_title</source>
         <extracomment>Notifications</extracomment>
         <translation>Notifications</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="32"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="48"/>
         <source>settings_chat_attached_files_auto_download_title</source>
         <extracomment>&quot;Automatic download&quot;</extracomment>
         <translation>Téléchargement automatique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="34"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
         <source>settings_chat_attached_files_auto_download_subtitle</source>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Télécharger automatiquement les fichiers échangés dans les conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
+        <source>settings_chat_download_folder_title</source>
+        <extracomment>&quot;Dossier de téléchargement des fichiers&quot;</extracomment>
+        <translation>Dossier de téléchargement des fichiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
+        <source>settings_chat_download_folder_browse_button</source>
+        <extracomment>Browse folders</extracomment>
+        <translation>Parcourir les dossiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
         <source>settings_chat_display_notification_content_title</source>
         <extracomment>&quot;Display notification content&quot;</extracomment>
         <translation>Afficher le contenu</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="82"/>
         <source>settings_chat_display_notification_content_subtitle</source>
         <extracomment>&quot;Display the content of the received message&quot;</extracomment>
         <translation>Afficher le contenu du message reçu</translation>
@@ -3592,13 +3604,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>DecoratedTextField</name>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="57"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="61"/>
         <source>textfield_error_message_cannot_be_empty</source>
         <extracomment>&quot;ne peut être vide&quot;</extracomment>
         <translation>ne peut être vide</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="60"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="64"/>
         <source>textfield_error_message_unknown_format</source>
         <extracomment>&quot;Format non reconnu&quot;</extracomment>
         <translation>Format non reconnu</translation>
@@ -4451,7 +4463,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation type="unfinished">Tentative de connexion distante ...</translation>
+        <translation>Tentative de connexion distante ...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4501,7 +4513,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <extracomment>Error while setting participants !</extracomment>
-        <translation type="unfinished">Erreur lors de la modification des participants !</translation>
+        <translation>Erreur lors de la modification des participants !</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
@@ -4512,7 +4524,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
         <source>info_popup_manage_participant_updated_message</source>
         <extracomment>Participants updated</extracomment>
-        <translation type="unfinished">Participants mis à jour</translation>
+        <translation>Participants mis à jour</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
@@ -4523,7 +4535,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <extracomment>Apply</extracomment>
-        <translation type="unfinished">Appliquer</translation>
+        <translation>Appliquer</translation>
     </message>
 </context>
 <context>
@@ -5922,13 +5934,25 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="208"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="213"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
         <translation>Afficher %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="206"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source>textfield_custom_button_accessible_name</source>
+        <extracomment>%1 button on %2</extracomment>
+        <translation>Bouton %1 de %2</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source></source>
+        <extracomment>%1 button on %2</extracomment>
+        <translation>de %1 à %2 (UTC%3)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation>Cacher %1</translation>

@@ -42,6 +42,7 @@ public:
 	               echoCancellationEnabledChanged)
 	Q_PROPERTY(bool autoDownloadReceivedFiles READ getAutoDownloadReceivedFiles WRITE setAutoDownloadReceivedFiles
 	               NOTIFY autoDownloadReceivedFilesChanged)
+	Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
 	Q_PROPERTY(bool displayNotificationContent READ getDisplayNotificationContent WRITE setDisplayNotificationContent
 	               NOTIFY displayNotificationContentChanged)
 	Q_PROPERTY(
@@ -95,17 +96,18 @@ public:
 	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
 	Q_PROPERTY(bool crashReporterEnabled READ getCrashReporterEnabled WRITE setCrashReporterEnabled NOTIFY
 	               crashReporterEnabledChanged)
-	Q_PROPERTY(QString logsEmail READ getLogsEmail) Q_PROPERTY(QString logsFolder READ getLogsFolder)
-	    Q_PROPERTY(QString ringtoneName READ getRingtoneFileName NOTIFY ringtoneChanged)
-	        Q_PROPERTY(QString ringtonePath READ getRingtonePath WRITE setRingtone NOTIFY ringtoneChanged)
-	            Q_PROPERTY(QString ringtoneFolder MEMBER mRingtoneFolder NOTIFY ringtoneChanged)
-	                Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
-	                    Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
+	Q_PROPERTY(QString logsEmail READ getLogsEmail)
+	Q_PROPERTY(QString logsFolder READ getLogsFolder)
+	Q_PROPERTY(QString ringtoneName READ getRingtoneFileName NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtonePath READ getRingtonePath WRITE setRingtone NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtoneFolder MEMBER mRingtoneFolder NOTIFY ringtoneChanged)
+	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
+	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
-	                        Q_PROPERTY(bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices
-	                                       NOTIFY showAccountDevicesChanged)
+	Q_PROPERTY(
+	    bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
 
-	                            static QSharedPointer<SettingsCore> create();
+	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
 	SettingsCore(const SettingsCore &settingsCore);
 	virtual ~SettingsCore();
@@ -152,6 +154,9 @@ public:
 		return mAutoDownloadReceivedFiles;
 	}
 	void setAutoDownloadReceivedFiles(bool enabled);
+
+	QString getDownloadFolder() const;
+	void setDownloadFolder(QString folder);
 
 	bool getDisplayNotificationContent() {
 		return mDisplayNotificationContent;
@@ -292,7 +297,6 @@ public:
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)
-	DECLARE_CORE_GETSET(QString, downloadFolder, DownloadFolder)
 	// Read-only
 	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
 	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
@@ -315,6 +319,7 @@ signals:
 
 	void echoCancellationEnabledChanged();
 	void autoDownloadReceivedFilesChanged();
+	void downloadFolderChanged();
 	void displayNotificationContentChanged();
 
 	void automaticallyRecordCallsEnabledChanged();
@@ -413,6 +418,7 @@ private:
 	bool mVideoEnabled;
 	bool mEchoCancellationEnabled;
 	bool mAutoDownloadReceivedFiles;
+	QString mDownloadFolder;
 	bool mDisplayNotificationContent;
 	bool mAutomaticallyRecordCallsEnabled;
 
