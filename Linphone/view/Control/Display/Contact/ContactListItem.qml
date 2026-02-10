@@ -86,6 +86,7 @@ FocusScope {
                     Layout.preferredHeight: visible ? implicitHeight: 0
                     text: UtilsCpp.boldTextPart(mainItem.displayName,
                                                 mainItem.highlightText)
+                    textFormat: Text.AutoText
                     font {
                         pixelSize: mainItem.showDefaultAddress ? Typography.h4.pixelSize : Typography.p1.pixelSize
                         capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase
@@ -102,6 +103,7 @@ FocusScope {
                         ? UtilsCpp.getUsername(mainItem.addressFromFilter)
                         : mainItem.addressFromFilter
                     text: UtilsCpp.boldTextPart(address, mainItem.highlightText)
+                    textFormat: Text.AutoText
                     maximumLineCount: 1
                     elide: Text.ElideRight
                     font {

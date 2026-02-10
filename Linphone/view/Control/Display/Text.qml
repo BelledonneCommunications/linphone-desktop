@@ -13,6 +13,7 @@ Quick.Text {
         weight: Typography.p1.weight
 	}
 	color: DefaultStyle.main2_600
+	textFormat: Text.PlainText
 	wrapMode: Quick.Text.Wrap
 	elide: Quick.Text.ElideRight
 	transformOrigin: Quick.Item.TopLeft
