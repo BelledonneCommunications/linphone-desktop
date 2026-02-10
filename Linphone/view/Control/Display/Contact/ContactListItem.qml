@@ -104,6 +104,7 @@ FocusScope {
                         ? UtilsCpp.getUsername(mainItem.addressFromFilter)
                         : mainItem.addressFromFilter
                     text: UtilsCpp.boldTextPart(address, mainItem.highlightText)
+                    textFormat: Text.AutoText
                     maximumLineCount: 1
                     elide: Text.ElideRight
                     font {
