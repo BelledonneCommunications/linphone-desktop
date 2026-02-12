@@ -2593,6 +2593,21 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Automaticky stahovat přenesené nebo přijaté soubory v konverzacích</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="21"/>
+        <source>settings_chat_notifications_title</source>
+        <translation>Notifikace</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="52"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <translation>Zobrazit obsah přijaté zprávy</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <translation>Zobrazit obsah</translation>
+    </message>
 </context>
 <context>
     <name>CliModel</name>
@@ -4426,7 +4441,7 @@ Expirace : %1</translation>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation type="unfinished">Žádný token nenalezen</translation>
+        <translation>Pokus o připojení k jednotnému přihlášení na webové stránce ...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4449,7 +4464,7 @@ Expirace : %1</translation>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
-        <translation type="unfinished">Žádný token nenalezen</translation>
+        <translation>Chyba při nastavování účastníků!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
@@ -4459,12 +4474,12 @@ Expirace : %1</translation>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
         <source>info_popup_manage_participant_updated_message</source>
-        <translation type="unfinished">Žádný token nenalezen</translation>
+        <translation>Účastníci aktualizováni</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
-        <translation type="unfinished">Žádný token nenalezen</translation>
+        <translation>Použít</translation>
     </message>
 </context>
 <context>
@@ -4943,6 +4958,11 @@ Expirace : %1</translation>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nová zpráva v místnosti %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <source>new_chat_room_message</source>
+        <translation>Přijata nová zpráva!</translation>
     </message>
 </context>
 <context>

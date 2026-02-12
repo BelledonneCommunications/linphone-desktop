@@ -2677,7 +2677,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="23"/>
         <source>settings_chat_notifications_title</source>
         <extracomment>Notifications</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Benachrichtigungen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="48"/>
@@ -2707,13 +2707,13 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
         <source>settings_chat_display_notification_content_title</source>
         <extracomment>&quot;Display notification content&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Inhalt anzeigen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="82"/>
         <source>settings_chat_display_notification_content_subtitle</source>
         <extracomment>&quot;Display the content of the received message&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Den Inhalt der empfangenen Nachricht anzeigen</translation>
     </message>
 </context>
 <context>
@@ -4590,7 +4590,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation type="unfinished">Kein Token gefunden</translation>
+        <translation>Auf Single Sign-On Website anmelden ...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4644,7 +4644,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <extracomment>Error while setting participants !</extracomment>
-        <translation type="unfinished">Kein Token gefunden</translation>
+        <translation>Fehler beim Festlegen der Teilnehmer!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
@@ -4655,7 +4655,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
         <source>info_popup_manage_participant_updated_message</source>
         <extracomment>Participants updated</extracomment>
-        <translation type="unfinished">Kein Token gefunden</translation>
+        <translation>Teilnehmer aktualisiert</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
@@ -4666,7 +4666,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <extracomment>Apply</extracomment>
-        <translation type="unfinished">Kein Token gefunden</translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
@@ -5146,7 +5146,7 @@ Ablauf: %1</translation>
         <location filename="../../core/notifier/Notifier.cpp" line="388"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Neue Nachricht empfangen!</translation>
     </message>
     <message>
         <location filename="../../core/notifier/Notifier.cpp" line="391"/>

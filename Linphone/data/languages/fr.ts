@@ -328,7 +328,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="340"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
-        <translation>Dernière connexion:</translation>
+        <translation>Dernière connexion&#xa0;:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="358"/>
@@ -720,7 +720,7 @@
         <location filename="../../core/App.cpp" line="1094"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
-        <translation>Send an order to the application towards a command line</translation>
+        <translation>Donner un ordre à l&apos;application depuis l&apos;invite de commandes</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="1098"/>
@@ -4463,7 +4463,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
         <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
-        <translation>Tentative de connexion distante ...</translation>
+        <translation>Tentative de connexion distante...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4513,7 +4513,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <extracomment>Error while setting participants !</extracomment>
-        <translation>Erreur lors de la modification des participants !</translation>
+        <translation>Erreur lors de la modification des participants&#x202f;!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>

@@ -7,7 +7,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="67"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="86"/>
@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти налаштування %1</translation>
     </message>
 </context>
 <context>
@@ -145,6 +145,16 @@
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Не вдалося додати обліковий запис.</translation>
     </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>URI реєстратора недійсний. Переконайтеся, що він відповідає наступному формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язковий)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>URI вихідного проксі-сервера недійсний. Переконайтеся, що він відповідає такому формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язковий)</translation>
+    </message>
 </context>
 <context>
     <name>AccountModel</name>
@@ -152,37 +162,37 @@
         <location filename="../../model/account/AccountModel.cpp" line="253"/>
         <source>set_mwi_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера голосової пошти, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="292"/>
         <source>set_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити вихідний проксі-сервер URI з адреси %1. Переконайтеся, що він відповідає наступному формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язково)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера розмов, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="440"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера зустрічей, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="487"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу голосової пошти, не вдалося створити адресу з %1</translation>
     </message>
 </context>
 <context>
@@ -302,12 +312,22 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="345"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Інформація відсутня</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
         <source>copied</source>
         <translation>Скопійовано</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>Вашу SIP-адресу скопійовано в буфер обміну</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Помилка копіювання вашої SIP-адреси</translation>
     </message>
 </context>
 <context>
@@ -397,18 +417,18 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URI реєстратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="140"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URI вихідного SIP-проксі</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="145"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Якщо це поле заповнено, вихідний проксі-сервер буде ввімкнено автоматично. Залиште це поле порожнім, щоб вимкнути його.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
@@ -458,6 +478,16 @@
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>URL-адреса сервера Lime</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
+        <source>mwi_server_address_tooltip</source>
+        <translation>Адреса сервера MWI, який надсилає сповіщення SIP для відображення індикаторів нової голосової пошти</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
+        <source>voicemail_address_tooltip</source>
+        <translation>SIP-адреса, набрана під час натискання кнопки голосової пошти</translation>
+    </message>
 </context>
 <context>
     <name>AddParticipantsForm</name>
@@ -482,7 +512,7 @@
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
         <source>remove_participant_accessible_name</source>
         <extracomment>Remove participant %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Видалити учасника %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
@@ -561,7 +591,7 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="103"/>
         <source>download_apply_remote_provisioning_accessible_name</source>
         <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Завантаження та застосування віддаленого налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="116"/>
@@ -629,7 +659,7 @@
         <location filename="../../core/App.cpp" line="660"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Помилка віддаленого налаштування: %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="654"/>
