@@ -233,6 +233,7 @@ win64-codesigning:
     MINGW_TYPE: mingw64
   rules:
     - !reference [.rules-merge-request-manual, rules]
+    - if: $NIGHTLY_MASTER
     - if: $PACKAGE_WINDOWS
   script:
     - cd build-desktop/OUTPUT/Packages/
