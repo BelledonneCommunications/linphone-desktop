@@ -356,8 +356,8 @@ void CoreModel::migrate() {
 		                 // these when core is ready.
 		if (!config->hasEntry("video", "automatically_accept")) config->setInt("video", "automatically_accept", 1);
 		if (!config->hasEntry("video", "automatically_initiate")) config->setInt("video", "automatically_initiate", 0);
-		if (!config->hasEntry("video", "automatically_accept_direction"))
-			config->setInt("video", "automatically_accept_direction", 2);
+		// Force automatically accept direction to receive only for 6.x version for asymetrical video
+		config->setInt("video", "automatically_accept_direction", 2);
 		lInfo() << log().arg("Migrating) Video Policy for version 7.");
 	}
 
