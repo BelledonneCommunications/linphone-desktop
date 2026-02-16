@@ -55,10 +55,10 @@ AbstractMainPage {
         }
     }
     onSelectedContactChanged: {
-        console.log("selected contact changed, go to contact details")
         // if we are editing a contact, force staying on edition page
         if (!rightPanelStackView.currentItem
             || rightPanelStackView.currentItem.objectName != "contactEdition") {
+            console.log("selected contact changed, go to contact details")
             goToContactDetails()
         }
     }
@@ -435,7 +435,8 @@ AbstractMainPage {
                     ColumnLayout {
                         spacing: 0
                         Text {
-                            text: contactDetail.contactName
+                            text: UtilsCpp.encodeEmojiToQmlRichFormat(contactDetail.contactName)
+                            textFormat: Text.RichText
                             Layout.fillWidth: true
                             maximumLineCount: 1
                             font {

@@ -98,6 +98,8 @@ endif()
 
 if(${Qt6_VERSION} VERSION_LESS "6.8.0")
 	message( FATAL_ERROR "Linphone requires Qt 6.8.0 or newer. Exiting CMake." )
+elseif(${Qt6_VERSION} VERSION_LESS "6.9.0")
+	message(WARNING "Using Qt version "${Qt6_VERSION} ". Some emojis could not be rendered well as Linphone requires Qt 6.9.0 minimum version for rendering them without safety issue.")
 endif()
 
 qt6_standard_project_setup()

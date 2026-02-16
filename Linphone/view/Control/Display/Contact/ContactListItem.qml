@@ -36,7 +36,7 @@ FocusScope {
     property real itemsRightMargin: Utils.getSizeWithScreenRatio(39)
 
     property var displayName: searchResultItem? searchResultItem.core.fullName : ""
-    property var initial: displayName.length > 0 ? displayName[0].toLocaleLowerCase(AppCpp.localeAsString) : ''
+    property var initial: displayName.length > 0 ? UtilsCpp.getInitials(displayName, 1).toLocaleLowerCase(AppCpp.localeAsString) : ''
 
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
@@ -45,7 +45,7 @@ FocusScope {
 
     MouseArea {
         Text {
-            id: initial
+            id: initialText
             anchors.left: parent.left
             visible: mainItem.showInitials
             anchors.verticalCenter: parent.verticalCenter
@@ -53,7 +53,8 @@ FocusScope {
             verticalAlignment: Text.AlignVCenter
             width: Utils.getSizeWithScreenRatio(20)
             opacity: previousInitial != mainItem.initial ? 1 : 0
-            text: mainItem.initial || ""
+            text: mainItem.initial
+            textFormat: Text.RichText
             color: DefaultStyle.main2_400
             font {
                 pixelSize: Utils.getSizeWithScreenRatio(20)
@@ -63,7 +64,7 @@ FocusScope {
         }
         RowLayout {
             id: contactDelegate
-            anchors.left: initial.visible ? initial.right : parent.left
+            anchors.left: initialText.visible ? initialText.right : parent.left
             anchors.right: parent.right
             anchors.rightMargin: mainItem.itemsRightMargin
             anchors.top: parent.top
@@ -84,9 +85,9 @@ FocusScope {
                     visible: mainItem.showDisplayName
                     Layout.fillWidth: true
                     Layout.preferredHeight: visible ? implicitHeight: 0
-                    text: UtilsCpp.boldTextPart(mainItem.displayName,
+                    text: UtilsCpp.boldTextPart(UtilsCpp.encodeEmojiToQmlRichFormat((mainItem.displayName)),
                                                 mainItem.highlightText)
-                    textFormat: Text.AutoText
+                    textFormat: Text.RichText
                     font {
                         pixelSize: mainItem.showDefaultAddress ? Typography.h4.pixelSize : Typography.p1.pixelSize
                         capitalization: mainItem.displayNameCapitalization ? Font.Capitalize : Font.MixedCase

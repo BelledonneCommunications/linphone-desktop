@@ -89,6 +89,18 @@ ColumnLayout {
 				Layout.preferredHeight: title.contentHeight
 				anchors.margins: Utils.getSizeWithScreenRatio(2)
 
+				Text {
+					anchors.fill: parent
+					anchors.margins: 6
+					visible: !titleMainItem.isEditingSubject
+					text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chatGui.core.title) || ""
+					textFormat: Text.RichText
+					color: DefaultStyle.main2_700
+					wrapMode: Text.Wrap
+					horizontalAlignment: Text.AlignHCenter
+					verticalAlignment: Text.AlignVCenter
+					font: Typography.p1
+				}
 				TextEdit {
 					id: title
 					anchors.fill: parent
@@ -96,11 +108,17 @@ ColumnLayout {
 					font: Typography.p1
 					color: DefaultStyle.main2_700
 					text: mainItem.chatGui.core.title || ""
+					visible: titleMainItem.isEditingSubject
 					enabled: titleMainItem.isEditingSubject
 					wrapMode: TextEdit.Wrap
 					horizontalAlignment: Text.AlignHCenter
 					verticalAlignment: Text.AlignVCenter
 					Keys.onReturnPressed: {
+						if (titleMainItem.isEditingSubject)
+							titleMainItem.saveSubject()
+						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject
+					}
+					Keys.onEnterPressed: {
 						if (titleMainItem.isEditingSubject)
 							titleMainItem.saveSubject()
 						titleMainItem.isEditingSubject = !titleMainItem.isEditingSubject

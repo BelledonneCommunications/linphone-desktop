@@ -103,6 +103,7 @@ Control.TabBar {
 			contentItem: Text {
 				id: tabText
 				width: implicitWidth
+				textFormat: Text.RichText
 				font {
 					pixelSize: mainItem.pixelSize
 					weight: mainItem.textWeight

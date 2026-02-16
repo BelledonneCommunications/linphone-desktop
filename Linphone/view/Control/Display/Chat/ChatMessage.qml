@@ -499,6 +499,7 @@ Control.Control {
                             model: ConstantsCpp.reactionsList
                             delegate: Button {
                                 text: UtilsCpp.encodeEmojiToQmlRichFormat(modelData)
+                                textFormat: Text.RichText
                                 background: Rectangle {
                                     anchors.fill: parent
                                     color: DefaultStyle.grey_200
