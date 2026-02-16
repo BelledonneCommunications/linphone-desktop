@@ -64,6 +64,7 @@ MessageInfosLayout {
 			Item{Layout.fillWidth: true}
 			Text {
 				text: UtilsCpp.encodeEmojiToQmlRichFormat(modelData.body)
+				textFormat: Text.RichText
 				font {
 					pixelSize: Typography.h3.pixelSize
 					weight: Typography.p3.weight

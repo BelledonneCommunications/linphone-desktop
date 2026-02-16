@@ -108,9 +108,10 @@ FocusScope {
                         }
                         ColumnLayout {
                             Text {
-                                text: mainItem.chat?.core.title || ""
+                                text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chat?.core.title) || ""
                                 color: DefaultStyle.main2_600
                                 maximumLineCount: 1
+                                textFormat: Text.RichText
                                 font {
                                     pixelSize: Typography.h4.pixelSize
                                     weight: Utils.getSizeWithScreenRatio(400)

@@ -545,7 +545,13 @@ QStringList ChatMessageCore::getReactionsSingletonAsStrings() const {
 		auto map = reac.toMap();
 		auto count = map["count"].toInt();
 		totalCount += count;
+		QString body = map["body"].toString();
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+		reacStringList.append(
+		    ToolModel::encodeTextToQmlRichFormat(QString("%1 %2").arg(map["body"].toString()).arg(count)));
+#else
 		reacStringList.append(QString("%1 %2").arg(map["body"].toString()).arg(count));
+#endif
 	}
 	reacStringList.prepend(QString("%1 %2").arg(mTotalReactionsLabel).arg(totalCount));
 	return reacStringList;

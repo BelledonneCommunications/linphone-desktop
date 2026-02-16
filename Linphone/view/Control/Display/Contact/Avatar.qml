@@ -157,6 +157,7 @@ Loader{
 							verticalAlignment: Text.AlignVCenter
 							horizontalAlignment: Text.AlignHCenter
 							text: initialItem.initials
+							textFormat: Text.RichText
 							font {
 								pixelSize: initialItem.height * 36 / 120
 								weight: Typography.h4.weight

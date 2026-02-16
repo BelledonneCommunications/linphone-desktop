@@ -124,7 +124,7 @@ inline std::string u32_to_ascii(std::u32string const &s) {
 	return out;
 }
 
-QString Utils::getInitials(const QString &username) {
+QString Utils::getInitials(const QString &username, int letterCount) {
 	if (username.isEmpty()) return "";
 
 	QRegularExpression regex("[\\s\\.]+");
@@ -136,7 +136,13 @@ QString Utils::getInitials(const QString &username) {
 	// if name starts by an emoji, only return this one
 	QVector<uint> utf32_string = username.toUcs4();
 	auto code = utf32_string[0];
-	if (Utils::codepointIsEmoji(code)) return QString::fromStdU32String(char32);
+	if (Utils::codepointIsEmoji(code)) {
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
+		return Utils::encodeEmojiToQmlRichFormat(QString::fromStdU32String(char32));
+#else
+		QString::fromStdU32String(char32);
+#endif
+	}
 
 	QStringList initials;
 	initials << QString::fromStdU32String(char32);
@@ -145,6 +151,7 @@ QString Utils::getInitials(const QString &username) {
 			str32 = words[i].toStdU32String();
 			char32[0] = str32[0];
 			initials << QString::fromStdU32String(char32);
+			if (initials.count() >= letterCount) break;
 			std::string converted = u32_to_ascii(char32);
 			if (Utils::codepointIsEmoji(atoi(converted.c_str()))) {
 				break;
@@ -1894,7 +1901,7 @@ VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text,
 QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
 	QString fmtBody = "";
 	QVector<uint> utf32_string = body.toUcs4();
-
+#if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 	bool insideFontBlock = false;
 	for (auto &code : utf32_string) {
 		if (Utils::codepointIsEmoji(code)) {
@@ -1914,6 +1921,9 @@ QString Utils::encodeEmojiToQmlRichFormat(const QString &body) {
 	if (insideFontBlock) {
 		fmtBody += "</font>";
 	}
+#else
+	fmtBody = body;
+#endif
 	return fmtBody;
 }
 

@@ -180,7 +180,8 @@ ListView {
                     id: friendAddress
                     Layout.fillWidth: true
                     maximumLineCount: 1
-                    text: modelData? modelData.core.title : ""
+                    text: modelData? UtilsCpp.encodeEmojiToQmlRichFormat(modelData.core.title) : ""
+                    textFormat: Text.RichText
                     color: DefaultStyle.main2_800
                     font {
                         pixelSize: Typography.p1.pixelSize
