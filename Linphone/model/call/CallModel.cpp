@@ -67,6 +67,11 @@ void CallModel::accept(bool withVideo) {
 		}
 	}
 	activateLocalVideo(params, withVideo);
+	params->enableCamera(withVideo);
+	lInfo() << log()
+	               .arg("Accept call with params : enableVideo = %1 | enableCamera = %2")
+	               .arg(params->videoEnabled())
+	               .arg(params->cameraEnabled());
 	mMonitor->acceptWithParams(params);
 	emit localVideoEnabledChanged(withVideo);
 	emit cameraEnabledChanged(withVideo && params->cameraEnabled());
@@ -144,12 +149,17 @@ bool CallModel::videoEnabled() const {
 
 void CallModel::activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable) {
 	lInfo() << sLog()
-	               .arg("Updating call with video enabled and media direction set to %1")
+	               .arg("Updating call with video enabled = %1 and media direction set to %2")
+	               .arg(params->videoEnabled())
 	               .arg((int)params->getVideoDirection());
-	params->enableVideo(SettingsModel::getInstance()->getVideoEnabled());
+	params->enableVideo(enable || params->screenSharingEnabled()); //(SettingsModel::getInstance()->getVideoEnabled());
 	auto videoDirection = params->getVideoDirection();
 	params->setVideoDirection(enable || params->screenSharingEnabled() ? linphone::MediaDirection::SendRecv
 	                                                                   : linphone::MediaDirection::RecvOnly);
+	lInfo() << sLog()
+	               .arg("Call updated with video enabled = %1 media direction set to %2")
+	               .arg(params->videoEnabled())
+	               .arg((int)params->getVideoDirection());
 }
 
 void CallModel::setLocalVideoEnabled(bool enabled) {
@@ -459,7 +469,8 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		auto params = call->getParams();
 		auto videoDirection = params->getVideoDirection();
 		auto remoteVideoDirection = call->getRemoteParams()->getVideoDirection();
-		lInfo() << log().arg("Camera enabled changed") << params->cameraEnabled();
+		lInfo() << log().arg("State changed, camera enabled =") << params->cameraEnabled()
+		        << "| video direction =" << (int)videoDirection;
 		emit localVideoEnabledChanged(videoDirection == linphone::MediaDirection::SendOnly ||
 		                              videoDirection == linphone::MediaDirection::SendRecv);
 		emit cameraEnabledChanged((videoDirection == linphone::MediaDirection::SendOnly ||

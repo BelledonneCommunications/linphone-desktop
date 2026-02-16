@@ -1155,67 +1155,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="373"/>
+        <location filename="../../model/call/CallModel.cpp" line="383"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>Keine Antwort</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="377"/>
+        <location filename="../../model/call/CallModel.cpp" line="387"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403: Zugriff auf Ressource verweigert</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="381"/>
+        <location filename="../../model/call/CallModel.cpp" line="391"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>Zeitüberschreitung der Anfrage</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="385"/>
+        <location filename="../../model/call/CallModel.cpp" line="395"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>Der Benutzer hat den Anruf abgelehnt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="389"/>
+        <location filename="../../model/call/CallModel.cpp" line="399"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>Benutzer nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="393"/>
+        <location filename="../../model/call/CallModel.cpp" line="403"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>Der Benutzer ist beschäftigt</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="397"/>
+        <location filename="../../model/call/CallModel.cpp" line="407"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>Der Benutzer kann Ihren Anruf nicht annehmen</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="401"/>
+        <location filename="../../model/call/CallModel.cpp" line="411"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Dienst nicht verfügbar oder Netzwerkfehler</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="405"/>
+        <location filename="../../model/call/CallModel.cpp" line="415"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>Benutzer kann nicht gestört werden</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="409"/>
+        <location filename="../../model/call/CallModel.cpp" line="419"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Vorübergehend nicht verfügbar</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="413"/>
+        <location filename="../../model/call/CallModel.cpp" line="423"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation>Server-Zeitüberschreitung</translation>
@@ -2960,53 +2960,53 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
 <context>
     <name>ContactListItem</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="204"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="203"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Enlever des favoris&quot;</extracomment>
         <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="206"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="205"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="220"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="219"/>
         <source>Partager</source>
         <translation>Teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="233"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="232"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="235"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="234"/>
         <source>information_popup_vcard_creation_error</source>
         <extracomment>La création du fichier vcard a échoué</extracomment>
         <translation>VCard-Erstellung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="239"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="238"/>
         <source>information_popup_vcard_creation_title</source>
         <extracomment>VCard créée</extracomment>
         <translation>VCard erstellt</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="241"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="240"/>
         <source>information_popup_vcard_creation_success</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard in %1 gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="243"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="242"/>
         <source>contact_sharing_email_title</source>
         <extracomment>Partage de contact</extracomment>
         <translation>Kontakt teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="249"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="248"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Löschen</translation>
@@ -6110,10 +6110,9 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
         <source></source>
         <extracomment>%1 button on %2</extracomment>
-        <translation>von %1 zu %2 (UTC%3)</translation>
+        <translation type="vanished">von %1 zu %2 (UTC%3)</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="211"/>
