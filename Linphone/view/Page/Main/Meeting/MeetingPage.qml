@@ -499,17 +499,17 @@ AbstractMainPage {
 						}
 					}
 					Connections {
-						enabled: conferenceEdit.conferenceInfoGui
+						enabled: conferenceEdit && conferenceEdit.conferenceInfoGui
 						target: conferenceEdit.conferenceInfoGui ? conferenceEdit.conferenceInfoGui.core : null
 						ignoreUnknownSignals: true
 						function onSaveFailed() {
 							UtilsCpp.getMainWindow().closeLoadingPopup()
 						}
 						function onSchedulerStateChanged() {
-							editFocusScope.enabled = conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
+							editFocusScope.enabled = conferenceEdit.conferenceInfoGui.core.schedulerState != LinphoneEnums.ConferenceSchedulerState.AllocationPending
 							if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Ready) {
-								rightPanelStackView.pop()
 								UtilsCpp.getMainWindow().closeLoadingPopup()
+								rightPanelStackView.pop()
 								//: "Enregistré"
 								UtilsCpp.showInformationPopup(qsTr("saved"),
 															  //: "Réunion mise à jour"
@@ -518,7 +518,9 @@ AbstractMainPage {
 							else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.AllocationPending
 								|| conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Updating) {
 									//: "Modification de la réunion en cours…"
-									UtilsCpp.getMainWindow().showLoadingPopup(qsTr("meeting_schedule_edit_in_progress"))
+									UtilsCpp.getMainWindow().showLoadingPopup(qsTr("meeting_schedule_edit_in_progress"), true, function(){
+										conferenceEdit.conferenceInfoGui.core.undo()
+									})
 							} else if (conferenceEdit.conferenceInfoGui.core.schedulerState == LinphoneEnums.ConferenceSchedulerState.Error) {
 								UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
 															  //: "Échec de la modification de la réunion !"
@@ -621,7 +623,7 @@ AbstractMainPage {
 		FocusScope{
 			width: Utils.getSizeWithScreenRatio(393)
 			anchors.horizontalCenter: parent?.horizontalCenter
-			RowLayout {
+			ColumnLayout {
 				id: meetingDetailsLayout
 				visible: mainItem.selectedConference
 				anchors.top: parent.top
@@ -629,146 +631,188 @@ AbstractMainPage {
 				anchors.horizontalCenter: parent.horizontalCenter
 				anchors.bottomMargin: Utils.getSizeWithScreenRatio(30)
 				width: Utils.getSizeWithScreenRatio(393)
+				uniformCellSizes: true
 				// direction: FlexboxLayout.Column
 				// alignContent: FlexboxLayout.AlignSpaceBetween
-				spacing: Utils.getSizeWithScreenRatio(16)
-				Section {
-					visible: mainItem.selectedConference
-					Layout.fillWidth: true
-					content: RowLayout {
-						spacing: Utils.getSizeWithScreenRatio(8)
-						EffectImage {
-							imageSource: AppIcons.usersThree
-							colorizationColor: DefaultStyle.main2_600
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-						}
-						Text {
-							Layout.fillWidth: true
-							text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
-							maximumLineCount: 1
-							font {
-								pixelSize: Utils.getSizeWithScreenRatio(20)
-								weight: Typography.h4.weight
+				ColumnLayout{
+					Layout.alignment: Qt.AlignTop
+					spacing: Utils.getSizeWithScreenRatio(16)
+					Section {
+						visible: mainItem.selectedConference
+						Layout.fillWidth: true
+						content: RowLayout {
+							spacing: Utils.getSizeWithScreenRatio(8)
+							EffectImage {
+								imageSource: AppIcons.usersThree
+								colorizationColor: DefaultStyle.main2_600
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							}
-						}
-						Item {
-							Layout.fillWidth: true
-						}
-						RoundButton {
-							id: editButton
-							property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
-							visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
-							icon.source: AppIcons.pencil
-							style: ButtonStyle.noBackgroundOrange
-							KeyNavigation.left: leftPanelStackView.currentItem
-							KeyNavigation.right: deletePopup
-							KeyNavigation.up: joinButton
-							KeyNavigation.down: shareNetworkButton
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							onClicked: mainItem.editConference(mainItem.selectedConference)
-						}
-						PopupButton {
-							id: deletePopup
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-							contentImageColor: DefaultStyle.main1_500_main
-							KeyNavigation.left: editButton.visible ? editButton : leftPanelStackView.currentItem
-							KeyNavigation.right: leftPanelStackView.currentItem
-							KeyNavigation.up: joinButton
-							KeyNavigation.down: shareNetworkButton
-
-							popup.contentItem: IconLabelButton {
-								style: ButtonStyle.hoveredBackgroundRed
+							Text {
+								Layout.fillWidth: true
+								text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
+								maximumLineCount: 1
+								font {
+									pixelSize: Utils.getSizeWithScreenRatio(20)
+									weight: Typography.h4.weight
+								}
+							}
+							Item {
+								Layout.fillWidth: true
+							}
+							RoundButton {
+								id: editButton
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
-								property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
-								icon.source: AppIcons.trashCan
-								//: "Supprimer la réunion"
-								text: qsTr("meeting_info_delete")
+								visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
+								icon.source: AppIcons.pencil
+								style: ButtonStyle.noBackgroundOrange
+								KeyNavigation.left: leftPanelStackView.currentItem
+								KeyNavigation.right: deletePopup
+								KeyNavigation.up: joinButton
+								KeyNavigation.down: shareNetworkButton
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+								onClicked: mainItem.editConference(mainItem.selectedConference)
+							}
+							PopupButton {
+								id: deletePopup
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+								contentImageColor: DefaultStyle.main1_500_main
+								KeyNavigation.left: editButton.visible ? editButton : leftPanelStackView.currentItem
+								KeyNavigation.right: leftPanelStackView.currentItem
+								KeyNavigation.up: joinButton
+								KeyNavigation.down: shareNetworkButton
 
-								onClicked: {
-									if (mainItem.selectedConference) {
-										cancelAndDeleteConfDialog.confInfoToDelete = mainItem.selectedConference
-										cancelAndDeleteConfDialog.cancel = canCancel
-										cancelAndDeleteConfDialog.open()
-										deletePopup.close()
+								popup.contentItem: IconLabelButton {
+									style: ButtonStyle.hoveredBackgroundRed
+									property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
+									property bool canCancel: isMeObj && isMeObj.value && mainItem.selectedConference?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+									icon.source: AppIcons.trashCan
+									//: "Supprimer la réunion"
+									text: qsTr("meeting_info_delete")
+
+									onClicked: {
+										if (mainItem.selectedConference) {
+											cancelAndDeleteConfDialog.confInfoToDelete = mainItem.selectedConference
+											cancelAndDeleteConfDialog.cancel = canCancel
+											cancelAndDeleteConfDialog.open()
+											deletePopup.close()
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-				Section {
-					Layout.fillWidth: true
-					content: ColumnLayout {
-						spacing: Utils.getSizeWithScreenRatio(15)
-						width: parent.width
-						RowLayout {
-							spacing: Utils.getSizeWithScreenRatio(8)
-							Layout.fillWidth: true
-							EffectImage {
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-								colorizationColor: DefaultStyle.main2_600
-								imageSource: AppIcons.videoCamera
-							}
-							SmallButton {
-								id: linkButton
+					Section {
+						Layout.fillWidth: true
+						content: ColumnLayout {
+							spacing: Utils.getSizeWithScreenRatio(15)
+							width: parent.width
+							RowLayout {
+								spacing: Utils.getSizeWithScreenRatio(8)
 								Layout.fillWidth: true
-								text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
-								textSize: Typography.p1.pixelSize
-								textWeight: Typography.p1.weight
-								underline: true
-								style: ButtonStyle.noBackground
-								Keys.onPressed: (event)=> {
-									if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-										clicked(undefined)
-										event.accepted = true;
+								EffectImage {
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+									Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+									colorizationColor: DefaultStyle.main2_600
+									imageSource: AppIcons.videoCamera
+								}
+								SmallButton {
+									id: linkButton
+									Layout.fillWidth: true
+									text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
+									textSize: Typography.p1.pixelSize
+									textWeight: Typography.p1.weight
+									underline: true
+									style: ButtonStyle.noBackground
+									Keys.onPressed: (event)=> {
+										if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+											clicked(undefined)
+											event.accepted = true;
+										}
+									}
+									KeyNavigation.left: shareNetworkButton
+									KeyNavigation.right: shareNetworkButton
+									KeyNavigation.up: deletePopup
+									KeyNavigation.down: joinButton
+									onClicked: {
+										// TODO : voir si c'est en audio only quand on clique sur le lien
+										UtilsCpp.createCall(mainItem.selectedConference.core.uri)
 									}
 								}
-								KeyNavigation.left: shareNetworkButton
-								KeyNavigation.right: shareNetworkButton
-								KeyNavigation.up: deletePopup
-								KeyNavigation.down: joinButton
-								onClicked: {
-									// TODO : voir si c'est en audio only quand on clique sur le lien
-									UtilsCpp.createCall(mainItem.selectedConference.core.uri)
+								RoundButton {
+									id: shareNetworkButton
+									style: ButtonStyle.noBackground
+									icon.source: AppIcons.shareNetwork
+									KeyNavigation.left: linkButton
+									KeyNavigation.right: linkButton
+									KeyNavigation.up: deletePopup
+									KeyNavigation.down: joinButton
+									onClicked: {
+										var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
+										if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
+																	//: "Adresse de la réunion copiée"
+																	qsTr("meeting_address_copied_to_clipboard_toast"))
+									}
 								}
 							}
-							RoundButton {
-								id: shareNetworkButton
-								style: ButtonStyle.noBackground
-								icon.source: AppIcons.shareNetwork
-								KeyNavigation.left: linkButton
-								KeyNavigation.right: linkButton
-								KeyNavigation.up: deletePopup
-								KeyNavigation.down: calendarPlusButton
-								onClicked: {
-									var success = UtilsCpp.copyToClipboard(mainItem.selectedConference.core.uri)
-									if (success) UtilsCpp.showInformationPopup(qsTr("saved"),
-																  //: "Adresse de la réunion copiée"
-																  qsTr("meeting_address_copied_to_clipboard_toast"))
+							RowLayout {
+								spacing: Utils.getSizeWithScreenRatio(8)
+								EffectImage {
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+									Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+									imageSource: AppIcons.clock
+									colorizationColor: DefaultStyle.main2_600
+								}
+								Text {
+									text: mainItem.selectedConference && mainItem.selectedConference.core
+											? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTime)
+											+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTime)
+											+ " - "
+											+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
+											: ''
+									font {
+										pixelSize: Utils.getSizeWithScreenRatio(14)
+										capitalization: Font.Capitalize
+									}
+								}
+							}
+							RowLayout {
+								spacing: Utils.getSizeWithScreenRatio(8)
+								EffectImage {
+									Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+									Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+									imageSource: AppIcons.globe
+									colorizationColor: DefaultStyle.main2_600
+								}
+								Text {
+									Layout.fillWidth: true
+									//: "Fuseau horaire"
+									text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+									font {
+										pixelSize: Utils.getSizeWithScreenRatio(14)
+										capitalization: Font.Capitalize
+									}
 								}
 							}
 						}
-						RowLayout {
+					}
+					Section {
+						Layout.fillWidth: true
+						visible: mainItem.selectedConference && mainItem.selectedConference.core?.description.length != 0
+						content: RowLayout {
 							spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-								imageSource: AppIcons.clock
+								imageSource: AppIcons.note
 								colorizationColor: DefaultStyle.main2_600
 							}
 							Text {
-								text: mainItem.selectedConference && mainItem.selectedConference.core
-										? UtilsCpp.toDateString(mainItem.selectedConference.core.dateTime)
-										+ " | " + UtilsCpp.toDateHourString(mainItem.selectedConference.core.dateTime)
-										+ " - "
-										+ UtilsCpp.toDateHourString(mainItem.selectedConference.core.endDateTime)
-										: ''
+								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
+								Layout.fillWidth: true
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(14)
-									capitalization: Font.Capitalize
 								}
 							}
 							RoundButton {
@@ -784,18 +828,25 @@ AbstractMainPage {
 								}
 							}
 						}
-						RowLayout {
+					}
+					Section {
+						Layout.fillWidth: true
+						content: RowLayout {
 							spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-								imageSource: AppIcons.globe
+								imageSource: AppIcons.userRectangle
 								colorizationColor: DefaultStyle.main2_600
 							}
+							Avatar {
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+								Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+								_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
+								secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+							}
 							Text {
-								Layout.fillWidth: true
-								//: "Fuseau horaire"
-								text: "%1: %2".arg(qsTr("meeting_schedule_timezone_title")).arg(mainItem.selectedConference && mainItem.selectedConference.core ? (mainItem.selectedConference.core.timeZoneModel.displayName + ", " + mainItem.selectedConference.core.timeZoneModel.countryName) : "")
+								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
 								font {
 									pixelSize: Utils.getSizeWithScreenRatio(14)
 									capitalization: Font.Capitalize
@@ -803,132 +854,89 @@ AbstractMainPage {
 							}
 						}
 					}
-				}
-				Section {
-					Layout.fillWidth: true
-					visible: mainItem.selectedConference && mainItem.selectedConference.core?.description.length != 0
-					content: RowLayout {
-						spacing: Utils.getSizeWithScreenRatio(8)
-						EffectImage {
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-							imageSource: AppIcons.note
-							colorizationColor: DefaultStyle.main2_600
-						}
-						Text {
-							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.description : ""
-							Layout.fillWidth: true
-							font {
-								pixelSize: Utils.getSizeWithScreenRatio(14)
+					Section {
+						visible: participantList.count > 0
+						Layout.fillWidth: true
+						Layout.fillHeight: true
+						Layout.maximumHeight: participantList.contentHeight + Utils.getSizeWithScreenRatio(1) + spacing
+						content: 
+						RowLayout {
+							width: Utils.getSizeWithScreenRatio(393)
+							spacing: Utils.getSizeWithScreenRatio(8)
+							EffectImage {
+								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+								Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+								Layout.topMargin: Utils.getSizeWithScreenRatio(20)
+								imageSource: AppIcons.usersTwo
+								colorizationColor: DefaultStyle.main2_600
 							}
-						}
-					}
-				}
-				Section {
-					Layout.fillWidth: true
-					content: RowLayout {
-						spacing: Utils.getSizeWithScreenRatio(8)
-						EffectImage {
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-							imageSource: AppIcons.userRectangle
-							colorizationColor: DefaultStyle.main2_600
-						}
-						Avatar {
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
-							_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
-							secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-						}
-						Text {
-							text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
-							font {
-								pixelSize: Utils.getSizeWithScreenRatio(14)
-								capitalization: Font.Capitalize
-							}
-						}
-					}
-				}
-				Section {
-					visible: participantList.count > 0
-					Layout.fillWidth: true
-					Layout.fillHeight: true
-					Layout.maximumHeight: participantList.contentHeight + Utils.getSizeWithScreenRatio(1) + spacing
-					content: RowLayout {
-						width: Utils.getSizeWithScreenRatio(393)
-						spacing: Utils.getSizeWithScreenRatio(8)
-						EffectImage {
-							Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-							Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-							Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-							Layout.topMargin: Utils.getSizeWithScreenRatio(20)
-							imageSource: AppIcons.usersTwo
-							colorizationColor: DefaultStyle.main2_600
-						}
-						ListView {
-							id: participantList
-							// Layout.preferredHeight: contentHeight
-							Layout.fillWidth: true
-							Layout.fillHeight: true
-							model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
-							clip: true
-							Control.ScrollBar.vertical: ScrollBar {
-								id: participantScrollBar
-								anchors.right: participantList.right
-								anchors.top: participantList.top
-								anchors.bottom: participantList.bottom
-								visible: participantList.height < participantList.contentHeight
-							}
-							delegate: RowLayout {
-								height: Utils.getSizeWithScreenRatio(56)
-								width: participantList.width - participantScrollBar.width - Utils.getSizeWithScreenRatio(5)
-								Avatar {
-									Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
-									Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
-									_address: modelData.address
-									secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-									shadowEnabled: false
+							ListView {
+								id: participantList
+								// Layout.preferredHeight: contentHeight
+								Layout.fillWidth: true
+								Layout.fillHeight: true
+								height: contentHeight
+								model: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.participants : []
+								clip: true
+								Control.ScrollBar.vertical: ScrollBar {
+									id: participantScrollBar
+									anchors.right: participantList.right
+									anchors.top: participantList.top
+									anchors.bottom: participantList.bottom
+									visible: participantList.height < participantList.contentHeight
 								}
-								Text {
-									property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
-									text: displayNameObj?.value || ""
-									maximumLineCount: 1
-									Layout.fillWidth: true
-									font {
-										pixelSize: Utils.getSizeWithScreenRatio(14)
-										capitalization: Font.Capitalize
+								delegate: RowLayout {
+									height: Utils.getSizeWithScreenRatio(56)
+									width: participantList.width - participantScrollBar.width - Utils.getSizeWithScreenRatio(5)
+									Avatar {
+										Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
+										Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
+										_address: modelData.address
+										secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
+										shadowEnabled: false
 									}
-								}
-								Text {
-									//: "Organisateur"
-									text: qsTr("meeting_info_organizer_label")
-									visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
-									color: DefaultStyle.main2_400
-									font {
-										pixelSize: Utils.getSizeWithScreenRatio(12)
-										weight: Utils.getSizeWithScreenRatio(300)
+									Text {
+										property var displayNameObj: UtilsCpp.getDisplayName(modelData.address)
+										text: displayNameObj?.value || ""
+										maximumLineCount: 1
+										Layout.fillWidth: true
+										font {
+											pixelSize: Utils.getSizeWithScreenRatio(14)
+											capitalization: Font.Capitalize
+										}
+									}
+									Text {
+										//: "Organisateur"
+										text: qsTr("meeting_info_organizer_label")
+										visible: mainItem.selectedConference && mainItem.selectedConference.core?.organizerAddress === modelData.address
+										color: DefaultStyle.main2_400
+										font {
+											pixelSize: Utils.getSizeWithScreenRatio(12)
+											weight: Utils.getSizeWithScreenRatio(300)
+										}
 									}
 								}
 							}
 						}
 					}
-				}
-				BigButton {
-					id: joinButton
-					visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
-					Layout.fillWidth: true
-					//: "Rejoindre la réunion"
-					text: qsTr("meeting_info_join_title")
-					focus: true
-					KeyNavigation.up: shareNetworkButton
-					KeyNavigation.down: deletePopup
-					KeyNavigation.left: leftPanelStackView.currentItem
-					KeyNavigation.right: leftPanelStackView.currentItem
-					onClicked: {
-						console.log(mainItem.selectedConference.core.uri)
-						var callsWindow = UtilsCpp.getOrCreateCallsWindow()
-						callsWindow.setupConference(mainItem.selectedConference)
-						UtilsCpp.smartShowWindow(callsWindow)
+					BigButton {
+						id: joinButton
+						visible: mainItem.selectedConference && mainItem.selectedConference.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+						Layout.fillWidth: true
+						//: "Rejoindre la réunion"
+						text: qsTr("meeting_info_join_title")
+						focus: true
+						KeyNavigation.up: shareNetworkButton
+						KeyNavigation.down: deletePopup
+						KeyNavigation.left: leftPanelStackView.currentItem
+						KeyNavigation.right: leftPanelStackView.currentItem
+						onClicked: {
+							console.log(mainItem.selectedConference.core.uri)
+							var callsWindow = UtilsCpp.getOrCreateCallsWindow()
+							callsWindow.setupConference(mainItem.selectedConference)
+							UtilsCpp.smartShowWindow(callsWindow)
+						}
 					}
 				}
 			}

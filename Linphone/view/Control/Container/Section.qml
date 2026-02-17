@@ -12,7 +12,6 @@ ColumnLayout {
     spacing: Utils.getSizeWithScreenRatio(15)
 	property alias content: contentLayout.data
 	property alias contentLayout: contentLayout
-    implicitHeight: contentLayout.implicitHeight + Utils.getSizeWithScreenRatio(1) + spacing
 	ColumnLayout {
 		id: contentLayout
         spacing: Utils.getSizeWithScreenRatio(8)
