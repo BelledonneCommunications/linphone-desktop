@@ -141,21 +141,23 @@ QString Utils::getInitials(const QString &username, int letterCount) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 9, 0)
 		return Utils::encodeEmojiToQmlRichFormat(QString::fromStdU32String(char32));
 #else
-		QString::fromStdU32String(char32);
+		return QString::fromStdU32String(char32);
 #endif
 	}
 
 	QStringList initials;
 	initials << QString::fromStdU32String(char32);
-	for (int i = 1; i < words.size() && initials.size() <= 1; ++i) {
-		if (words[i].size() > 0) {
-			str32 = words[i].toStdU32String();
-			char32[0] = str32[0];
-			initials << QString::fromStdU32String(char32);
-			if (initials.count() >= letterCount) break;
-			std::string converted = u32_to_ascii(char32);
-			if (Utils::codepointIsEmoji(atoi(converted.c_str()))) {
-				break;
+	if (initials.count() < letterCount) {
+		for (int i = 1; i < words.size() && initials.size() <= 1; ++i) {
+			if (words[i].size() > 0) {
+				str32 = words[i].toStdU32String();
+				char32[0] = str32[0];
+				initials << QString::fromStdU32String(char32);
+				if (initials.count() >= letterCount) break;
+				std::string converted = u32_to_ascii(char32);
+				if (Utils::codepointIsEmoji(atoi(converted.c_str()))) {
+					break;
+				}
 			}
 		}
 	}

@@ -60,7 +60,7 @@ Button {
 			text: mainItem.text
 			font {
 				pixelSize: mainItem.textSize
-				weight: mainItem.textWeight * 2
+				weight: mainItem.textWeight
 				family: DefaultStyle.defaultFont
 				capitalization: mainItem.capitalization
 				underline: mainItem.underline
