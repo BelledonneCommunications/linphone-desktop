@@ -1128,25 +1128,25 @@
         <translation>%1 laufend</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="91"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="99"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
         <translation>Anruf %1 weiterleiten</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="119"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="127"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
         <translation>Anruf %1 fortsetzen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="121"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="129"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
         <translation>Anruf %1 pausieren</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Call/CallListView.qml" line="144"/>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="152"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
         <translation>Anruf %1 beenden</translation>
