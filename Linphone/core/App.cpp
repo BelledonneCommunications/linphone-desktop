@@ -1218,7 +1218,7 @@ bool App::notify(QObject *receiver, QEvent *event) {
 }
 
 void App::handleAccountActivity(QSharedPointer<AccountCore> accountCore) {
-	if (!accountCore) return;
+	if (!accountCore || !mMainWindow) return;
 	auto accountPresence = accountCore->getPresence();
 	if ((mMainWindow && mMainWindow->isActive() || (mCallsWindow && mCallsWindow->isActive())) &&
 	    accountPresence == LinphoneEnums::Presence::Away) {
@@ -1567,13 +1567,9 @@ bool App::event(QEvent *event) {
 		receivedMessage(0, url.toLocal8Bit());
 	} else if (event->type() == QEvent::ApplicationStateChange) {
 		auto state = static_cast<QApplicationStateChangeEvent *>(event);
-		if (state->applicationState() == Qt::ApplicationActive) Utils::smartShowWindow(getLastActiveWindow());
-	} else if (event->type() == QEvent::ApplicationActivate) {
-		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
-			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			handleAccountActivity(accountCore);
+		if (state->applicationState() == Qt::ApplicationActive) {
+			Utils::smartShowWindow(getLastActiveWindow());
 		}
-	} else if (event->type() == QEvent::ApplicationDeactivate) {
 		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 			auto accountCore = getAccountList()->getAt<AccountCore>(i);
 			handleAccountActivity(accountCore);
