@@ -228,7 +228,7 @@ Control.TextField {
         anchors.right: parent.right
         anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
         onClicked: mainItem.customCallback()
-        //: %1 button on %2
+        //: %1 button of %2
         Accessible.name: qsTr("textfield_custom_button_accessible_name").arg(mainItem.customButtonAccessibleName).arg(mainItem.Accessible.name)
     }
 }

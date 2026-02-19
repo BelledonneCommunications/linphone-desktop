@@ -76,7 +76,7 @@ AbstractSettingsLayout {
 	Component {
 		id: displayNotifParamComp
 		SwitchSetting {
-			//: "Display notification content"
+			//: "Display content"
 			titleText: qsTr("settings_chat_display_notification_content_title")
 			//: "Display the content of the received message"
 			subTitleText: qsTr("settings_chat_display_notification_content_subtitle")
