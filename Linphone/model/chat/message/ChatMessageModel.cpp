@@ -190,7 +190,11 @@ void ChatMessageModel::onFileTransferProgressIndication(const std::shared_ptr<li
                                                         const std::shared_ptr<linphone::Content> &content,
                                                         size_t offset,
                                                         size_t total) {
-	emit fileTransferProgressIndication(message, content, offset, total);
+	try {
+		emit fileTransferProgressIndication(message, content, offset, total);
+	} catch (const std::exception &ex) {
+		lFatal() << log().arg("Exception has been catch in signal fileTransferProgressIndication : %1").arg(ex.what());
+	}
 }
 
 void ChatMessageModel::onParticipantImdnStateChanged(

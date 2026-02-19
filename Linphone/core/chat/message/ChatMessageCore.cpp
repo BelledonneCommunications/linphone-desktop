@@ -304,18 +304,25 @@ void ChatMessageCore::setSelf(QSharedPointer<ChatMessageCore> me) {
 	    &ChatMessageModel::fileTransferProgressIndication,
 	    [this](const std::shared_ptr<linphone::ChatMessage> &message, const std::shared_ptr<linphone::Content> &content,
 	           size_t offset, size_t total) {
-		    mChatMessageModelConnection->invokeToCore([this, content, offset, total] {
-			    auto it =
-			        std::find_if(mChatMessageContentList.begin(), mChatMessageContentList.end(),
-			                     [content](QSharedPointer<ChatMessageContentCore> item) {
-				                     return item->getContentModel()->getContent()->getName() == content->getName();
-			                     });
-			    if (it != mChatMessageContentList.end()) {
-				    auto contentCore = mChatMessageContentList.at(std::distance(mChatMessageContentList.begin(), it));
-				    assert(contentCore);
-				    contentCore->setFileOffset(offset);
-			    }
-		    });
+		    try {
+			    mChatMessageModelConnection->invokeToCore([this, content, offset, total] {
+				    auto it =
+				        std::find_if(mChatMessageContentList.begin(), mChatMessageContentList.end(),
+				                     [content](QSharedPointer<ChatMessageContentCore> item) {
+					                     return item->getContentModel()->getContent()->getName() == content->getName();
+				                     });
+				    if (it != mChatMessageContentList.end()) {
+					    auto contentCore =
+					        mChatMessageContentList.at(std::distance(mChatMessageContentList.begin(), it));
+					    assert(contentCore);
+					    contentCore->setFileOffset(offset);
+				    }
+			    });
+		    } catch (const std::exception &ex) {
+			    lFatal() << log()
+			                    .arg("Exception has been catch in signal fileTransferProgressIndication : %1")
+			                    .arg(ex.what());
+		    }
 	    });
 
 	mChatMessageModelConnection->makeConnectToModel(
