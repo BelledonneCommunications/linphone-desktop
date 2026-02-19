@@ -772,30 +772,30 @@
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1622"/>
+        <location filename="../../core/App.cpp" line="1618"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1640"/>
+        <location filename="../../core/App.cpp" line="1636"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1767"/>
+        <location filename="../../core/App.cpp" line="1763"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -4670,7 +4670,7 @@ Expiration : %1</translation>
         <translation>No meeting for today</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="340"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Delete meeting</translation>

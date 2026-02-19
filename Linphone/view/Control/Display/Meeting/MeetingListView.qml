@@ -332,7 +332,9 @@ ListView {
 						contentItem: IconLabelButton {
 							style: ButtonStyle.hoveredBackgroundRed
 							property var isMeObj: UtilsCpp.isMe(itemDelegate.itemGui?.core?.organizerAddress)
-							property bool canCancel: isMeObj && isMeObj.value && itemDelegate.itemGui?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+							property bool canCancel: isMeObj && isMeObj.value 
+							&& itemDelegate.itemGui?.core?.state !== LinphoneEnums.ConferenceInfoState.Cancelled
+							&& UtilsCpp.daysOffset(new Date(), itemDelegate.itemGui?.core?.endDateTime) >= 0
 							icon.source: AppIcons.trashCan
 							//: "Supprimer la réunion"
 							text: qsTr("meeting_info_delete")

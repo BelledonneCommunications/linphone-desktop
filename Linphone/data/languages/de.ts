@@ -781,30 +781,30 @@
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1622"/>
+        <location filename="../../core/App.cpp" line="1618"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1640"/>
+        <location filename="../../core/App.cpp" line="1636"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1767"/>
+        <location filename="../../core/App.cpp" line="1763"/>
         <source>mark_all_read_action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4738,7 +4738,7 @@ Error</extracomment>
         <translation>Heute keine Besprechungen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="340"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Besprechung löschen</translation>

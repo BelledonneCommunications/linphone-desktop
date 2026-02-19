@@ -767,30 +767,30 @@
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Cacher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1607"/>
+        <location filename="../../core/App.cpp" line="1603"/>
         <source>show_action</source>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1622"/>
+        <location filename="../../core/App.cpp" line="1618"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1640"/>
+        <location filename="../../core/App.cpp" line="1636"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Rechercher une mise à jour</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1767"/>
+        <location filename="../../core/App.cpp" line="1763"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -4641,7 +4641,7 @@ Expiration : %1</translation>
         <translation>Aucune réunion aujourd&apos;hui</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="340"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Supprimer la réunion</translation>
