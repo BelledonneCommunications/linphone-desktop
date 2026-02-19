@@ -207,12 +207,14 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 
 // -----------------------------------------------------------------------------
 
-void Notifier::showNotification(QObject *notification, int timeout) {
+void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 	// Display notification.
 	QTimer *timer = new QTimer(notification);
 	timer->setInterval(timeout);
 	timer->setSingleShot(true);
 	notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
+	notification->show();
+	notification->raise();
 
 	// Destroy it after timeout.
 	QObject::connect(timer, &QTimer::timeout, this,
