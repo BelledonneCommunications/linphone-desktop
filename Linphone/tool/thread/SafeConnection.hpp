@@ -74,7 +74,6 @@ protected:
 	}
 	~SafeConnection() {
 		mLocker.lock();
-		disconnect();
 		if (mModel.mCountRef != 0)
 			QTimer::singleShot(1000, mModel.get(), []() {
 				lCritical() << "[SafeConnection] Destroyed 1s ago but a Model is still in memory";

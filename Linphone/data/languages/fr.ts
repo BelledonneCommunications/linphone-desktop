@@ -2033,13 +2033,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="144"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="146"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation>L&apos;historique des messages a été supprimé</translation>
@@ -4580,19 +4580,19 @@ Expiration : %1</translation>
 <context>
     <name>MeetingListView</name>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="280"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="284"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
         <translation>Réunion annulée</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="304"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="308"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
         <translation>Aucune réunion aujourd&apos;hui</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="342"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Supprimer la réunion</translation>
