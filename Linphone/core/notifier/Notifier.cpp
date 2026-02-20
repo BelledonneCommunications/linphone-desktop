@@ -207,12 +207,23 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 
 // -----------------------------------------------------------------------------
 
-void Notifier::showNotification(QObject *notification, int timeout) {
+void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 	// Display notification.
 	QTimer *timer = new QTimer(notification);
 	timer->setInterval(timeout);
 	timer->setSingleShot(true);
 	notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
+#ifdef Q_OS_WIN
+	QObject::connect(App::getInstance(), &App::sessionUnlocked, notification, [this, notification] {
+		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
+		notification->show();
+		notification->raise();
+		notification->requestActivate();
+	});
+#endif
+	notification->show();
+	notification->raise();
+	notification->requestActivate();
 
 	// Destroy it after timeout.
 	QObject::connect(timer, &QTimer::timeout, this,

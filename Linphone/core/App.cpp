@@ -1052,6 +1052,10 @@ void App::initFonts() {
 
 void App::clean() {
 	mDateUpdateTimer.stop();
+#ifdef Q_OS_WIN
+	removeNativeEventFilter(mLockEventFilter);
+	delete mLockEventFilter;
+#endif
 	if (mEngine) {
 		mEngine->clearComponentCache();
 		mEngine->clearSingletons();
@@ -1309,11 +1313,20 @@ QQuickWindow *App::getMainWindow() const {
 }
 
 void App::setMainWindow(QQuickWindow *data) {
-	if (mMainWindow) disconnect(mMainWindow, &QQuickWindow::activeChanged, this, nullptr);
+	if (mMainWindow) {
+		disconnect(mMainWindow, &QQuickWindow::activeChanged, this, nullptr);
+	}
 	if (mMainWindow != data) {
 		mMainWindow = data;
 		connect(mMainWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
 		handleAppActivity();
+
+		mMainWindow->winId();
+
+#ifdef Q_OS_WIN
+		WTSRegisterSessionNotification(reinterpret_cast<HWND>(mMainWindow->winId()), NOTIFY_FOR_THIS_SESSION);
+#endif
+
 		emit mainWindowChanged();
 	}
 }
@@ -1592,7 +1605,6 @@ void App::setSysTrayIcon() {
 	    (mSystemTrayIcon ? mSystemTrayIcon
 	                     : new QSystemTrayIcon(nullptr)); // Workaround : QSystemTrayIcon cannot be deleted because
 	                                                      // of setContextMenu (indirectly)
-
 	// trayIcon: Right click actions.
 	QAction *restoreAction = nullptr;
 	if (mSettings && !mSettings->getExitOnClose()) {
@@ -1654,6 +1666,13 @@ void App::setSysTrayIcon() {
 	systemTrayIcon->show();
 	if (!mSystemTrayIcon) mSystemTrayIcon = systemTrayIcon;
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) qInfo() << "System tray is not available";
+
+//
+#ifdef Q_OS_WIN
+	if (!mLockEventFilter) mLockEventFilter = new LockEventFilter();
+	connect(mLockEventFilter, &LockEventFilter::sessionUnlocked, this, [this] { emit sessionUnlocked(); });
+	installNativeEventFilter(mLockEventFilter);
+#endif
 }
 
 //-----------------------------------------------------------

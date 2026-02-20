@@ -678,14 +678,14 @@
     <message>
         <location filename="../../core/App.cpp" line="437"/>
         <location filename="../../core/App.cpp" line="515"/>
-        <location filename="../../core/App.cpp" line="819"/>
+        <location filename="../../core/App.cpp" line="822"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="438"/>
-        <location filename="../../core/App.cpp" line="821"/>
+        <location filename="../../core/App.cpp" line="824"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation type="unfinished"></translation>
@@ -725,86 +725,86 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="815"/>
+        <location filename="../../core/App.cpp" line="818"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1108"/>
+        <location filename="../../core/App.cpp" line="1115"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1110"/>
+        <location filename="../../core/App.cpp" line="1117"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1114"/>
+        <location filename="../../core/App.cpp" line="1121"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1119"/>
+        <location filename="../../core/App.cpp" line="1126"/>
         <source>command_line_option_show_app_version</source>
         <translation>App-Version anzeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1127"/>
+        <location filename="../../core/App.cpp" line="1134"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1129"/>
+        <location filename="../../core/App.cpp" line="1136"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1134"/>
+        <location filename="../../core/App.cpp" line="1141"/>
         <source>command_line_option_minimized</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1137"/>
+        <location filename="../../core/App.cpp" line="1144"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1140"/>
+        <location filename="../../core/App.cpp" line="1147"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1603"/>
+        <location filename="../../core/App.cpp" line="1618"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1603"/>
+        <location filename="../../core/App.cpp" line="1618"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1618"/>
+        <location filename="../../core/App.cpp" line="1633"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1636"/>
+        <location filename="../../core/App.cpp" line="1651"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1763"/>
+        <location filename="../../core/App.cpp" line="1785"/>
         <source>mark_all_read_action</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2071,13 +2071,13 @@
 <context>
     <name>ChatCore</name>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="144"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/ChatCore.cpp" line="146"/>
+        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
         <source>info_toast_deleted_message_history</source>
         <extracomment>Message history has been deleted</extracomment>
         <translation type="unfinished"></translation>
@@ -4726,19 +4726,19 @@ Error</extracomment>
 <context>
     <name>MeetingListView</name>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="280"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="283"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
         <translation>Besprechung abgesagt</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="304"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="307"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
         <translation>Heute keine Besprechungen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="340"/>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="343"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Besprechung löschen</translation>
@@ -5135,42 +5135,42 @@ Error</extracomment>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="307"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="318"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="373"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="363"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="374"/>
         <source>new_file_message</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="366"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="377"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="399"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="391"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="402"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="419"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="430"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation type="unfinished"></translation>

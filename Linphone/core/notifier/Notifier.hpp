@@ -90,7 +90,7 @@ private:
 	};
 
 	bool createNotification(NotificationType type, QVariantMap data);
-	void showNotification(QObject *notification, int timeout);
+	void showNotification(QQuickWindow *notification, int timeout);
 
 	QHash<QString, int> mScreenHeightOffset;
 	int mInstancesNumber = 0;
