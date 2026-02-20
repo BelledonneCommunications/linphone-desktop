@@ -53,6 +53,13 @@ ChatList::~ChatList() {
 	mModelConnection->disconnect();
 }
 
+void ChatList::disconnectItem(QSharedPointer<ChatCore> chat) {
+	disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
+	disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
+	disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
+	disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
+}
+
 void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	connect(
 	    chat.get(), &ChatCore::deleted, this,
@@ -68,7 +75,7 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 		get(chat.get(), &i);
 		if (i != -1) {
 			auto modelIndex = index(i);
-			emit dataChanged(modelIndex, modelIndex);
+			if (modelIndex.isValid()) emit dataChanged(modelIndex, modelIndex);
 		}
 	};
 	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this, dataChange] {
@@ -117,10 +124,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				mustBeInMainThread(getClassName());
 				for (auto &chat : getSharedList<ChatCore>()) {
 					if (chat) {
-						disconnect(chat.get(), &ChatCore::deleted, this, nullptr);
-						disconnect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, nullptr);
-						disconnect(chat.get(), &ChatCore::lastUpdatedTimeChanged, this, nullptr);
-						disconnect(chat.get(), &ChatCore::lastMessageChanged, this, nullptr);
+						disconnectItem(chat);
 					}
 				}
 				mList.clear();

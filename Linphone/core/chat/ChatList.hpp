@@ -40,6 +40,7 @@ public:
 	~ChatList();
 	void setSelf(QSharedPointer<ChatList> me);
 	void connectItem(QSharedPointer<ChatCore> chat);
+	void disconnectItem(QSharedPointer<ChatCore> chat);
 
 	int findChatIndex(ChatGui *chat);
 	bool addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSignal);
