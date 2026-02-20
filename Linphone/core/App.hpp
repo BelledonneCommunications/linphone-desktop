@@ -29,6 +29,7 @@
 #include "core/chat/ChatGui.hpp"
 #include "core/chat/ChatList.hpp"
 #include "core/conference/ConferenceInfoList.hpp"
+#include "core/event-filter/LockEventFilter.hpp"
 #include "core/setting/SettingsCore.hpp"
 #include "core/singleapplication/singleapplication.h"
 #include "model/cli/CliModel.hpp"
@@ -231,6 +232,9 @@ signals:
 	void lForceOidcTimeout();
 	void remainingTimeBeforeOidcTimeoutChanged();
 	void currentAccountChanged();
+#ifdef Q_OS_WIN
+	void sessionUnlocked();
+#endif
 	// void executeCommand(QString command);
 
 private:
@@ -248,6 +252,9 @@ private:
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	QQuickWindow *mLastActiveWindow = nullptr;
+#ifdef Q_OS_WIN
+	LockEventFilter *mLockEventFilter = nullptr;
+#endif
 	// Holds the current chat displayed in the view
 	// to know if we need to display the notification
 	ChatGui *mCurrentChat = nullptr;

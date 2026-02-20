@@ -711,80 +711,80 @@
         <translation>indisponible</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1106"/>
+        <location filename="../../core/App.cpp" line="1110"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1108"/>
+        <location filename="../../core/App.cpp" line="1112"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Donner un ordre à l&apos;application depuis l&apos;invite de commandes</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1112"/>
+        <location filename="../../core/App.cpp" line="1116"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1117"/>
+        <location filename="../../core/App.cpp" line="1121"/>
         <source>command_line_option_show_app_version</source>
         <translation>Afficher la version de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1125"/>
+        <location filename="../../core/App.cpp" line="1129"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1127"/>
+        <location filename="../../core/App.cpp" line="1131"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1132"/>
+        <location filename="../../core/App.cpp" line="1136"/>
         <source>command_line_option_minimized</source>
         <translation>Minimiser</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1135"/>
+        <location filename="../../core/App.cpp" line="1139"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1138"/>
+        <location filename="../../core/App.cpp" line="1142"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1605"/>
+        <location filename="../../core/App.cpp" line="1613"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Cacher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1605"/>
+        <location filename="../../core/App.cpp" line="1613"/>
         <source>show_action</source>
         <translation>Afficher</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1620"/>
+        <location filename="../../core/App.cpp" line="1628"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quitter</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1638"/>
+        <location filename="../../core/App.cpp" line="1646"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Rechercher une mise à jour</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1765"/>
+        <location filename="../../core/App.cpp" line="1780"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -4980,42 +4980,42 @@ Expiration : %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="307"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="318"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Nouvel appel de %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="362"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="373"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation>Message vocal reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="363"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="374"/>
         <source>new_file_message</source>
         <translation>Fichier reçu !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="366"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="377"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Nouvelle invitation à une conférence !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="388"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="399"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
         <translation>Nouveau message reçu</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="391"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="402"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Nouveaux messages reçus !</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="419"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="430"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nouveau message sur la conversation %1</translation>

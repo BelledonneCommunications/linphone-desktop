@@ -40,6 +40,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/emoji/EmojiModel.cpp
 	core/emoji/EmojiProxy.cpp
 	core/event-count-notifier/AbstractEventCountNotifier.cpp
+	core/event-filter/LockEventFilter.cpp
 	core/fps-counter/FPSCounter.cpp
 	core/friend/FriendCore.cpp
 	core/friend/FriendGui.cpp
