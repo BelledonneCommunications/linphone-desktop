@@ -37,15 +37,22 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 	    mList.get(), &ConferenceInfoList::haveCurrentDateChanged, this,
 	    [this] {
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
-		    sortModel->invalidate(); // New date => sort and filter change.
+		    if (sortModel) sortModel->invalidate(); // New date => sort and filter change.
 		    loadUntil(nullptr);
+	    },
+	    Qt::QueuedConnection);
+	connect(
+	    mList.get(), &ConferenceInfoList::rowsRemoved, this,
+	    [this] {
+		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+		    if (sortModel) sortModel->invalidate(); // New date => sort and filter change.
 	    },
 	    Qt::QueuedConnection);
 	connect(
 	    mList.get(), &ConferenceInfoList::confInfoInserted, this,
 	    [this](QSharedPointer<ConferenceInfoCore> data) {
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
-		    sortModel->invalidate(); // New conf => sort change. Filter can change if on current date.
+		    if (sortModel) sortModel->invalidate(); // New conf => sort change. Filter can change if on current date.
 		    static const QMetaMethod conferenceInfoCreatedSignal =
 		        QMetaMethod::fromSignal(&ConferenceInfoProxy::conferenceInfoCreated);
 		    if (isSignalConnected(conferenceInfoCreatedSignal)) emit conferenceInfoCreated(new ConferenceInfoGui(data));
@@ -107,6 +114,11 @@ bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const 
 
 void ConferenceInfoProxy::clear() {
 	mList->clearData();
+}
+
+void ConferenceInfoProxy::invalidate() {
+	auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
+	if (sortModel) sortModel->invalidate();
 }
 
 ConferenceInfoGui *ConferenceInfoProxy::getCurrentDateConfInfo(bool enableCancelledConference) {

@@ -74,7 +74,11 @@ ListView {
 	}
 //----------------------------------------------------------------
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
-	
+
+	Component.onCompleted: {
+		console.log("meeting list view completed invalidate")
+		confInfoProxy.invalidate()
+	}
 	
 	Keys.onPressed: (event)=> {
 		if(event.key == Qt.Key_Up) {
