@@ -73,7 +73,9 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 		mDuration = conferenceInfo->getDuration();
 		mEndDateTime = mDateTime.addSecs(mDuration * 60);
 		mIsScheduled = mDateTime.isValid();
-		mOrganizerAddress = Utils::coreStringToAppString(conferenceInfo->getOrganizer()->asStringUriOnly());
+		mOrganizerAddress = conferenceInfo->getOrganizer()
+		                        ? Utils::coreStringToAppString(conferenceInfo->getOrganizer()->asStringUriOnly())
+		                        : QString();
 		mOrganizerName = mConferenceInfoModel->getOrganizerName();
 		mSubject = Utils::coreStringToAppString(conferenceInfo->getSubject());
 		mDescription = Utils::coreStringToAppString(conferenceInfo->getDescription());
