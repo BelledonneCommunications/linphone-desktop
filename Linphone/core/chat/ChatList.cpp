@@ -103,6 +103,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		}
 		setIsUpdating(true);
 		beginResetModel();
+		mList.clear();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(getClassName());
 			// Avoid copy to lambdas
@@ -127,7 +128,6 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 						disconnectItem(chat);
 					}
 				}
-				mList.clear();
 				for (auto &chat : *chats) {
 					connectItem(chat);
 					mList.append(chat);

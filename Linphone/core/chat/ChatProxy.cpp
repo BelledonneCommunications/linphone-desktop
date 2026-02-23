@@ -51,6 +51,7 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 			}
 		});
 		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
+		newChatList->lUpdate();
 	}
 	QSortFilterProxyModel::setSourceModel(newChatList);
 	sort(0);
