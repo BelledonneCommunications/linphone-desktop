@@ -521,6 +521,7 @@ FocusScope {
                 ChatDroppableTextArea {
                     id: messageSender
                     Control.SplitView.preferredHeight: mainItem.chat?.core.isReadOnly ? 0 : height
+                    Control.SplitView.fillHeight: true
                     Control.SplitView.minimumHeight: mainItem.chat?.core.isReadOnly ? 0 : Utils.getSizeWithScreenRatio(79)
                     chat: mainItem.chat
                     selectedFilesCount: contents.count

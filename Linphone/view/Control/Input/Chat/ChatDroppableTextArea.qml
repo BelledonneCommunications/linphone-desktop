@@ -65,6 +65,7 @@ Control.Control {
 	rightPadding: Utils.getSizeWithScreenRatio(15)
 	topPadding: Utils.getSizeWithScreenRatio(16)
 	bottomPadding: Utils.getSizeWithScreenRatio(16)
+	
 	background: Rectangle {
 		anchors.fill: parent
 		color: DefaultStyle.grey_100
@@ -99,9 +100,7 @@ Control.Control {
 				}
 				Control.Control {
 					id: sendingControl
-					onHeightChanged: {
-						sendingAreaStackView.height = height
-					}
+					Layout.preferredHeight: mainItem.height - mainItem.topPadding - mainItem.rightPadding
 					Layout.fillWidth: true
 					Layout.alignment: Qt.AlignCenter
 					leftPadding: Utils.getSizeWithScreenRatio(24)
@@ -122,13 +121,19 @@ Control.Control {
 					contentItem: RowLayout {
 						Flickable {
 							id: sendingAreaFlickable
-							Layout.preferredHeight: Math.min(Utils.getSizeWithScreenRatio(100), contentHeight)
 							Layout.fillHeight: true
 							width: sendingControl.width - sendingControl.leftPadding - sendingControl.rightPadding
 							Layout.fillWidth: true
 							Layout.alignment: Qt.AlignCenter
 							contentHeight: sendingTextArea.contentHeight
 							contentWidth: width
+
+							onContentHeightChanged: {
+								if (sendingTextArea.contentHeight > mainItem.height - (mainItem.topPadding + mainItem.bottomPadding + sendingControl.topPadding + sendingControl.bottomPadding)
+								&& sendingTextArea.contentHeight < Utils.getSizeWithScreenRatio(100)) {
+									mainItem.height = sendingTextArea.contentHeight + mainItem.topPadding + mainItem.bottomPadding + sendingControl.topPadding + sendingControl.bottomPadding
+								}
+							}
 
 							function ensureVisible(r) {
 								if (contentX >= r.x)
@@ -143,13 +148,13 @@ Control.Control {
 
 							TextArea {
 								id: sendingTextArea
-							// RectangleTest{anchors.fill: parent}
 								width: sendingAreaFlickable.width
 								height: implicitHeight// sendingAreaFlickable.height
 								textFormat: TextEdit.PlainText
 								onTextChanged: {
 									mainItem.text = text
 								}
+								
 								Component.onCompleted: {
 									mainItem.textArea = sendingTextArea
 									sendingTextArea.text = mainItem.text
