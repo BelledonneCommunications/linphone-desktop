@@ -727,7 +727,7 @@ void App::initCore() {
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 
-			    connect(this, &App::coreStartedChanged, this, [this] {
+			    auto initLists = [this] {
 				    if (mCoreStarted) {
 					    if (!mAccountList) setAccountList(AccountList::create());
 					    else {
@@ -751,7 +751,10 @@ void App::initCore() {
 					    else mChatList->lUpdate();
 					    disconnect(this, &App::coreStartedChanged, this, nullptr);
 				    }
-			    });
+			    };
+			    if (mCoreStarted) {
+				    initLists();
+			    } else connect(this, &App::coreStartedChanged, this, initLists);
 
 			    // if (!mSettings) {
 			    mSettings = settings;

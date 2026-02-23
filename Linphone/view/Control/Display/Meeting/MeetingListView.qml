@@ -76,7 +76,6 @@ ListView {
 	onAtYEndChanged: if(atYEnd) confInfoProxy.displayMore()
 
 	Component.onCompleted: {
-		console.log("meeting list view completed invalidate")
 		confInfoProxy.invalidate()
 	}
 	
