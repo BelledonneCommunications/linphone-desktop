@@ -150,11 +150,16 @@ void ConferenceModel::toggleScreenSharing() {
 			                              : linphone::MediaDirection::SendOnly);
 		}
 		if (params->isValid()) {
-			lInfo() << log()
-			               .arg("Toggling screen sharing %1, direction=%2")
-			               .arg(enable)
-			               .arg((int)params->getVideoDirection());
-			mMonitor->getCall()->update(params);
+			if (mMonitor->getCall()) {
+				mMonitor->getCall()->update(params);
+				lInfo() << log()
+				               .arg("Toggling screen sharing %1, direction=%2")
+				               .arg(enable)
+				               .arg((int)params->getVideoDirection());
+			} else {
+				lCritical() << log().arg(
+				    "Cannot toggle screen sharing because call associated to this conference is null");
+			}
 		} else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
 	}
 }
@@ -171,7 +176,8 @@ bool ConferenceModel::isScreenSharingEnabled() const {
 void ConferenceModel::onActiveSpeakerParticipantDevice(
     const std::shared_ptr<linphone::Conference> &conference,
     const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
-    lDebug() << "onActiveSpeakerParticipantDevice: " << (participantDevice ? participantDevice->getAddress()->asString().c_str() : "NULL");
+	lDebug() << "onActiveSpeakerParticipantDevice: "
+	         << (participantDevice ? participantDevice->getAddress()->asString().c_str() : "NULL");
 
 	emit activeSpeakerParticipantDevice(conference, conference->getActiveSpeakerParticipantDevice());
 }
