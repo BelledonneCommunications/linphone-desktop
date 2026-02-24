@@ -3,6 +3,7 @@ import QtQuick.Layouts
 import QtQuick.Effects
 
 import Linphone
+import SettingsCpp
 import QtQml
 import UtilsCpp 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
@@ -41,7 +42,7 @@ ListView {
 			Text {
 				id: delegateName
 				property var remoteNameObj: UtilsCpp.getDisplayName(modelData.core.remoteAddress)
-				text: modelData.core.isConference 
+				text: modelData.core.isConference && !SettingsCpp.disableMeetingsFeature
 					? modelData.core.conference.core.subject
 					: remoteNameObj ? remoteNameObj.value : ""
                 font.pixelSize: Math.round(14 * DefaultStyle.dp)

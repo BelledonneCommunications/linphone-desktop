@@ -809,6 +809,7 @@ AbstractWindow {
                                 onClicked: {
                                     callsModel.lMergeAll()
                                     popupbutton.close()
+                                    rightPanel.visible = false
                                 }
                             }
                         }
@@ -864,9 +865,9 @@ AbstractWindow {
                     //: "Partage de votre écran"
                     Control.StackView.onActivated: rightPanel.headerTitleText = qsTr("conference_action_screen_sharing")
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     ScreencastSettings {
                         anchors.fill: parent
                         anchors.topMargin: Math.round(16 * DefaultStyle.dp)
@@ -882,9 +883,9 @@ AbstractWindow {
                 Item {
                     objectName: "participantListPanel"
                     Keys.onEscapePressed: event => {
-                                              rightPanel.visible = false
-                                              event.accepted = true
-                                          }
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     Control.StackView {
                         id: participantsStack
                         anchors.fill: parent
