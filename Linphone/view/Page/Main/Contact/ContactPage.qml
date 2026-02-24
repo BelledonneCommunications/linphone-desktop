@@ -233,6 +233,7 @@ AbstractMainPage {
                 Layout.fillWidth: true
                 //: "Contacts"
                 text: qsTr("bottom_navigation_contacts_label")
+                maximumLineCount: 1
                 color: DefaultStyle.main2_700
                 font.pixelSize: Typography.h2.pixelSize
                 font.weight: Typography.h2.weight

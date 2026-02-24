@@ -129,6 +129,7 @@ AbstractMainPage {
                         Layout.fillWidth: true
                         //: "Conversations"
                         text: qsTr("chat_list_title")
+                        maximumLineCount: 1
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight

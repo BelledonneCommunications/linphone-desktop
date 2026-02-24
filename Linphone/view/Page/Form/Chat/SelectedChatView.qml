@@ -90,14 +90,20 @@ FocusScope {
             header.bottomPadding: Utils.getSizeWithScreenRatio(searchBarLayout.visible ? 3 : 6)
 
             header.contentItem: ColumnLayout {
+                id: chatHeader
                 Layout.fillWidth: true
                 Layout.leftMargin: mainItem.call ? 0 : Utils.getSizeWithScreenRatio(31)
                 Layout.rightMargin: Utils.getSizeWithScreenRatio(41)
                 spacing: searchBarLayout.visible ? Utils.getSizeWithScreenRatio(9) : 0
-                RowLayout {
+                property real minimumWidthForSwitchintToRowLayout: headerInfos.implicitWidth + headerActionButtons.implicitWidth
+                property var useVerticalLayout: width < minimumWidthForSwitchintToRowLayout
+                GridLayout {
+		            columns: chatHeader.useVerticalLayout ? 1 : children.length
+		            rows: 1
                     RowLayout {
-                        id: chatHeader
+                        id: headerInfos
                         spacing: Utils.getSizeWithScreenRatio(12)
+                        // property int childrenWidth: 
                         Avatar {
                             property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                             contact: contactObj?.value || null
@@ -108,10 +114,10 @@ FocusScope {
                         }
                         ColumnLayout {
                             Text {
+                                Layout.fillWidth: true
                                 text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chat?.core.title) || ""
                                 color: DefaultStyle.main2_600
                                 maximumLineCount: 1
-                                textFormat: Text.RichText
                                 font {
                                     pixelSize: Typography.h4.pixelSize
                                     weight: Utils.getSizeWithScreenRatio(400)
@@ -121,7 +127,7 @@ FocusScope {
                                 visible: mainItem.chat?.core.ephemeralEnabled || false
                                 EffectImage {
                                     colorizationColor: DefaultStyle.main1_500_main
-                                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
+                                    Layout.preferredWidth: visible ? Utils.getSizeWithScreenRatio(14) : 0
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                                     imageSource: AppIcons.clockCountDown
                                 }
@@ -160,8 +166,8 @@ FocusScope {
                             imageSource: AppIcons.bellSlash
                         }
                     }
-                    Item{Layout.fillWidth: true}
                     RowLayout {
+                        id: headerActionButtons
                         spacing: Utils.getSizeWithScreenRatio(16)
                         RoundButton {
                             visible: !mainItem.call && !mainItem.chat?.core.isReadOnly
@@ -198,6 +204,7 @@ FocusScope {
                             visible: !mainItem.call
                             style: ButtonStyle.noBackground
                             checkable: true
+                            Layout.preferredWidth: width
                             checkedImageColor: DefaultStyle.main1_500_main
                             icon.source: AppIcons.info
                             checked: detailsPanel.visible
