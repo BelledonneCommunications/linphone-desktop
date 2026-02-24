@@ -2695,13 +2695,13 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
         <source>settings_chat_download_folder_title</source>
         <extracomment>&quot;Dossier de téléchargement des fichiers&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dateien Download Ordner</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
         <source>settings_chat_download_folder_browse_button</source>
         <extracomment>Browse folders</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ordner durchsuchen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
@@ -5476,7 +5476,7 @@ Ablauf: %1</translation>
         <location filename="../../tool/LinphoneEnums.cpp" line="224"/>
         <source>incoming</source>
         <extracomment>&quot;Entrant&quot;</extracomment>
-        <translation>Eingehend</translation>
+        <translation>Eingehender</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="227"/>
@@ -6107,7 +6107,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../view/Control/Input/TextField.qml" line="232"/>
         <source>textfield_custom_button_accessible_name</source>
         <extracomment>%1 button on %2</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>%1-Schaltfläche auf %2</translation>
     </message>
     <message>
         <source></source>

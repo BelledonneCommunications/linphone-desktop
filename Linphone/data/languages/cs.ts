@@ -5739,12 +5739,6 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <translation>Zahájit skupinový hovor?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Tato konverzace není šifrována!</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>

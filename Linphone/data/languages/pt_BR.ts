@@ -5577,12 +5577,6 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
         <translation>Iniciar uma chamada em grupo?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Esta conversa não está criptografada!</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
