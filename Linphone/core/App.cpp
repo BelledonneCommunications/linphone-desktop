@@ -1324,10 +1324,9 @@ void App::setMainWindow(QQuickWindow *data) {
 		connect(mMainWindow, &QQuickWindow::activeChanged, this, &App::handleAppActivity);
 		handleAppActivity();
 
-		mMainWindow->winId();
-
 #ifdef Q_OS_WIN
-		WTSRegisterSessionNotification(reinterpret_cast<HWND>(mMainWindow->winId()), NOTIFY_FOR_THIS_SESSION);
+		if (mMainWindow)
+			WTSRegisterSessionNotification(reinterpret_cast<HWND>(mMainWindow->winId()), NOTIFY_FOR_THIS_SESSION);
 #endif
 
 		emit mainWindowChanged();
