@@ -154,11 +154,16 @@ void ConferenceModel::toggleScreenSharing() {
 			                              : linphone::MediaDirection::SendOnly);
 		}
 		if (params->isValid()) {
-			lInfo() << log()
-			               .arg("Toggling screen sharing %1, direction=%2")
-			               .arg(enable)
-			               .arg((int)params->getVideoDirection());
-			mMonitor->getCall()->update(params);
+			if (mMonitor->getCall()) {
+				mMonitor->getCall()->update(params);
+				lInfo() << log()
+				               .arg("Toggling screen sharing %1, direction=%2")
+				               .arg(enable)
+				               .arg((int)params->getVideoDirection());
+			} else {
+				lCritical() << log().arg(
+				    "Cannot toggle screen sharing because call associated to this conference is null");
+			}
 		} else lCritical() << log().arg("Cannot toggle screen sharing because parameters are invalid");
 	}
 }
