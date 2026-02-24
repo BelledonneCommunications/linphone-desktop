@@ -2086,13 +2086,13 @@
 <context>
     <name>ChatDroppableTextArea</name>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="164"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="163"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="203"/>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="202"/>
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation type="unfinished"></translation>
@@ -2769,13 +2769,13 @@ Error</extracomment>
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="585"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="587"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="587"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="589"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Ihr Konto ist getrennt</translation>
