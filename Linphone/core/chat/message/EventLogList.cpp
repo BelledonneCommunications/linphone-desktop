@@ -290,12 +290,12 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 			return;
 		}
 		setIsUpdating(true);
-		beginResetModel();
 		for (auto &event : getSharedList<EventLogCore>()) {
 			disconnectItem(event);
 		}
-		mList.clear();
 		if (!mChatCore) {
+			beginResetModel();
+			mList.clear();
 			endResetModel();
 			setIsUpdating(false);
 			emit modelUpdated();
@@ -303,6 +303,8 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 		}
 		auto chatModel = mChatCore->getModel();
 		if (!chatModel) {
+			beginResetModel();
+			mList.clear();
 			endResetModel();
 			setIsUpdating(false);
 			emit modelUpdated();
@@ -317,10 +319,13 @@ void EventLogList::setSelf(QSharedPointer<EventLogList> me) {
 				if (it->getChatMessage() || model->isHandled()) events->push_front(model);
 			}
 			mCoreModelConnection->invokeToCore([this, events] {
+				beginResetModel();
+				mList.clear();
 				for (auto &event : *events) {
 					connectItem(event);
 					mList.append(event);
 				}
+				delete events;
 				endResetModel();
 				setIsUpdating(false);
 				emit modelUpdated();
