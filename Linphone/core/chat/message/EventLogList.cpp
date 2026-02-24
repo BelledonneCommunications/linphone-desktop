@@ -159,6 +159,7 @@ void EventLogList::displayMore() {
 					}
 					add(*events);
 				}
+				delete events;
 			});
 		});
 	};
@@ -201,6 +202,7 @@ void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
 			connectItem(e);
 		}
 		add(*events);
+		delete events;
 		emit messagesLoadedUpTo(event);
 	});
 }
