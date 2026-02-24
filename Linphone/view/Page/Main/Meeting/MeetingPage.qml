@@ -160,6 +160,7 @@ AbstractMainPage {
 						//: Réunions
 						text: qsTr("meetings_list_title")
 						color: DefaultStyle.main2_700
+						maximumLineCount: 1
 						font.pixelSize: Typography.h2.pixelSize
 						font.weight: Typography.h2.weight
 					}

@@ -148,6 +148,7 @@ AbstractMainPage {
                         Layout.fillWidth: true
                         //: "Appels"
                         text: qsTr("call_history_call_list_title")
+						maximumLineCount: 1
                         color: DefaultStyle.main2_700
                         font.pixelSize: Typography.h2.pixelSize
                         font.weight: Typography.h2.weight
