@@ -162,7 +162,7 @@ ColumnLayout {
 		}
 		delegate: ChatTextContent {
 			Layout.fillWidth: true
-			horizontalAlignment: mainItem.isRemoteMessage || implicitWidth > mainItem.width ? TextEdit.AlignLeft : TextEdit.AlignRight
+			horizontalAlignment: TextEdit.AlignLeft
 			// height: implicitHeight
 			contentGui: modelData
 			chatGui: mainItem.chatGui
