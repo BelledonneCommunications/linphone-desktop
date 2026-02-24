@@ -51,14 +51,17 @@ void ChatMessageFileList::setSelf(QSharedPointer<ChatMessageFileList> me) {
 	mCoreModelConnection = SafeConnection<ChatMessageFileList, CoreModel>::create(me, CoreModel::getInstance());
 	mCoreModelConnection->makeConnectToCore(&ChatMessageFileList::lUpdate, [this]() {
 		mustBeInMainThread(log().arg(Q_FUNC_INFO));
-		beginResetModel();
-		mList.clear();
+
 		if (!mChat) {
+			beginResetModel();
+			mList.clear();
 			endResetModel();
 			return;
 		}
 		auto chatModel = mChat->getModel();
 		if (!chatModel) {
+			beginResetModel();
+			mList.clear();
 			endResetModel();
 			return;
 		}
@@ -87,9 +90,12 @@ void ChatMessageFileList::setSelf(QSharedPointer<ChatMessageFileList> me) {
 				contents->push_back(model);
 			}
 			mCoreModelConnection->invokeToCore([this, contents] {
+				beginResetModel();
+				mList.clear();
 				for (auto i : *contents)
 					mList << i.template objectCast<QObject>();
 				endResetModel();
+				delete contents;
 			});
 		});
 	});
