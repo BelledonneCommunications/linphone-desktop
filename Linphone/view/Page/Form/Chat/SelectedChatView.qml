@@ -443,7 +443,7 @@ FocusScope {
                                     //: Reply to %1
                                     text: mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : ""
                                     color: DefaultStyle.main2_500_main
-                                    textFormar: Text.RichText
+                                    textFormat: Text.RichText
                                     font {
                                         pixelSize: Typography.p3.pixelSize
                                         weight: Typography.p3.weight
