@@ -152,7 +152,17 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		if (!message) return;
 		if (room->getAccount() != core->getDefaultAccount()) {
-			qInfo() << log().arg("Chat room does not refer to current account, return");
+			qInfo() << log().arg("Chat room to add does not refer to current account, return");
+			return;
+		}
+		bool canAdd = false;
+		auto linphoneChatRooms = core->getDefaultAccount()->filterChatRooms(Utils::appStringToCoreString(mFilter));
+		for (auto it : linphoneChatRooms) {
+			if (it->getIdentifier() == room->getIdentifier()) canAdd = true;
+			break;
+		}
+		if (!canAdd) {
+			lInfo() << log().arg("Chat room to add does not match the current filter, return");
 			return;
 		}
 		auto chatCore = ChatCore::create(room);
