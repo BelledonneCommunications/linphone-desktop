@@ -84,6 +84,7 @@ Popup {
 				Layout.fillWidth: true
                 Layout.maximumWidth: Utils.getSizeWithScreenRatio(300)
 				text: mainItem.description
+				textFormat: Text.RichText
 				wrapMode: Text.WordWrap
 				color: DefaultStyle.main2_500_main
 				onLinkActivated: Qt.openUrlExternally(link)
