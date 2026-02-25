@@ -60,6 +60,7 @@ public:
 	void setDisplayItemsStep(int displayItemsStep);
 
 	void findChatMessageWithFilter(QString filter, int startIndex, bool forward = true, bool isFirstResearch = true);
+	void findChatMessageById(const QString &messageId);
 
 	void setSelf(QSharedPointer<EventLogList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
@@ -71,6 +72,7 @@ signals:
 	void filterChanged(QString filter);
 	void eventInsertedByUser(int index);
 	void messageWithFilterFound(int index);
+	void foundMessagById(int index);
 	void listAboutToBeReset();
 	void chatGuiChanged();
 	void displayItemsStepChanged();

@@ -23,7 +23,8 @@ Control.Control {
     property bool isFromChatGroup: chatMessage? chatMessage.core.isFromChatGroup : false
     property bool isReply: chatMessage? chatMessage.core.isReply : false
     property bool isForward: chatMessage? chatMessage.core.isForward : false
-    property string replyText: chatMessage? chatMessage.core.replyText : false
+    property string replyText: chatMessage? chatMessage.core.replyText : ""
+    property string replyMessageId: chatMessage? chatMessage.core.replyMessageId : ""
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
     property bool linkHovered: false
@@ -40,6 +41,7 @@ Control.Control {
     signal forwardMessageRequested()
     signal endOfVoiceRecordingReached()
     signal requestAutoPlayVoiceRecording()
+    signal searchMessageByIdRequested(string id)
     onRequestAutoPlayVoiceRecording: chatBubbleContent.requestAutoPlayVoiceRecording()
 
     Timer {
@@ -154,6 +156,13 @@ Control.Control {
                         anchors.fill: parent
                         color: DefaultStyle.grey_200
                         radius: Utils.getSizeWithScreenRatio(16)
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            onClicked: {
+                                mainItem.searchMessageByIdRequested(mainItem.replyMessageId)
+                            }
+                        }
                     }
                     contentItem: Text {
                         Layout.fillWidth: true

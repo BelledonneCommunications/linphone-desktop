@@ -194,6 +194,7 @@ ChatMessageCore::ChatMessageCore(const std::shared_ptr<linphone::ChatMessage> &c
 
 		mIsForward = chatmessage->isForward();
 		mIsReply = chatmessage->isReply();
+		mReplyMessageId = Utils::coreStringToAppString(chatmessage->getReplyMessageId());
 		if (mIsReply) {
 			auto replymessage = chatmessage->getReplyMessage();
 			if (replymessage) {

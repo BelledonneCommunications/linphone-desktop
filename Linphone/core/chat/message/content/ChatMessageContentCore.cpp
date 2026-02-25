@@ -109,7 +109,7 @@ void ChatMessageContentCore::setSelf(QSharedPointer<ChatMessageContentCore> me) 
 				mChatMessageContentModelConnection->invokeToCore([this, error] {
 					//: Error downloading file %1
 					if (error->isEmpty()) *error = tr("download_file_default_error").arg(mName);
-					Utils::showInformationPopup(tr("info_popup_error_titile"), *error, false);
+					Utils::showInformationPopup(tr("info_popup_error_title"), *error, false);
 					delete error;
 				});
 			} else delete error;

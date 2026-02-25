@@ -107,6 +107,7 @@ class ChatMessageCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isForward MEMBER mIsForward CONSTANT)
 	Q_PROPERTY(bool isReply MEMBER mIsReply CONSTANT)
 	Q_PROPERTY(QString replyText MEMBER mReplyText CONSTANT)
+	Q_PROPERTY(QString replyMessageId MEMBER mReplyMessageId CONSTANT)
 	Q_PROPERTY(QString repliedToName MEMBER mRepliedToName CONSTANT)
 	Q_PROPERTY(bool hasFileContent MEMBER mHasFileContent CONSTANT)
 	Q_PROPERTY(bool isVoiceRecording MEMBER mIsVoiceRecording CONSTANT)
@@ -220,6 +221,7 @@ private:
 	bool mIsForward = false;
 	bool mIsReply = false;
 	QString mReplyText;
+	QString mReplyMessageId;
 	QString mRepliedToName;
 	bool mHasFileContent = false;
 	bool mIsCalendarInvite = false;

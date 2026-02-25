@@ -201,7 +201,10 @@ void EventLogList::loadMessagesUpTo(std::shared_ptr<linphone::EventLog> event) {
 	                     : nullptr;
 	auto chatModel = mChatCore->getModel();
 	assert(chatModel);
-	if (!chatModel) return;
+	if (!chatModel) {
+		emit messagesLoadedUpTo(nullptr);
+		return;
+	}
 	int filters = static_cast<int>(linphone::ChatRoom::HistoryFilter::ChatMessage) |
 	              static_cast<int>(linphone::ChatRoom::HistoryFilter::InfoNoDevice);
 	auto beforeEvents = chatModel->getHistoryRangeNear(mItemsToLoadBeforeSearchResult, 0, event, filters);
@@ -273,24 +276,78 @@ void EventLogList::findChatMessageWithFilter(QString filter, int startIndex, boo
 					mLastFoundResult = *it;
 					mCoreModelConnection->invokeToCore([this, index] { emit messageWithFilterFound(index); });
 				} else {
-					connect(this, &EventLogList::messagesLoadedUpTo, this,
-					        [this](std::shared_ptr<linphone::EventLog> event) {
-						        auto eventList = getSharedList<EventLogCore>();
-						        auto it = std::find_if(eventList.begin(), eventList.end(),
-						                               [event](const QSharedPointer<EventLogCore> item) {
-							                               return item->getModel()->getEventLog() == event;
-						                               });
-						        int index = it != eventList.end() ? std::distance(eventList.begin(), it) : -1;
-						        if (mLastFoundResult && mLastFoundResult == *it) index = -1;
-						        mLastFoundResult = *it;
-						        mCoreModelConnection->invokeToCore(
-						            [this, index] { emit messageWithFilterFound(index); });
-					        });
+					connect(
+					    this, &EventLogList::messagesLoadedUpTo, this,
+					    [this](std::shared_ptr<linphone::EventLog> event) {
+						    if (event == nullptr) emit messageWithFilterFound(-1);
+						    else {
+							    auto eventList = getSharedList<EventLogCore>();
+							    auto it = std::find_if(eventList.begin(), eventList.end(),
+							                           [event](const QSharedPointer<EventLogCore> item) {
+								                           return item->getModel()->getEventLog() == event;
+							                           });
+							    int index = it != eventList.end() ? std::distance(eventList.begin(), it) : -1;
+							    if (mLastFoundResult && mLastFoundResult == *it) index = -1;
+							    mLastFoundResult = *it;
+							    mCoreModelConnection->invokeToCore(
+							        [this, index] { emit messageWithFilterFound(index); });
+						    }
+					    },
+					    Qt::SingleShotConnection);
 					loadMessagesUpTo(eventLog);
 				}
 			} else {
 				lInfo() << log().arg("event not found at all in history");
 				mCoreModelConnection->invokeToCore([this, index] { emit messageWithFilterFound(index); });
+			}
+		});
+	}
+}
+
+void EventLogList::findChatMessageById(const QString &messageId) {
+	lInfo() << log().arg("Try to find message by id :");
+	auto eventList = getSharedList<EventLogCore>();
+	auto it = std::find_if(eventList.begin(), eventList.end(), [messageId](const QSharedPointer<EventLogCore> item) {
+		auto messageCore = item->getChatMessageCore();
+		if (!messageCore) return false;
+		return messageCore->getMessageId() == messageId;
+	});
+	if (it != eventList.end()) {
+		int index = std::distance(eventList.begin(), it);
+		if (index != -1) emit foundMessagById(index);
+	} else {
+		lInfo() << log().arg("Not found in displayed messages, search in entire history");
+		auto chatModel = mChatCore->getModel();
+		mCoreModelConnection->invokeToModel([this, chatModel, messageId] {
+			auto history = chatModel->getHistory();
+			auto it = std::find_if(history.begin(), history.end(),
+			                       [messageId](const std::shared_ptr<linphone::EventLog> eventLog) {
+				                       auto chatMessage = eventLog->getChatMessage();
+				                       if (!chatMessage) return false;
+				                       return Utils::coreStringToAppString(chatMessage->getMessageId()) == messageId;
+			                       });
+			// int index = it != history.end() ? std::distance(history.begin(), it) : -1;
+			// if (index != -1) emit foundMessagById(index);
+			if (it != history.end()) {
+				lInfo() << log().arg("Found in entire history, load messages up to it");
+				connect(
+				    this, &EventLogList::messagesLoadedUpTo, this,
+				    [this](std::shared_ptr<linphone::EventLog> event) {
+					    if (event == nullptr) return;
+					    auto eventList = getSharedList<EventLogCore>();
+					    auto it = std::find_if(eventList.begin(), eventList.end(),
+					                           [event](const QSharedPointer<EventLogCore> item) {
+						                           return item->getModel()->getEventLog() == event;
+					                           });
+					    int index = it != eventList.end() ? std::distance(eventList.begin(), it) : -1;
+					    lInfo() << log().arg("Index corresponding to chat message id :") << index;
+					    mCoreModelConnection->invokeToCore([this, index] { emit foundMessagById(index); });
+				    },
+				    Qt::SingleShotConnection);
+				loadMessagesUpTo(*it);
+			} else {
+				lInfo() << log().arg("Not found in entire history, event must have been deleted");
+				emit foundMessagById(-1);
 			}
 		});
 	}

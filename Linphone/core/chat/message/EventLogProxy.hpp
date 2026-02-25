@@ -77,10 +77,12 @@ public:
 	Q_INVOKABLE int findFirstUnreadIndex();
 	Q_INVOKABLE void markIndexAsRead(int proxyIndex);
 	Q_INVOKABLE void findIndexCorrespondingToFilter(int startIndex, bool forward = true, bool isFirstResearch = true);
+	Q_INVOKABLE void findChatMessageById(const QString &messageId);
 
 signals:
 	void eventInsertedByUser(int index);
 	void indexWithFilterFound(int index);
+	void foundMessagById(int index);
 	void chatGuiChanged();
 	void countChanged();
 	void initialDisplayItemsChanged();

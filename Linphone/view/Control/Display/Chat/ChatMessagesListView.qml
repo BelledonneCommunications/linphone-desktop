@@ -29,6 +29,7 @@ ListView {
     signal editMessageRequested(ChatMessageGui chatMessage)
     signal requestHighlight(int indexToHighlight)
     signal requestAutoPlayVoiceRecording(int indexToPlay)
+    signal searchMessageByIdRequested(string id)
     currentIndex: -1
 
     property string filterText
@@ -44,6 +45,9 @@ ListView {
     onFindIndexWithFilter: (forward) => {
         searchForward = forward
         eventLogProxy.findIndexCorrespondingToFilter(currentIndex, searchForward, false)
+    }
+    onSearchMessageByIdRequested: (id) => {
+        eventLogProxy.findChatMessageById(id)
     }
 
     Button {
@@ -125,6 +129,13 @@ ListView {
                     //: No result found
                     qsTr("info_popup_no_result_message"), false)
                 }
+            }
+        }
+        onFoundMessagById: (index) => {
+            if (index !== -1) {
+                currentIndex = index
+                mainItem.positionViewAtIndex(index, ListView.Center)
+                mainItem.requestHighlight(index)
             }
         }
     }
@@ -327,6 +338,7 @@ ListView {
                 onShowReactionsForMessageRequested: mainItem.showReactionsForMessageRequested(chatMessage)
                 onShowImdnStatusForMessageRequested: mainItem.showImdnStatusForMessageRequested(chatMessage)
                 onReplyToMessageRequested: mainItem.replyToMessageRequested(chatMessage)
+                onSearchMessageByIdRequested: (id) => mainItem.searchMessageByIdRequested(id)
                 onForwardMessageRequested: mainItem.forwardMessageRequested(chatMessage)
                 onEndOfVoiceRecordingReached: {
                     if (nextChatMessage && nextChatMessage.core.isVoiceRecording) mainItem.requestAutoPlayVoiceRecording(index - 1)

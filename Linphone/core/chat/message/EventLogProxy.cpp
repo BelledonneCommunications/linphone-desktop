@@ -39,6 +39,7 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 	if (oldEventLogList) {
 		disconnect(oldEventLogList, &EventLogList::displayItemsStepChanged, this, nullptr);
 		disconnect(oldEventLogList, &EventLogList::messageWithFilterFound, this, nullptr);
+		disconnect(oldEventLogList, &EventLogList::foundMessagById, this, nullptr);
 		disconnect(oldEventLogList, &EventLogList::eventInsertedByUser, this, nullptr);
 	}
 	auto newEventLogList = dynamic_cast<EventLogList *>(model);
@@ -52,6 +53,19 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 				loadUntil(proxyIndex);
 			}
 			emit indexWithFilterFound(proxyIndex);
+		});
+		connect(newEventLogList, &EventLogList::foundMessagById, this, [this, newEventLogList](int i) {
+			auto model = dynamic_cast<EventLogList *>(sourceModel());
+			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
+			if (i != -1) {
+				loadUntil(proxyIndex);
+				lInfo() << "Found index by id, request highlight at index" << proxyIndex;
+				emit foundMessagById(proxyIndex);
+			} else {
+				Utils::showInformationPopup("info_popup_error_title",
+				                            //: Original message not found. It may have been deleted
+				                            "info_popup_reply_message_not_found_error");
+			}
 		});
 		connect(newEventLogList, &EventLogList::eventInsertedByUser, this, [this, newEventLogList](int i) {
 			int proxyIndex = mapFromSource(newEventLogList->index(i, 0)).row();
@@ -205,5 +219,12 @@ void EventLogProxy::findIndexCorrespondingToFilter(int startIndex, bool forward,
 	if (eventLogList) {
 		auto listIndex = mapToSource(index(startIndex, 0)).row();
 		eventLogList->findChatMessageWithFilter(filter, listIndex, forward, isFirstResearch);
+	}
+}
+
+void EventLogProxy::findChatMessageById(const QString &messageId) {
+	auto eventLogList = dynamic_cast<EventLogList *>(sourceModel());
+	if (eventLogList) {
+		eventLogList->findChatMessageById(messageId);
 	}
 }
