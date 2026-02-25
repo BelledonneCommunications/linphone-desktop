@@ -2136,97 +2136,97 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="480"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="489"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copier la sélection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="482"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="491"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="490"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="499"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="492"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="501"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="130"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="132"/>
         <source>chat_message_remote_replied</source>
         <extracomment>%1 replied</extracomment>
         <translation>%1 a répondu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="97"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="99"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
         <translation>Transféré</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="128"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="130"/>
         <source>chat_message_remote_replied_to</source>
         <extracomment>%1 replied to %2</extracomment>
         <translation>%1 a répondu à %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="133"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="135"/>
         <source>chat_message_user_replied_to</source>
         <extracomment>You replied to %1</extracomment>
         <translation>Vous avez répondu à %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="135"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="137"/>
         <source>chat_message_user_replied</source>
         <extracomment>You replied</extracomment>
         <translation>Vous avez répondu</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="429"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="438"/>
         <source>chat_message_send_again</source>
         <extracomment>&quot;Re-send&quot;</extracomment>
         <translation>Ré-envoyer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="440"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="449"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Info de réception</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="452"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="461"/>
         <source>menu_edit_chat_message</source>
         <extracomment>&quot;Edit&quot;</extracomment>
         <translation>Modifier</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="466"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="475"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Répondre</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="500"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="509"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
         <translation>Transférer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="517"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="526"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="306"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="315"/>
         <source>conversation_message_edited_label</source>
         <translation>Modifié</translation>
     </message>
@@ -2240,9 +2240,13 @@
         <translation>Erreur de téléchargement du fichier %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
         <source>info_popup_error_titile</source>
-        <translation>Erreur</translation>
+        <translation type="vanished">Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
+        <translation type="unfinished">Erreur</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="144"/>
@@ -2356,13 +2360,13 @@ Error</extracomment>
         <translation>Réactions</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="223"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="224"/>
         <source>info_toast_deleted_title</source>
         <extracomment>Deleted</extracomment>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="225"/>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="226"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>Le message a été supprimé</translation>
@@ -2422,44 +2426,44 @@ Error</extracomment>
 <context>
     <name>ChatMessagesListView</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="113"/>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="124"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="117"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="128"/>
         <source>popup_info_find_message_title</source>
         <extracomment>Find message</extracomment>
         <translation>Trouver un message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="126"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="130"/>
         <source>info_popup_no_result_message</source>
         <extracomment>No result found</extracomment>
         <translation>Aucun résultat trouvé</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="118"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="122"/>
         <source>info_popup_first_result_message</source>
         <extracomment>First result reached</extracomment>
         <translation>Premier résultat atteint</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="116"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="120"/>
         <source>info_popup_last_result_message</source>
         <extracomment>Last result reached</extracomment>
         <translation>Dernier résultat atteint</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="164"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="175"/>
         <source>chat_message_list_encrypted_header_title</source>
         <extracomment>End to end encrypted chat</extracomment>
         <translation>Conversation chiffrée de bout en bout</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="166"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="177"/>
         <source>unencrypted_conversation_warning</source>
         <extracomment>This conversation is not encrypted !</extracomment>
         <translation>Cette conversation n&apos;est pas chiffrée !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="177"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="188"/>
         <source>chat_message_list_encrypted_header_message</source>
         <extracomment>Messages in this conversation are e2e encrypted. 
  Only your correspondent can decrypt them.</extracomment>
@@ -2467,7 +2471,7 @@ Error</extracomment>
 en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="179"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="190"/>
         <source>chat_message_list_not_encrypted_header_message</source>
         <extracomment>Messages are not end to end encrypted, 
  may sure you don&apos;t share any sensitive information !</extracomment>
@@ -2475,39 +2479,39 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         assurez-vous de ne pas partager d’informations sensibles !</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="219"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="230"/>
         <source>chat_message_is_writing_info</source>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 est en train d&apos;écrire…</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="240"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="251"/>
         <source>conversation_dialog_delete_chat_message_title</source>
         <extracomment>&quot;Supprimer le message ?&quot;</extracomment>
         <translation>Supprimer le message ?</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="248"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="259"/>
         <source>conversation_dialog_delete_locally_label</source>
         <translation>Pour moi</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="259"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="270"/>
         <source>conversation_dialog_delete_for_everyone_label</source>
         <translation>Pour tout le monde</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="270"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="281"/>
         <source>dialog_cancel</source>
         <translation>Annuler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="351"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="363"/>
         <source>info_toast_deleted_title</source>
         <translation>Supprimé</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="353"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="365"/>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>Le message a été supprimé</translation>
