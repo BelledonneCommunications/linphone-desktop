@@ -26,7 +26,7 @@
 
 .macosx-desktop:
   stage: build
-  tags: [ "macos-min-xcode12.2" ]
+  tags: [ "macos-min-xcode15" ]
   before_script:
     - QT_MAC_VER=${QT_MAC_VER_FORCED:-$QT_MAC_VER}
   rules:
@@ -95,7 +95,7 @@ macosx-ninja-novideo:
 # WAIT for QT6 for arm64
 macosx-ninja-package:
   stage: package
-  tags: [ "macosx-min-xcode12.2" ]
+  tags: [ "macos-min-xcode15" ]
   needs: []
   rules:
     - !reference [.rules-merge-request-manual, rules]
@@ -119,7 +119,7 @@ macosx-ninja-package:
 
 macosx-codesigning:
   stage: signing
-  tags: [ "macosx-min-xcode12.2" ]
+  tags: [ "macos-min-xcode15" ]
   needs:
     - macosx-ninja-package
   rules:
@@ -144,7 +144,7 @@ macosx-codesigning:
 
 macosx-deploy:
  stage: deploy
- tags: [ "macosx-min-xcode12.2" ]
+ tags: [ "macos-min-xcode15" ]
  needs:
    - macosx-codesigning
  only:
@@ -162,7 +162,7 @@ macosx-deploy:
 
 macosx-makefile-plugins-deploy:
  stage: deploy
- tags: [ "macosx-min-xcode12.2" ]
+ tags: [ "macos-min-xcode15" ]
  needs:
    - macosx-makefile
  only:

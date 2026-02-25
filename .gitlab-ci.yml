@@ -25,7 +25,7 @@ variables:
   #CMAKE_OPTIONS: -DENABLE_LIME_X3DH=YES
 
 # Docker image version
-  UBUNTU_2204_IMAGE_VERSION: 20260209_add_qt_6.8.3_opensource
+  UBUNTU_2204_IMAGE_VERSION: 20260225_add_qt_6.10.2
 
 
 workflow:
