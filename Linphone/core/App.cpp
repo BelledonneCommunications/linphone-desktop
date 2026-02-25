@@ -837,8 +837,10 @@ void App::initCore() {
 					        }
 					        checkForUpdate();
 					        setIsRestarting(false);
-					        window->show();
-					        window->requestActivate();
+					        if (window) {
+						        window->show();
+						        window->requestActivate();
+					        }
 
 					        //---------------------------------------------------------------------------------------------
 					        lDebug() << log().arg("Creating KeyboardShortcuts");
