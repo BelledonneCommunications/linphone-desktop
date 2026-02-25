@@ -26,7 +26,6 @@ Group changes to describe their impact on the project, as follows:
 - Key navigation improvement
 
 ### Changed
-- Get back to minimum supported Qt version 6.8.0 for MacOS 12 compatibility (further versions should not support it anymore)
 - Liphone now supports MacOS Intel processors
 - SDK version is now 5.4.88
 
