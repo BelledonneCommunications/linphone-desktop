@@ -10,10 +10,31 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
-## [6.1.0] - Unreleased
+
+## [6.1.1] - 2026-02-25
+
+### Added
+- Configuration : The app now supports multiple commands in the same file (for calling a command just after account configuration)
+- New parameters : 
+    - hide the content of a new received message
+    - choose the folder of the attachments
+
+### Fixed
+- Crash in chat due to residual chats
+- Vulnerability in some texts rendered in rich text (/!\ Some emojis could not be rendered well if Qt < 6.9.0 is used)
+- Notifications display on MacOS if the app is running in the background
+- Key navigation improvement
+
+### Changed
+- Get back to minimum supported Qt version 6.8.0 for MacOS 12 compatibility (further versions should not support it anymore)
+- Liphone now supports MacOS Intel processors
+- SDK version is now 5.4.88
+
+
+## [6.1.0] - 2026-01-27
 
 6.1.0 release is the complete version of the new Linphone Desktop with all features including chat
-
+ 
 ### Added
 - Chat: chat with your contacts, including text messaging, voice recording, sharing files or medias
 - Presence: get your friend's presence status as long as you both are in your contact list
