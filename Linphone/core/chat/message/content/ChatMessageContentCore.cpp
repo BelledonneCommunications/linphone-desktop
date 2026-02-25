@@ -155,6 +155,12 @@ void ChatMessageContentCore::setSelf(QSharedPointer<ChatMessageContentCore> me) 
 		    mChatMessageContentModelConnection->invokeToCore(
 		        [this, msgState = LinphoneEnums::fromLinphone(state)] { emit msgStateChanged(msgState); });
 	    });
+
+	// Sync state from SDK in case the file was already downloaded before we registered as listener
+	// (e.g. auto-download in group chats may complete before the UI objects are created).
+	if (mIsFileTransfer && !mWasDownloaded) {
+		mChatMessageContentModelConnection->invokeToModel([this] { mChatMessageContentModel->createThumbnail(); });
+	}
 }
 
 bool ChatMessageContentCore::isFile() const {

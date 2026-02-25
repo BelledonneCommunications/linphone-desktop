@@ -459,6 +459,7 @@ FocusScope {
                                     	(mainItem.chatMessage ? qsTr("reply_to_label").arg(UtilsCpp.boldTextPart(mainItem.chatMessage.core.fromName, mainItem.chatMessage.core.fromName)) : "")
                                     	: qsTr("conversation_editing_message_title")
                                     color: DefaultStyle.main2_500_main
+                                    textFormar: Text.RichText
                                     font {
                                         pixelSize: Typography.p3.pixelSize
                                         weight: Typography.p3.weight
