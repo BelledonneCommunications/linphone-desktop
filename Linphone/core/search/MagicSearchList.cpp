@@ -194,6 +194,10 @@ void MagicSearchList::setSearch(const QString &search) {
 	}
 }
 
+QString MagicSearchList::getSearch() const {
+	return mSearchFilter;
+}
+
 int MagicSearchList::getSourceFlags() const {
 	return mSourceFlags;
 }
