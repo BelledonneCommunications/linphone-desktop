@@ -129,6 +129,7 @@ Notifier::~Notifier() {
 
 bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap data) {
 	mMutex->lock();
+	lInfo() << log().arg("Create notification") << type;
 	// Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
 	if (mInstancesNumber >= MaxNotificationsNumber) { // Check existing instances.
 		qWarning() << QStringLiteral("Unable to create another notification.");
@@ -161,10 +162,11 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 			    engine, &QQmlApplicationEngine::objectCreated, this,
 			    [this, url, screen, engine, type, data](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
-					    lCritical() << "[App] Notifier.qml couldn't be load.";
+					    lCritical() << log().arg("%1 couldn't be load.").arg(url.toString());
 					    engine->deleteLater();
 					    exit(-1);
 				    } else {
+					    lInfo() << log().arg("Load %1").arg(url.toString());
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
 						    window->setProperty(NotificationPropertyData, data);
@@ -187,8 +189,24 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						        screen ? mScreenHeightOffset.take(screen->name()) : 0; // Access optimization
 						    mScreenHeightOffset.insert(screen->name(), screenHeightOffset + window->height());
 						    QObject::connect(window, &QQuickWindow::closing, window, [this, window] {
-							    qDebug() << "closing notification";
+							    lInfo() << log().arg("Closing notification");
 							    deleteNotification(QVariant::fromValue(window));
+						    });
+						    QObject::connect(window, &QQuickWindow::visibleChanged, window, [this](bool visible) {
+							    lInfo() << log().arg("Notification visible changed") << visible;
+						    });
+						    QObject::connect(window, &QQuickWindow::activeChanged, window, [this, window] {
+							    lInfo() << log().arg("Notification active changed") << window->isActive();
+						    });
+						    QObject::connect(window, &QQuickWindow::visibilityChanged, window,
+						                     [this](QWindow::Visibility visibility) {
+							                     lInfo() << log().arg("Notification visibility changed") << visibility;
+						                     });
+						    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
+							    lInfo() << log().arg("Notification width changed") << width;
+						    });
+						    QObject::connect(window, &QQuickWindow::heightChanged, window, [this](int height) {
+							    lInfo() << log().arg("Notification height changed") << height;
 						    });
 						    showNotification(window, timeout);
 						    lInfo() << QStringLiteral("Create notification:") << QVariant::fromValue(window);
@@ -209,6 +227,7 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 
 void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 	// Display notification.
+	lInfo() << log().arg("Show notification");
 	QTimer *timer = new QTimer(notification);
 	timer->setInterval(timeout);
 	timer->setSingleShot(true);
@@ -218,12 +237,10 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
 		notification->show();
 		notification->raise();
-		notification->requestActivate();
 	});
 #endif
 	notification->show();
 	notification->raise();
-	notification->requestActivate();
 
 	// Destroy it after timeout.
 	QObject::connect(timer, &QTimer::timeout, this,
@@ -258,7 +275,7 @@ void Notifier::deleteNotification(QVariant notification) {
 		return;
 	}
 
-	lInfo() << QStringLiteral("Delete notification:") << instance << --mInstancesNumber;
+	lInfo() << log().arg("Delete notification:") << instance << --mInstancesNumber;
 
 	instance->setProperty("__valid", true);
 	auto timerProperty = instance->property(NotificationPropertyTimer).value<QTimer *>();

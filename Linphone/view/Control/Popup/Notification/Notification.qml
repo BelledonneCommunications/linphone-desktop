@@ -17,7 +17,6 @@ DesktopPopup {
 	property double radius: 0
 	property color backgroundColor: DefaultStyle.grey_0
 	property double backgroundOpacity: 1
-	default property alias _content: content.data
 	
 	signal deleteNotification (var notification)
 	width: mainItem.overriddenWidth
@@ -69,9 +68,5 @@ DesktopPopup {
 				shadowBlur: 0.1
 			}
 		}
-	}
-	Item {
-		id: content
-		anchors.fill: parent
 	}
 }
