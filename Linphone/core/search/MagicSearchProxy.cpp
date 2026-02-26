@@ -129,6 +129,7 @@ void MagicSearchProxy::setSearchText(const QString &search) {
 	if (mSearchText != search) {
 		mSearchText = search;
 		mList->setSearch(mSearchText);
+		emit searchTextChanged();
 	}
 }
 
@@ -233,6 +234,8 @@ bool MagicSearchProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
 	auto l = getItemAtSource<MagicSearchList, FriendCore>(sourceLeft.row());
 	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
+	auto list = dynamic_cast<MagicSearchList *>(sourceModel());
+	QString filter = list ? list->getSearch() : QString();
 
 	if (l && r) {
 		bool lIsStored = l->getIsStored() || l->isLdap() || l->isCardDAV();
@@ -241,6 +244,8 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 		else if (!lIsStored && rIsStored) return false;
 		auto lName = l->getFullName().toLower();
 		auto rName = r->getFullName().toLower();
+		if (lName == filter) return true;
+		else if (rName == filter) return false;
 		return lName < rName;
 	}
 	return true;
