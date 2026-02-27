@@ -83,6 +83,7 @@ ListView {
 		}
 		Button {
 			id: pausingButton
+			visible: !modelData.core.isConference || !SettingsCpp.disableMeetingsFeature
 			enabled: !(modelData.core.state === LinphoneEnums.CallState.PausedByRemote)
             Layout.preferredWidth: Math.round(28 * DefaultStyle.dp)
             Layout.preferredHeight: Math.round(28 * DefaultStyle.dp)

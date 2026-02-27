@@ -1138,6 +1138,7 @@ AbstractWindow {
                     spacing: Math.round(10 * DefaultStyle.dp)
                     CheckableButton {
                         id: pauseButton
+			            visible: !mainWindow.call.core.isConference || !SettingsCpp.disableMeetingsFeature
                         Layout.preferredWidth: Math.round(55 * DefaultStyle.dp)
                         Layout.preferredHeight: Math.round(55 * DefaultStyle.dp)
                         icon.width: Math.round(32 * DefaultStyle.dp)
