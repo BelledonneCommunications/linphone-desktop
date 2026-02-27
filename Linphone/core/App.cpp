@@ -1585,9 +1585,11 @@ bool App::event(QEvent *event) {
 		if (state->applicationState() == Qt::ApplicationActive) {
 			Utils::smartShowWindow(getLastActiveWindow());
 		}
-		for (int i = 0; i < getAccountList()->rowCount(); ++i) {
-			auto accountCore = getAccountList()->getAt<AccountCore>(i);
-			handleAccountActivity(accountCore);
+		if (getAccountList()) {
+			for (int i = 0; i < getAccountList()->rowCount(); ++i) {
+				auto accountCore = getAccountList()->getAt<AccountCore>(i);
+				handleAccountActivity(accountCore);
+			}
 		}
 	}
 
