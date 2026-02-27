@@ -64,7 +64,7 @@ void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
 		if (mCurrentCall) callCore = mCurrentCall->getCore();
 		if (callCore) {
 			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this]() {
-				auto conference = mCurrentCall->getCore()->getConferenceCore();
+				auto conference = mCurrentCall ? mCurrentCall->getCore()->getConferenceCore() : nullptr;
 				lDebug() << log().arg("Set conference") << this << " => " << conference;
 				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
 			});

@@ -23,6 +23,9 @@ Item {
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
+	// Use unique address to display stickers list in active speaker mode
+	// in case two devices of the same user are present
+	property bool useUniqueAddress: false
 	property alias displayPresence: avatar.displayPresence
 	property color color: DefaultStyle.grey_600
     property real radius: Math.round(15 * DefaultStyle.dp)
@@ -35,7 +38,9 @@ Item {
 	property string remoteAddress: account 
 		? account.core.identityAddress
 		: participantDevice
-			? participantDevice.core.address
+			? useUniqueAddress
+				? participantDevice.core.uniqueAddress
+				: participantDevice.core.address
 			: call
 				? call.core.remoteAddress
 				: ""

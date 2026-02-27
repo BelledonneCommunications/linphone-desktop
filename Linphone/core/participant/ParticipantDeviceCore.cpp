@@ -46,6 +46,7 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 		mName = Utils::coreStringToAppString(device->getName());
 		auto deviceAddress = device->getAddress()->clone();
 		mUniqueAddress = Utils::coreStringToAppString(deviceAddress->asString());
+		deviceAddress->clean();
 		mAddress = Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
 		// the display name of the device himself may be the uncleaned sip uri
 		// Use the participant name instead
@@ -58,7 +59,7 @@ ParticipantDeviceCore::ParticipantDeviceCore(const std::shared_ptr<linphone::Par
 		mParticipantDeviceModel = Utils::makeQObject_ptr<ParticipantDeviceModel>(device);
 		mParticipantDeviceModel->setSelf(mParticipantDeviceModel);
 		mState = LinphoneEnums::fromLinphone(device->getState());
-		lDebug() << "Address = " << Utils::coreStringToAppString(deviceAddress->asStringUriOnly());
+		lDebug() << "Address = " << mAddress;
 		mIsLocal = ToolModel::findAccount(deviceAddress) != nullptr; // TODO set local
 		mIsVideoEnabled = mParticipantDeviceModel->isVideoEnabled();
 		mIsPaused = device->getState() == linphone::ParticipantDevice::State::Left ||
