@@ -22,7 +22,8 @@ Item {
 		: ""
 	
 	// currently speaking address (for hiding in list view)
-	property string activeSpeakerAddress
+	property string activeSpeakerAddress: activeSpeakerSticker.remoteAddress
+	onActiveSpeakerAddressChanged: console.log("active speaker address changed", activeSpeakerAddress)
 
 	property ParticipantDeviceProxy participantDevices : ParticipantDeviceProxy {
 			id: allDevices
@@ -43,17 +44,19 @@ Item {
 			call: mainItem.call
 			displayAll: !mainItem.conference
 			participantDevice: mainItem.conference && mainItem.conference.core.activeSpeakerDevice
+			useUniqueAddress: true
 			property var address: participantDevice && participantDevice.core.address
 			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
 			qmlName: 'AS'
 			securityBreach: !mainItem.conference && mainItem.call?.core.isMismatch || false
 			displayPresence: false
-			Binding {
-				target: mainItem
-				property: "activeSpeakerAddress"
-				value: activeSpeakerSticker.address
-				when: true
-			}
+			onAddressChanged: console.log("active speaker adress changed ==================", address)
+			// Binding {
+			// 	target: mainItem
+			// 	property: "activeSpeakerAddress"
+			// 	value: activeSpeakerSticker.address
+			// 	when: true
+			// }
 		}
 		ListView{
 			id: sideStickers
@@ -68,7 +71,7 @@ Item {
 			clip: true
 			delegate: Item{	// Spacing workaround
 				visible: $modelData && mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
-										&& ($modelData.core.address != activeSpeakerAddress || mainItem.conference?.core.isScreenSharingEnabled) || false
+										&& ($modelData.core.address != mainItem.activeSpeakerAddress || mainItem.conference?.core.isScreenSharingEnabled) || false
                 height: visible ? Math.round((180 + 15) * DefaultStyle.dp) : 0
                 width: Math.round(300 * DefaultStyle.dp)
 				Sticker {

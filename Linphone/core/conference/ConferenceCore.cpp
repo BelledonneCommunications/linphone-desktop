@@ -50,10 +50,26 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	auto me = conference->getMe();
 	if (me) {
 		mMe = ParticipantCore::create(me);
+		auto meDevices = me->getDevices();
+		for (auto &device : meDevices) {
+			auto deviceCore = ParticipantDeviceCore::create(device);
+			if (deviceCore) {
+				mMeDevices.append(deviceCore);
+				connect(deviceCore.get(), &ParticipantDeviceCore::stateChanged, this, [this, deviceCore] {
+					auto state = deviceCore->getState();
+					lInfo() << "me state changed, paused ="
+					        << (state == LinphoneEnums::ParticipantDeviceState::Left ||
+					            state == LinphoneEnums::ParticipantDeviceState::OnHold);
+					setIsMePaused(state == LinphoneEnums::ParticipantDeviceState::Left ||
+					              state == LinphoneEnums::ParticipantDeviceState::OnHold);
+				});
+			}
+		}
 	}
 }
 ConferenceCore::~ConferenceCore() {
 	mustBeInMainThread("~" + getClassName());
+	mMeDevices.clear();
 	if (mConferenceModel) emit mConferenceModel->removeListener();
 }
 
@@ -215,5 +231,16 @@ void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDevi
 		mActiveSpeakerDevice = device;
 		qDebug() << log().arg("Changing active speaker device to %1").arg(device ? device->getAddress() : "None");
 		emit activeSpeakerDeviceChanged();
+	}
+}
+
+bool ConferenceCore::getIsMePaused() const {
+	return mIsMePaused;
+}
+
+void ConferenceCore::setIsMePaused(bool paused) {
+	if (mIsMePaused != paused) {
+		mIsMePaused = paused;
+		emit isMePausedChanged();
 	}
 }

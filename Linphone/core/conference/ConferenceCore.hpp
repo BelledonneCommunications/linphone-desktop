@@ -80,6 +80,9 @@ public:
 	void setIsLocalScreenSharing(bool state);
 	void setIsScreenSharingEnabled(bool state);
 
+	bool getIsMePaused() const;
+	void setIsMePaused(bool paused);
+
 	std::shared_ptr<ConferenceModel> getModel() const;
 
 	//---------------------------------------------------------------------------
@@ -92,6 +95,7 @@ signals:
 	void activeSpeakerDeviceChanged();
 	void subjectChanged();
 	void isRecordingChanged();
+	void isMePausedChanged();
 
 	void lToggleScreenSharing();
 
@@ -100,12 +104,14 @@ private:
 	std::shared_ptr<ConferenceModel> mConferenceModel;
 	QSharedPointer<ParticipantDeviceCore> mActiveSpeakerDevice;
 	QSharedPointer<ParticipantCore> mMe;
+	QList<QSharedPointer<ParticipantDeviceCore>> mMeDevices;
 	int mParticipantDeviceCount = 0;
 
 	bool mIsReady = false;
 	bool mIsRecording = false;
 	bool mIsLocalScreenSharing = false;
 	bool mIsScreenSharingEnabled = false;
+	bool mIsMePaused = false;
 	QString mSubject;
 	QDateTime mStartDate = QDateTime::currentDateTime();
 

@@ -271,6 +271,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		});
 		mCallModelConnection->invokeToCore([this, state, message]() { setState(LinphoneEnums::fromLinphone(state)); });
 	});
+
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});
@@ -601,9 +602,13 @@ QSharedPointer<ConferenceCore> CallCore::getConferenceCore() const {
 
 void CallCore::setConference(const QSharedPointer<ConferenceCore> &conference) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+	if (mConference) disconnect(mConference.get(), &ConferenceCore::isMePausedChanged, this, nullptr);
 	if (mConference != conference) {
 		mConference = conference;
 		lDebug() << "[CallCore] Set conference : " << mConference;
+		if (mConference)
+			connect(mConference.get(), &ConferenceCore::isMePausedChanged, this,
+			        [this] { setPaused(mConference->getIsMePaused()); });
 		setIsConference(conference != nullptr);
 		emit conferenceChanged();
 	}

@@ -86,17 +86,27 @@ void CallModel::terminate() {
 void CallModel::setPaused(bool paused) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (paused) {
-		lInfo() << "Pausing call"
-		        << (mMonitor->getRemoteAddress() ? mMonitor->getRemoteAddress()->asStringUriOnly()
-		                                         : "no remote address");
 		if (mMonitor->getConference()) {
+			lInfo() << "Leaving conference"
+			        << (mMonitor->getRemoteAddress() ? mMonitor->getRemoteAddress()->asStringUriOnly() : "no address");
 			mMonitor->getConference()->leave();
 		} else {
+			lInfo() << "Pausing call"
+			        << (mMonitor->getRemoteAddress() ? mMonitor->getRemoteAddress()->asStringUriOnly()
+			                                         : "no remote address");
 			mMonitor->pause();
 		}
 	} else {
-		if (mMonitor->getConference()) mMonitor->getConference()->enter();
-		mMonitor->resume();
+		if (mMonitor->getConference()) {
+			lInfo() << "Entering conference"
+			        << (mMonitor->getRemoteAddress() ? mMonitor->getRemoteAddress()->asStringUriOnly() : "no address");
+			mMonitor->getConference()->enter();
+		} else {
+			lInfo() << "Resuming call"
+			        << (mMonitor->getRemoteAddress() ? mMonitor->getRemoteAddress()->asStringUriOnly()
+			                                         : "no remote address");
+			mMonitor->resume();
+		}
 	}
 }
 
