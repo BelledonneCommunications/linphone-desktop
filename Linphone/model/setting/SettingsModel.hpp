@@ -195,6 +195,8 @@ public:
 	void setDisableMeetingsFeature(bool value);
 	bool getDisableMeetingsFeature() const;
 
+	bool autoCheckForUpdateOnStart() const;
+	void setAutoCheckForUpdateOnStart(bool check);
 	bool isCheckForUpdateAvailable() const;
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
@@ -285,6 +287,7 @@ signals:
 
 	void disableMeetingsFeatureChanged(bool value);
 
+	void autoCheckForUpdateOnStartChanged();
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
 

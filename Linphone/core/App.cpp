@@ -835,7 +835,7 @@ void App::initCore() {
 							        }
 						        }
 					        }
-					        checkForUpdate();
+					        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
 					        setIsRestarting(false);
 					        if (window) {
 						        window->show();

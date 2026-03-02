@@ -274,6 +274,7 @@ public:
 	void setCardDAVMinCharForResearch(int min);
 
 	bool isCheckForUpdateAvailable() const;
+	bool autoCheckForUpdateOnStart() const;
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
 
@@ -480,6 +481,7 @@ private:
 
 	// Check update
 	bool mIsCheckForUpdateAvailable = false;
+	bool mAutoCheckForUpdateOnStart = false;
 
 	DECLARE_ABSTRACT_OBJECT
 };

@@ -925,6 +925,15 @@ bool SettingsModel::getDisableMeetingsFeature() const {
 	return !!mConfig->getInt(UiSection, "disable_meetings_feature", 0);
 }
 
+bool SettingsModel::autoCheckForUpdateOnStart() const {
+	return !!mConfig->getInt(UiSection, "auto_check_for_update_on_start", isCheckForUpdateAvailable());
+}
+
+void SettingsModel::setAutoCheckForUpdateOnStart(bool check) {
+	mConfig->setInt(UiSection, "auto_check_for_update_on_start", check);
+	emit autoCheckForUpdateOnStartChanged();
+}
+
 bool SettingsModel::isCheckForUpdateAvailable() const {
 #ifdef ENABLE_UPDATE_CHECK
 	return true;
