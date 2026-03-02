@@ -169,6 +169,7 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 					    lInfo() << log().arg("Load %1").arg(url.toString());
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
+						    window->setParent(nullptr);
 						    window->setProperty(NotificationPropertyData, data);
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
@@ -208,8 +209,8 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						    QObject::connect(window, &QQuickWindow::heightChanged, window, [this](int height) {
 							    lInfo() << log().arg("Notification height changed") << height;
 						    });
-						    showNotification(window, timeout);
 						    lInfo() << QStringLiteral("Create notification:") << QVariant::fromValue(window);
+						    showNotification(window, timeout);
 					    }
 				    }
 			    },
@@ -235,12 +236,18 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 #ifdef Q_OS_WIN
 	QObject::connect(App::getInstance(), &App::sessionUnlocked, notification, [this, notification] {
 		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
+		notification->hide();
 		notification->show();
 		notification->raise();
+		lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
+		        << "visibility =" << notification->visibility();
 	});
 #endif
 	notification->show();
 	notification->raise();
+	lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
+	        << "visibility =" << notification->visibility() << "size =" << notification->width()
+	        << notification->height();
 
 	// Destroy it after timeout.
 	QObject::connect(timer, &QTimer::timeout, this,

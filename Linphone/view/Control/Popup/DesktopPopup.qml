@@ -44,7 +44,6 @@ Window {
 	opacity: 1.0
 	height: _content[0] != null ? _content[0].height : 0
 	width: _content[0] != null ? _content[0].width : 0
-	visible: true
 
 	Item {
 		id: content
