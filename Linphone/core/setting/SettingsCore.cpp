@@ -118,6 +118,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 
 	// Check for update
 	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+	mAutoCheckForUpdateOnStart = settingsModel->autoCheckForUpdateOnStart();
 
 	// Ui
 	INIT_CORE_MEMBER(DisableChatFeature, settingsModel)
@@ -314,6 +315,7 @@ void SettingsCore::reloadSettings() {
 
 	// Check for update
 	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+	mAutoCheckForUpdateOnStart = settingsModel->autoCheckForUpdateOnStart();
 
 	setDisableChatFeature(settingsModel->getDisableChatFeature());
 	setDisableMeetingsFeature(settingsModel->getDisableMeetingsFeature());
@@ -1408,6 +1410,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 
 	// Check update
 	mIsCheckForUpdateAvailable = model->isCheckForUpdateAvailable();
+	mAutoCheckForUpdateOnStart = model->autoCheckForUpdateOnStart();
 
 	// UI
 	mDisableChatFeature = model->getDisableChatFeature();
@@ -1443,6 +1446,10 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 
 bool SettingsCore::isCheckForUpdateAvailable() const {
 	return mIsCheckForUpdateAvailable;
+}
+
+bool SettingsCore::autoCheckForUpdateOnStart() const {
+	return mAutoCheckForUpdateOnStart;
 }
 
 void SettingsCore::save() {

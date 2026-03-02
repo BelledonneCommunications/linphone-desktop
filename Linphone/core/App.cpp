@@ -860,7 +860,7 @@ void App::initCore() {
 							                Qt::SingleShotConnection);
 						        }
 					        }
-					        checkForUpdate();
+					        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
 					        setIsRestarting(false);
 					        window->show();
 					        window->requestActivate();

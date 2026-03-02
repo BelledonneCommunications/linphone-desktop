@@ -198,6 +198,8 @@ public:
 	bool getShowPastMeetings() const;
 	void setShowPastMeetings(bool show);
 
+	bool autoCheckForUpdateOnStart() const;
+	void setAutoCheckForUpdateOnStart(bool check);
 	bool isCheckForUpdateAvailable() const;
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
@@ -291,6 +293,7 @@ signals:
 
 	void showPastMeetingsChanged(bool value);
 
+	void autoCheckForUpdateOnStartChanged();
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
 
