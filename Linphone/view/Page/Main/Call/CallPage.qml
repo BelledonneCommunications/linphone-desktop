@@ -627,15 +627,32 @@ AbstractMainPage {
                                         RowLayout {
                                             EffectImage {
                                                 id: statusIcon
-                                                imageSource: modelData.core.status
-                                                             === LinphoneEnums.CallStatus.Declined
-                                                             || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted ? AppIcons.arrowElbow : modelData.core.isOutgoing ? AppIcons.arrowUpRight : AppIcons.arrowDownLeft
-                                                colorizationColor: modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted || modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : modelData.core.isOutgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                                                imageSource: modelData 
+                                                    ? modelData.core.status === LinphoneEnums.CallStatus.Declined
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.Aborted 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted 
+                                                        ? AppIcons.arrowElbow 
+                                                        : modelData.core.isOutgoing 
+                                                            ? AppIcons.arrowUpRight 
+                                                            : AppIcons.arrowDownLeft
+                                                    : ""
+                                                colorizationColor: modelData && modelData.core.status === LinphoneEnums.CallStatus.Declined 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.Aborted 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted 
+                                                        || modelData.core.status === LinphoneEnums.CallStatus.Missed 
+                                                    ? DefaultStyle.danger_500_main 
+                                                    : modelData.core.isOutgoing 
+                                                        ? DefaultStyle.info_500_main 
+                                                        : DefaultStyle.success_500_main
                                                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(16)
                                                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(16)
                                                 transform: Rotation {
-                                                    angle: modelData.core.isOutgoing
-                                                           && (modelData.core.status === LinphoneEnums.CallStatus.Declined || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere || modelData.core.status === LinphoneEnums.CallStatus.Aborted || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
+                                                    angle: modelData && modelData.core.isOutgoing && (modelData.core.status === LinphoneEnums.CallStatus.Declined 
+                                                            || modelData.core.status === LinphoneEnums.CallStatus.DeclinedElsewhere 
+                                                            || modelData.core.status === LinphoneEnums.CallStatus.Aborted 
+                                                            || modelData.core.status === LinphoneEnums.CallStatus.EarlyAborted) ? 180 : 0
                                                     origin {
                                                         x: statusIcon.width / 2
                                                         y: statusIcon.height / 2
@@ -644,12 +661,15 @@ AbstractMainPage {
                                                 }
                                                 Text {
                                                     //: "Appel manqué"
-                                                    text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
-                                                                                                                    : modelData.core.isOutgoing
-                                                                                                                        //: "Appel sortant"
-                                                                                                                        ? qsTr("call_outgoing")
-                                                                                                                        //: "Appel entrant"
-                                                                                                                        : qsTr("call_audio_incoming")
+                                                    text: modelData
+                                                    ? modelData.core.status === LinphoneEnums.CallStatus.Missed 
+                                                        ? qsTr("notification_missed_call_title")
+                                                        : modelData.core.isOutgoing
+                                                            //: "Appel sortant"
+                                                            ? qsTr("call_outgoing")
+                                                            //: "Appel entrant"
+                                                            : qsTr("call_audio_incoming")
+                                                    : ""
                                                     font {
                                                         pixelSize: Typography.p1.pixelSize
                                                         weight: Typography.p1.weight
@@ -657,8 +677,8 @@ AbstractMainPage {
                                                 }
                                             }
                                             Text {
-                                                text: UtilsCpp.formatDate(modelData.core.date)
-                                                color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                                text: modelData ? UtilsCpp.formatDate(modelData.core.date) : ""
+                                                color: modelData?.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                                 font {
                                                     pixelSize: Utils.getSizeWithScreenRatio(12)
                                                     weight: Utils.getSizeWithScreenRatio(300)
@@ -670,9 +690,7 @@ AbstractMainPage {
                                             Layout.fillWidth: true
                                         }
                                         Text {
-                                            text: UtilsCpp.formatElapsedTime(
-                                                        modelData.core.duration,
-                                                        false)
+                                            text: modelData ? UtilsCpp.formatElapsedTime(modelData.core.duration,false) : ""
                                             font {
                                                 pixelSize: Utils.getSizeWithScreenRatio(12)
                                                 weight: Utils.getSizeWithScreenRatio(300)
