@@ -112,6 +112,8 @@ public:
 	Q_PROPERTY(bool tokenVerified READ getTokenVerified WRITE setTokenVerified NOTIFY securityUpdated)
 	Q_PROPERTY(bool isMismatch READ isMismatch WRITE setIsMismatch NOTIFY securityUpdated)
 	Q_PROPERTY(LinphoneEnums::MediaEncryption encryption READ getEncryption NOTIFY securityUpdated)
+	Q_PROPERTY(LinphoneEnums::ConferenceSecurityLevel conferenceSecurityLevel READ getConferenceSecurityLevel NOTIFY
+	               conferenceSecurityLevelChanged)
 	Q_PROPERTY(QString encryptionString READ getEncryptionString NOTIFY securityUpdated)
 	Q_PROPERTY(QString localToken READ getLocalToken WRITE setLocalToken MEMBER mLocalToken NOTIFY localTokenChanged)
 	Q_PROPERTY(QStringList remoteTokens WRITE setRemoteTokens MEMBER mRemoteTokens NOTIFY remoteTokensChanged)
@@ -195,6 +197,9 @@ public:
 	QString getEncryptionString() const;
 	void setEncryption(LinphoneEnums::MediaEncryption encryption);
 
+	LinphoneEnums::ConferenceSecurityLevel getConferenceSecurityLevel() const;
+	void setConferenceSecurityLevel(LinphoneEnums::ConferenceSecurityLevel level);
+
 	bool getRemoteVideoEnabled() const;
 	void setRemoteVideoEnabled(bool enabled);
 
@@ -253,6 +258,7 @@ signals:
 	void pausedChanged();
 	void transferStateChanged();
 	void securityUpdated();
+	void conferenceSecurityLevelChanged();
 	void tokenVerified();
 	void localTokenChanged();
 	void remoteTokensChanged();
@@ -321,6 +327,7 @@ private:
 	LinphoneEnums::CallDir mDir;
 	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
 	LinphoneEnums::MediaEncryption mEncryption;
+	LinphoneEnums::ConferenceSecurityLevel mConferenceSecurityLevel;
 
 	QString mLastErrorMessage;
 	QString mRemoteName;

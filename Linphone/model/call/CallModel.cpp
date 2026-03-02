@@ -283,7 +283,7 @@ void CallModel::setConference(const std::shared_ptr<linphone::Conference> &confe
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	if (mConference != conference) {
 		mConference = conference;
-		emit conferenceChanged();
+		emit conferenceChanged(conference);
 	}
 }
 

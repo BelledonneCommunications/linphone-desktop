@@ -106,7 +106,7 @@ signals:
 	void microphoneVolumeGainChanged(float volume);
 	void inputAudioDeviceChanged(const std::string &id);
 	void outputAudioDeviceChanged(const std::string &id);
-	void conferenceChanged();
+	void conferenceChanged(const std::shared_ptr<linphone::Conference> &conference);
 	void conferenceVideoLayoutChanged(LinphoneEnums::ConferenceLayout layout);
 	void videoDescriptorChanged();
 	void errorMessageChanged(const QString &error);

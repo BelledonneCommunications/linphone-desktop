@@ -120,6 +120,9 @@ private:
 	                              const std::string &subject) override;
 	virtual void onAudioDeviceChanged(const std::shared_ptr<linphone::Conference> &conference,
 	                                  const std::shared_ptr<const linphone::AudioDevice> &audioDevice) override;
+	virtual void onParticipantDeviceIsMuted(const std::shared_ptr<linphone::Conference> &conference,
+	                                        const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice,
+	                                        bool isMuted) override;
 
 signals:
 	void activeSpeakerParticipantDevice(const std::shared_ptr<linphone::Conference> &conference,
@@ -144,6 +147,9 @@ signals:
 	void conferenceStateChanged(const std::shared_ptr<linphone::Conference> &conference,
 	                            linphone::Conference::State newState);
 	void subjectChanged(const std::string &subject);
+	void participantDeviceIsMuted(const std::shared_ptr<linphone::Conference> &conference,
+	                              const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice,
+	                              bool isMuted);
 
 private:
 	QTimer mDurationTimer;

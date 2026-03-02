@@ -288,6 +288,13 @@ void ConferenceModel::onAudioDeviceChanged(const std::shared_ptr<linphone::Confe
 	lDebug() << "onAudioDeviceChanged is not yet implemented.";
 }
 
+void ConferenceModel::onParticipantDeviceIsMuted(
+    const std::shared_ptr<linphone::Conference> &conference,
+    const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice,
+    bool isMuted) {
+	emit participantDeviceIsMuted(conference, participantDevice, isMuted);
+}
+
 void ConferenceModel::onIsScreenSharingEnabledChanged() {
 	auto call = mMonitor->getCall();
 	std::shared_ptr<linphone::CallParams> params = CoreModel::getInstance()->getCore()->createCallParams(call);

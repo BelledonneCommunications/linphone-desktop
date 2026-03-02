@@ -30,6 +30,7 @@ void LinphoneEnums::registerMetaTypes() {
 	qRegisterMetaType<LinphoneEnums::CallState>();
 	qRegisterMetaType<LinphoneEnums::CallStatus>();
 	qRegisterMetaType<LinphoneEnums::SecurityLevel>();
+	qRegisterMetaType<LinphoneEnums::ConferenceSecurityLevel>();
 	qRegisterMetaType<LinphoneEnums::ChatMessageState>();
 	qRegisterMetaType<LinphoneEnums::ChatRoomState>();
 	qRegisterMetaType<LinphoneEnums::ConferenceLayout>();
@@ -207,6 +208,27 @@ linphone::SecurityLevel LinphoneEnums::toLinphone(const LinphoneEnums::SecurityL
 
 LinphoneEnums::SecurityLevel LinphoneEnums::fromLinphone(const linphone::SecurityLevel &level) {
 	return static_cast<LinphoneEnums::SecurityLevel>(level);
+}
+
+linphone::Conference::SecurityLevel LinphoneEnums::toLinphone(const LinphoneEnums::ConferenceSecurityLevel &level) {
+	return linphone::Conference::SecurityLevel();
+}
+
+LinphoneEnums::ConferenceSecurityLevel LinphoneEnums::fromLinphone(const linphone::Conference::SecurityLevel &level) {
+	return static_cast<LinphoneEnums::ConferenceSecurityLevel>(level);
+}
+
+QString LinphoneEnums::toString(const linphone::Conference::SecurityLevel &level) {
+	switch (level) {
+		case linphone::Conference::SecurityLevel::EndToEnd:
+			return "End to end";
+		case linphone::Conference::SecurityLevel::PointToPoint:
+			return "Point to point";
+		case linphone::Conference::SecurityLevel::None:
+			return "None";
+		default:
+			return QString();
+	}
 }
 
 LinphoneEnums::CallDir LinphoneEnums::fromLinphone(const linphone::Call::Dir &data) {

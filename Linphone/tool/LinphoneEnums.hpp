@@ -178,6 +178,17 @@ Q_ENUM_NS(SecurityLevel)
 linphone::SecurityLevel toLinphone(const LinphoneEnums::SecurityLevel &level);
 LinphoneEnums::SecurityLevel fromLinphone(const linphone::SecurityLevel &level);
 
+enum class ConferenceSecurityLevel {
+	None = int(linphone::Conference::SecurityLevel::None),
+	PointToPoint = int(linphone::Conference::SecurityLevel::PointToPoint),
+	EndToEnd = int(linphone::Conference::SecurityLevel::EndToEnd)
+};
+Q_ENUM_NS(ConferenceSecurityLevel)
+
+linphone::Conference::SecurityLevel toLinphone(const LinphoneEnums::ConferenceSecurityLevel &level);
+LinphoneEnums::ConferenceSecurityLevel fromLinphone(const linphone::Conference::SecurityLevel &level);
+QString toString(const linphone::Conference::SecurityLevel &level);
+
 enum class CallDir { Outgoing = int(linphone::Call::Dir::Outgoing), Incoming = int(linphone::Call::Dir::Incoming) };
 Q_ENUM_NS(CallDir)
 

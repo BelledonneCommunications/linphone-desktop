@@ -159,6 +159,11 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	mIsConference = conference != nullptr;
 	if (mIsConference) {
 		mConference = ConferenceCore::create(conference);
+		auto confInfo = conference->getInfo();
+		if (conference->getCurrentParams() &&
+		    conference->getCurrentParams()->getSecurityLevel() == linphone::Conference::SecurityLevel::EndToEnd)
+			mConferenceSecurityLevel = LinphoneEnums::fromLinphone(linphone::Conference::SecurityLevel::EndToEnd);
+		mConferenceSecurityLevel = LinphoneEnums::ConferenceSecurityLevel::PointToPoint;
 	}
 	mMicrophoneMuted = conference ? conference->getMicrophoneMuted() : call->getMicrophoneMuted();
 	mSpeakerMuted = call->getSpeakerMuted();
@@ -350,13 +355,25 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			if (device) mCallModel->setOutputAudioDevice(device);
 		});
 	});
-	mCallModelConnection->makeConnectToModel(&CallModel::conferenceChanged, [this]() {
-		auto conference = mCallModel->getMonitor()->getConference();
-		// Force enable video if in conference to handle screen sharing
-		if (conference && !mCallModel->videoEnabled()) mCallModel->enableVideo(true);
-		QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
-		mCallModelConnection->invokeToCore([this, core]() { setConference(core); });
-	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::conferenceChanged, [this](const std::shared_ptr<linphone::Conference> &conference) {
+		    // Force enable video if in conference to handle screen sharing
+		    if (conference && !mCallModel->videoEnabled()) mCallModel->enableVideo(true);
+		    QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
+		    if (conference) {
+			    LinphoneEnums::ConferenceSecurityLevel level;
+			    lInfo() << log().arg("Conference changed %1, security level is")
+			            << (conference->getCurrentParams()
+			                    ? LinphoneEnums::toString(conference->getCurrentParams()->getSecurityLevel())
+			                    : "no conference params");
+			    if (conference->getCurrentParams() &&
+			        conference->getCurrentParams()->getSecurityLevel() == linphone::Conference::SecurityLevel::EndToEnd)
+				    level = LinphoneEnums::ConferenceSecurityLevel::EndToEnd;
+			    else level = LinphoneEnums::ConferenceSecurityLevel::PointToPoint;
+			    mCallModelConnection->invokeToCore([this, level]() { setConferenceSecurityLevel(level); });
+		    }
+		    mCallModelConnection->invokeToCore([this, core]() { setConference(core); });
+	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lAccept, [this](bool withVideo) {
 		mCallModelConnection->invokeToModel([this, withVideo]() { mCallModel->accept(withVideo); });
 	});
@@ -705,6 +722,17 @@ void CallCore::setRemoteTokens(const QStringList &token) {
 
 LinphoneEnums::MediaEncryption CallCore::getEncryption() const {
 	return mEncryption;
+}
+
+LinphoneEnums::ConferenceSecurityLevel CallCore::getConferenceSecurityLevel() const {
+	return mConferenceSecurityLevel;
+}
+
+void CallCore::setConferenceSecurityLevel(LinphoneEnums::ConferenceSecurityLevel level) {
+	if (mConferenceSecurityLevel != level) {
+		mConferenceSecurityLevel = level;
+		emit conferenceSecurityLevelChanged();
+	}
 }
 
 QString CallCore::getEncryptionString() const {

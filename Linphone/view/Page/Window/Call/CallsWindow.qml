@@ -499,17 +499,21 @@ AbstractWindow {
                                 EffectImage {
                                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(15)
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(15)
-                                    colorizationColor: mainWindow.call 
-                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp 
-                                            ? DefaultStyle.info_500_main 
-                                            : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
-                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified 
-                                                    ? DefaultStyle.warning_600 
-                                                    : DefaultStyle.info_500_main 
-                                                : DefaultStyle.grey_0 
-                                        : "transparent"
+                                    colorizationColor: mainWindow.conference
+                                        ?  DefaultStyle.info_500_main
+                                        : mainWindow.call 
+                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp 
+                                                ? DefaultStyle.info_500_main 
+                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+                                                    ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified 
+                                                        ? DefaultStyle.warning_600 
+                                                        : DefaultStyle.info_500_main 
+                                                    : DefaultStyle.grey_0 
+                                            : "transparent"
                                     visible: mainWindow.call
-                                    imageSource: mainWindow.call
+                                    imageSource: mainWindow.conference
+                                        ?  AppIcons.lockKey
+                                        : mainWindow.call
                                         ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                             ? AppIcons.lockSimple
                                             : mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
@@ -522,7 +526,11 @@ AbstractWindow {
                                 Text {
                                     id: encryptionStatusText
                                     text: mainWindow.conference
-                                        ? qsTr("call_srtp_point_to_point_encrypted")
+                                        ? mainWindow.call.core.conferenceSecurityLevel === LinphoneEnums.ConferenceSecurityLevel.EndToEnd
+                                            //: End to end encrypted meeting
+                                            ? qsTr("conference_end_to_end_encrypted")
+                                            //: Point to point encrypted meeting
+                                            : qsTr("conference_srtp_point_to_point_encrypted")
                                         : mainWindow.call
                                             ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                             //: Appel chiffré de point à point
