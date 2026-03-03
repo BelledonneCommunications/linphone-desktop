@@ -17,11 +17,13 @@ Item {
 	property bool useColor: colorizationColor != undefined
 	property bool shadowEnabled: false
 	property bool isImageReady: false
+	property bool retainWhileLoading: true
 	Image {
 		id: image
 		visible: !effect2.effectEnabled
 		source: mainItem.imageSource
 		fillMode: mainItem.fillMode
+		retainWhileLoading: mainItem.retainWhileLoading
 		sourceSize.width: width
 		sourceSize.height: height
 		width: mainItem.imageWidth

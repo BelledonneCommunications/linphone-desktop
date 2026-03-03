@@ -137,7 +137,6 @@ Control.TabBar {
 				}
 				Text {
 					id: buttonText
-					visible: buttonIcon.isImageReady
 					text: modelData.label
 					font {
 						weight: mainItem.currentIndex === index
