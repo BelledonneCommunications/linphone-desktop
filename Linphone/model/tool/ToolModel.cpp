@@ -667,7 +667,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 		qWarning() << "failed to get chat params from conference params, return";
 		return nullptr;
 	}
-	chatParams->setEphemeralLifetime(0);
+	chatParams->deactivateEphemeral();
 	auto accountParams = account->getParams();
 	auto sameDomain = remoteAddress && remoteAddress->getDomain() == SettingsModel::getInstance()->getDefaultDomain() &&
 	                  remoteAddress->getDomain() == accountParams->getDomain();
@@ -787,7 +787,7 @@ ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linpho
 		qWarning() << "failed to get chat params from conference params, return";
 		return nullptr;
 	}
-	chatParams->setEphemeralLifetime(0);
+	chatParams->deactivateEphemeral();
 	chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 
 	auto accountParams = account->getParams();

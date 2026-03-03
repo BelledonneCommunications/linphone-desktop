@@ -147,15 +147,14 @@ void ChatModel::setMuted(bool muted) {
 	emit mutedChanged(muted);
 }
 
-void ChatModel::enableEphemeral(bool enable) {
-	mMonitor->enableEphemeral(enable);
-	emit ephemeralEnableChanged(enable);
-}
-
 void ChatModel::setEphemeralLifetime(int time) {
-	mMonitor->setEphemeralLifetime(time);
+	if (time != 0) {
+		mMonitor->activateEphemeral(time, mMonitor->getEphemeralNotReadLifetime());
+	} else {
+		mMonitor->deactivateEphemeral();
+	}
 	emit ephemeralLifetimeChanged(time);
-	enableEphemeral(time != 0);
+	emit ephemeralEnableChanged(time != 0);
 }
 
 void ChatModel::deleteHistory() {
