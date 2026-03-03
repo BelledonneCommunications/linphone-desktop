@@ -37,14 +37,10 @@ Window {
 	// ---------------------------------------------------------------------------
 
 	objectName: '__internalWindow'
-	property bool showAsTool : false
-	// Don't use Popup for flags : it could lead to error in geometry. On Mac, Using Tool ensure to have the Window on Top and fullscreen independant
-	// flags: Qt.WindowDoesNotAcceptFocus | Qt.BypassWindowManagerHint | (showAsTool?Qt.Tool:Qt.WindowStaysOnTopHint) | Qt.Window | Qt.FramelessWindowHint;
-	flags: Qt.SplashScreen | Qt.WindowDoesNotAcceptFocus | Qt.WindowStaysOnTopHint  //| Qt.FramelessWindowHint 
 	opacity: 1.0
+	transientParent: null
 	height: _content[0] != null ? _content[0].height : 0
 	width: _content[0] != null ? _content[0].width : 0
-
 	Item {
 		id: content
 		anchors.fill:parent

@@ -1596,10 +1596,6 @@ bool App::event(QEvent *event) {
 		}
 		receivedMessage(0, url.toLocal8Bit());
 	} else if (event->type() == QEvent::ApplicationStateChange) {
-		auto state = static_cast<QApplicationStateChangeEvent *>(event);
-		if (state->applicationState() == Qt::ApplicationActive) {
-			Utils::smartShowWindow(getLastActiveWindow());
-		}
 		if (getAccountList()) {
 			for (int i = 0; i < getAccountList()->rowCount(); ++i) {
 				auto accountCore = getAccountList()->getAt<AccountCore>(i);
