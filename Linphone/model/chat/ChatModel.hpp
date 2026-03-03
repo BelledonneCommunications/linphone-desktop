@@ -79,7 +79,6 @@ public:
 	void compose();
 	linphone::ChatRoom::State getState() const;
 	void setMuted(bool muted);
-	void enableEphemeral(bool enable);
 	void setEphemeralLifetime(int time);
 	void setSubject(QString subject) const;
 	void removeParticipantAtIndex(int index) const;

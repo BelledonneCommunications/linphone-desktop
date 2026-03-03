@@ -73,7 +73,7 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 					                                                  // secured chatroom
 					        auto chatParams = params->getChatParams();
 					        if (!chatParams) return;
-					        chatParams->setEphemeralLifetime(0);
+					        chatParams->deactivateEphemeral();
 					        chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 					        params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 					        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
