@@ -281,9 +281,10 @@ VariantObject *Utils::haveAccount() {
 
 void Utils::smartShowWindow(QQuickWindow *window) {
 	if (!window) return;
-	// if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
-	//	window->showMaximized();
-	lInfo() << "[Utils] : show window" << window;
+	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
+		window->showMaximized();
+	else if (window->visibility() == QWindow::FullScreen) // Avoid to change visibility mode
+		window->showFullScreen();
 	window->show();
 	App::getInstance()->setLastActiveWindow(window);
 	lInfo() << "[Utils] : raise window" << window;

@@ -141,11 +141,10 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 		bool showAsTool = false;
 #ifdef Q_OS_MACOS
 		for (auto w : QGuiApplication::topLevelWindows()) {
-			if ((w->windowState() & Qt::WindowFullScreen) == Qt::WindowFullScreen) {
+			if (w->visibility() == QWindow::FullScreen) {
 				showAsTool = true;
-				w->raise(); // Used to get focus on Mac (On Mac, A Tool is hidden if the app has not focus and the only
-				            // way to rid it is to use Widget Attributes(Qt::WA_MacAlwaysShowToolWindow) that is not
-				            // available)
+				w->raise(); // Used to get focus on Mac (On Mac, A Tool is hidden if the app has not focus and the
+				// only way to rid it is to use Widget Attributes(Qt::WA_MacAlwaysShowToolWindow) that is not available)
 			}
 		}
 #endif
@@ -159,7 +158,7 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 			const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
 			QObject::connect(
 			    engine, &QQmlApplicationEngine::objectCreated, this,
-			    [this, url, screen, engine, type, data](QObject *obj, const QUrl &objUrl) {
+			    [this, url, screen, engine, type, data, showAsTool](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
 					    lCritical() << "[App] Notifier.qml couldn't be load.";
 					    engine->deleteLater();
@@ -167,7 +166,16 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 				    } else {
 					    auto window = qobject_cast<QQuickWindow *>(obj);
 					    if (window) {
+						    window->setParent(nullptr);
 						    window->setProperty(NotificationPropertyData, data);
+						    window->setScreen(screen);
+						    // Don't use Popup for flags : it could lead to error in geometry. On Mac, Using Tool ensure
+						    // to have the Window on Top and fullscreen independant
+						    window->setFlags((showAsTool ? Qt::Tool : Qt::WindowStaysOnTopHint) |
+						                     Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
+#ifdef Q_OS_LINUX
+						    window->setFlag(Qt::WindowDoesNotAcceptFocus);
+#endif
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
 						    const int timeout = Notifications[type].getTimeout() * 1000;
@@ -190,8 +198,24 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 							    qDebug() << "closing notification";
 							    deleteNotification(QVariant::fromValue(window));
 						    });
+						    QObject::connect(window, &QQuickWindow::visibleChanged, window, [this](bool visible) {
+							    lInfo() << log().arg("Notification visible changed") << visible;
+						    });
+						    QObject::connect(window, &QQuickWindow::activeChanged, window, [this, window] {
+							    lInfo() << log().arg("Notification active changed") << window->isActive();
+						    });
+						    QObject::connect(window, &QQuickWindow::visibilityChanged, window,
+						                     [this](QWindow::Visibility visibility) {
+							                     lInfo() << log().arg("Notification visibility changed") << visibility;
+						                     });
+						    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
+							    lInfo() << log().arg("Notification width changed") << width;
+						    });
+						    QObject::connect(window, &QQuickWindow::heightChanged, window, [this](int height) {
+							    lInfo() << log().arg("Notification height changed") << height;
+						    });
+						    lInfo() << QStringLiteral("Create notification:") << window;
 						    showNotification(window, timeout);
-						    lInfo() << QStringLiteral("Create notification:") << QVariant::fromValue(window);
 					    }
 				    }
 			    },
@@ -215,15 +239,21 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 	notification->setProperty(NotificationPropertyTimer, QVariant::fromValue(timer));
 #ifdef Q_OS_WIN
 	QObject::connect(App::getInstance(), &App::sessionUnlocked, notification, [this, notification] {
+		if (!notification) return;
 		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
-		notification->show();
+		notification->hide();
+		notification->showNormal();
 		notification->raise();
-		notification->requestActivate();
+		lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
+		        << "visibility =" << notification->visibility();
 	});
 #endif
-	notification->show();
+	notification->hide();
+	notification->showNormal();
 	notification->raise();
-	notification->requestActivate();
+	lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
+	        << "visibility =" << notification->visibility() << "size =" << notification->width()
+	        << notification->height();
 
 	// Destroy it after timeout.
 	QObject::connect(timer, &QTimer::timeout, this,
@@ -239,7 +269,7 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 void Notifier::deleteNotificationOnTimeout(QVariant notification) {
 #ifdef Q_OS_MACOS
 	for (auto w : QGuiApplication::topLevelWindows()) {
-		if ((w->windowState() & Qt::WindowFullScreen) == Qt::WindowFullScreen) {
+		if (w->visibility() == QWindow::FullScreen) {
 			w->requestActivate(); // Used to get focus on fullscreens on Mac in order to avoid screen switching.
 		}
 	}
