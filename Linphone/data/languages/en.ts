@@ -4953,7 +4953,7 @@ Expiration : %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="342"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="343"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>New call from %1</translation>
