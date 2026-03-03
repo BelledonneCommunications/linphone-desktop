@@ -101,6 +101,7 @@ signals:
 	void messageReadInChatRoom(std::shared_ptr<linphone::ChatRoom> chatRoom);
 	void oidcRemainingTimeBeforeTimeoutChanged(int remainingTime);
 	void forceOidcTimeout();
+	void oidcRequestFailed(const QString &error);
 	void timeoutTimerStarted();
 	void timeoutTimerStopped();
 

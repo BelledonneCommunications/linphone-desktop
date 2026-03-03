@@ -210,13 +210,14 @@ void CoreModel::setPathAfterStart() {
 
 QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 	*error = false;
+	lInfo() << log().arg("Get config %1").arg(filePath);
 	if (!filePath.isEmpty()) {
 		if (QUrl(filePath).isRelative()) { // this is a file path
 			filePath = Paths::getConfigFilePath(filePath, false);
 			if (!filePath.isEmpty()) filePath = "file://" + filePath;
 		}
 		if (filePath.isEmpty()) {
-			qWarning() << "Remote provisioning cannot be retrieved. Command have been cleaned";
+			lWarning() << "Remote provisioning path cannot be retrieved. Command have been cleaned";
 			Utils::showInformationPopup(tr("info_popup_error_title"),
 			                            //: "Remote provisioning cannot be retrieved"
 			                            tr("fetching_config_failed_error_message"), false);
@@ -229,23 +230,28 @@ QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 void CoreModel::useFetchConfig(QString filePath, bool askForConfirmation) {
 	bool error = false;
 	filePath = getFetchConfig(filePath, &error);
+	lInfo() << log().arg("Use fetch config");
 	if (!error && !filePath.isEmpty()) {
-
 		if (mCore && mCore->getGlobalState() == linphone::GlobalState::On) {
 			// TODO
 			// if (mSettings->getAutoApplyProvisioningConfigUriHandlerEnabled()) setFetchConfig(filePath); else
+			lInfo() << log().arg("Request fetch config");
 			emit requestFetchConfig(filePath, askForConfirmation);
 		} else {
+			lInfo() << log().arg("Global state is off, wait for requesting fetch config");
 			connect(
-			    this, &CoreModel::globalStateChanged, this, [filePath, this]() { useFetchConfig(filePath); },
+			    this, &CoreModel::globalStateChanged, this,
+			    [filePath, askForConfirmation, this]() { useFetchConfig(filePath, askForConfirmation); },
 			    Qt::SingleShotConnection);
 		}
+	} else {
+		lWarning() << log().arg("Could not get file path for fetching config, return");
 	}
 }
 
 bool CoreModel::setFetchConfig(QString filePath) {
 	bool fetched = false;
-	qDebug() << "setFetchConfig with " << filePath;
+	lInfo() << "setFetchConfig with " << filePath;
 	if (!filePath.isEmpty()) {
 		if (mCore) {
 			filePath.replace('\\', '/');
@@ -254,8 +260,11 @@ bool CoreModel::setFetchConfig(QString filePath) {
 		}
 	}
 	if (!fetched) {
-		qWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
-	} else emit requestRestart();
+		lWarning() << "Remote provisionning cannot be retrieved. Command have been cleaned";
+	} else {
+		lInfo() << "Remote provisionning has been retrieved. Restart";
+		emit requestRestart();
+	}
 	return fetched;
 }
 
@@ -411,8 +420,8 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 		auto username = Utils::coreStringToAppString(authInfo->getUsername());
 		auto realm = Utils::coreStringToAppString(authInfo->getRealm());
 		if (!serverUrl.isEmpty()) {
-			qDebug() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username << "@"
-			         << realm << " at " << serverUrl;
+			lInfo() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username << "@"
+			        << realm << " at " << serverUrl;
 			QString key = username + '@' + realm + ' ' + serverUrl;
 			if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
 			auto oidcModel = new OIDCModel(authInfo, this);
@@ -421,6 +430,12 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 				emit timeoutTimerStarted();
 				qDebug() << "start refresh timer";
+			});
+			connect(oidcModel, &OIDCModel::requestFailed, this, [this, oidcModel](const QString &error) {
+				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+				lWarning() << log().arg("Request failed") << error;
+				emit oidcRequestFailed(error);
+				oidcModel->forceTimeout();
 			});
 			if (oidcModel->isTimerRunning()) {
 				emit timeoutTimerStarted();

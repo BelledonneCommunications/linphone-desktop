@@ -128,12 +128,17 @@ void CliModel::cliShow(QHash<QString, QString> args) {
 }
 
 void CliModel::cliFetchConfig(QHash<QString, QString> args) {
+	lInfo() << log().arg("Run fetch-config function");
 	if (args.contains("fetch-config")) {
-		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On)
+		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On) {
+			lInfo() << log().arg("Global state is not on, wait for change of state to use config");
 			connect(
 			    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this,
 			    [this, args]() { cliFetchConfig(args); }, Qt::SingleShotConnection);
-		else CoreModel::getInstance()->useFetchConfig(args["fetch-config"], false);
+		} else {
+			lInfo() << log().arg("Global state is on, use config");
+			CoreModel::getInstance()->useFetchConfig(args["fetch-config"], false);
+		}
 	}
 }
 
@@ -240,7 +245,7 @@ void CliModel::Command::execute(QHash<QString, QString> &args, CliModel *parent)
 	if (!mGenericArguments) { // Check arguments validity.
 		for (const auto &argName : args.keys()) {
 			if (!mArgsScheme.contains(argName)) {
-				qWarning()
+				lWarning()
 				    << QStringLiteral("Command with invalid argument: `%1 (%2)`.").arg(mFunctionName).arg(argName);
 
 				return;

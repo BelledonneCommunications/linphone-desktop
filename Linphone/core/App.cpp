@@ -368,6 +368,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	                                                                                bool askForConfirmation) {
 		mCoreModelConnection->invokeToCore([this, path, askForConfirmation]() {
 			auto apply = [this, path] {
+				lInfo() << log().arg("Apply fetch config");
 				mCoreModelConnection->invokeToModel([this, path]() { CoreModel::getInstance()->setFetchConfig(path); });
 			};
 			auto callback = [this, path, askForConfirmation]() {
@@ -385,9 +386,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 				QMetaObject::invokeMethod(getMainWindow(), "showConfirmationPopup", QVariant::fromValue(obj));
 			};
 			if (!getMainWindow()) { // Delay
-				if (askForConfirmation)
+				if (askForConfirmation) {
+					lInfo() << log() << "App wants confirmation before applying config, wait for main window to open";
 					connect(this, &App::mainWindowChanged, this, callback, Qt::SingleShotConnection);
-				else connect(this, &App::mainWindowChanged, this, apply, Qt::SingleShotConnection);
+				} else connect(this, &App::mainWindowChanged, this, apply, Qt::SingleShotConnection);
 			} else {
 				if (askForConfirmation) callback();
 				else apply();
@@ -398,6 +400,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    &CoreModel::globalStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
 		    mCoreModelConnection->invokeToCore([this, gstate] {
+			    lInfo() << log().arg("Core global state changed :") << (int)gstate;
 			    setCoreStarted(gstate == linphone::GlobalState::On);
 			    if (gstate == linphone::GlobalState::Configuring) {
 				    if (mMainWindow) {
@@ -465,6 +468,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	// Synchronize state for because linphoneCore was ran before any connections.
 	mCoreModelConnection->invokeToModel([this]() {
 		auto state = CoreModel::getInstance()->getCore()->getGlobalState();
+		lInfo() << log().arg("Start app, core global state =") << (int)state;
 		mCoreModelConnection->invokeToCore([this, state] {
 			setCoreStarted(state == linphone::GlobalState::On);
 			if (state == linphone::GlobalState::Configuring) {
@@ -547,6 +551,10 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			                                         emit remainingTimeBeforeOidcTimeoutChanged();
 		                                         });
 	                                         });
+	mCoreModelConnection->makeConnectToModel(&CoreModel::oidcRequestFailed, [this](const QString &error) {
+		mCoreModelConnection->invokeToCore(
+		    [this, error] { Utils::showInformationPopup("info_popup_error_title", error, false); });
+	});
 	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
 		qDebug() << "App: force oidc timeout";
 		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
@@ -1421,6 +1429,7 @@ void App::onAuthenticationRequested(const std::shared_ptr<linphone::Core> &core,
                                     const std::shared_ptr<linphone::AuthInfo> &authInfo,
                                     linphone::AuthMethod method) {
 	bool authInfoIsInAccounts = false;
+	lInfo() << log().arg("onAuthenticationRequested, method =") << (int)method;
 	if (authInfo) {
 		for (auto &account : core->getAccountList()) {
 			if (!account) continue;
