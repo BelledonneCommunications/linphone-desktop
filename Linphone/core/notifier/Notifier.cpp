@@ -237,13 +237,14 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 	QObject::connect(App::getInstance(), &App::sessionUnlocked, notification, [this, notification] {
 		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
 		notification->hide();
-		notification->show();
+		notification->showNormal();
 		notification->raise();
 		lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
 		        << "visibility =" << notification->visibility();
 	});
 #endif
-	notification->show();
+	notification->hide();
+	notification->showNormal();
 	notification->raise();
 	lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
 	        << "visibility =" << notification->visibility() << "size =" << notification->width()
