@@ -752,6 +752,12 @@ void App::initCore() {
 					    if (!mChatList) setChatList(ChatList::create());
 					    else mChatList->lUpdate();
 					    disconnect(this, &App::coreStartedChanged, this, nullptr);
+				    } else {
+					    if (mAccountList) mAccountList->resetData();
+					    if (mCallList) mCallList->resetData();
+					    if (mCallHistoryList) mCallHistoryList->resetData();
+					    if (mChatList) mChatList->resetData();
+					    if (mConferenceInfoList) mConferenceInfoList->resetData();
 				    }
 			    };
 			    if (mCoreStarted) {
