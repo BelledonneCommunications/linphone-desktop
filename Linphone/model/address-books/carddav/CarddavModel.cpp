@@ -23,6 +23,8 @@
 #include "model/setting/SettingsModel.hpp"
 #include "tool/Utils.hpp"
 
+#include <QUrl>
+
 DEFINE_ABSTRACT_OBJECT(CarddavModel)
 
 using namespace std;
@@ -62,14 +64,32 @@ void CarddavModel::save(
 	// Auth info handled in lazy mode, if provided handle otherwise ignore.
 	// TODO: add dialog to ask user before removing existing auth info if existing already - (comment from Android)
 	if (!username.empty() && !realm.empty()) {
-		mRemovedAuthInfo = core->findAuthInfo(realm, username, "");
+		// Extract domain (hostname) from server URI so auth info can be matched by domain when
+		// the CardDAV HTTP client receives a 401 challenge
+		std::string domain;
+		if (!uri.empty()) {
+			QUrl serverUrl(QString::fromStdString(uri));
+			domain = serverUrl.host().toStdString();
+		}
+		mRemovedAuthInfo = core->findAuthInfo(realm, username, domain);
 		if (mRemovedAuthInfo != nullptr) {
 			lWarning() << log().arg("Auth info with username ") << username << " already exists, removing it first.";
 			core->removeAuthInfo(mRemovedAuthInfo);
 		}
 		lInfo() << log().arg("Adding auth info with username") << username;
-		mCreatedAuthInfo = linphone::Factory::get()->createAuthInfo(username, "", password, "", realm, "");
+		mCreatedAuthInfo = linphone::Factory::get()->createAuthInfo(username, "", password, "", realm, domain);
 		core->addAuthInfo(mCreatedAuthInfo);
+
+		// Store CardDAV credentials in a dedicated config section.
+		// The core's AuthInfo system computes HA1 and clears plaintext passwords,
+		// but CardDAV uses HTTP Basic auth which requires the plaintext password.
+		// This config section is never touched by the AuthInfo write logic.
+		if (!domain.empty()) {
+			auto config = core->getConfig();
+			config->setString("carddav_auth", domain + "_username", username);
+			config->setString("carddav_auth", domain + "_password", password);
+			lInfo() << log().arg("Stored CardDAV credentials for domain ") << domain;
+		}
 	} else {
 		lInfo() << log().arg("No auth info provided upon saving.");
 	}
@@ -89,7 +109,21 @@ void CarddavModel::save(
 
 void CarddavModel::remove() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
-	CoreModel::getInstance()->getCore()->removeFriendList(mCarddavFriendList);
+	auto core = CoreModel::getInstance()->getCore();
+
+	// Clean up CardDAV credentials from config
+	if (mCarddavFriendList && !mCarddavFriendList->getUri().empty()) {
+		QUrl serverUrl(QString::fromStdString(mCarddavFriendList->getUri()));
+		std::string domain = serverUrl.host().toStdString();
+		if (!domain.empty()) {
+			auto config = core->getConfig();
+			config->setString("carddav_auth", domain + "_username", "");
+			config->setString("carddav_auth", domain + "_password", "");
+			lInfo() << log().arg("Cleaned up CardDAV credentials for domain ") << domain;
+		}
+	}
+
+	core->removeFriendList(mCarddavFriendList);
 	lInfo() << log().arg("Friend list removed:") << mCarddavFriendList->getUri();
 	emit removed();
 }
