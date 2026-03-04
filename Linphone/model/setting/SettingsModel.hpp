@@ -195,6 +195,9 @@ public:
 	void setDisableMeetingsFeature(bool value);
 	bool getDisableMeetingsFeature() const;
 
+	bool getShowPastMeetings() const;
+	void setShowPastMeetings(bool show);
+
 	bool isCheckForUpdateAvailable() const;
 	bool isCheckForUpdateEnabled() const;
 	void setCheckForUpdateEnabled(bool enable);
@@ -284,6 +287,8 @@ signals:
 	void dndChanged(bool value);
 
 	void disableMeetingsFeatureChanged(bool value);
+
+	void showPastMeetingsChanged(bool value);
 
 	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();

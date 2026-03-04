@@ -931,6 +931,15 @@ bool SettingsModel::getDisableMeetingsFeature() const {
 	return !!mConfig->getInt(UiSection, "disable_meetings_feature", 0);
 }
 
+bool SettingsModel::getShowPastMeetings() const {
+	return !!mConfig->getInt(UiSection, "show_past_meetings", 0);
+}
+
+void SettingsModel::setShowPastMeetings(bool show) {
+	mConfig->setBool(UiSection, "show_past_meetings", show);
+	emit showPastMeetingsChanged(show);
+}
+
 bool SettingsModel::isCheckForUpdateAvailable() const {
 #ifdef ENABLE_UPDATE_CHECK
 	return true;

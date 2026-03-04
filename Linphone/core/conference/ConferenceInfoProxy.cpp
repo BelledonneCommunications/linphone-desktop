@@ -83,35 +83,6 @@ bool ConferenceInfoProxy::getAccountConnected() const {
 	return mList && mList->getAccountConnected();
 }
 
-bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	auto list = qobject_cast<ConferenceInfoList *>(sourceModel());
-	auto ciCore = list->getAt<ConferenceInfoCore>(sourceRow);
-	if (ciCore) {
-		if (ciCore->getDuration() == 0) return false;
-		bool searchTextInSubject = false;
-		bool searchTextInParticipant = false;
-		if (ciCore->getSubject().contains(mFilterText, Qt::CaseInsensitive)) searchTextInSubject = true;
-		for (auto &contact : ciCore->getParticipants()) {
-			auto infos = contact.toMap();
-			if (infos["displayName"].toString().contains(mFilterText, Qt::CaseInsensitive)) {
-				searchTextInParticipant = true;
-				break;
-			}
-		}
-		if (!searchTextInSubject && !searchTextInParticipant) return false;
-		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
-		if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::None)) {
-			return true;
-		} else if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::Future)) {
-			auto res = ciCore->getEndDateTimeUtc() >= currentDateTime;
-			return res;
-		} else return mFilterType == -1;
-	} else {
-		// if mlist count == 1 there is only the dummy row which we don't display alone
-		return !list->haveCurrentDate() && list->getCount() > 1 && mFilterText.isEmpty();
-	}
-}
-
 void ConferenceInfoProxy::clear() {
 	mList->clearData();
 }
@@ -154,6 +125,40 @@ int ConferenceInfoProxy::loadUntil(QSharedPointer<ConferenceInfoCore> data) {
 		return listIndex;
 	}
 	return -1;
+}
+
+bool ConferenceInfoProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
+	auto list = qobject_cast<ConferenceInfoList *>(sourceModel());
+	auto ciCore = list->getAt<ConferenceInfoCore>(sourceRow);
+	if (ciCore) {
+		if (ciCore->getDuration() == 0) return false;
+		auto meeting = getItemAtSource<ConferenceInfoList, ConferenceInfoCore>(sourceRow);
+		auto showPastMeetings = App::getInstance()->getSettings()->getShowPastMeetings();
+		if (!showPastMeetings && Utils::daysOffset(QDateTime::currentDateTimeUtc(), meeting->getDateTimeUtc()) < 0)
+			return false;
+
+		bool searchTextInSubject = false;
+		bool searchTextInParticipant = false;
+		if (ciCore->getSubject().contains(mFilterText, Qt::CaseInsensitive)) searchTextInSubject = true;
+		for (auto &contact : ciCore->getParticipants()) {
+			auto infos = contact.toMap();
+			if (infos["displayName"].toString().contains(mFilterText, Qt::CaseInsensitive)) {
+				searchTextInParticipant = true;
+				break;
+			}
+		}
+		if (!searchTextInSubject && !searchTextInParticipant) return false;
+		QDateTime currentDateTime = QDateTime::currentDateTimeUtc();
+		if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::None)) {
+			return true;
+		} else if (mFilterType == int(ConferenceInfoProxy::ConferenceInfoFiltering::Future)) {
+			auto res = ciCore->getEndDateTimeUtc() >= currentDateTime;
+			return res;
+		} else return mFilterType == -1;
+	} else {
+		// if mlist count == 1 there is only the dummy row which we don't display alone
+		return !list->haveCurrentDate() && list->getCount() > 1 && mFilterText.isEmpty();
+	}
 }
 
 bool ConferenceInfoProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft,
