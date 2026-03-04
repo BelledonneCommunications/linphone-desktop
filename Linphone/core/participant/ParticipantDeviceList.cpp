@@ -95,10 +95,10 @@ void ParticipantDeviceList::setConferenceModel(const std::shared_ptr<ConferenceM
 	if (mConferenceModel != conferenceModel) {
 		mConferenceModel = conferenceModel;
 		lDebug() << log().arg("Set Conference %1").arg((quint64)mConferenceModel.get());
-		if (mConferenceModelConnection->mCore.lock()) {          // Ensure to get myself
-			auto oldConnect = mConferenceModelConnection->mCore; // Setself rebuild safepointer
-			setSelf(mConferenceModelConnection->mCore.mQData);   // reset connections
-			oldConnect.unlock();
+		if (mConferenceModelConnection->mCore.lock()) {         // Ensure to get myself
+			auto me = mConferenceModelConnection->mCore.mQData; // Save shared pointer before unlock
+			mConferenceModelConnection->mCore.unlock();         // Unlock before destroying old connection
+			setSelf(me);                                        // reset connections
 		}
 		beginResetModel();
 		mList.clear();

@@ -74,13 +74,17 @@ protected:
 	}
 	~SafeConnection() {
 		mLocker.lock();
+		auto coreType = QString(typeid(A).name());
+		auto modelType = QString(typeid(B).name());
 		if (mModel.mCountRef != 0)
-			QTimer::singleShot(1000, mModel.get(), []() {
-				lCritical() << "[SafeConnection] Destroyed 1s ago but a Model is still in memory";
+			QTimer::singleShot(1000, mModel.get(), [coreType, modelType]() {
+				lCritical() << "[SafeConnection] Destroyed 1s ago but a Model is still in memory."
+				            << "Core:" << coreType << "Model:" << modelType;
 			});
 		if (mCore.mCountRef != 0)
-			QTimer::singleShot(1000, mCore.get(), []() {
-				lCritical() << "[SafeConnection] Destroyed 1s ago but a Core is still in memory";
+			QTimer::singleShot(1000, mCore.get(), [coreType, modelType]() {
+				lCritical() << "[SafeConnection] Destroyed 1s ago but a Core is still in memory."
+				            << "Core:" << coreType << "Model:" << modelType;
 			});
 		mLocker.unlock();
 	}
