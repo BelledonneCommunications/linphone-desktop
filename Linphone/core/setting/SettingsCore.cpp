@@ -1230,6 +1230,14 @@ bool SettingsCore::getShowPastMeetings() const {
 	return mShowPastMeetings;
 }
 
+void SettingsCore::setShowPastMeetings(bool show) {
+	if (mShowPastMeetings != show) {
+		mShowPastMeetings = show;
+		emit showPastMeetingsChanged();
+		setIsSaved(false);
+	}
+}
+
 bool SettingsCore::getExitOnClose() const {
 	return mExitOnClose;
 }

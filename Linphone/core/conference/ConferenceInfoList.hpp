@@ -27,6 +27,7 @@
 #include <linphone++/linphone.hh>
 
 class CoreModel;
+class SettingsModel;
 class ConferenceInfoCore;
 class AccountCore;
 
@@ -74,6 +75,7 @@ signals:
 
 private:
 	QSharedPointer<SafeConnection<ConferenceInfoList, CoreModel>> mCoreModelConnection;
+	QSharedPointer<SafeConnection<ConferenceInfoList, SettingsModel>> mSettingsModelConnection;
 	QSharedPointer<AccountCore> mCurrentAccountCore;
 	bool mHaveCurrentDate = false;
 	bool mAccountConnected = false;

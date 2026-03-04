@@ -23,6 +23,7 @@
 #include "ConferenceInfoGui.hpp"
 #include "core/App.hpp"
 #include "model/object/VariantObject.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include <QSharedPointer>
@@ -163,6 +164,11 @@ void ConferenceInfoList::setSelf(QSharedPointer<ConferenceInfoList> me) {
 			}
 		});
 	});
+
+	mSettingsModelConnection =
+	    SafeConnection<ConferenceInfoList, SettingsModel>::create(me, SettingsModel::getInstance());
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::showPastMeetingsChanged, &ConferenceInfoList::lUpdate);
+
 	emit lUpdate();
 }
 

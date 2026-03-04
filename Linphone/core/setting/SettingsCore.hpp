@@ -40,6 +40,7 @@ public:
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY videoEnabledChanged)
 	Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY
 	               echoCancellationEnabledChanged)
+	Q_PROPERTY(bool showPastMeetings READ getShowPastMeetings WRITE setShowPastMeetings NOTIFY showPastMeetingsChanged)
 	Q_PROPERTY(bool autoDownloadReceivedFiles READ getAutoDownloadReceivedFiles WRITE setAutoDownloadReceivedFiles
 	               NOTIFY autoDownloadReceivedFilesChanged)
 	Q_PROPERTY(QString downloadFolder READ getDownloadFolder WRITE setDownloadFolder NOTIFY downloadFolderChanged)
@@ -168,6 +169,9 @@ public:
 	}
 	void setAutomaticallyRecordCallsEnabled(bool enabled);
 
+	bool getShowPastMeetings() const;
+	void setShowPastMeetings(bool show);
+
 	float getPlaybackGain() const;
 	void setPlaybackGain(float gain);
 	void setPlaybackGainFromModel(float gain);
@@ -279,7 +283,6 @@ public:
 
 	DECLARE_CORE_GETSET_MEMBER(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableMeetingsFeature, DisableMeetingsFeature)
-	DECLARE_CORE_GETSET(bool, showPastMeetings, ShowPastMeetings)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideAccountSettings, HideAccountSettings)
@@ -322,6 +325,8 @@ signals:
 	void autoDownloadReceivedFilesChanged();
 	void downloadFolderChanged();
 	void displayNotificationContentChanged();
+
+	void showPastMeetingsChanged();
 
 	void automaticallyRecordCallsEnabledChanged();
 
@@ -422,6 +427,8 @@ private:
 	QString mDownloadFolder;
 	bool mDisplayNotificationContent;
 	bool mAutomaticallyRecordCallsEnabled;
+
+	bool mShowPastMeetings;
 
 	// Audio
 	QVariantList mCaptureDevices;
