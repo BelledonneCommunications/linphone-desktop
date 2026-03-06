@@ -25,6 +25,8 @@
 #include "model/tool/ToolModel.hpp"
 
 #include <QSharedPointer>
+#include <QTimer>
+
 #include <linphone++/linphone.hh>
 
 // =============================================================================
@@ -71,12 +73,17 @@ void ChatList::connectItem(QSharedPointer<ChatCore> chat) {
 	    },
 	    Qt::SingleShotConnection);
 	auto dataChange = [this, chat] {
-		int i = -1;
-		get(chat.get(), &i);
-		if (i != -1) {
-			auto modelIndex = index(i);
-			if (modelIndex.isValid()) emit dataChanged(modelIndex, modelIndex);
-		}
+		// Defer dataChanged to avoid destroying QML delegates synchronously
+		// during a SafeConnection::invokeToCore callback, which causes
+		// accessibility to access already-freed QQuickItem data (QTBUG).
+		QTimer::singleShot(0, this, [this, chat] {
+			int i = -1;
+			get(chat.get(), &i);
+			if (i != -1) {
+				auto modelIndex = index(i);
+				if (modelIndex.isValid()) emit dataChanged(modelIndex, modelIndex);
+			}
+		});
 	};
 	connect(chat.get(), &ChatCore::unreadMessagesCountChanged, this, [this, dataChange] {
 		dataChange();
