@@ -18,6 +18,7 @@ Item {
 	property bool shadowEnabled: false
 	property bool isImageReady: false
 	property bool retainWhileLoading: true
+	property alias status: image.status
 	Image {
 		id: image
 		visible: !effect2.effectEnabled

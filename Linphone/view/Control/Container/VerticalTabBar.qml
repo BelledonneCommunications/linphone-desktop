@@ -142,7 +142,7 @@ Control.TabBar {
 					font {
 						weight: mainItem.currentIndex === index
 							? Utils.getSizeWithScreenRatio(800)
-							: tabButton.hovered 
+							: tabButton.hovered
 								? Utils.getSizeWithScreenRatio(600)
 								: Utils.getSizeWithScreenRatio(400)
 						pixelSize: Utils.getSizeWithScreenRatio(11)

@@ -115,6 +115,7 @@ FocusScope {
                         ColumnLayout {
                             Text {
                                 Layout.fillWidth: true
+	                            Component.onCompleted: console.log(text, "width", width, "implicitWidth", implicitWidth, "advance", advance, contentWidth)
                                 text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chat?.core.title) || ""
                                 color: DefaultStyle.main2_600
                                 maximumLineCount: 1
@@ -166,6 +167,7 @@ FocusScope {
                             imageSource: AppIcons.bellSlash
                         }
                     }
+                    Item{Layout.fillWidth: true}
                     RowLayout {
                         id: headerActionButtons
                         spacing: Utils.getSizeWithScreenRatio(16)
@@ -211,12 +213,17 @@ FocusScope {
                             onCheckedChanged: {
                                 detailsPanel.visible = checked
                             }
+                            Connections {
+                                target: detailsPanel
+                                function onVisibleChanged() {
+                                    if (!detailsPanel.visible) detailsPanelButton.checked = false
+                                }
+                            }
                         }
                     }
                 }
                 RowLayout {
                     id: searchBarLayout
-                    visible: searchInHistoryButton.checked
                     onVisibleChanged: {
                         if(!visible) chatMessagesSearchBar.clearText()
                         else chatMessagesSearchBar.forceActiveFocus()
@@ -291,7 +298,14 @@ FocusScope {
                 anchors.fill: parent
                 orientation: Qt.Vertical
                 handle: Rectangle {
-                    visible: !mainItem.chat?.core.isReadOnly
+                    id: splitViewHandle
+                    visible: !mainItem.chat?.core.isReadOnly || false
+                    // Hack for keeping handle unvisible in call history chat
+                    // (It somehow becomes visible when switching from call history to chat
+                    // history even if chat is read only)
+                    onVisibleChanged: {
+                        visible = !mainItem.chat?.core.isReadOnly || false
+                    }
                     enabled: visible
                     implicitHeight: Utils.getSizeWithScreenRatio(8)
                     color: Control.SplitHandle.hovered ? DefaultStyle.grey_200 : DefaultStyle.grey_100
@@ -574,7 +588,7 @@ FocusScope {
             }
         }
         Rectangle {
-            visible: detailsPanel.visible
+            visible: detailsPanel.visible && detailsPanel.width < mainItem.width
             color: DefaultStyle.main2_200
             Layout.preferredWidth: Utils.getSizeWithScreenRatio(1)
             Layout.fillHeight: true
@@ -583,7 +597,7 @@ FocusScope {
             id: detailsPanel
             visible: false
             Layout.fillHeight: true
-            Layout.preferredWidth: Utils.getSizeWithScreenRatio(387)
+            Layout.preferredWidth: Math.min(Utils.getSizeWithScreenRatio(387), mainItem.width)
             onVisibleChanged: if(!visible) {
                 contentLoader.panelType = SelectedChatView.PanelType.None
             }
@@ -591,6 +605,11 @@ FocusScope {
             background: Rectangle {
                 color: DefaultStyle.grey_0
                 anchors.fill: parent
+                RoundButton {
+                    style: ButtonStyle.noBackgroundOrange
+                    icon.source: AppIcons.leftArrow
+                    onClicked: detailsPanel.visible = false
+                }
             }
 
             contentItem: Loader {

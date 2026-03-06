@@ -192,8 +192,8 @@ ColumnLayout {
 		spacing: Utils.getSizeWithScreenRatio(10)
 		Layout.alignment: Qt.AlignHCenter
 		Layout.topMargin: Utils.getSizeWithScreenRatio(30)
-		Layout.preferredHeight: Utils.getSizeWithScreenRatio(110)
-		Layout.minimumHeight: Utils.getSizeWithScreenRatio(110)
+		Layout.preferredHeight: visible ? Utils.getSizeWithScreenRatio(110) : 0
+		Layout.minimumHeight: visible ? Utils.getSizeWithScreenRatio(110) : 0
 		LabelButton {
 			text.Layout.fillWidth: true
 			text.horizontalAlignment: Text.AlignHCenter

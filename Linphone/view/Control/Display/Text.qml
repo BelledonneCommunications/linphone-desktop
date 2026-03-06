@@ -7,6 +7,20 @@ Quick.Text {
 	id: mainItem
 	property double scaleLettersFactor: 1.
 	width: txtMeter.advanceWidth
+	property alias tooltip: tooltip
+	property alias mouseArea: mouseArea
+	Quick.MouseArea  {
+		id: mouseArea
+		anchors.fill: parent
+		acceptedButtons: Qt.NoButton
+		hoverEnabled: true
+		onContainsMouseChanged: console.log("mouse area contains mouse", containsMouse)
+	}
+	ToolTip {
+		id: tooltip
+		visible: mainItem.visible && mouseArea.containsMouse && mainItem.truncated
+		text: mainItem.text
+	}
 	font {
 		family: DefaultStyle.defaultFont
         pixelSize: Utils.getSizeWithScreenRatio(10)

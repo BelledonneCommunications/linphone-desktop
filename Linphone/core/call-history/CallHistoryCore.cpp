@@ -20,6 +20,7 @@
 
 #include "CallHistoryCore.hpp"
 #include "core/App.hpp"
+#include "core/chat/ChatGui.hpp"
 #include "core/conference/ConferenceInfoCore.hpp"
 #include "core/friend/FriendGui.hpp"
 #include "model/call-history/CallHistoryModel.hpp"
@@ -58,6 +59,9 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 		mConferenceInfo = ConferenceInfoCore::create(confinfo);
 		mRemoteAddress = Utils::coreStringToAppString(confinfo->getUri()->asStringUriOnly());
 		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
+		if (auto chatroom = callLog->getChatRoom()) {
+			mChatCore = ChatCore::create(chatroom);
+		}
 	} else {
 		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
 		auto linphoneFriend = ToolModel::findFriendByAddress(addr);
@@ -154,6 +158,10 @@ void CallHistoryCore::setDuration(const QString &duration) {
 		mDuration = duration;
 		emit durationChanged(mDuration);
 	}
+}
+
+ChatGui *CallHistoryCore::getChatGui() const {
+	return mChatCore ? new ChatGui(mChatCore) : nullptr;
 }
 
 void CallHistoryCore::remove() {

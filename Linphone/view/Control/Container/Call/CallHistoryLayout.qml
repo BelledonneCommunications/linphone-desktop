@@ -16,6 +16,7 @@ ColumnLayout {
 
 	property FriendGui contact
 	property var conferenceInfo: callHistoryGui?.core.conferenceInfo
+	property var chatGui: callHistoryGui?.core.chatGui
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
 	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
@@ -33,8 +34,12 @@ ColumnLayout {
 	property alias buttonContent: rightButton.data
 	property alias detailContent: detailControl.data
 
+	signal conferenceChatDisplayRequested()
+	signal conferenceCallHistoryDisplayRequested()
+
 	ColumnLayout {
         spacing: Utils.getSizeWithScreenRatio(13)
+		Layout.alignment: Qt.AlignHCenter
 		Item {
             Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 			Layout.preferredHeight: detailAvatar.height
@@ -65,6 +70,7 @@ ColumnLayout {
 
 			ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(2)
+				Layout.alignment: Qt.AlignHCenter
 				Text {
 					Layout.preferredWidth: implicitWidth
 					Layout.alignment: Qt.AlignHCenter
@@ -81,7 +87,7 @@ ColumnLayout {
 					Layout.alignment: Qt.AlignHCenter
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
-					visible: mainItem.specificAddress != ""
+					visible: mainItem.specificAddress != "" && !mainItem.isConference
 					text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(mainItem.specificAddress) : mainItem.specificAddress
 					elide: Text.ElideMiddle
 					maximumLineCount: 1
@@ -106,7 +112,7 @@ ColumnLayout {
 		}
 	}
 	MediumButton {
-		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature
+		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature && !confWithChatLayout.visible
 		Layout.alignment: Qt.AlignHCenter
 		//: "Rejoindre la réunion"
 		text: qsTr("meeting_info_join_title")
@@ -118,6 +124,47 @@ ColumnLayout {
 				UtilsCpp.smartShowWindow(callsWindow)
 			}
 		}
+	}
+	RowLayout {
+		id: confWithChatLayout
+		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature && mainItem.chatGui !== null
+		Layout.alignment: Qt.AlignHCenter
+        spacing: Utils.getSizeWithScreenRatio(72)
+		// Layout.fillWidth: true
+		Layout.preferredHeight: childrenRect.height
+		LabelButton {
+			visible: !SettingsCpp.disableChatFeature
+            width: Utils.getSizeWithScreenRatio(56)
+            height: Utils.getSizeWithScreenRatio(56)
+            button.icon.width: Utils.getSizeWithScreenRatio(24)
+            button.icon.height: Utils.getSizeWithScreenRatio(24)
+            button.icon.source: AppIcons.videoconference
+            //: "Join"
+            label: qsTr("meeting_info_join_title")
+			button.onClicked: if (mainItem.conferenceInfo) {
+				var callsWindow = UtilsCpp.getOrCreateCallsWindow()
+				callsWindow.setupConference(mainItem.conferenceInfo)
+				UtilsCpp.smartShowWindow(callsWindow)
+			}
+        }
+		LabelButton {
+			visible: !SettingsCpp.disableChatFeature
+			button.checkable: true
+            width: Utils.getSizeWithScreenRatio(56)
+            height: Utils.getSizeWithScreenRatio(56)
+            button.icon.width: Utils.getSizeWithScreenRatio(24)
+            button.icon.height: Utils.getSizeWithScreenRatio(24)
+            button.icon.source: button.checked ? AppIcons.callList : AppIcons.chatTeardropText
+            label: button.checked 
+            //: "Call history"
+			? qsTr("contact_call_history_action")
+            //: "Conversation"
+			: qsTr("contact_conversation_action")
+			button.onCheckedChanged: {
+				if (button.checked) mainItem.conferenceChatDisplayRequested()
+				else mainItem.conferenceCallHistoryDisplayRequested()
+			}
+        }
 	}
 	RowLayout {
 		Layout.alignment: Qt.AlignHCenter
