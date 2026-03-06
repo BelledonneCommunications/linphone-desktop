@@ -89,7 +89,6 @@ Control.TabBar {
 		Control.TabButton {
 			id: tabButton
 			width: mainItem.width
-			height: visible && buttonIcon.isImageReady ? undefined : 0
             bottomInset:  Utils.getSizeWithScreenRatio(32)
             topInset:  Utils.getSizeWithScreenRatio(32)
 			hoverEnabled: true
@@ -134,10 +133,12 @@ Control.TabBar {
 					fillMode: Image.PreserveAspectFit
 					colorizationColor: DefaultStyle.grey_0
 					useColor: !modelData.colored
+					onStatusChanged: if (status === Image.Ready && !buttonText.visible) buttonText.visible = true
 				}
 				Text {
 					id: buttonText
 					text: modelData.label
+					visible: false
 					font {
 						weight: mainItem.currentIndex === index
 							? Utils.getSizeWithScreenRatio(800)
