@@ -192,9 +192,9 @@ signals:
 	void lSetMuted(bool muted);
 	void lSetEphemeralLifetime(int time);
 	void lSetSubject(QString subject);
-	void lRemoveParticipantAtIndex(int index);
+	void lRemoveParticipant(QString sipAddress);
 	void lSetParticipantsAddresses(QStringList addresses);
-	void lToggleParticipantAdminStatusAtIndex(int index);
+	void lToggleParticipantAdminStatus(QString sipAddress);
 
 private:
 	QString id;

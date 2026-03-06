@@ -81,9 +81,9 @@ public:
 	void setMuted(bool muted);
 	void setEphemeralLifetime(int time);
 	void setSubject(QString subject) const;
-	void removeParticipantAtIndex(int index) const;
+	void removeParticipant(const QString &sipAddress) const;
 	void setParticipantAddresses(const QStringList &addresses);
-	void toggleParticipantAdminStatusAtIndex(int index) const;
+	void toggleParticipantAdminStatus(const QString &sipAddress) const;
 
 signals:
 	void historyDeleted();

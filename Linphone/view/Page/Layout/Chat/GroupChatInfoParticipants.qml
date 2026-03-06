@@ -144,7 +144,7 @@ ColumnLayout {
 									icon.height: Utils.getSizeWithScreenRatio(32)
 									onClicked: {
 										detailOptions.close()
-										mainItem.chatGui.core.lToggleParticipantAdminStatusAtIndex(index)
+										mainItem.chatGui.core.lToggleParticipantAdminStatus(participantGui.core.sipAddress)
 									}
 								}
 								IconLabelButton {
@@ -181,7 +181,7 @@ ColumnLayout {
 										"",
 										function(confirmed) {
 											if (confirmed) {
-												mainItem.chatGui.core.lRemoveParticipantAtIndex(index)
+												mainItem.chatGui.core.lRemoveParticipant(participantGui.core.sipAddress)
 											}
 										})
 									}

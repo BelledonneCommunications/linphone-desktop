@@ -221,14 +221,19 @@ void ChatModel::setSubject(QString subject) const {
 	return mMonitor->setSubject(Utils::appStringToCoreString(subject));
 }
 
-void ChatModel::removeParticipantAtIndex(int index) const {
-	auto participant = *std::next(mMonitor->getParticipants().begin(), index);
-	mMonitor->removeParticipant(participant);
+void ChatModel::removeParticipant(const QString &sipAddress) const {
+	if (!mMonitor) return;
+	auto addr = Utils::appStringToCoreString(sipAddress);
+	for (auto &p : mMonitor->getParticipants())
+		if (p && p->getAddress()->asStringUriOnly() == addr) return mMonitor->removeParticipant(p);
 }
 
-void ChatModel::toggleParticipantAdminStatusAtIndex(int index) const {
-	auto participant = *std::next(mMonitor->getParticipants().begin(), index);
-	mMonitor->setParticipantAdminStatus(participant, !participant->isAdmin());
+void ChatModel::toggleParticipantAdminStatus(const QString &sipAddress) const {
+	if (!mMonitor) return;
+	auto addr = Utils::appStringToCoreString(sipAddress);
+	for (auto &p : mMonitor->getParticipants())
+		if (p && p->getAddress()->asStringUriOnly() == addr)
+			return mMonitor->setParticipantAdminStatus(p, !p->isAdmin());
 }
 
 void ChatModel::setParticipantAddresses(const QStringList &addresses) {
