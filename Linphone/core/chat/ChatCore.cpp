@@ -399,17 +399,17 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 		    }
 		    mChatModelConnection->invokeToCore([this, success] { emit participantAddressesChanged(success); });
 	    });
-	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipantAtIndex, [this](int index) {
-		mChatModelConnection->invokeToModel([this, index]() { mChatModel->removeParticipantAtIndex(index); });
+	mChatModelConnection->makeConnectToCore(&ChatCore::lRemoveParticipant, [this](QString sipAddress) {
+		mChatModelConnection->invokeToModel([this, sipAddress]() { mChatModel->removeParticipant(sipAddress); });
 	});
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lSetParticipantsAddresses, [this](QStringList addresses) {
 		mChatModelConnection->invokeToModel([this, addresses]() { mChatModel->setParticipantAddresses(addresses); });
 	});
 
-	mChatModelConnection->makeConnectToCore(&ChatCore::lToggleParticipantAdminStatusAtIndex, [this](int index) {
+	mChatModelConnection->makeConnectToCore(&ChatCore::lToggleParticipantAdminStatus, [this](QString sipAddress) {
 		mChatModelConnection->invokeToModel(
-		    [this, index]() { mChatModel->toggleParticipantAdminStatusAtIndex(index); });
+		    [this, sipAddress]() { mChatModel->toggleParticipantAdminStatus(sipAddress); });
 	});
 
 	mCoreModelConnection = SafeConnection<ChatCore, CoreModel>::create(me, CoreModel::getInstance());
