@@ -169,8 +169,10 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 		bool canAdd = false;
 		auto linphoneChatRooms = core->getDefaultAccount()->filterChatRooms(Utils::appStringToCoreString(mFilter));
 		for (auto it : linphoneChatRooms) {
-			if (it->getIdentifier() == room->getIdentifier()) canAdd = true;
-			break;
+			if (it->getIdentifier() == room->getIdentifier()) {
+				canAdd = true;
+				break;
+			}
 		}
 		if (!canAdd) {
 			lInfo() << log().arg("Chat room to add does not match the current filter, return");
