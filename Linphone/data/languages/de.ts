@@ -977,25 +977,40 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="112"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="118"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="143"/>
         <source>meeting_info_join_title</source>
-        <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
+        <extracomment>&quot;Rejoindre la réunion&quot;
+----------
+&quot;Join&quot;</extracomment>
         <translation>Besprechung beitreten</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="135"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="160"/>
+        <source>contact_call_history_action</source>
+        <extracomment>&quot;Call history&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="162"/>
+        <source>contact_conversation_action</source>
+        <extracomment>&quot;Conversation&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="182"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="149"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="196"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="169"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="216"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Videoanruf</translation>
@@ -1394,19 +1409,19 @@
         <translation>Fehler beim Kopieren der Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="647"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="654"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
         <translation>Verpasster Anruf</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="650"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="657"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
         <translation>Ausgehender Anruf</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="652"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="659"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Eingehender Anruf</translation>
@@ -5991,36 +6006,36 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="459"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="473"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="460"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="474"/>
         <source>conversation_editing_message_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="673"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="692"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="675"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="694"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="704"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="723"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="738"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="757"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konversationen</translation>
