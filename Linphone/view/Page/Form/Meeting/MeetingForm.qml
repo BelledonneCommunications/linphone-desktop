@@ -35,7 +35,7 @@ FocusScope {
             spacing: Utils.getSizeWithScreenRatio(18)
 			CheckableButton {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(151)
-				icon.source: AppIcons.usersThree
+				icon.source: AppIcons.videoconference
                 icon.width: Utils.getSizeWithScreenRatio(24)
                 icon.height: Utils.getSizeWithScreenRatio(24)
 				enabled: false
@@ -63,7 +63,7 @@ FocusScope {
 			content: RowLayout {
                 spacing: Utils.getSizeWithScreenRatio(8)
 				EffectImage {
-					imageSource: AppIcons.usersThree
+					imageSource: AppIcons.videoconference
 					colorizationColor: DefaultStyle.main2_600
                     width: Utils.getSizeWithScreenRatio(24)
                     height: Utils.getSizeWithScreenRatio(24)
@@ -265,7 +265,7 @@ FocusScope {
 					contentItem: RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(8)
 						EffectImage {
-							imageSource: AppIcons.usersThree
+							imageSource: AppIcons.videoconference
 							colorizationColor: DefaultStyle.main2_600
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)

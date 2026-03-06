@@ -434,7 +434,7 @@ AbstractMainPage {
 						RowLayout {
 							spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage{
-								imageSource: AppIcons.usersThree
+								imageSource: AppIcons.videoconference
 								colorizationColor: DefaultStyle.main2_600
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
@@ -644,7 +644,7 @@ AbstractMainPage {
 						content: RowLayout {
 							spacing: Utils.getSizeWithScreenRatio(8)
 							EffectImage {
-								imageSource: AppIcons.usersThree
+								imageSource: AppIcons.videoconference
 								colorizationColor: DefaultStyle.main2_600
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)

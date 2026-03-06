@@ -369,7 +369,7 @@ AbstractWindow {
                                         : (mainWindow.call.core.paused || mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
                                             ? AppIcons.pause
                                             : mainWindow.conference
-                                                ? AppIcons.usersThree
+                                                ? AppIcons.videoconference
                                                 : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
                                                     ? AppIcons.arrowUpRight
                                                     : AppIcons.arrowDownLeft
@@ -389,7 +389,7 @@ AbstractWindow {
                                     target: callStatusIcon
                                     when: middleItemStackView.currentItem.objectName === "waitingRoom"
                                     property: "imageSource"
-                                    value: AppIcons.usersThree
+                                    value: AppIcons.videoconference
                                 }
                             }
                             Connections {

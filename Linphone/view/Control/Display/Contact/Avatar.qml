@@ -170,7 +170,7 @@ Loader{
 							width: stackView.width/2
 							height: width
 							colorizationColor: DefaultStyle.main2_600
-							imageSource: mainItem.isConference ? AppIcons.usersThree : AppIcons.profile
+							imageSource: mainItem.isConference ? AppIcons.videoconference : AppIcons.profile
 							anchors.centerIn: parent
 						}
 					}
