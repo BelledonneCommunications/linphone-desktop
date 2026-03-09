@@ -94,10 +94,15 @@ elseif(WIN32)
             message(FATAL_ERROR "Failed to upload symbols! ${CPACK_COMMAND_RESULT}")
         endif()
     endif()
+
     #####################################################
     # Clean all unwanted files to package.
     #####################################################
-    remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
+    if(@ENABLE_BUGSPLAT_SYMBOLS_UPLOAD@)
+        remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/*.pdb")
+    else()
+        remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
+    endif()
 
      # TODO: remove all pdb when CrashReporter is available. Symbols for crashing are in server so it is not needed for deployment.
      # if debugging is needed, we could rebuild it and use pdb from local build instead of using official binaries.
