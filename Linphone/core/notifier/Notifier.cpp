@@ -171,6 +171,7 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 					    if (window) {
 						    window->setParent(nullptr);
 						    window->setProperty(NotificationPropertyData, data);
+						    window->setScreen(screen);
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
 						    const int timeout = Notifications[type].getTimeout() * 1000;
