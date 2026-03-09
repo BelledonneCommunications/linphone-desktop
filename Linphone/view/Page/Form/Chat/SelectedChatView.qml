@@ -22,6 +22,7 @@ FocusScope {
     property alias callHeaderContent: splitPanel.header.contentItem
     property bool replyingToMessage: false
     property bool editingMessage: false
+    property bool backButtonVisible: false
     property string lastChar
     property AccountGui currentAccount: AppCpp.currentAccount
     property bool showEncryptedInfo: currentAccount && currentAccount.core.limeServerUrl !== "" && currentAccount.core.conferenceFactoryAddress !== ""
@@ -29,6 +30,7 @@ FocusScope {
     
     signal oneOneCall(bool video)
     signal groupCall()
+    signal backButtonPressed()
 
     onActiveFocusChanged: if(activeFocus) {
         if (chatMessagesListView.lastItemVisible) chat.core.lMarkAsRead()
@@ -103,7 +105,12 @@ FocusScope {
                     RowLayout {
                         id: headerInfos
                         spacing: Utils.getSizeWithScreenRatio(12)
-                        // property int childrenWidth: 
+                        RoundButton {
+                            icon.source: AppIcons.leftArrow
+                            style: ButtonStyle.noBackground
+                            visible: mainItem.backButtonVisible
+                            onPressed: mainItem.backButtonPressed()
+                        }
                         Avatar {
                             property var contactObj: mainItem.chat ? UtilsCpp.findFriendByAddress(mainItem.chat?.core.peerAddress) : null
                             contact: contactObj?.value || null
@@ -115,7 +122,6 @@ FocusScope {
                         ColumnLayout {
                             Text {
                                 Layout.fillWidth: true
-	                            Component.onCompleted: console.log(text, "width", width, "implicitWidth", implicitWidth, "advance", advance, contentWidth)
                                 text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chat?.core.title) || ""
                                 color: DefaultStyle.main2_600
                                 maximumLineCount: 1

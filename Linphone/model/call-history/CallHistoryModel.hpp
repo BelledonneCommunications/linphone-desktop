@@ -35,6 +35,7 @@ public:
 	~CallHistoryModel();
 
 	void removeCallHistory();
+	std::shared_ptr<linphone::ChatRoom> getChatRoom() const;
 
 private:
 	std::shared_ptr<linphone::CallLog> callLog;

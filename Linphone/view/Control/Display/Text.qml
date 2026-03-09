@@ -14,7 +14,6 @@ Quick.Text {
 		anchors.fill: parent
 		acceptedButtons: Qt.NoButton
 		hoverEnabled: true
-		onContainsMouseChanged: console.log("mouse area contains mouse", containsMouse)
 	}
 	ToolTip {
 		id: tooltip

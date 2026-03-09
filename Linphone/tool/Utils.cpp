@@ -22,6 +22,7 @@
 
 #include "UriTools.hpp"
 #include "core/App.hpp"
+#include "core/call-history/CallHistoryGui.hpp"
 #include "core/call/CallGui.hpp"
 #include "core/chat/ChatCore.hpp"
 #include "core/chat/ChatGui.hpp"
@@ -34,6 +35,7 @@
 #include "core/path/Paths.hpp"
 #include "core/payload-type/DownloadablePayloadTypeCore.hpp"
 #include "core/recorder/RecorderGui.hpp"
+#include "model/call-history/CallHistoryModel.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
@@ -1709,6 +1711,22 @@ void Utils::openChat(ChatGui *chat) {
 			}
 		});
 	}
+}
+
+VariantObject *Utils::getChatForCallLog(CallHistoryGui *callLog) {
+	if (!callLog || !callLog->mCore) return nullptr;
+	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	if (!data) return nullptr;
+	data->makeRequest([core = callLog->mCore, data]() {
+		auto model = core->getModel();
+		if (!model) return QVariant();
+		auto chatRoom = model->getChatRoom();
+		if (!chatRoom) return QVariant();
+		auto chatCore = ChatCore::create(chatRoom);
+		return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
+	});
+	data->requestValue();
+	return data;
 }
 
 bool Utils::isEmptyMessage(QString message) {

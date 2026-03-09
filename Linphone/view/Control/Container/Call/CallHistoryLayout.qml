@@ -35,7 +35,6 @@ ColumnLayout {
 	property alias detailContent: detailControl.data
 
 	signal conferenceChatDisplayRequested()
-	signal conferenceCallHistoryDisplayRequested()
 
 	ColumnLayout {
         spacing: Utils.getSizeWithScreenRatio(13)
@@ -149,20 +148,15 @@ ColumnLayout {
         }
 		LabelButton {
 			visible: !SettingsCpp.disableChatFeature
-			button.checkable: true
             width: Utils.getSizeWithScreenRatio(56)
             height: Utils.getSizeWithScreenRatio(56)
             button.icon.width: Utils.getSizeWithScreenRatio(24)
             button.icon.height: Utils.getSizeWithScreenRatio(24)
             button.icon.source: button.checked ? AppIcons.callList : AppIcons.chatTeardropText
-            label: button.checked 
-            //: "Call history"
-			? qsTr("contact_call_history_action")
             //: "Conversation"
-			: qsTr("contact_conversation_action")
-			button.onCheckedChanged: {
-				if (button.checked) mainItem.conferenceChatDisplayRequested()
-				else mainItem.conferenceCallHistoryDisplayRequested()
+			label: qsTr("contact_conversation_action")
+			button.onPressed: {
+				mainItem.conferenceChatDisplayRequested()
 			}
         }
 	}

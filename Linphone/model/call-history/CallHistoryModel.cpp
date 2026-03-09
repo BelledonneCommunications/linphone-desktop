@@ -41,3 +41,7 @@ void CallHistoryModel::removeCallHistory() {
 	qInfo() << "Removing call log: " << Utils::coreStringToAppString(callLog->getCallId());
 	CoreModel::getInstance()->getCore()->removeCallLog(callLog);
 }
+
+std::shared_ptr<linphone::ChatRoom> CallHistoryModel::getChatRoom() const {
+	return callLog ? callLog->getChatRoom() : nullptr;
+}

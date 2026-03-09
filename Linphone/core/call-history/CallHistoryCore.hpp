@@ -30,8 +30,6 @@
 #include <linphone++/linphone.hh>
 
 class CallHistoryModel;
-class ChatCore;
-class ChatGui;
 class FriendModel;
 
 class CallHistoryCore : public QObject, public AbstractObject {
@@ -41,8 +39,8 @@ class CallHistoryCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString remoteAddress MEMBER mRemoteAddress CONSTANT)
 	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
 	Q_PROPERTY(bool isConference MEMBER mIsConference CONSTANT)
+	Q_PROPERTY(bool hasChat MEMBER mHasChat CONSTANT)
 	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
-	Q_PROPERTY(ChatGui *chatGui READ getChatGui CONSTANT)
 	Q_PROPERTY(QDateTime date MEMBER mDate CONSTANT)
 	Q_PROPERTY(LinphoneEnums::CallStatus status MEMBER mStatus CONSTANT)
 	Q_PROPERTY(QString duration READ getDuration WRITE setDuration NOTIFY durationChanged)
@@ -58,7 +56,7 @@ public:
 	QString getDuration() const;
 	void setDuration(const QString &duration);
 
-	ChatGui *getChatGui() const;
+	std::shared_ptr<CallHistoryModel> getModel() const;
 
 	void onRemoved(const std::shared_ptr<linphone::Friend> &updatedFriend);
 
@@ -81,7 +79,7 @@ signals:
 private:
 	QString mDuration;
 	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
-	QSharedPointer<ChatCore> mChatCore = nullptr;
+	bool mHasChat = false;
 	std::shared_ptr<CallHistoryModel> mCallHistoryModel;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<CallHistoryCore, FriendModel>> mFriendModelConnection;

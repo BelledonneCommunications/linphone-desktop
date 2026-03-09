@@ -591,46 +591,41 @@ AbstractMainPage {
                         }
                     }
                 }
-                onConferenceChatDisplayRequested: detailContentStack.currentIndex = 1
-                onConferenceCallHistoryDisplayRequested: detailContentStack.currentIndex = 0
+                onConferenceChatDisplayRequested: {
+                    rightPanelStackView.push(historyChatComp, {"callHistory": mainItem.selectedRowHistoryGui})
+                }
                 detailContent: Item {
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
                     Layout.fillHeight: true
                     RoundedPane {
                         id: detailControl
-                        visible: detailContentStack.currentIndex !== 0 || detailListView.count > 0
+                        visible: detailListView.count > 0
                         width: parent.width
-                        height: detailContentStack.currentIndex === 0 
-                                ? Math.min(parent.height, detailListView.contentHeight) + topPadding + bottomPadding
-                                : parent.height
+                        height: Math.min(parent.height, detailListView.contentHeight) + topPadding + bottomPadding
                         background: Rectangle {
                             id: detailListBackground
                             anchors.fill: parent
                             color: DefaultStyle.grey_0
                             radius: Utils.getSizeWithScreenRatio(15)
                         }
-
-                        contentItem: StackLayout {
-                            id: detailContentStack
-                            currentIndex: 0
-                            Control.ScrollView {
-                                id: historyScrollView
-                                Control.ScrollBar.vertical: ScrollBar {
-                                    id: historyScrollBar
-                                    visible: historyScrollView.contentHeight > historyScrollView.height
-                                    anchors.top: parent.top
-                                    anchors.bottom: parent.bottom
-                                    anchors.right: parent.right
-                                }
-                                CallHistoryListView {
-                                    id: detailListView
-                                    Layout.fillWidth: true
-                                    Layout.fillHeight: true
-                                    Layout.rightMargin: historyScrollBar.width + Utils.getSizeWithScreenRatio(8)
-                                    spacing: Utils.getSizeWithScreenRatio(14)
-                                    clip: true
-                                    searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
-                                    busyIndicatorSize: Utils.getSizeWithScreenRatio(40)
+                        contentItem: Control.ScrollView {
+                            id: historyScrollView
+                            Control.ScrollBar.vertical: ScrollBar {
+                                id: historyScrollBar
+                                visible: historyScrollView.contentHeight > historyScrollView.height
+                                anchors.top: parent.top
+                                anchors.bottom: parent.bottom
+                                anchors.right: parent.right
+                            }
+                            CallHistoryListView {
+                                id: detailListView
+                                Layout.fillWidth: true
+                                Layout.fillHeight: true
+                                Layout.rightMargin: historyScrollBar.width + Utils.getSizeWithScreenRatio(8)
+                                spacing: Utils.getSizeWithScreenRatio(14)
+                                clip: true
+                                searchText: mainItem.selectedRowHistoryGui ? mainItem.selectedRowHistoryGui.core.remoteAddress : ""
+                                busyIndicatorSize: Utils.getSizeWithScreenRatio(40)
 
                                 delegate: Item {
                                     width: detailListView.width
@@ -660,50 +655,44 @@ AbstractMainPage {
                                                             }
                                                         }
                                                     }
-                                                    Text {
-                                                        //: "Appel manqué"
-                                                        text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
-                                                                                                                        : modelData.core.isOutgoing
-                                                                                                                            //: "Appel sortant"
-                                                                                                                            ? qsTr("call_outgoing")
-                                                                                                                            //: "Appel entrant"
-                                                                                                                            : qsTr("call_audio_incoming")
-                                                        font {
-                                                            pixelSize: Typography.p1.pixelSize
-                                                            weight: Typography.p1.weight
-                                                        }
-                                                    }
-                                                }
                                                 Text {
-                                                    text: UtilsCpp.formatDate(modelData.core.date)
-                                                    color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                                    //: "Appel manqué"
+                                                    text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
+                                                                                                                    : modelData.core.isOutgoing
+                                                                                                                        //: "Appel sortant"
+                                                                                                                        ? qsTr("call_outgoing")
+                                                                                                                        //: "Appel entrant"
+                                                                                                                        : qsTr("call_audio_incoming")
                                                     font {
-                                                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                                                        weight: Utils.getSizeWithScreenRatio(300)
+                                                        pixelSize: Typography.p1.pixelSize
+                                                        weight: Typography.p1.weight
                                                     }
                                                 }
-                                            }
-                                            Item {
-                                                Layout.fillHeight: true
-                                                Layout.fillWidth: true
                                             }
                                             Text {
-                                                text: UtilsCpp.formatElapsedTime(
-                                                            modelData.core.duration,
-                                                            false)
+                                                text: UtilsCpp.formatDate(modelData.core.date)
+                                                color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                                 font {
                                                     pixelSize: Utils.getSizeWithScreenRatio(12)
                                                     weight: Utils.getSizeWithScreenRatio(300)
                                                 }
                                             }
                                         }
+                                        Item {
+                                            Layout.fillHeight: true
+                                            Layout.fillWidth: true
+                                        }
+                                        Text {
+                                            text: UtilsCpp.formatElapsedTime(
+                                                        modelData.core.duration,
+                                                        false)
+                                            font {
+                                                pixelSize: Utils.getSizeWithScreenRatio(12)
+                                                weight: Utils.getSizeWithScreenRatio(300)
+                                            }
+                                        }
                                     }
                                 }
-                            }
-                            SelectedChatView {
-                                Layout.fillWidth: true
-                                Layout.fillHeight: true
-                                chat: contactDetail.callHistoryGui.core.chatGui
                             }
                         }
                     }
@@ -711,6 +700,18 @@ AbstractMainPage {
                 Item {
                     Layout.fillHeight: true
                 }
+            }
+        }
+    }
+    Component {
+        id: historyChatComp
+        SelectedChatView {
+            backButtonVisible: true
+            property var callHistory: null
+            property var chatObj: callHistory ? UtilsCpp.getChatForCallLog(callHistory) : null
+            chat: chatObj ? chatObj.value : null
+            onBackButtonPressed: {
+                rightPanelStackView.pop()
             }
         }
     }

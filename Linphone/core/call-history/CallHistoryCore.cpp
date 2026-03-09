@@ -54,13 +54,14 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mDuration = QString::number(callLog->getDuration());
 	mIsConference = callLog->wasConference();
 	mCallId = Utils::coreStringToAppString(callLog->getCallId());
+	mHasChat = false;
 	if (mIsConference) {
 		auto confinfo = callLog->getConferenceInfo();
 		mConferenceInfo = ConferenceInfoCore::create(confinfo);
 		mRemoteAddress = Utils::coreStringToAppString(confinfo->getUri()->asStringUriOnly());
 		mDisplayName = Utils::coreStringToAppString(confinfo->getSubject());
 		if (auto chatroom = callLog->getChatRoom()) {
-			mChatCore = ChatCore::create(chatroom);
+			mHasChat = true;
 		}
 	} else {
 		mRemoteAddress = Utils::coreStringToAppString(addr->asStringUriOnly());
@@ -160,8 +161,8 @@ void CallHistoryCore::setDuration(const QString &duration) {
 	}
 }
 
-ChatGui *CallHistoryCore::getChatGui() const {
-	return mChatCore ? new ChatGui(mChatCore) : nullptr;
+std::shared_ptr<CallHistoryModel> CallHistoryCore::getModel() const {
+	return mCallHistoryModel;
 }
 
 void CallHistoryCore::remove() {

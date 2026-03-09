@@ -44,9 +44,9 @@
 #endif // ifndef UTILS_NO_BREAK
 
 class CallGui;
+class CallHistoryGui;
 class QQuickWindow;
 class VariantObject;
-class CallGui;
 class ConferenceInfoGui;
 class ConferenceCore;
 class ParticipantDeviceCore;
@@ -155,6 +155,7 @@ public:
 	Q_INVOKABLE static VariantObject *getChatForAddress(QString address);
 	Q_INVOKABLE static VariantObject *createGroupChat(QString subject, QStringList participantAddresses);
 	Q_INVOKABLE static void openChat(ChatGui *chat);
+	Q_INVOKABLE static VariantObject *getChatForCallLog(CallHistoryGui *callLog);
 	Q_INVOKABLE static bool isEmptyMessage(QString message);
 	Q_INVOKABLE static VariantObject *encodeTextToQmlRichFormat(const QString &text,
 	                                                            const QString &textPartToBold = QString(),
