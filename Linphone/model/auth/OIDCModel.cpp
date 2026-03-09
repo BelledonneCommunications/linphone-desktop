@@ -54,7 +54,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	if (!replyHandler->isListening()) {
 		lWarning() << log().arg("OAuthHttpServerReplyHandler is not listening on port") << port;
 		emit requestFailed(tr("OAuthHttpServerReplyHandler is not listening"));
-		// emit finished();
+		emit finished();
 		return;
 	}
 	mAuthInfo = authInfo;
@@ -179,26 +179,31 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 				lWarning() << log().arg("Network error");
 				//: Network error
 				emit requestFailed(tr("oidc_authentication_network_error"));
+				emit finished();
 				break;
 			case QAbstractOAuth::Error::ServerError:
 				lWarning() << log().arg("Server error");
 				//: Server error
 				emit requestFailed(tr("oidc_authentication_server_error"));
+				emit finished();
 				break;
 			case QAbstractOAuth::Error::OAuthTokenNotFoundError:
 				lWarning() << log().arg("OAuth token not found");
 				//: OAuth token not found
 				emit requestFailed(tr("oidc_authentication_token_not_found_error"));
+				emit finished();
 				break;
 			case QAbstractOAuth::Error::OAuthTokenSecretNotFoundError:
 				lWarning() << log().arg("OAuth token secret not found");
 				//: OAuth token secret not found
 				emit requestFailed(tr("oidc_authentication_token_secret_not_found_error"));
+				emit finished();
 				break;
 			case QAbstractOAuth::Error::OAuthCallbackNotVerified:
 				lWarning() << log().arg("OAuth callback not verified");
 				//: OAuth callback not verified
 				emit requestFailed(tr("oidc_authentication_callback_not_verified_error"));
+				emit finished();
 				break;
 			default: {
 			}
@@ -246,7 +251,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 			        mIdToken.clear();
 			        lWarning() << "No ID Token or Access Token found in the tokens.";
 			        emit requestFailed(tr("oidc_authentication_no_token_found_error"));
-			        // emit finished();
+			        emit finished();
 		        }
 	        });
 #endif
@@ -281,6 +286,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 	});
 
 	connect(this, &OIDCModel::finished, this, &OIDCModel::deleteLater);
+
 	auto url = QUrl(Utils::coreStringToAppString(authInfo->getAuthorizationServer()));
 	url.setPath(url.path() + OIDCWellKnown);
 	lInfo() << log().arg("Get request") << url;
@@ -290,7 +296,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 }
 
 void OIDCModel::forceTimeout() {
-	lWarning() << log().arg("Froce timeout for OpenID connection.");
+	lWarning() << log().arg("Force timeout for OpenID connection.");
 	stopTimeoutTimer();
 	dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 	CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
@@ -315,13 +321,14 @@ void OIDCModel::stopTimeoutTimer() {
 void OIDCModel::openIdConfigReceived() {
 	lInfo() << log().arg("OpenID config received");
 	auto reply = dynamic_cast<QNetworkReply *>(sender());
-	lInfo() << log().arg("Reply :") << reply->readAll();
-	auto document = QJsonDocument::fromJson(reply->readAll());
+	auto replyArray = reply->readAll();
+	lInfo() << log().arg("Reply :") << replyArray;
+	auto document = QJsonDocument::fromJson(replyArray);
 	if (document.isNull()) {
 		lWarning() << log().arg("Reply is empty");
 		//: OIDC reply is empty !
-		emit requestFailed(tr("oidc_authentication_empty_reply_error"));
-		// emit finished();
+		// emit requestFailed(tr("oidc_authentication_empty_reply_error"));
+		emit finished();
 		return;
 	}
 	auto rootArray = document.toVariant().toMap();
@@ -331,7 +338,7 @@ void OIDCModel::openIdConfigReceived() {
 		lWarning() << log().arg("No authorization endpoint found in OpenID configuration");
 		//: No authorization endpoint found in OpenID configuration
 		emit requestFailed(tr("oidc_authentication_no_auth_found_in_config_error"));
-		// emit finished();
+		emit finished();
 		return;
 	}
 	if (rootArray.contains("token_endpoint")) {
@@ -347,7 +354,7 @@ void OIDCModel::openIdConfigReceived() {
 		lWarning() << log().arg("No token endpoint found in OpenID configuration");
 		//: No token endpoint found in OpenID configuration
 		emit requestFailed(tr("oidc_authentication_no_token_found_in_config_error"));
-		// emit finished();
+		emit finished();
 		return;
 	}
 	lInfo() << log().arg("Grant open id config");

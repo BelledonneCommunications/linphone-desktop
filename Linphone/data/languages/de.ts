@@ -682,6 +682,7 @@
     <message>
         <location filename="../../core/App.cpp" line="438"/>
         <location filename="../../core/App.cpp" line="517"/>
+        <location filename="../../core/App.cpp" line="556"/>
         <location filename="../../core/App.cpp" line="834"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
@@ -3602,12 +3603,12 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
 <context>
     <name>CoreModel</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="221"/>
+        <location filename="../../model/core/CoreModel.cpp" line="225"/>
         <source>info_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="223"/>
+        <location filename="../../model/core/CoreModel.cpp" line="227"/>
         <source>fetching_config_failed_error_message</source>
         <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
         <translation>Die externe Bereitstellung kann nicht abgerufen werden</translation>
@@ -5120,42 +5121,42 @@ Ablauf: %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="343"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="344"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Neuer Anruf von %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="397"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="398"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation>Sprachnachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="398"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="399"/>
         <source>new_file_message</source>
         <translation>Datei empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="401"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="402"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Konferenzeinladung erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="423"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="424"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
         <translation>Neue Nachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="426"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="427"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="454"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="455"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Neue Nachricht im Chat %1</translation>
@@ -5170,7 +5171,7 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="121"/>
-        <location filename="../../model/auth/OIDCModel.cpp" line="298"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="304"/>
         <source>oidc_authentication_timeout_message</source>
         <extracomment>Timeout: Not authenticated</extracomment>
         <translation>Zeitüberschreitung: Nicht authentifiziert</translation>
@@ -5206,78 +5207,78 @@ Ablauf: %1</translation>
         <translation>Netzwerkfehler</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="186"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="187"/>
         <source>oidc_authentication_server_error</source>
         <extracomment>Server error</extracomment>
         <translation>Serverfehler</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="191"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="193"/>
         <source>oidc_authentication_token_not_found_error</source>
         <extracomment>OAuth token not found</extracomment>
         <translation>OAuth-Token nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="196"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="199"/>
         <source>oidc_authentication_token_secret_not_found_error</source>
         <extracomment>OAuth token secret not found</extracomment>
         <translation>OAuth-Token-Geheimnis nicht gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="201"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="205"/>
         <source>oidc_authentication_callback_not_verified_error</source>
         <extracomment>OAuth callback not verified</extracomment>
         <translation>OAuth-Callback nicht verifiziert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="213"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="218"/>
         <source>oidc_authentication_request_auth_message</source>
         <extracomment>Requesting authorization from browser</extracomment>
         <translation>Autorisierung über den Browser anfordern</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="248"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="253"/>
         <source>oidc_authentication_no_token_found_error</source>
         <translation>Kein Token gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="260"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="265"/>
         <source>oidc_authentication_request_token_message</source>
         <extracomment>Requesting access token</extracomment>
         <translation>Zugriffstoken wird angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="265"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="270"/>
         <source>oidc_authentication_refresh_token_message</source>
         <extracomment>Refreshing access token</extracomment>
         <translation>Zugriffstoken wird aktualisiert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="270"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="275"/>
         <source>oidc_authentication_request_authorization_message</source>
         <extracomment>Requesting authorization</extracomment>
         <translation>Autorisierung wird angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="275"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="280"/>
         <source>oidc_authentication_request_temporary_credentials_message</source>
         <extracomment>Requesting temporary credentials</extracomment>
         <translation>Temporäre Anmeldedaten werden angefordert</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="323"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="330"/>
         <source>oidc_authentication_empty_reply_error</source>
         <extracomment>OIDC reply is empty !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="333"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="340"/>
         <source>oidc_authentication_no_auth_found_in_config_error</source>
         <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
         <translation>Kein Autorisierungs-Endpunkt in der OpenID-Konfiguration gefunden</translation>
     </message>
     <message>
-        <location filename="../../model/auth/OIDCModel.cpp" line="349"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="356"/>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>Kein Token-Endpunkt in der OpenID-Konfiguration gefunden</translation>

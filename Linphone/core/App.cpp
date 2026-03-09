@@ -553,7 +553,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	                                         });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::oidcRequestFailed, [this](const QString &error) {
 		mCoreModelConnection->invokeToCore(
-		    [this, error] { Utils::showInformationPopup("info_popup_error_title", error, false); });
+		    [this, error] { Utils::showInformationPopup(tr("info_popup_error_title"), error, false); });
 	});
 	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
 		qDebug() << "App: force oidc timeout";
