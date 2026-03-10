@@ -439,6 +439,10 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 				lWarning() << log().arg("Request failed") << error;
 				emit oidcRequestFailed(error);
+			});
+			connect(oidcModel, &OIDCModel::finished, this, [this, oidcModel] {
+				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+				lWarning() << log().arg("Request finished");
 				oidcModel->forceTimeout();
 			});
 			if (oidcModel->isTimerRunning()) {

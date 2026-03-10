@@ -327,7 +327,7 @@ void OIDCModel::openIdConfigReceived() {
 	if (document.isNull()) {
 		lWarning() << log().arg("Reply is empty");
 		//: OIDC reply is empty !
-		// emit requestFailed(tr("oidc_authentication_empty_reply_error"));
+		emit requestFailed(tr("oidc_authentication_empty_reply_error"));
 		emit finished();
 		return;
 	}
