@@ -51,7 +51,8 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
-	mDuration = QString::number(callLog->getDuration());
+	mDuration = callLog->getDuration();
+	mDurationString = QString::number(mDuration);
 	mIsConference = callLog->wasConference();
 	mCallId = Utils::coreStringToAppString(callLog->getCallId());
 	mHasChat = false;
@@ -149,16 +150,17 @@ ConferenceInfoGui *CallHistoryCore::getConferenceInfoGui() const {
 	return mConferenceInfo ? new ConferenceInfoGui(mConferenceInfo) : nullptr;
 }
 
-QString CallHistoryCore::getDuration() const {
+int CallHistoryCore::getDuration() const {
 	return mDuration;
 }
 
-void CallHistoryCore::setDuration(const QString &duration) {
+QString CallHistoryCore::getDurationString() const {
+	return mDurationString;
+}
+
+QDateTime CallHistoryCore::getStartDate() const {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
-	if (mDuration != duration) {
-		mDuration = duration;
-		emit durationChanged(mDuration);
-	}
+	return mDate;
 }
 
 std::shared_ptr<CallHistoryModel> CallHistoryCore::getModel() const {

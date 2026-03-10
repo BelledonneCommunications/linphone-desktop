@@ -43,7 +43,7 @@ class CallHistoryCore : public QObject, public AbstractObject {
 	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
 	Q_PROPERTY(QDateTime date MEMBER mDate CONSTANT)
 	Q_PROPERTY(LinphoneEnums::CallStatus status MEMBER mStatus CONSTANT)
-	Q_PROPERTY(QString duration READ getDuration WRITE setDuration NOTIFY durationChanged)
+	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
 
 public:
 	static QSharedPointer<CallHistoryCore> create(const std::shared_ptr<linphone::CallLog> &callLogs);
@@ -53,8 +53,10 @@ public:
 	void setSelf(QSharedPointer<CallHistoryCore> me);
 	ConferenceInfoGui *getConferenceInfoGui() const;
 
-	QString getDuration() const;
-	void setDuration(const QString &duration);
+	int getDuration() const;
+	QString getDurationString() const;
+
+	QDateTime getStartDate() const;
 
 	std::shared_ptr<CallHistoryModel> getModel() const;
 
@@ -71,13 +73,15 @@ public:
 	QString mCallId;
 
 signals:
-	void durationChanged(QString duration);
+	void durationChanged(int duration);
+	void durationStringChanged(QString duration);
 	void displayNameChanged();
 	void friendUpdated(); // When a friend is created, this log is linked to it.
 	void removed();
 
 private:
-	QString mDuration;
+	int mDuration;
+	QString mDurationString;
 	QSharedPointer<ConferenceInfoCore> mConferenceInfo = nullptr;
 	bool mHasChat = false;
 	std::shared_ptr<CallHistoryModel> mCallHistoryModel;

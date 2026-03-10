@@ -59,7 +59,7 @@ public:
 	// void displayMore();
 
 signals:
-	void lUpdate();
+	void lUpdate(bool signalReset = true);
 	void lRemoveEntriesForAddress(QString address);
 	void lRemoveAllEntries();
 	void listAboutToBeReset();

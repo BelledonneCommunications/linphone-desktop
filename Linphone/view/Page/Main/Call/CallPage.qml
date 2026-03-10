@@ -683,9 +683,7 @@ AbstractMainPage {
                                             Layout.fillWidth: true
                                         }
                                         Text {
-                                            text: UtilsCpp.formatElapsedTime(
-                                                        modelData.core.duration,
-                                                        false)
+                                            text: UtilsCpp.formatElapsedTime(modelData.core.duration,false)
                                             font {
                                                 pixelSize: Utils.getSizeWithScreenRatio(12)
                                                 weight: Utils.getSizeWithScreenRatio(300)
