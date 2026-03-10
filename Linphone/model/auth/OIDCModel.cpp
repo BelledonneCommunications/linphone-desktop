@@ -305,8 +305,16 @@ void OIDCModel::stopTimeoutTimer() {
 
 void OIDCModel::openIdConfigReceived() {
 	auto reply = dynamic_cast<QNetworkReply *>(sender());
-	auto document = QJsonDocument::fromJson(reply->readAll());
-	if (document.isNull()) return;
+	auto replyArray = reply->readAll();
+	lInfo() << log().arg("Reply :") << replyArray;
+	auto document = QJsonDocument::fromJson(replyArray);
+	if (document.isNull()) {
+		lWarning() << log().arg("Reply is empty");
+		//: OIDC reply is empty !
+		emit requestFailed(tr("oidc_authentication_empty_reply_error"));
+		emit finished();
+		return;
+	}
 	auto rootArray = document.toVariant().toMap();
 	if (rootArray.contains("authorization_endpoint")) {
 		mOidc.setAuthorizationUrl(QUrl(rootArray["authorization_endpoint"].toString()));

@@ -59,6 +59,10 @@ CoreModel::CoreModel(const QString &configPath, QThread *parent)
 }
 
 CoreModel::~CoreModel() {
+	for (auto &oidc : mOpenIdConnections) {
+		oidc->deleteLater();
+	}
+	mOpenIdConnections.clear();
 }
 
 std::shared_ptr<CoreModel> CoreModel::create(const QString &configPath, QThread *parent) {
@@ -417,13 +421,23 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 			qDebug() << "onAuthenticationRequested for Bearer. Initialize OpenID connection for " << username << "@"
 			         << realm << " at " << serverUrl;
 			QString key = username + '@' + realm + ' ' + serverUrl;
-			if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
+			// if (mOpenIdConnections.contains(key)) mOpenIdConnections[key]->deleteLater();
 			auto oidcModel = new OIDCModel(authInfo, this);
 			mOpenIdConnections[key] = oidcModel;
 			connect(oidcModel, &OIDCModel::timeoutTimerStarted, this, [this] {
 				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 				emit timeoutTimerStarted();
 				qDebug() << "start refresh timer";
+			});
+			connect(oidcModel, &OIDCModel::requestFailed, this, [this, oidcModel](const QString &error) {
+				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+				lWarning() << log().arg("Request failed") << error;
+				emit oidcRequestFailed(error);
+				oidcModel->forceTimeout();
+			});
+			connect(oidcModel, &OIDCModel::finished, this, [this, oidcModel] {
+				mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+				lInfo() << log().arg("Request finished");
 			});
 			if (oidcModel->isTimerRunning()) {
 				emit timeoutTimerStarted();

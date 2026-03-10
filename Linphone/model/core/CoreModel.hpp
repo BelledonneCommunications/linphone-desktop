@@ -103,6 +103,7 @@ signals:
 	void forceOidcTimeout();
 	void timeoutTimerStarted();
 	void timeoutTimerStopped();
+	void oidcRequestFailed(QString error);
 
 private:
 	QString mConfigPath;

@@ -338,6 +338,9 @@ App::App(int &argc, char *argv[])
 	mEventCountNotifier = new EventCountNotifier(this);
 	mDateUpdateTimer.start();
 
+	mOIDCRefreshTimer.setInterval(1000);
+	mOIDCRefreshTimer.setSingleShot(false);
+
 #ifdef Q_OS_LINUX
 	exportDesktopFile();
 #endif
