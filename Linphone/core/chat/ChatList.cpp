@@ -158,6 +158,7 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 	                            const std::shared_ptr<linphone::ChatMessage> &message, bool sendAddSignal = false) {
 		mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 		// if (!message) return;
+		if (!core->getDefaultAccount()) return;
 		if (room->getAccount() != core->getDefaultAccount()) {
 			qInfo() << log().arg("Chat room to add does not refer to current account, return");
 			return;
