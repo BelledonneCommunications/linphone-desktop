@@ -76,6 +76,7 @@ FocusScope{
 				}
 			}
 			Text {
+				Layout.preferredWidth: visible ? implicitWidth: 0
 				visible: mainItem.labelIndication !== undefined
 				font.pixelSize: Utils.getSizeWithScreenRatio(12)
                 font.weight: Utils.getSizeWithScreenRatio(300)
@@ -89,6 +90,7 @@ FocusScope{
 			FocusScope {
 				id: contentItem
 				height: childrenRect.height
+				width: parent.width
 				anchors.left: parent.left
 				anchors.right: parent.right
 			}

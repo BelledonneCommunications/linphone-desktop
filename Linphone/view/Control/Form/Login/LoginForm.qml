@@ -19,8 +19,8 @@ ColumnLayout {
 		enableErrorText: true
 		contentItem: TextField {
 			id: usernameEdit
-            Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
-            Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+			width: parent.width
+            height: Utils.getSizeWithScreenRatio(49)
 			isError: username.errorTextVisible || (errorText.isVisible && text.length > 0)
 			onAccepted: passwordEdit.forceActiveFocus()
 			//: "%1 mandatory"
@@ -38,8 +38,8 @@ ColumnLayout {
 			enableErrorText: true
 			contentItem: TextField {
 				id: passwordEdit
-                Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
-                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+				width: parent.width
+                height: Utils.getSizeWithScreenRatio(49)
 				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
 				onAccepted: connectionButton.trigger()

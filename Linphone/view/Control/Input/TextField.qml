@@ -8,8 +8,6 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 Control.TextField {
     id: mainItem
-    property var customWidth
-    width: Utils.getSizeWithScreenRatio(customWidth ? customWidth - 1 : 360)
     height: Utils.getSizeWithScreenRatio(49)
     leftPadding: Utils.getSizeWithScreenRatio(15)
     rightPadding: eyeButton.visible

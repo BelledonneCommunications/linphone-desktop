@@ -44,10 +44,9 @@ FormItemLayout {
 	
 	contentItem: TextField {
 		id: textField
-        Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
 		placeholderText: useTitleAsPlaceHolder ? mainItem.title : mainItem.placeHolder
 		initialText: (mainItem.propertyOwnerGui ? mainItem.propertyOwnerGui.core[mainItem.propertyName] : mainItem.propertyOwner[mainItem.propertyName]) || ''
-		customWidth: mainItem.parent.width
+		width: mainItem.parent.width
 		propertyName: mainItem.propertyName
 		propertyOwner: mainItem.propertyOwner
 		propertyOwnerGui: mainItem.propertyOwnerGui

@@ -194,7 +194,7 @@ LoginLayout {
 								contentItem: TextField {
 									id: usernameEdit
 									isError: username.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
-									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+									width: parent.width
 									KeyNavigation.down: passwordEdit
 									//: "%1 mandatory"
 									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
@@ -210,7 +210,7 @@ LoginLayout {
 									id: passwordEdit
 									isError: password.errorTextVisible || (LoginPageCpp.badIds && errorText.isVisible)
 									hidden: true
-									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+									width: parent.width
 									KeyNavigation.up: usernameEdit
 									KeyNavigation.down: domainEdit
 									Accessible.name: qsTr("password")
@@ -220,14 +220,17 @@ LoginLayout {
 								id: domain
 								//: "Domaine"
 								label: qsTr("sip_address_domain")
+								//: "Domaine de votre identité SIP (ex: sip.example.com)"
+								tooltip: qsTr("sip_address_domain_tooltip")
 								mandatory: true
 								enableErrorText: true
 								Layout.fillWidth: true
 								contentItem: TextField {
 									id: domainEdit
+									placeholderText: "sip.example.com"
 									isError: domain.errorTextVisible
 									initialText: SettingsCpp.assistantThirdPartySipAccountDomain
-									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+									width: parent.width
 									KeyNavigation.up: passwordEdit
 									KeyNavigation.down: displayName
 									//: "%1 mandatory"
@@ -246,7 +249,7 @@ LoginLayout {
 								Layout.fillWidth: true
 								contentItem: TextField {
 									id: displayName
-									Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+									width: parent.width
 									KeyNavigation.up: domainEdit
 									KeyNavigation.down: transportCbox
 									Accessible.name: qsTr("sip_address_display_name")
@@ -259,7 +262,7 @@ LoginLayout {
 								contentItem: ComboBox {
 									id: transportCbox
 									height: Utils.getSizeWithScreenRatio(49)
-									width: Utils.getSizeWithScreenRatio(360)
+									width: parent.width
 									textRole: "text"
 									valueRole: "value"
 									model: [
@@ -391,7 +394,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: connectionIdEdit
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+								width: parent.width
 								Accessible.name: qsTr("login_id")
 								KeyNavigation.up: transportCbox
 								KeyNavigation.down: registrarUriEdit
@@ -404,7 +407,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: registrarUriEdit
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+								width: parent.width
 								Accessible.name: qsTr("login_registrar_uri")
 								KeyNavigation.up: outboundProxyUriEdit
 								KeyNavigation.down: connectionIdEdit
@@ -419,7 +422,7 @@ LoginLayout {
 							Layout.fillWidth: true
 							contentItem: TextField {
 								id: outboundProxyUriEdit
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(360)
+								width: parent.width
 								Accessible.name: qsTr("login_proxy_server_url")
 								KeyNavigation.up: registrarUriEdit
 							}

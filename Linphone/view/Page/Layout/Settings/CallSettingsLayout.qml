@@ -24,7 +24,7 @@ AbstractSettingsLayout {
             //: "Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture."
             subTitle: qsTr("settings_call_devices_subtitle"),
 			contentComponent: multiMediaParametersComponent,
-			customWidth: 540,
+			width: 540,
 			customRightMargin: 36
 		}
 	]

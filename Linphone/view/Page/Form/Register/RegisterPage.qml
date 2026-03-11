@@ -141,6 +141,7 @@ LoginLayout {
                                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 								contentItem: TextField {
 									id: usernameInput
+									width: parent.width
 									backgroundBorderColor: usernameItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 									//: "%1 mandatory"
 									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("username"))
@@ -169,7 +170,7 @@ LoginLayout {
 							PhoneNumberInput {
 								id: phoneNumberInput
 								Layout.fillWidth: false
-                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(390)
+                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 								property string completePhoneNumber: countryCode + phoneNumber
                                 //: "Numéro de téléphone"
                                 label: qsTr("phone_number")
@@ -189,6 +190,7 @@ LoginLayout {
 								enableErrorText: true
 								contentItem: TextField {
 									id: emailInput
+									width: parent.width
 									backgroundBorderColor: emailItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 									//: "%1 mandatory"
 									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("email"))
@@ -210,6 +212,7 @@ LoginLayout {
 									enableErrorText: true
 									contentItem: TextField {
 										id: pwdInput
+										width: parent.width
 										hidden: true
                                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
@@ -226,8 +229,8 @@ LoginLayout {
                                     enableErrorText: false
 									contentItem: TextField {
 										id: confirmPwdInput
+										width: parent.width
 										hidden: true
-                                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 										//: "%1 mandatory"
 										Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("assistant_account_register_password_confirmation"))

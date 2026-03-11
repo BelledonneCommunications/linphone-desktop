@@ -178,7 +178,7 @@ Rectangle {
 						Layout.topMargin: modelData.hideTopMargin ? 0 : Utils.getSizeWithScreenRatio(mainItem.useVerticalLayout ? 10 : 21)
 						Layout.bottomMargin: Utils.getSizeWithScreenRatio(21)
 						Layout.leftMargin: mainItem.useVerticalLayout ? 0 : Utils.getSizeWithScreenRatio(17)
-						Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.customWidth > 0 ? modelData.customWidth : 545)
+						Layout.preferredWidth: Utils.getSizeWithScreenRatio(modelData.width > 0 ? modelData.width : 545)
 						Layout.alignment: Qt.AlignRight
 						Loader {
 							id: contentLoader

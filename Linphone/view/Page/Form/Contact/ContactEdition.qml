@@ -223,7 +223,8 @@ MainRightPanel {
                     label: qsTr("contact_editor_first_name")
 					contentItem: TextField {
 						id: givenNameEdit
-                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+                        height: Utils.getSizeWithScreenRatio(49)
+                		width: parent.width
 						initialText: contact.core.givenName
 						onTextEdited: {
 							contact.core.givenName = givenNameEdit.text
@@ -241,6 +242,7 @@ MainRightPanel {
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: nameTextField
+                		width: parent.width
 						initialText: contact.core.familyName
 						onTextEdited: contact.core.familyName = text
 						backgroundColor: DefaultStyle.grey_0
@@ -255,6 +257,7 @@ MainRightPanel {
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: companyTextField
+                		width: parent.width
 						initialText: contact.core.organization
 						onTextEdited: contact.core.organization = text
 						backgroundColor: DefaultStyle.grey_0
@@ -269,6 +272,7 @@ MainRightPanel {
 					Layout.fillWidth: true
 					contentItem: TextField {
 						id: jobTextField
+						width: parent.width
 						initialText: contact.core.job
 						onTextEdited: contact.core.job = text
 						backgroundColor: DefaultStyle.grey_0
@@ -293,6 +297,7 @@ MainRightPanel {
 						contentItem: RowLayout {
 							id: addressLayout
                             spacing: Utils.getSizeWithScreenRatio(10)
+							width: parent.width
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
 									(index - 1 >=0 ? addressesList.itemAt(index - 1) : jobTextField).forceActiveFocus(Qt.BacktabFocusReason)
@@ -308,7 +313,7 @@ MainRightPanel {
 							}
 							TextField {
 								id: addressTextField
-                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(421)
+                                Layout.fillWidth: true
 								Layout.preferredHeight: height
 								onEditingFinished: {
                                     var label = qsTr("sip_address")
@@ -350,6 +355,7 @@ MainRightPanel {
 					}
 					contentItem: TextField {
 						id: newAddressTextField
+						width: parent.width
 						backgroundColor: DefaultStyle.grey_0
 						Keys.onPressed: (event) => {
 							if(event.key == Qt.Key_Up){
@@ -378,6 +384,7 @@ MainRightPanel {
 						label: modelData.label
 						contentItem: RowLayout {
 							id: phoneNumberLayout
+							width: parent.width
                             spacing: Utils.getSizeWithScreenRatio(10)
 							function updateFocus(event){
 								if(event.key == Qt.Key_Up){
@@ -390,7 +397,7 @@ MainRightPanel {
 							}
 							TextField {
 								id: phoneTextField
-                                Layout.preferredWidth: Utils.getSizeWithScreenRatio(421)
+                                Layout.fillWidth: true
 								Layout.preferredHeight: height
 								initialText: modelData.address
 								backgroundColor: DefaultStyle.grey_0
@@ -431,6 +438,7 @@ MainRightPanel {
 					}
 					contentItem: TextField {
 						id: phoneNumberInputTextField
+						width: parent.width
 						backgroundColor: DefaultStyle.grey_0
 						Keys.onPressed: (event) => {
 							if(event.key == Qt.Key_Up){

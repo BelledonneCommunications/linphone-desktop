@@ -78,8 +78,8 @@ FocusScope {
             labelIndication: qsTr("required")
             contentItem: TextField {
                 id: groupName
-                Layout.fillWidth: true
-                Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
+			    width: parent.width
+                height: Utils.getSizeWithScreenRatio(49)
                 focus: true
                 isError: groupNameItem.errorMessage !== ""
                 KeyNavigation.down: addParticipantsLayout //participantList.count > 0 ? participantList : searchbar
