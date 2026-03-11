@@ -103,7 +103,7 @@ AbstractWindow {
     }
     Connections {
         enabled: activeFocusItem !== null
-        target: activeFocusItem.Keys
+        target: activeFocusItem ? activeFocusItem.Keys : null
         function onPressed(event) {
             if (rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "dialerPanel"){
                 mainWindow.keyPressedOnDialer(event)
@@ -721,11 +721,11 @@ AbstractWindow {
                     KeyNavigation.tab : Utils.isDescendant(nextItemInFocusChain(), rightPanel) ? nextItemInFocusChain() : videoCameraButton
 
                     // Do not consider padding for chat
-                    Binding on topPadding {
-                        when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "chatPanel"
-                        value: 0
-                        restoreMode: Binding.RestoreBindingOrValue
-                    }
+                    // Binding on topPadding {
+                    //     when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "chatPanel"
+                    //     value: Utils.getSizeWithScreenRatio(10)
+                    //     restoreMode: Binding.RestoreBindingOrValue
+                    // }
                     Binding on leftPadding {
                         when: rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "chatPanel"
                         value: 0
@@ -827,7 +827,7 @@ AbstractWindow {
                             rightPanel.visible = false
                             event.accepted = true
                         }
-                        groupCallVisible: false
+                        startGroupButtonVisible: false
                         displayCurrentCalls: true
                         searchBarColor: DefaultStyle.grey_0
                         searchBarBorderColor: DefaultStyle.grey_200
@@ -883,7 +883,7 @@ AbstractWindow {
                         id: newCallForm
                         width: parent.width
                         height: rightPanel.contentItemHeight
-                        groupCallVisible: false
+                        startGroupButtonVisible: false
                         searchBarColor: DefaultStyle.grey_0
                         searchBarBorderColor: DefaultStyle.grey_200
                         numPadPopup: numericPad
@@ -1103,7 +1103,7 @@ AbstractWindow {
                     objectName: "chatPanel"
                     width: parent.width
                     Component.onCompleted: chatView.forceActiveFocus()
-                    SelectedChatView {
+                    contentItem: SelectedChatView {
                         id: chatView
                         width: parent.width
                         height: rightPanel.contentItemHeight
@@ -1113,12 +1113,22 @@ AbstractWindow {
                         }
                         call: mainWindow.call
                         chat: mainWindow.chat
+
+                        Connections {
+                            enabled: rightPanel.contentLoader.item.objectName === "chatPanel"
+                            target: chatView.callHeaderContent
+                            function onHeightChanged() {
+                                rightPanel.headerStack.height = chatView.callHeaderContent.height
+                            }
+
+                        }
                     }
                     Connections {
                         target: rightPanel.contentLoader
                         function onItemChanged() {
                             if (rightPanel.contentLoader.item.objectName === "chatPanel") {
                                 rightPanel.customHeaderButtons = chatView.callHeaderContent
+                                rightPanel.headerStack.height = chatView.callHeaderContent.height
                             }
                         }
                     }

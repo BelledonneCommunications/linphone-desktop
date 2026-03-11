@@ -37,7 +37,7 @@ Control.Page {
 	header: Control.Control {
 		id: pageHeader
 		width: mainItem.width
-        height: Utils.getSizeWithScreenRatio(67)
+        implicitHeight: Math.max(headerStack.height, Utils.getSizeWithScreenRatio(67))
         leftPadding: Utils.getSizeWithScreenRatio(10)
         rightPadding: Utils.getSizeWithScreenRatio(10)
 		background: Rectangle {
@@ -51,9 +51,24 @@ Control.Page {
 				height: pageHeader.height/2
 				width: pageHeader.width
 			}
+			RoundButton {
+				id: closeButton
+				visible: mainItem.closeButtonVisible
+				style: ButtonStyle.noBackground
+				icon.source: AppIcons.closeX
+				onClicked: mainItem.visible = false
+				anchors.right: parent.right
+				anchors.top: parent.top
+				anchors.rightMargin: Utils.getSizeWithScreenRatio(5)
+				anchors.topMargin: Utils.getSizeWithScreenRatio(5)
+				//: Close %1 panel
+				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
+				KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
+			}
 		}
 		contentItem: StackLayout {
 			id: headerStack
+			anchors.verticalCenter: pageHeader.verticalCenter
 			RowLayout {
 				Layout.alignment: Qt.AlignVCenter
                 spacing: Utils.getSizeWithScreenRatio(10)
@@ -73,16 +88,6 @@ Control.Page {
 				}
 				RowLayout {
 					id: customButtonLayout
-				}
-				RoundButton {
-					id: closeButton
-					visible: mainItem.closeButtonVisible
-					style: ButtonStyle.noBackground
-					icon.source: AppIcons.closeX
-					onClicked: mainItem.visible = false
-					//: Close %1 panel
-					Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
-					KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
 				}
 			}
 			RowLayout {
@@ -145,7 +150,7 @@ Control.Page {
 	    Control.ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
 		Control.Control {
 			id: contentControl
-			rightPadding: scrollbar.width + Utils.getSizeWithScreenRatio(10)
+			rightPadding: scrollbar.visible ? scrollbar.width + Utils.getSizeWithScreenRatio(10) : 0
 			anchors.left: scrollview.left
 			anchors.right: scrollview.right
 			width: scrollview.width

@@ -9,7 +9,6 @@ import SettingsCpp
 
 CreationFormLayout {
 	id: mainItem
-	property bool groupCallVisible
 	property bool displayCurrentCalls: false
 	signal transferCallToAnotherRequested(CallGui dest)
 

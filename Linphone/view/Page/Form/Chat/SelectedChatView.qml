@@ -100,6 +100,7 @@ FocusScope {
                 property real minimumWidthForSwitchintToRowLayout: headerInfos.implicitWidth + headerActionButtons.implicitWidth
                 property var useVerticalLayout: width < minimumWidthForSwitchintToRowLayout
                 GridLayout {
+                    id: chatInfosLayout
 		            columns: chatHeader.useVerticalLayout ? 1 : children.length
 		            rows: 1
                     RowLayout {
@@ -228,14 +229,17 @@ FocusScope {
                         }
                     }
                 }
-                RowLayout {
+                GridLayout {
                     id: searchBarLayout
+                    visible: false
+                    columns: mainItem.call ? 1 : children.length
+                    rows: 1
                     onVisibleChanged: {
                         if(!visible) chatMessagesSearchBar.clearText()
                         else chatMessagesSearchBar.forceActiveFocus()
                     }
-                    spacing: Utils.getSizeWithScreenRatio(50)
-                    height: Utils.getSizeWithScreenRatio(65)
+                    columnSpacing: Utils.getSizeWithScreenRatio(50)
+                    // height: Utils.getSizeWithScreenRatio(65)
                     Connections {
                         target: mainItem
                         function onChatChanged() {searchBarLayout.visible = false}
@@ -291,6 +295,7 @@ FocusScope {
                     RoundButton {
                         icon.source: AppIcons.closeX
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
+                        visible: !mainItem.call
                         onClicked: {
                             chatMessagesListView.filterText = ""
                             searchBarLayout.visible = false
@@ -373,7 +378,7 @@ FocusScope {
                         Control.Control {
                             id: participantListPopup
                             width: parent.width
-                            height: Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200))
+                            height: visible ? Math.min(participantInfoList.height, Utils.getSizeWithScreenRatio(200)) : 0
                             visible: mainItem.lastChar === "@"
                             onVisibleChanged: console.log("participant list visible changed", visible, height)
                             anchors.bottom: chatMessagesListView.bottom

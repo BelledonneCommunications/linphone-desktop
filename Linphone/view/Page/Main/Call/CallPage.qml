@@ -394,7 +394,6 @@ AbstractMainPage {
                     Layout.fillHeight: true
                     focus: true
                     numPadPopup: numericPadPopupItem
-                    groupCallVisible: true
                     searchBarColor: DefaultStyle.grey_100
                     onContactClicked: contact => {
                         mainWindow.startCallWithContact(contact, false, callContactsList)

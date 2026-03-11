@@ -119,7 +119,7 @@ ListView {
                         //: Last result reached
                         ? qsTr("info_popup_last_result_message")
                         //: First result reached
-                        : qsTr("info_popup_first_result_message"), false)
+                        : qsTr("info_popup_first_result_message"), false, mainWindow)
                     mainItem.positionViewAtIndex(mainItem.lastIndexFoundWithFilter, ListView.Center)
                     mainItem.requestHighlight(mainItem.lastIndexFoundWithFilter)
                 }
@@ -127,7 +127,7 @@ ListView {
                     //: Find message
                     UtilsCpp.showInformationPopup(qsTr("popup_info_find_message_title"),
                     //: No result found
-                    qsTr("info_popup_no_result_message"), false)
+                    qsTr("info_popup_no_result_message"), false, mainWindow)
                 }
             }
         }
@@ -140,19 +140,20 @@ ListView {
         }
     }
 
-    footer: Item {
+    footer: RowLayout {
         visible: mainItem.chat && !mainItem.loading
         height: visible ? (headerMessage.height + headerMessage.topMargin + headerMessage.bottomMargin) : Utils.getSizeWithScreenRatio(30)
-        width: headerMessage.width
+        // width: headerMessage.width
         anchors.horizontalCenter: parent.horizontalCenter
         Control.Control {
             id: headerMessage
             visible: mainItem.showEncryptedInfo
             property int topMargin: Utils.getSizeWithScreenRatio(mainItem.contentHeight > mainItem.height ? 30 : 50)
             property int bottomMargin: Utils.getSizeWithScreenRatio(30)
-            anchors.topMargin: topMargin
-            anchors.bottomMargin: bottomMargin
-            anchors.top: parent.top
+            property int sideMargin: Utils.getSizeWithScreenRatio(5)
+            Layout.topMargin: topMargin
+            Layout.bottomMargin: bottomMargin
+            Layout.alignment: Qt.AlignTop
             padding: Utils.getSizeWithScreenRatio(10)
             background: Rectangle {
                 color: "transparent"
@@ -161,6 +162,7 @@ ListView {
                 radius: Utils.getSizeWithScreenRatio(10)
             }
             contentItem: RowLayout {
+                Layout.maximumWidth: mainItem.width - (headerMessage.sideMargin*2)
                 EffectImage {
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(23)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(23)
@@ -169,6 +171,7 @@ ListView {
                 }
                 ColumnLayout {
                     spacing: Utils.getSizeWithScreenRatio(2)
+                    Layout.maximumWidth: mainItem.width
                     Text {
                         text: mainItem.isEncrypted
                             //: End to end encrypted chat
