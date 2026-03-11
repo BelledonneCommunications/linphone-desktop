@@ -2960,77 +2960,77 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="223"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="235"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="236"/>
         <source>contact_editor_first_name</source>
         <extracomment>&quot;Prénom&quot;</extracomment>
         <translation>Vorname</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="240"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="249"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="241"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="251"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
         <translation>Nachname</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="254"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="263"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="256"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="266"/>
         <source>contact_editor_company</source>
         <extracomment>&quot;Entreprise&quot;</extracomment>
         <translation>Unternehmen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="268"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="282"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="271"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="286"/>
         <source>contact_editor_job_title</source>
         <extracomment>&quot;Fonction&quot;</extracomment>
         <translation>Beruf</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="314"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="346"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="319"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="351"/>
         <source>sip_address</source>
         <translation>SIP-Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="324"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="329"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="339"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="369"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="375"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="405"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="412"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="420"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="427"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="450"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="458"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="402"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="428"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="409"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="435"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Telefon</translation>
@@ -3823,13 +3823,13 @@ Error</extracomment>
 <context>
     <name>DecoratedTextField</name>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="61"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="60"/>
         <source>textfield_error_message_cannot_be_empty</source>
         <extracomment>&quot;ne peut être vide&quot;</extracomment>
         <translation>darf nicht leer sein</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="64"/>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="63"/>
         <source>textfield_error_message_unknown_format</source>
         <extracomment>&quot;Format non reconnu&quot;</extracomment>
         <translation>Unbekanntes Format</translation>
@@ -5722,102 +5722,102 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="138"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="146"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="147"/>
         <source>username</source>
         <translation>Benutzername</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="146"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="181"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="194"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="217"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="233"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="147"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="182"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="196"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="220"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="236"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="157"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="158"/>
         <source>domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="175"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="178"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="181"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="179"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="182"/>
         <source>phone_number</source>
         <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
         <translation>Telefonnummer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="187"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="194"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="188"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="196"/>
         <source>email</source>
         <translation type="unfinished">Email</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="208"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="217"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="210"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="220"/>
         <source>password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="224"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="233"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="227"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="236"/>
         <source>assistant_account_register_password_confirmation</source>
         <extracomment>&quot;Confirmation mot de passe&quot;</extracomment>
         <translation>Passwort bestätigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="269"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="272"/>
         <source>assistant_dialog_cgu_and_privacy_policy_message</source>
         <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
         <translation>Ich akzeptiere %1 und %2</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="271"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="274"/>
         <source>assistant_dialog_general_terms_label</source>
         <extracomment>&quot;conditions d&apos;utilisation&quot;</extracomment>
         <translation>Allgemeine Geschäftsbedingungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="273"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="276"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
         <translation>Datenschutzrichtlinie</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="307"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="310"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Erstellen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="312"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="315"/>
         <source>assistant_account_create_missing_username_error</source>
         <extracomment>&quot;Veuillez entrer un nom d&apos;utilisateur&quot;</extracomment>
         <translation>Bitte Benutzernamen eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="316"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="319"/>
         <source>assistant_account_create_missing_password_error</source>
         <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
         <translation>Bitte Passwort eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="320"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="323"/>
         <source>assistant_account_create_confirm_password_error</source>
         <extracomment>&quot;Les mots de passe sont différents&quot;</extracomment>
         <translation>Die Passwörter stimmen nicht überein</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="324"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="327"/>
         <source>assistant_account_create_missing_number_error</source>
         <extracomment>&quot;Veuillez entrer un numéro de téléphone&quot;</extracomment>
         <translation>Bitte Telefonnummer eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="328"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="331"/>
         <source>assistant_account_create_missing_email_error</source>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Bitte E-Mail eingeben</translation>
@@ -5883,7 +5883,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -5896,76 +5896,82 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="222"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>sip_address_domain</source>
         <extracomment>&quot;Domaine&quot;</extracomment>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="245"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="252"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="224"/>
+        <source>sip_address_domain_tooltip</source>
+        <extracomment>&quot;Domaine de votre identité SIP (ex: sip.example.com)&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="248"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="255"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
         <translation>Anzeigename</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="257"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="276"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="260"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="279"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
         <translation>Transport</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="298"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="303"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="301"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="306"/>
         <source>assistant_account_login</source>
         <translation>Anmelden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="354"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="357"/>
         <source>assistant_account_login_missing_username</source>
         <translation>Bitte Benutzernamen eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="356"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="359"/>
         <source>assistant_account_login_missing_password</source>
         <translation>Bitte Passwort eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="359"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="362"/>
         <source>assistant_account_login_missing_domain</source>
         <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
         <translation>Bitte Domäne eingeben</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="382"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
         <source>login_advanced_parameters_label</source>
         <extracomment>Advanced parameters</extracomment>
         <translation>Erweiterte Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="416"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="423"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="419"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="426"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="421"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="403"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="408"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="406"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="411"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="390"/>
-        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="395"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="393"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="398"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
         <translation type="unfinished"></translation>
@@ -6242,13 +6248,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="213"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="230"/>
         <source>textfield_custom_button_accessible_name</source>
         <extracomment>%1 button of %2</extracomment>
         <translation type="unfinished"></translation>
@@ -6259,7 +6265,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation type="vanished">von %1 zu %2 (UTC%3)</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="209"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation type="unfinished"></translation>
