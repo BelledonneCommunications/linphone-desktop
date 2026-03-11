@@ -61,6 +61,7 @@ Popup {
 				Text {
 					Layout.fillWidth: true
 					text: mainItem.title
+					textFormat: Text.RichText
 					color: mainItem.isSuccess ? DefaultStyle.success_500_main : DefaultStyle.danger_500_main
 					font {
                         pixelSize: Typography.h4.pixelSize

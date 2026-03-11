@@ -96,6 +96,7 @@ LoginLayout {
 						Text {
 							id: title
 							text: modelData.title
+							textFormat: Text.RichText
 							font {
                                 pixelSize: Typography.h2.pixelSize
                                 weight: Typography.h2.weight
@@ -105,6 +106,7 @@ LoginLayout {
 							id: txt
                             Layout.maximumWidth: Utils.getSizeWithScreenRatio(361)
                             wrapMode: Text.WordWrap
+							textFormat: Text.RichText
                             font {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight

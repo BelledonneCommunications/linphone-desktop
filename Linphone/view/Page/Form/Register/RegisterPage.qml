@@ -281,6 +281,7 @@ LoginLayout {
                         Text {
 							id: privacyLinkText
                             text: acceptCguAndPrivacyPolicyItem.associatedText
+							textFormat: Text.RichText
                             onLinkActivated: (link) => Qt.openUrlExternally(link)
                             font {
                                 pixelSize: Typography.p1.pixelSize

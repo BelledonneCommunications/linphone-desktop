@@ -265,6 +265,7 @@ Control.Control {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             text: mainItem.chatMessage.core.text
+                            textFormat: Text.RichText
                         }
                         ChatMessageContent {
                             id: chatBubbleContent

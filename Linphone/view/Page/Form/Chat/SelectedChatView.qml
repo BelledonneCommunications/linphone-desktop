@@ -35,6 +35,11 @@ FocusScope {
     onActiveFocusChanged: if(activeFocus) {
         if (chatMessagesListView.lastItemVisible) chat.core.lMarkAsRead()
     }
+    onChatChanged: {
+        chatMessage = null
+        replyingToMessage = false
+        editingMessage = false
+    }
     MouseArea{
         anchors.fill: parent
         onPressed: {
@@ -476,7 +481,7 @@ FocusScope {
                             ColumnLayout {
                                 id: replyLayout
                                 spacing: 0
-                                visible: mainItem.chatMessage && (mainItem.replyingToMessage || mainItem.editingMessage)
+                                visible: mainItem.chatMessage && (mainItem.replyingToMessage || mainItem.editingMessage)
                                 Text {
                                     Layout.fillWidth: true
                                     //: Reply to %1
@@ -617,6 +622,7 @@ FocusScope {
                 color: DefaultStyle.grey_0
                 anchors.fill: parent
                 RoundButton {
+                    visible: contentLoader.panelType === SelectedChatView.PanelType.None
                     style: ButtonStyle.noBackgroundOrange
                     icon.source: AppIcons.leftArrow
                     onClicked: detailsPanel.visible = false

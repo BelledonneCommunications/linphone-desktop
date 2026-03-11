@@ -16,7 +16,6 @@ ColumnLayout {
 
 	property FriendGui contact
 	property var conferenceInfo: callHistoryGui?.core.conferenceInfo
-	property var chatGui: callHistoryGui?.core.chatGui
 	property bool isConference: conferenceInfo != undefined && conferenceInfo != null
 	property string contactAddress: specificAddress != "" ? specificAddress : contact && contact.core.defaultAddress || ""
 	property var computedContactNameObj: UtilsCpp.getDisplayName(contactAddress)
@@ -126,13 +125,12 @@ ColumnLayout {
 	}
 	RowLayout {
 		id: confWithChatLayout
-		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature && mainItem.chatGui !== null
+		visible: mainItem.isConference && !SettingsCpp.disableMeetingsFeature && mainItem.callHistoryGui?.core.hasChat
 		Layout.alignment: Qt.AlignHCenter
         spacing: Utils.getSizeWithScreenRatio(72)
 		// Layout.fillWidth: true
 		Layout.preferredHeight: childrenRect.height
 		LabelButton {
-			visible: !SettingsCpp.disableChatFeature
             width: Utils.getSizeWithScreenRatio(56)
             height: Utils.getSizeWithScreenRatio(56)
             button.icon.width: Utils.getSizeWithScreenRatio(24)
@@ -152,7 +150,7 @@ ColumnLayout {
             height: Utils.getSizeWithScreenRatio(56)
             button.icon.width: Utils.getSizeWithScreenRatio(24)
             button.icon.height: Utils.getSizeWithScreenRatio(24)
-            button.icon.source: button.checked ? AppIcons.callList : AppIcons.chatTeardropText
+            button.icon.source: AppIcons.chatTeardropText
             //: "Conversation"
 			label: qsTr("contact_conversation_action")
 			button.onPressed: {

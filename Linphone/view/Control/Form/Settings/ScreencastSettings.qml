@@ -172,7 +172,7 @@ ColumnLayout {
 	BigButton {
 		Layout.preferredHeight: height
 		height: implicitHeight
-        visible: mainItem.screenSharingAvailable$
+        visible: mainItem.screenSharingAvailable
 		enabled: mainItem.isLocalScreenSharing || windowsLayout.currentIndex !== -1 || screensLayout.currentIndex !== -1
 		text:  mainItem.conference && mainItem.conference.core.isLocalScreenSharing
         //: "Stop
