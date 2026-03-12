@@ -1003,8 +1003,8 @@
 <context>
     <name>CallHistoryLayout</name>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="117"/>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="142"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="116"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="140"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;
 ----------
@@ -1012,25 +1012,25 @@
         <translation>Join meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="157"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
         <source>contact_conversation_action</source>
         <extracomment>&quot;Conversation&quot;</extracomment>
         <translation>Conversation</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="176"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="174"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Call</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="190"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="188"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Message</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="210"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="208"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Video call</translation>
@@ -2223,25 +2223,25 @@
 <context>
     <name>ChatMessage</name>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="489"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="490"/>
         <source>chat_message_copy_selection</source>
         <extracomment>&quot;Copy selection&quot;</extracomment>
         <translation>Copy selection</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="491"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="492"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
         <translation>Copy</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="499"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="500"/>
         <source>chat_message_copied_to_clipboard_title</source>
         <extracomment>Copied</extracomment>
         <translation>Copied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="501"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="502"/>
         <source>chat_message_copied_to_clipboard_toast</source>
         <extracomment>&quot;to clipboard&quot;</extracomment>
         <translation>in clipboard</translation>
@@ -2277,43 +2277,43 @@
         <translation>You replied</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="438"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="439"/>
         <source>chat_message_send_again</source>
         <extracomment>&quot;Re-send&quot;</extracomment>
         <translation>Re-send</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="449"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
         <source>chat_message_reception_info</source>
         <extracomment>&quot;Reception info&quot;</extracomment>
         <translation>Reception info</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="461"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
         <source>menu_edit_chat_message</source>
         <extracomment>&quot;Edit&quot;</extracomment>
         <translation>Edit</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="475"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="476"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
         <translation>Reply</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="509"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="510"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
         <translation>Forward</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="526"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="527"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Delete</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="315"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="316"/>
         <source>conversation_message_edited_label</source>
         <translation>Edited</translation>
     </message>
@@ -5698,37 +5698,37 @@ Expiration : %1</translation>
         <translation>privacy policy</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="310"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="311"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Create</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="315"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="316"/>
         <source>assistant_account_create_missing_username_error</source>
         <extracomment>&quot;Veuillez entrer un nom d&apos;utilisateur&quot;</extracomment>
         <translation>Please enter a username</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="319"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="320"/>
         <source>assistant_account_create_missing_password_error</source>
         <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
         <translation>Please enter a password</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="323"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="324"/>
         <source>assistant_account_create_confirm_password_error</source>
         <extracomment>&quot;Les mots de passe sont différents&quot;</extracomment>
         <translation>Passwords do not match</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="327"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="328"/>
         <source>assistant_account_create_missing_number_error</source>
         <extracomment>&quot;Veuillez entrer un numéro de téléphone&quot;</extracomment>
         <translation>Please enter a phone number</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="331"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="332"/>
         <source>assistant_account_create_missing_email_error</source>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Please enter an email</translation>
@@ -6005,7 +6005,7 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SelectedChatView</name>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="54"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="59"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Start a group call ?</translation>
     </message>
@@ -6015,36 +6015,36 @@ To enable them in a commercial project, please contact us.</translation>
         <translation type="vanished">This conversation is not encrypted !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="484"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="489"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Reply to %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="485"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="490"/>
         <source>conversation_editing_message_title</source>
         <translation>Message beeing edited</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="703"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="709"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Shared medias</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="705"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="711"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Shared documents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="734"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="740"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Forward to…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="768"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="774"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Conversations</translation>
@@ -6579,13 +6579,13 @@ Error in the chat</extracomment>
         <translation>An open source application and a &lt;b&gt;free service&lt;/b&gt; &lt;br&gt;since &lt;b&gt;2001&lt;/b&gt;</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="123"/>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="125"/>
         <source>next</source>
         <extracomment>&quot;Suivant&quot;</extracomment>
         <translation>Next</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="125"/>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="127"/>
         <source>start</source>
         <extracomment>&quot;Commencer&quot;</extracomment>
         <translation>Start</translation>
