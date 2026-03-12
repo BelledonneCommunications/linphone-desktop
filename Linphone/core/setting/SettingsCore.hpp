@@ -284,6 +284,7 @@ public:
 	DECLARE_CORE_GETSET_MEMBER(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableMeetingsFeature, DisableMeetingsFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
+	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideAccountSettings, HideAccountSettings)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallRecordings, DisableCallRecordings)

@@ -1043,6 +1043,8 @@ DEFINE_GETSET_CONFIG(SettingsModel,
 						DisableBroadcastFeature,
 						"disable_broadcast_feature",
 						true)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableCallForward, DisableCallForward, "disable_call_forward", true)
+
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideSettings, HideSettings, "hide_settings", false)
 DEFINE_GETSET_CONFIG(
 	SettingsModel, bool, Bool, hideAccountSettings, HideAccountSettings, "hide_account_settings", false)

@@ -14,7 +14,7 @@ AbstractSettingsMenu {
         //: "Appels"
         {title: qsTr("settings_calls_title"), layout: "CallSettingsLayout"},
 		//: "Transfert d'appel"
-        {title: qsTr("settings_call_forward"), layout: "CallForwardSettingsLayout"},
+        {title: qsTr("settings_call_forward"), layout: "CallForwardSettingsLayout", visible: !SettingsCpp.disableCallForward},
         //: "Conversations"
         {title: qsTr("settings_conversations_title"), layout: "ChatSettingsLayout", visible: !SettingsCpp.disableChatFeature},
         //: "Contacts"

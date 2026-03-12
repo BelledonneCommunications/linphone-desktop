@@ -159,8 +159,9 @@ Control.Button {
         colorizationColor: mainItem.colorizationColor
 	}
 	
-	contentItem: Control.StackView{
+	contentItem: Control.StackView {
 		id: stacklayout
+		anchors.centerIn: parent
 		function updateComponent(){
 			var item
 			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0
@@ -194,18 +195,21 @@ Control.Button {
 			id: imageTextComponent
 			// Workaround for centering the content when its
 			// width is smaller than the button width
-			Item {
-				implicitWidth: content.implicitWidth
-				implicitHeight: content.implicitHeight
+			RowLayout {
+				id: content
+				width: stacklayout.width
+				height: stacklayout.height
 				RowLayout {
-					id: content
+					Layout.alignment: Qt.AlignCenter
 					spacing: mainItem.spacing
-					anchors.centerIn: parent
 					ButtonImage{
+						id: image
 						Layout.preferredWidth: mainItem.icon.width
 						Layout.preferredHeight: mainItem.icon.height
 					}
 					ButtonText {
+						Layout.maximumWidth: content.width - image.width - content.spacing
+						Layout.preferredWidth: implicitWidth
 					}
 				}
 			}
