@@ -127,6 +127,20 @@ AbstractSettingsLayout {
 				title: qsTr("settings_debug_app_version_title")
 				iconSource: AppIcons.appWindow
 				subTitle: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
+				onClicked: {
+					var text = UtilsCpp.copyToClipboard(AppCpp.applicationVersion)
+					if (text.length !== "") {
+						//: Copied
+						UtilsCpp.showInformationPopup(qsTr("copied"),
+						//: App version has been copied to clipboard
+						qsTr("settings_debug_app_version_copied_message"))
+					}
+				}
+				ToolTip {
+					visible: parent.containsMouse || parent.activeFocus
+					//: Copy text
+					text: qsTr("settings_debug_copy_tooltip")
+				}
 			}
 			HelpIconLabelButton {
 				enabled: false
@@ -137,6 +151,20 @@ AbstractSettingsLayout {
 				title: qsTr("settings_debug_sdk_version_title")
 				iconSource: AppIcons.resourcePackage
 				subTitle: AppCpp.sdkVersion
+				onClicked: {
+					var text = UtilsCpp.copyToClipboard(AppCpp.sdkVersion)
+					if (text.length !== "") {
+						//: Copied
+						UtilsCpp.showInformationPopup(qsTr("copied"),
+						//: SDK version has been copied to clipboard
+						qsTr("settings_debug_sdk_version_copied_message"))
+					}
+				}
+				ToolTip {
+					visible: parent.containsMouse || parent.activeFocus
+					//: Copy text
+					text: qsTr("settings_debug_copy_tooltip")
+				}
 			}
 			HelpIconLabelButton {
 				enabled: false
@@ -147,6 +175,20 @@ AbstractSettingsLayout {
 				//: "Qt Version"
 				title: qsTr("settings_debug_qt_version_title")
 				subTitle: AppCpp.qtVersion
+				onClicked: {
+					var text = UtilsCpp.copyToClipboard(AppCpp.qtVersion)
+					if (text.length !== "") {
+						//: Copied
+						UtilsCpp.showInformationPopup(qsTr("copied"),
+						//: Qt version has been copied to clipboard
+						qsTr("settings_debug_qt_version_copied_message"))
+					}
+				}
+				ToolTip {
+					visible: parent.containsMouse || parent.activeFocus
+					//: Copy text
+					text: qsTr("settings_debug_copy_tooltip")
+				}
 			}
 		}
 	}

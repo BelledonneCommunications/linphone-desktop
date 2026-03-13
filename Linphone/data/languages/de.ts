@@ -3760,7 +3760,7 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="67"/>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="162"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="204"/>
         <source>information_popup_error_title</source>
         <extracomment>Une erreur est survenue.</extracomment>
         <translation>Ein Fehler ist aufgetreten.</translation>
@@ -3802,19 +3802,53 @@ Error</extracomment>
         <translation>App-Version</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="137"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <extracomment>Copied</extracomment>
+        <translation type="unfinished">Kopiert</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="136"/>
+        <source>settings_debug_app_version_copied_message</source>
+        <extracomment>App version has been copied to clipboard</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="166"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="190"/>
+        <source>settings_debug_copy_tooltip</source>
+        <extracomment>Copy text</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="151"/>
         <source>settings_debug_sdk_version_title</source>
         <extracomment>&quot;Version du SDK&quot;</extracomment>
         <translation>SDK-Version</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="160"/>
+        <source>settings_debug_sdk_version_copied_message</source>
+        <extracomment>SDK version has been copied to clipboard</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="176"/>
         <source>settings_debug_qt_version_title</source>
         <extracomment>&quot;Qt Version&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="164"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="184"/>
+        <source>settings_debug_qt_version_copied_message</source>
+        <extracomment>Qt version has been copied to clipboard</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="206"/>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Hochladen der Logs fehlgeschlagen. Sie können die Log-Dateien direkt aus folgendem Verzeichnis teilen: %1</translation>

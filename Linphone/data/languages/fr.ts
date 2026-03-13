@@ -2302,10 +2302,6 @@
         <translation>Erreur de téléchargement du fichier %1</translation>
     </message>
     <message>
-        <source>info_popup_error_titile</source>
-        <translation type="vanished">Erreur</translation>
-    </message>
-    <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
         <source>info_popup_error_title</source>
         <translation>Erreur</translation>
@@ -2759,33 +2755,6 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <source>settings_chat_display_notification_content_subtitle</source>
         <extracomment>&quot;Display the content of the received message&quot;</extracomment>
         <translation>Afficher le contenu des messages reçus</translation>
-    </message>
-</context>
-<context>
-    <name>CliModel</name>
-    <message>
-        <source>show_function_description</source>
-        <translation type="vanished">Afficher</translation>
-    </message>
-    <message>
-        <source>fetch_config_function_description</source>
-        <translation type="vanished">Récupérer une configuration</translation>
-    </message>
-    <message>
-        <source>call_function_description</source>
-        <translation type="vanished">Appeler</translation>
-    </message>
-    <message>
-        <source>bye_function_description</source>
-        <translation type="vanished">Raccrocher</translation>
-    </message>
-    <message>
-        <source>accept_function_description</source>
-        <translation type="vanished">Accepter</translation>
-    </message>
-    <message>
-        <source>decline_function_description</source>
-        <translation type="vanished">Décliner</translation>
     </message>
 </context>
 <context>
@@ -3670,7 +3639,7 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="67"/>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="162"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="204"/>
         <source>information_popup_error_title</source>
         <extracomment>Une erreur est survenue.</extracomment>
         <translation>Une erreur est survenue.</translation>
@@ -3712,19 +3681,53 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
         <translation>Version de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="137"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <extracomment>Copied</extracomment>
+        <translation>Copié</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="136"/>
+        <source>settings_debug_app_version_copied_message</source>
+        <extracomment>App version has been copied to clipboard</extracomment>
+        <translation>La version de l&apos;application a été copiée dans le presse-papiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="166"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="190"/>
+        <source>settings_debug_copy_tooltip</source>
+        <extracomment>Copy text</extracomment>
+        <translation>Copier le texte</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="151"/>
         <source>settings_debug_sdk_version_title</source>
         <extracomment>&quot;Version du SDK&quot;</extracomment>
         <translation>Version du SDK</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="160"/>
+        <source>settings_debug_sdk_version_copied_message</source>
+        <extracomment>SDK version has been copied to clipboard</extracomment>
+        <translation>La version du SDK a été copiée dans le presse-papiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="176"/>
         <source>settings_debug_qt_version_title</source>
         <extracomment>&quot;Qt Version&quot;</extracomment>
         <translation>Version de Qt</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="164"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="184"/>
+        <source>settings_debug_qt_version_copied_message</source>
+        <extracomment>Qt version has been copied to clipboard</extracomment>
+        <translation>La version de Qt a été copiée dans le presse-papiers</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="206"/>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1</translation>
@@ -5979,11 +5982,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="59"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Démarrer un appel de groupe ?</translation>
-    </message>
-    <message>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
-        <translation type="vanished">Cette conversation n&apos;est pas chiffrée !</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="489"/>
