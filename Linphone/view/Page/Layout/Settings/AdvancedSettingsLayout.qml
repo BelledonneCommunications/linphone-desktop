@@ -92,9 +92,8 @@ AbstractSettingsLayout {
                 text: qsTr("settings_advanced_download_apply_remote_provisioning")
 				style: ButtonStyle.tertiary
 				onClicked: {
-					var url = configUri.value()
-					if (UtilsCpp.isValidURL(url))
-						UtilsCpp.useFetchConfig(configUri.value())
+					if (UtilsCpp.isValidURL(configUri.text))
+						UtilsCpp.useFetchConfig(configUri.text)
 					else
                         //: Invalid URL format
                         UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"), qsTr("settings_advanced_invalid_url_message"), false, UtilsCpp.getMainWindow())
