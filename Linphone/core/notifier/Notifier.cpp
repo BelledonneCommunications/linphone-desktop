@@ -174,8 +174,8 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						    // Don't use Popup for flags : it could lead to error in geometry. On Mac, Using Tool ensure
 						    // to have the Window on Top and fullscreen independant
 						    window->setFlags((showAsTool ? Qt::Tool : Qt::WindowStaysOnTopHint) |
-						                     Qt::FramelessWindowHint | Qt::WindowDoesNotAcceptFocus);
-#ifdef Q_OS_LINUX
+						                     Qt::FramelessWindowHint);
+#ifdef Q_OS_LINUX || Q_OS_WIN
 						    window->setFlag(Qt::WindowDoesNotAcceptFocus);
 #endif
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
@@ -210,6 +210,9 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						                     [this](QWindow::Visibility visibility) {
 							                     lInfo() << log().arg("Notification visibility changed") << visibility;
 						                     });
+						    QObject::connect(window, &QQuickWindow::flagsChanged, window, [this, window]() {
+							    lInfo() << log().arg("Notification flags changed") << window->flags();
+						    });
 						    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
 							    lInfo() << log().arg("Notification width changed") << width;
 						    });
@@ -246,14 +249,14 @@ void Notifier::showNotification(QQuickWindow *notification, int timeout) {
 		lInfo() << log().arg("Windows : screen unlocked, force raising notification");
 		notification->hide();
 		notification->showNormal();
-		notification->raise();
+		// notification->raise();
 		lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
 		        << "visibility =" << notification->visibility();
 	});
 #endif
 	notification->hide();
 	notification->showNormal();
-	notification->raise();
+	// notification->raise();
 	lInfo() << log().arg("Notification visibility : visible =") << notification->isVisible()
 	        << "visibility =" << notification->visibility() << "size =" << notification->width()
 	        << notification->height();
