@@ -210,9 +210,6 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						                     [this](QWindow::Visibility visibility) {
 							                     lInfo() << log().arg("Notification visibility changed") << visibility;
 						                     });
-						    QObject::connect(window, &QQuickWindow::flagsChanged, window, [this, window]() {
-							    lInfo() << log().arg("Notification flags changed") << window->flags();
-						    });
 						    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
 							    lInfo() << log().arg("Notification width changed") << width;
 						    });
