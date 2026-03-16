@@ -47,6 +47,7 @@ Mosaic {
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
+				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.remoteAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
 		}

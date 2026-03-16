@@ -25,6 +25,7 @@ Item {
 	property ParticipantDeviceGui participantDevice: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking || false
 	property alias displayPresence: avatar.displayPresence
+	property alias secured: avatar.secured
 	property color color: DefaultStyle.grey_600
     property real radius: Utils.getSizeWithScreenRatio(15)
 	property bool remoteIsPaused: participantDevice
@@ -115,7 +116,6 @@ Item {
 					call: !mainItem.previewEnabled ? mainItem.call : null
 					displayNameVal: mainItem.displayName
 					securityBreach: mainItem.securityBreach ? mainItem.securityBreach : securityLevel === LinphoneEnums.SecurityLevel.Unsafe
-					secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				}
 				ColumnLayout{
 					id: joiningView
