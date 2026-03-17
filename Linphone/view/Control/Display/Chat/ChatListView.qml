@@ -244,6 +244,7 @@ ListView {
 						maximumLineCount: 1
 						visible: !remoteComposingInfo.visible
 						text: modelData ? modelData.core.lastMessageText : ""
+                        textFormat: Text.AutoText
 						color: DefaultStyle.main2_400
 						font {
 							pixelSize: Typography.p1.pixelSize
