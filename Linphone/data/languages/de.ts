@@ -1505,36 +1505,36 @@
         <translation>Wähltöne aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="79"/>
         <source>settings_calls_enable_video_title</source>
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Video aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="89"/>
         <source>settings_calls_command_line_title</source>
         <extracomment>Command line</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="89"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="90"/>
         <source>settings_calls_command_line_title_place_holder</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="106"/>
         <source>settings_calls_current_ringtone_filename</source>
         <extracomment>Current ringtone :</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="130"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="131"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
         <translation type="unfinished"></translation>
@@ -2917,120 +2917,120 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="95"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="94"/>
         <source>contact_editor_mandatory_first_name_or_company_not_filled</source>
         <extracomment>&quot;Veuillez saisir un prénom ou un nom d&apos;entreprise&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="99"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="98"/>
         <source>contact_editor_mandatory_address_or_number_not_filled</source>
         <extracomment>&quot;Veuillez saisir une adresse ou un numéro de téléphone&quot;</extracomment>
         <translation>Bitte geben Sie eine SIP-Adresse oder Telefonnummer ein</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="116"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="115"/>
         <source>contact_editor_add_image_label</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
         <translation>Bild hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="134"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="133"/>
         <source>contact_details_edit</source>
         <extracomment>&quot;Modifier&quot;</extracomment>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="143"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="142"/>
         <source>edit_contact_image_accessible_name</source>
         <extracomment>&quot;Edit contact image&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="161"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="160"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="170"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="169"/>
         <source>delete_contact_image_accessible_name</source>
         <extracomment>&quot;Delete contact image&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="223"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="236"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="222"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="235"/>
         <source>contact_editor_first_name</source>
         <extracomment>&quot;Prénom&quot;</extracomment>
         <translation>Vorname</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="241"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="251"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="240"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="250"/>
         <source>contact_editor_last_name</source>
         <extracomment>&quot;Nom&quot;</extracomment>
         <translation>Nachname</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="256"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="266"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="255"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="265"/>
         <source>contact_editor_company</source>
         <extracomment>&quot;Entreprise&quot;</extracomment>
         <translation>Unternehmen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="271"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="286"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="270"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="285"/>
         <source>contact_editor_job_title</source>
         <extracomment>&quot;Fonction&quot;</extracomment>
         <translation>Beruf</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="319"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="351"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="318"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="350"/>
         <source>sip_address</source>
         <translation>SIP-Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="329"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="328"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="343"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="375"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="374"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="412"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="411"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="427"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="426"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="458"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="457"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="409"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="435"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="408"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="434"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Telefon</translation>
@@ -3274,6 +3274,12 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="617"/>
+        <source>contact_details_medias_and_documents_title</source>
+        <extracomment>&quot;Medias &amp; documents&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="375"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
@@ -3281,7 +3287,7 @@ Error</extracomment>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="397"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="754"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="799"/>
         <source>contact_details_edit</source>
         <extracomment>Edit
 ----------
@@ -3351,112 +3357,139 @@ Error</extracomment>
         <translation>Beruf :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="617"/>
         <source>contact_details_medias_title</source>
         <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Medien</translation>
+        <translation type="vanished">Medien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="630"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="648"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="633"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="653"/>
         <source>contact_details_medias_subtitle</source>
-        <extracomment>&quot;Afficher les medias partagés&quot;</extracomment>
+        <extracomment>&quot;Show shared medias&quot;</extracomment>
         <translation>Geteilte Medien anzeigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="654"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="672"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="692"/>
+        <source>contact_details_documents_subtitle</source>
+        <extracomment>&quot;Show shared documents&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="699"/>
         <source>contact_details_trust_title</source>
         <extracomment>&quot;Confiance&quot;</extracomment>
         <translation>Vertrauen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="661"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="706"/>
         <source>contact_dialog_devices_trust_title</source>
         <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
         <translation>Vertrauenslevel - Verifizierte Geräte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="670"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="715"/>
         <source>contact_details_no_device_found</source>
         <extracomment>&quot;Aucun appareil&quot;</extracomment>
         <translation>Kein Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="695"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="740"/>
         <source>contact_device_without_name</source>
         <extracomment>&quot;Appareil inconnu&quot;</extracomment>
         <translation>Unbekanntes Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="716"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="761"/>
         <source>contact_make_call_check_device_trust</source>
         <extracomment>&quot;Vérifier&quot;</extracomment>
         <translation>Überprüfen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="718"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="763"/>
         <source>verify_device_accessible_name</source>
         <extracomment>Verify %1 device</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="744"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="789"/>
         <source>contact_details_actions_title</source>
         <extracomment>&quot;Autres actions&quot;</extracomment>
         <translation>Weitere Aktionen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="774"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="819"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Retirer des favoris&quot;</extracomment>
         <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="776"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="821"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="793"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="838"/>
         <source>contact_details_share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="804"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="849"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="806"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="851"/>
         <source>contact_details_share_error_mesage</source>
         <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
         <translation>VCard-Erstellung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="811"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="856"/>
         <source>contact_details_share_success_title</source>
         <extracomment>&quot;VCard créée&quot;</extracomment>
         <translation>VCard erstellt</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="813"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="858"/>
         <source>contact_details_share_success_mesage</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard wurde in %1 gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="816"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="861"/>
         <source>contact_details_share_email_title</source>
         <extracomment>&quot;Partage de contact&quot;</extracomment>
         <translation>Kontakt teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="857"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="902"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
         <translation>Kontakt löschen</translation>
+    </message>
+</context>
+<context>
+    <name>ContactSharedFiles</name>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="22"/>
+        <source>contact_shared_medias_title</source>
+        <extracomment>&quot;Shared medias&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
+        <source>contact_shared_documents_title</source>
+        <extracomment>&quot;Shared documents&quot;</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="45"/>
+        <source>close_accessible_name</source>
+        <extracomment>Close %1</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -4043,29 +4076,29 @@ Error</extracomment>
     <name>FriendCore</name>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="31"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="69"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="189"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="425"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="590"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="77"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="197"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="433"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="598"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
         <translation>SIP-Adresse</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="33"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="77"/>
-        <location filename="../../core/friend/FriendCore.cpp" line="197"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="85"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="205"/>
         <source>device_id</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Telefon</translation>
     </message>
     <message>
-        <location filename="../../core/friend/FriendCore.cpp" line="421"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="429"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/friend/FriendCore.cpp" line="423"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="431"/>
         <source>information_popup_invalid_address_message</source>
         <extracomment>&quot;Adresse invalide&quot;</extracomment>
         <translation>Ungültige Adresse</translation>
@@ -6133,36 +6166,36 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="489"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="488"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="490"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="489"/>
         <source>conversation_editing_message_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="709"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="708"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="711"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="710"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="740"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="739"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="774"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="773"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konversationen</translation>
