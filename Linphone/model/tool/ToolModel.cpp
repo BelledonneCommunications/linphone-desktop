@@ -163,9 +163,9 @@ QString ToolModel::encodeTextToQmlRichFormat(const QString &text,
 			                  .second
 			                  //   .replace('&', "&amp;")
 			                  .replace('<', "\u2063&lt;")
-			                  .replace('\n', "<br>");
-			//   .replace('>', "\u2063&gt;")
-			//   .replace('"', "&quot;")
+			                  .replace('\n', "<br>")
+			                  //   .replace('>', "\u2063&gt;")
+			                  .replace('"', "&quot;");
 			//   .replace('\'', "&#039;");
 			if (!iriParsed[i].first) {
 				if (lastWasUrl) {
