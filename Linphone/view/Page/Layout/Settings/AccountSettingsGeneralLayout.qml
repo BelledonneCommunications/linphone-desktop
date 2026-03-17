@@ -176,6 +176,7 @@ AbstractSettingsLayout {
 				propertyOwnerGui: account
 				textRole: 'text'
 				flagRole: 'flag'
+				accessibleLabel: qsTr("manage_account_international_prefix")
 			}
 			SwitchSetting {
 				titleText: account?.core.humaneReadableRegistrationState

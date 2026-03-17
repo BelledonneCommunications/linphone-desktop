@@ -61,6 +61,9 @@ ListView {
     onVisibleChanged: if (visible && !expanded) expanded = true
 	
 	onYChanged: updatePosition()
+
+    Accessible.role: Accessible.List
+	Accessible.name: title
 	
 	// Qt bug: sometimes, containsMouse may not be send and update on each MouseArea.
 	// So we need to use this variable to switch off all hovered items.

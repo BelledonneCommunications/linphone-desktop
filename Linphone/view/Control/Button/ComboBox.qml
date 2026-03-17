@@ -38,6 +38,18 @@ Control.ComboBox {
     property color color: DefaultStyle.grey_100
     property color disabledColor: DefaultStyle.grey_200
 
+    // Accessibility properties
+    property string accessibleLabel: ""
+    Accessible.name: generateAccessibleName()
+
+    function generateAccessibleName() {
+        return currentText ?
+            //: %1 actual value %2
+            qsTr("combobox_with_value_accessible_name").arg(accessibleLabel).arg(currentText) :
+            accessibleLabel
+            
+    }
+
     onConstantImageSourceChanged: if (constantImageSource)
         selectedItemImg.imageSource = constantImageSource
     onCurrentIndexChanged: {
@@ -50,6 +62,12 @@ Control.ComboBox {
         if (mainItem.flagRole)
             selectedItemFlag.text = item[mainItem.flagRole];
         selectedItemImg.imageSource = constantImageSource ? constantImageSource : item.img ? item.img : "";
+    }
+
+    // Used for accessibility, contentItem remove value announcement from screen reader
+    onCurrentTextChanged: {
+        Accessible.name = generateAccessibleName()
+        Accessible.announce(currentText)
     }
 
     Keys.onPressed: event => {
@@ -181,11 +199,13 @@ Control.ComboBox {
             }
 
             delegate: Item {
+                id: delegate
                 width: mainItem.width
                 height: mainItem.height
                 // anchors.left: listView.left
                 // anchors.right: listView.right
-                Accessible.name: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
+                property string valueText: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
+                Accessible.name: valueText
                 RowLayout {
                     anchors.fill: parent
                     EffectImage {
@@ -216,7 +236,7 @@ Control.ComboBox {
                         Layout.leftMargin: delegateImg.visible ? 0 : Utils.getSizeWithScreenRatio(flagItem.visble ? 5 : 25)
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                         Layout.alignment: Qt.AlignCenter
-                        text: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
+                        text: delegate.valueText
                         elide: Text.ElideRight
                         maximumLineCount: 1
                         wrapMode: Text.WrapAnywhere

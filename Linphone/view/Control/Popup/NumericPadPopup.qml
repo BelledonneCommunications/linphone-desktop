@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
-import QtQuick.Layouts as Layout
+import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
@@ -10,15 +10,16 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Control.Popup {
 	id: mainItem
 	closePolicy: Control.Popup.CloseOnEscape
-    leftPadding: Utils.getSizeWithScreenRatio(72)
-    rightPadding: Utils.getSizeWithScreenRatio(72)
-    topPadding: Utils.getSizeWithScreenRatio(41)
-    bottomPadding: Utils.getSizeWithScreenRatio(18)
+	padding: Utils.getSizeWithScreenRatio(10)
 	property bool closeButtonVisible: true
 	property bool roundedBottom: false
 	property bool lastRowVisible: true
 	property var currentCall
-	onOpened: numPad.forceActiveFocus()
+	focus: true
+	onOpened: {
+		const focusReason = FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason
+		numPad.forceActiveFocus(focusReason)
+	}
 	signal buttonPressed(string text)
 	signal keyPadKeyPressed(KeyEvent event)
 	onKeyPadKeyPressed: (event) => {
@@ -35,6 +36,8 @@ Control.Popup {
 			height: parent.height
 			color: DefaultStyle.grey_100
             radius: Utils.getSizeWithScreenRatio(20)
+			bottomLeftRadius: mainItem.roundedBottom ? radius : 0
+			bottomRightRadius: mainItem.roundedBottom ? radius : 0
 		}
 		MultiEffect {
 			id: effect
@@ -46,24 +49,19 @@ Control.Popup {
 			shadowBlur: 0.1
 			z: -1
 		}
-		Rectangle {
-			width: parent.width
-			height: parent.height / 2
-			anchors.bottom: parent.bottom
-			color: DefaultStyle.grey_100
-			visible: !mainItem.roundedBottom
-		}
 		MouseArea {
 			anchors.fill: parent
 			onClicked: numPad.forceActiveFocus()
 		}
+	}
+	contentItem: ColumnLayout{
+		Accessible.role: Accessible.Dialog
+		//: "Numeric Pad"
+		Accessible.name : qsTr("numeric_pad_accessible_name")
 		BigButton {
 			id: closeButton
 			visible: mainItem.closeButtonVisible
-			anchors.top: parent.top
-			anchors.right: parent.right
-            anchors.topMargin: Utils.getSizeWithScreenRatio(10)
-            anchors.rightMargin: Utils.getSizeWithScreenRatio(10)
+			Layout.alignment: Qt.AlignRight
 			icon.source: AppIcons.closeX
             icon.width: Utils.getSizeWithScreenRatio(24)
             icon.height: Utils.getSizeWithScreenRatio(24)
@@ -72,15 +70,17 @@ Control.Popup {
 			//: Close numeric pad
 			Accessible.name: qsTr("close_numeric_pad_accessible_name")
 		}
-	}
-	contentItem: NumericPad{
-		id: numPad
-		lastRowVisible: mainItem.lastRowVisible
-		currentCall: mainItem.currentCall
-		onButtonPressed: (text) => {
-			mainItem.buttonPressed(text)
+		NumericPad{
+			id: numPad
+			Layout.alignment: Qt.AlignCenter
+			Layout.bottomMargin: Utils.getSizeWithScreenRatio(5)
+			lastRowVisible: mainItem.lastRowVisible
+			currentCall: mainItem.currentCall
+			onButtonPressed: (text) => {
+				mainItem.buttonPressed(text)
+			}
+			onLaunchCall: mainItem.launchCall()
+			onWipe: mainItem.wipe()
 		}
-		onLaunchCall: mainItem.launchCall()
-		onWipe: mainItem.wipe()
 	}
 }

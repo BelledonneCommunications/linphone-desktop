@@ -120,6 +120,8 @@ FocusScope {
 							startHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, startHour.selectedHour, startHour.selectedMin)
 							endHour.selectedDateTime = UtilsCpp.createDateTime(selectedDate, endHour.selectedHour, endHour.selectedMin)
 						}
+						//: Day
+						accessibleLabel: qsTr("day_accessible_name")
 					}
 				},
 				RowLayout {
@@ -147,6 +149,8 @@ FocusScope {
 									endHour.selectedDateTime = UtilsCpp.addSecs(selectedDateTime, 3600)
 								}
 							}
+							//: Start time
+							accessibleLabel: qsTr("start_time_accessible_name")
 						}
 						TimeComboBox {
 							id: endHour
@@ -160,6 +164,8 @@ FocusScope {
 							KeyNavigation.down: timeZoneCbox
 							KeyNavigation.left: startHour
 							KeyNavigation.right: startHour
+							//: End time
+							accessibleLabel: qsTr("end_time_accessible_name")
 						}
 						Item {
 							Layout.fillWidth: true
@@ -200,6 +206,8 @@ FocusScope {
 						var modelIndex = timeZoneCbox.model.index(currentIndex, 0)
 						mainItem.conferenceInfoGui.core.timeZoneModel = timeZoneCbox.model.data(modelIndex, Qt.DisplayRole + 1)
 					}
+					//: Timezone
+					accessibleLabel: qsTr("timezone_accessible_name")
 				}
 			]
 			

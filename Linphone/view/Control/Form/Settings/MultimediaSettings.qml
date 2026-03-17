@@ -57,7 +57,7 @@ ColumnLayout {
 					propertyOwner: SettingsCpp
 					textRole: 'display_name'
 					//: Choose %1
-					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_ringer_title"))
+					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_ringer_title"))
 				}
 				Item {
 					Layout.fillHeight: true
@@ -98,7 +98,7 @@ ColumnLayout {
 							SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
 						}
 					}
-					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
+					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
 				}
 				Slider {
 					id: speakerVolume
@@ -149,7 +149,7 @@ ColumnLayout {
 							SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
 						}
 					}
-					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
+					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
 				}
 				Slider {
 					id: microVolume
@@ -238,7 +238,7 @@ ColumnLayout {
 							SettingsCpp.lSetVideoDevice(videoDevicesCbox.currentValue)
 						}
 					}
-					Accessible.name: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_camera_title"))
+					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_camera_title"))
 				}
 			}
 			Connections {

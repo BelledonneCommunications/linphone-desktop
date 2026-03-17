@@ -125,7 +125,7 @@ AbstractSettingsLayout {
 					propertyName: "mediaEncryption"
 					textRole: 'display_name'
                     propertyOwner: SettingsCpp
-					Accessible.name: qsTr("settings_advanced_media_encryption_title")
+					accessibleLabel: qsTr("settings_advanced_media_encryption_title")
 				}
 			}
 			SwitchSetting {

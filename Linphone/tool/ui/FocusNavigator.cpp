@@ -32,12 +32,17 @@ bool FocusNavigator::doesLastFocusWasKeyboard() {
 	return mLastFocusWasKeyboard;
 }
 
-bool FocusNavigator::eventFilter(QObject *, QEvent *event) {
+QQuickItem *FocusNavigator::getLastFocusItem() {
+	return mLastFocusItem;
+}
+
+bool FocusNavigator::eventFilter(QObject *obj, QEvent *event) {
 	switch (event->type()) {
 		case QEvent::FocusIn: {
 			auto fe = static_cast<QFocusEvent *>(event);
 			if (fe) {
 				int focusReason = fe->reason();
+				// qDebug() << "New focus object" << obj << "| reason" << focusReason;
 				mLastFocusWasKeyboard = (focusReason == Qt::TabFocusReason || focusReason == Qt::BacktabFocusReason);
 			}
 			break;
@@ -45,12 +50,14 @@ bool FocusNavigator::eventFilter(QObject *, QEvent *event) {
 		default:
 			break;
 	}
-	return false;
+	return QObject::eventFilter(obj, event);
 }
 
 void FocusNavigator::onFocusObjectChanged(QObject *obj) {
 	// qDebug() << "New focus object" << obj; // Usefull to debug focus problems
 	auto item = qobject_cast<QQuickItem *>(obj);
+	mLastFocusItem = item;
 	if (!item) return;
 	emit focusChanged(item, mLastFocusWasKeyboard);
+	emit lastFocusItemChanged();
 }

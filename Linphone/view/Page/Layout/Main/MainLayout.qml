@@ -314,6 +314,8 @@ Item {
                                 sectionsSpacing: Utils.getSizeWithScreenRatio(5)
 
                                 searchBarText: magicSearchBar.text
+                                //: "Searchbar suggestions"
+                                Accessible.name: qsTr("searchbar_suggestions_accessible_name")
                             }
                         }
                     }
@@ -724,7 +726,12 @@ Item {
                 Component {
                     id: accountSettingsPageComponent
                     AccountSettingsPage {
-                        onGoBack: closeContextualMenuComponent()
+                        onGoBack: {
+                            closeContextualMenuComponent()
+                            if(FocusNavigator.doesLastFocusWasKeyboard()){
+                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                            }
+                        }
                         onAccountRemoved: {
                             closeContextualMenuComponent();
                             mainItem.accountRemoved();
@@ -734,13 +741,23 @@ Item {
                 Component {
                     id: settingsPageComponent
                     SettingsPage {
-                        onGoBack: closeContextualMenuComponent()
+                        onGoBack: {
+                            closeContextualMenuComponent()
+                            if(FocusNavigator.doesLastFocusWasKeyboard()){
+                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                            }
+                        }
                     }
                 }
                 Component {
                     id: helpPageComponent
                     HelpPage {
-                        onGoBack: closeContextualMenuComponent()
+                        onGoBack: {
+                            closeContextualMenuComponent()
+                            if(FocusNavigator.doesLastFocusWasKeyboard()){
+                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                            }
+                        }
                     }
                 }
                 Control.StackView {

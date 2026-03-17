@@ -333,7 +333,6 @@ AbstractWindow {
     Rectangle {
         anchors.fill: parent
         color: DefaultStyle.grey_900
-        focus: true
 
         ColumnLayout {
             anchors.fill: parent
@@ -865,10 +864,6 @@ AbstractWindow {
                             roundedBottom: true
                             lastRowVisible: false
                             visible: false
-                            leftPadding: Utils.getSizeWithScreenRatio(40)
-                            rightPadding: Utils.getSizeWithScreenRatio(40)
-                            topPadding: Utils.getSizeWithScreenRatio(41)
-                            bottomPadding: Utils.getSizeWithScreenRatio(18)
                             Component.onCompleted: parent.height = height
                         }
                     }
@@ -904,10 +899,6 @@ AbstractWindow {
                             parent: numericPadContainer
                             roundedBottom: true
                             visible: newCallForm.searchBar.numericPadButton.checked
-                            leftPadding: Utils.getSizeWithScreenRatio(40)
-                            rightPadding: Utils.getSizeWithScreenRatio(40)
-                            topPadding: Utils.getSizeWithScreenRatio(41)
-                            bottomPadding: Utils.getSizeWithScreenRatio(18)
                             onLaunchCall: {
                                 rightPanel.visible = false
                                 UtilsCpp.createCall(newCallForm.searchBar.text)
@@ -1407,6 +1398,7 @@ AbstractWindow {
                 // End call button
                 BigButton {
                     id: endCallButton
+                    focus: true
                     Layout.row: 0
                     icon.width: Utils.getSizeWithScreenRatio(32)
                     icon.height: Utils.getSizeWithScreenRatio(32)

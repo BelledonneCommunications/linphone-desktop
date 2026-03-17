@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls.Basic as Control
-import QtQuick.Layouts as Layout
+import QtQuick.Layouts
 import QtQuick.Effects
 import Linphone
 import UtilsCpp
@@ -107,11 +107,12 @@ FocusScope {
 		}
 	}
 
-	Layout.GridLayout {
+	GridLayout {
 		id: numPadGrid
 		columns: 3
         columnSpacing: Utils.getSizeWithScreenRatio(40)
         rowSpacing: Utils.getSizeWithScreenRatio(10)
+
 		function getButtonAt(index){
 			index = (index+15) % 15
 			if(index >= 0){
@@ -131,7 +132,7 @@ FocusScope {
 			model: 9
 			BigButton {
 				id: numPadButton
-				Layout.Layout.alignment: Qt.AlignHCenter
+				Layout.alignment: Qt.AlignHCenter
 				required property int index
                 implicitWidth: Utils.getSizeWithScreenRatio(60)
                 implicitHeight: Utils.getSizeWithScreenRatio(60)
@@ -158,7 +159,7 @@ FocusScope {
 			]
 			BigButton {
 				id: digitButton
-				Layout.Layout.alignment: Qt.AlignHCenter
+				Layout.alignment: Qt.AlignHCenter
                 implicitWidth: Utils.getSizeWithScreenRatio(60)
                 implicitHeight: Utils.getSizeWithScreenRatio(60)
 				
@@ -212,7 +213,7 @@ FocusScope {
 			visible: mainItem.lastRowVisible
             implicitWidth: Utils.getSizeWithScreenRatio(75)
             implicitHeight: Utils.getSizeWithScreenRatio(55)
-			Layout.Layout.alignment: Qt.AlignHCenter
+			Layout.alignment: Qt.AlignHCenter
             icon.width: Utils.getSizeWithScreenRatio(32)
             icon.height: Utils.getSizeWithScreenRatio(32)
             radius: Utils.getSizeWithScreenRatio(71)
@@ -231,17 +232,14 @@ FocusScope {
 		Button {
 			id: eraseButton
 			visible: mainItem.lastRowVisible
-            leftPadding: Utils.getSizeWithScreenRatio(5)
-            rightPadding: Utils.getSizeWithScreenRatio(5)
-            topPadding: Utils.getSizeWithScreenRatio(5)
-            bottomPadding: Utils.getSizeWithScreenRatio(5)
-			Layout.Layout.alignment: Qt.AlignHCenter
+			padding: Utils.getSizeWithScreenRatio(5)
+			Layout.alignment: Qt.AlignHCenter
 			icon.source: AppIcons.backspaceFill
 			style: ButtonStyle.noBackground
             icon.width: Utils.getSizeWithScreenRatio(38)
             icon.height: Utils.getSizeWithScreenRatio(38)
-            Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
-            Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(38)
+            Layout.preferredWidth: Utils.getSizeWithScreenRatio(38)
+            Layout.preferredHeight: Utils.getSizeWithScreenRatio(38)
 			
 			//: Erase
 			Accessible.name: qsTr("erase_accessible_name")

@@ -94,7 +94,7 @@ AbstractSettingsLayout {
 							SettingsCpp.callForwardToAddress = "voicemail";
 					}
 				}
-
+				accessibleLabel: qsTr("settings_call_forward_destination_choose")
 			}
 			DecoratedTextField {
 				id: sipInputField

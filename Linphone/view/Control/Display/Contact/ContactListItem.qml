@@ -43,6 +43,7 @@ FocusScope {
     signal contactDeletionRequested(FriendGui contact)
     signal containsMouseChanged(bool containsMouse)
     Accessible.name: displayName
+    Accessible.role: Accessible.ListItem
 
     MouseArea {
         Text {

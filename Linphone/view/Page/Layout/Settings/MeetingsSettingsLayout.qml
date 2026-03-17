@@ -55,6 +55,7 @@ AbstractSettingsLayout {
 					propertyName: "conferenceLayout"
 					propertyOwner: SettingsCpp
 					textRole: 'display_name'
+					accessibleLabel: qsTr("settings_meetings_default_layout_title")
 				}
 			}
 			SwitchSetting {

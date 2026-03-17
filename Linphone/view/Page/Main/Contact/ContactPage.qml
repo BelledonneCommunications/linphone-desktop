@@ -42,7 +42,7 @@ AbstractMainPage {
         rightPanelStackView.clear()
         contactList.resetSelections()
     }
-    function goToContactDetails() {
+    function goToContactDetails(focusEditButton=false) {
         if (selectedContact) {
             var firstItem = rightPanelStackView.get(0)
             if (firstItem && firstItem.objectName == "contactDetail")
@@ -58,6 +58,10 @@ AbstractMainPage {
                     rightPanelStackView.push(contactDetail)
                 }
             }
+            if(focusEditButton){
+                rightPanelStackView.get(0).focusEditButton()
+            }
+            
         } else {
             rightPanelStackView.clear()
         }
@@ -335,6 +339,10 @@ AbstractMainPage {
             width: parent?.width
             height: parent?.height
             property string objectName: "contactDetail"
+
+            function focusEditButton(){
+                contactDetail.button.forceActiveFocus(Qt.TabFocusReason)
+            }
             component ContactDetailLayout: ColumnLayout {
                 id: contactDetailLayout
                 spacing: Utils.getSizeWithScreenRatio(15)
@@ -922,7 +930,7 @@ AbstractMainPage {
         ContactEdition {
             property string objectName: "contactEdition"
             onCloseEdition: redirectAddress => {
-                goToContactDetails()
+                goToContactDetails(true)
                 if (redirectAddress) {
                     initialFriendToDisplay = redirectAddress
                 }

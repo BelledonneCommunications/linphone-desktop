@@ -5,30 +5,29 @@ import QtQuick.Controls.Basic
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Rectangle{
 	id: mainItem
 	property int voicemailCount: 0
 	property bool showMwi: false
+	property real scaleFactor: 1.0
     width: Utils.getSizeWithScreenRatio(42 * scaleFactor)
     height: Utils.getSizeWithScreenRatio(36 * scaleFactor)
-	property real scaleFactor: 1.0
 	signal clicked()
 	color: 'transparent'
-	Button {
+	IconButton {
 		anchors.bottom: parent.bottom
 		anchors.left: parent.left
+		style: ButtonStyle.noBackground
 		icon.source: AppIcons.voicemail
-		icon.color: DefaultStyle.main2_600
         width: Utils.getSizeWithScreenRatio(33 * scaleFactor)
 		height: width
 		icon.width: width
 		icon.height: width
-		padding: 0
-		background: Item {
-			anchors.fill: parent
-		}
+		//: "Voicemail"
+		Accessible.name: qsTr("voicemail_accessible_name")
 		onClicked: {
 			mainItem.clicked()
 		}

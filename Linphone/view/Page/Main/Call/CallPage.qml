@@ -337,7 +337,10 @@ AbstractMainPage {
             width: parent?.width
             height: parent?.height
             Control.StackView.onActivated: {
-                callContactsList.forceActiveFocus()
+                if(!numericPadPopupItem.visible){
+		            const focusReason = FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason
+                   callContactsList.forceActiveFocus(focusReason)
+                }
             }
             ColumnLayout {
                 anchors.fill: parent
@@ -379,7 +382,6 @@ AbstractMainPage {
                     Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    focus: true
                     numPadPopup: numericPadPopupItem
                     searchBarColor: DefaultStyle.grey_100
                     onContactClicked: contact => {

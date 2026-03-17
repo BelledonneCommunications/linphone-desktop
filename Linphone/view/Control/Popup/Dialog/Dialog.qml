@@ -37,13 +37,38 @@ Popup {
 	signal accepted()
 	signal rejected()
 
+	property Item itemToFocusOnClose: null
+	property bool quitWithKeyboard : false
+
+	function updateQuitWithKeyboardPress (event) {
+		if(visible && (event.key == Qt.Key_Escape || event.key == Qt.Key_Enter || event.key == Qt.Key_Space || event.key == Qt.Key_Return)){
+			mainItem.quitWithKeyboard = true
+		}
+	}
+
+	onAboutToHide: {
+		if(mainItem.itemToFocusOnClose && mainItem.itemToFocusOnClose.visible && mainItem.quitWithKeyboard){
+			// Focus last element that was focused before Dialog was opened
+			mainItem.itemToFocusOnClose.forceActiveFocus(Qt.TabFocusReason)
+		}
+		mainItem.itemToFocusOnClose = null
+	}
+
 	contentItem: FocusScope {
+		Accessible.role: Accessible.Dialog
+		Accessible.name: mainItem.title
+		Accessible.description: mainItem.details
 		implicitWidth: child.implicitWidth
 		implicitHeight: child.implicitHeight
 		onVisibleChanged: {
-			if(visible) forceActiveFocus()
+			if(visible){
+				mainItem.itemToFocusOnClose = FocusNavigator.lastFocusItem
+				const focusReason = FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason
+				forceActiveFocus(focusReason)
+			}
 		}
 		Keys.onPressed: (event) => {
+			mainItem.updateQuitWithKeyboardPress(event)
 			if(visible && event.key == Qt.Key_Escape){
 				mainItem.close()
 				event.accepted = true
@@ -129,6 +154,9 @@ Popup {
 							mainItem.rejected()
 						mainItem.close()
 					}
+					Keys.onPressed: (event) => {
+						mainItem.updateQuitWithKeyboardPress(event)
+					}
 					KeyNavigation.left: secondButtonId
 					KeyNavigation.right: secondButtonId
 				}
@@ -144,6 +172,9 @@ Popup {
 						else
 							mainItem.rejected()
 						mainItem.close()
+					}
+					Keys.onPressed: (event) => {
+						mainItem.updateQuitWithKeyboardPress(event)
 					}
 					KeyNavigation.left: firstButtonId
 					KeyNavigation.right: firstButtonId

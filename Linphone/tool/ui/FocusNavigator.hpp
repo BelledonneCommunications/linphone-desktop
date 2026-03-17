@@ -25,18 +25,22 @@
 
 class FocusNavigator : public QObject {
 	Q_OBJECT
+	Q_PROPERTY(QQuickItem* lastFocusItem READ getLastFocusItem NOTIFY lastFocusItemChanged)
 
 public:
 	explicit FocusNavigator(QObject *parent = nullptr);
 	Q_INVOKABLE bool doesLastFocusWasKeyboard();
+	Q_INVOKABLE QQuickItem *getLastFocusItem();
 
 protected:
 	bool eventFilter(QObject *obj, QEvent *event) override;
 
 signals:
 	void focusChanged(QQuickItem *item, bool keyboardFocus);
+	void lastFocusItemChanged();
 
 private:
 	bool mLastFocusWasKeyboard = false;
+	QQuickItem *mLastFocusItem = nullptr;
 	void onFocusObjectChanged(QObject *obj);
 };

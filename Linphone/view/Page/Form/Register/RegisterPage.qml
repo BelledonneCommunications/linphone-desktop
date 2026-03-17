@@ -155,7 +155,7 @@ LoginLayout {
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 									enabled: false
 									model: [{text:"@sip.linphone.org"}]
-									Accessible.name: qsTr("domain")
+									accessibleLabel: qsTr("domain")
 								}
 								EffectImage {
                                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(16)

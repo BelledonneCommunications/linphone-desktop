@@ -276,7 +276,7 @@ LoginLayout {
 									})
 									KeyNavigation.up: displayName
 									KeyNavigation.down: outboundProxyUriEdit
-									Accessible.name: qsTr("transport")
+									accessibleLabel: qsTr("transport")
 								}
 							}
 						}
