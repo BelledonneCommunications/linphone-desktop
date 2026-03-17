@@ -74,6 +74,7 @@ AbstractSettingsLayout {
                 propertyOwner: SettingsCpp
             }
             SwitchSetting {
+				visible: false
                 //: "Autoriser la vidéo"
                 titleText: qsTr("settings_calls_enable_video_title")
                 propertyName: "videoEnabled"
