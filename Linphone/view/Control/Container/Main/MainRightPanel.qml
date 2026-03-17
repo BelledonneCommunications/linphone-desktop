@@ -10,8 +10,9 @@ ColumnLayout {
 	id: mainItem
 	property color panelColor: DefaultStyle.grey_100
 	property alias headerContentItem: rightPanelHeader.contentItem
-	property alias content: rightPanelContent.children
+	property alias content: rightPanelContent.contentItem
 	property alias header: rightPanelHeader
+	property int contentTopPadding: 0
 	spacing: 0
 
 	Control.Control {
@@ -41,16 +42,20 @@ ColumnLayout {
 			}
 		}
 	}
-	Rectangle {
+	Control.Control {
 		id: rightPanelContent
-		color: mainItem.panelColor
 		Layout.fillWidth: true
 		Layout.fillHeight: true
-        MouseArea {
-            anchors.fill: parent
-            onClicked: {
-                rightPanelContent.forceActiveFocus()
-            }
-        }
+		topPadding: mainItem.contentTopPadding
+		background: Rectangle {
+			anchors.fill: parent
+			color: mainItem.panelColor
+			MouseArea {
+				anchors.fill: parent
+				onClicked: {
+					rightPanelContent.forceActiveFocus()
+				}
+			}
+		}
 	}
 }

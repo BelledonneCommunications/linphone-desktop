@@ -612,40 +612,85 @@ AbstractMainPage {
                             }
                         }
                         ContactDetailLayout {
-                            visible: false//!SettingsCpp.disableChatFeature
-                            //: "Medias"
-                            label: qsTr("contact_details_medias_title")
+                            visible: !SettingsCpp.disableChatFeature
+                            //: "Medias & documents"
+                            label: qsTr("contact_details_medias_and_documents_title")
                             Layout.fillWidth: true
-                            content: Button {
-                                style: ButtonStyle.noBackground
-                                contentItem: RowLayout {
-                                    EffectImage {
-                                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-                                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-                                        imageSource: AppIcons.shareNetwork
-                                        colorizationColor: DefaultStyle.main2_600
-                                    }
-                                    Text {
-                                        //: "Afficher les medias partagés"
-                                        text: qsTr("contact_details_medias_subtitle")
-                                        font {
-                                            pixelSize: Typography.p1.pixelSize
-                                            weight: Typography.p1.weight
+                            content: ColumnLayout {
+                                spacing: Utils.getSizeWithScreenRatio(10)
+                                Button {
+                                    Layout.fillWidth: true
+                                    style: ButtonStyle.noBackground
+                                    contentItem: RowLayout {
+                                        EffectImage {
+                                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                                            imageSource: AppIcons.shareNetwork
+                                            colorizationColor: DefaultStyle.main2_600
+                                        }
+                                        Text {
+                                            //: "Show shared medias"
+                                            text: qsTr("contact_details_medias_subtitle")
+                                            font {
+                                                pixelSize: Typography.p1.pixelSize
+                                                weight: Typography.p1.weight
+                                            }
+                                        }
+                                        Item {
+                                            Layout.fillWidth: true
+                                        }
+                                        EffectImage {
+                                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                                            imageSource: AppIcons.rightArrow
+                                            colorizationColor: DefaultStyle.main2_600
                                         }
                                     }
-                                    Item {
-                                        Layout.fillWidth: true
+                                    onClicked: {
+                                        rightPanelStackView.push(contactSharedFiles, {
+                                         "filter": ChatMessageFileProxy.FilterContentType.Medias})
                                     }
-                                    EffectImage {
-                                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-                                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-                                        imageSource: AppIcons.rightArrow
-                                        colorizationColor: DefaultStyle.main2_600
-                                    }
+                                    Accessible.name: qsTr("contact_details_medias_subtitle")
                                 }
-                                onClicked: console.debug(
-                                               "TODO : go to shared media")
-                                Accessible.name: qsTr("contact_details_medias_subtitle")
+                                Rectangle {
+                                    Layout.fillWidth: true
+                                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(1)
+                                    color: DefaultStyle.main2_200
+                                }
+                                Button {
+                                    Layout.fillWidth: true
+                                    style: ButtonStyle.noBackground
+                                    contentItem: RowLayout {
+                                        EffectImage {
+                                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                                            imageSource: AppIcons.pdf
+                                            colorizationColor: DefaultStyle.main2_600
+                                        }
+                                        Text {
+                                            //: "Show shared documents"
+                                            text: qsTr("contact_details_documents_subtitle")
+                                            font {
+                                                pixelSize: Typography.p1.pixelSize
+                                                weight: Typography.p1.weight
+                                            }
+                                        }
+                                        Item {
+                                            Layout.fillWidth: true
+                                        }
+                                        EffectImage {
+                                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+                                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
+                                            imageSource: AppIcons.rightArrow
+                                            colorizationColor: DefaultStyle.main2_600
+                                        }
+                                    }
+                                    onClicked: {
+                                        rightPanelStackView.push(contactSharedFiles, {
+                                         "filter": ChatMessageFileProxy.FilterContentType.Documents})
+                                    }
+                                    Accessible.name: qsTr("contact_details_documents_subtitle")
+                                }
                             }
                         }
                         ContactDetailLayout {
@@ -882,6 +927,14 @@ AbstractMainPage {
                     initialFriendToDisplay = redirectAddress
                 }
             }
+        }
+    }
+
+    Component {
+        id: contactSharedFiles
+        ContactSharedFiles {
+            contact: mainItem.selectedContact
+            onClose: rightPanelStackView.pop()
         }
     }
 }

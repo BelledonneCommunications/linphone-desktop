@@ -147,7 +147,7 @@ public:
 	bool isCardDAV() const;
 	bool getReadOnly() const;
 
-	std::shared_ptr<FriendModel> getFriendModel();
+	std::shared_ptr<FriendModel> getModel();
 
 	Q_INVOKABLE void remove();
 	Q_INVOKABLE void save();

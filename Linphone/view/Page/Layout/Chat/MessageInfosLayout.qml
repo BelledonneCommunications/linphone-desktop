@@ -22,12 +22,15 @@ ColumnLayout {
 	property alias listView: listView
 	property var parentView
 	property alias content: contentLayout.children
+	property bool showTitle: true
 
 	spacing: Utils.getSizeWithScreenRatio(25)
 
 	signal goBackRequested()
 
 	RowLayout {
+		id: titleLayout
+		visible: mainItem.showTitle
 		BigButton {
 			icon.source: AppIcons.leftArrow
 			style: ButtonStyle.noBackground

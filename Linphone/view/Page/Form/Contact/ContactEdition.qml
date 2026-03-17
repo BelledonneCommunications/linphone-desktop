@@ -75,7 +75,6 @@ MainRightPanel {
 
 	content: ContactLayout {
 		id: contactLayoutItem
-		anchors.fill: parent
 		contact: mainItem.contact
 		button.text: mainItem.saveButtonText
 		button.Keys.onPressed: (event) => {

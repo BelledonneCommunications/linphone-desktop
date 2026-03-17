@@ -311,7 +311,6 @@ FocusScope {
             }
 
             content: Control.SplitView {
-                anchors.fill: parent
                 orientation: Qt.Vertical
                 handle: Rectangle {
                     id: splitViewHandle

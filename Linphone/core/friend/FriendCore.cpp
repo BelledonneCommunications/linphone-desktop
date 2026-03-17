@@ -54,6 +54,14 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 		mPictureUri = Utils::coreStringToAppString(contact->getPhoto());
 		mFullName = mFriendModel->getFullName();
 		auto defaultAddress = contact->getAddress();
+		if (!defaultAddress) {
+			for (auto &address : contact->getAddresses()) {
+				if (address) {
+					defaultAddress = address;
+					break;
+				}
+			}
+		}
 		auto vcard = contact->getVcard();
 		if (vcard) {
 			mOrganization = Utils::coreStringToAppString(vcard->getOrganization());
@@ -731,7 +739,7 @@ bool FriendCore::getReadOnly() const {
 	                                // [misc]vcards-contacts-list=<URL> & CardDAV
 }
 
-std::shared_ptr<FriendModel> FriendCore::getFriendModel() {
+std::shared_ptr<FriendModel> FriendCore::getModel() {
 	return mFriendModel;
 }
 
