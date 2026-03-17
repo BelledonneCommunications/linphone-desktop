@@ -294,59 +294,60 @@
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="167"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="179"/>
         <source>manage_account_international_prefix</source>
         <extracomment>Indicatif international*</extracomment>
         <translation>Indicatif international*</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="193"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="194"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
         <translation>Déconnecter mon compte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="201"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="202"/>
         <source>manage_account_delete_message</source>
         <translation>Votre compte sera retiré de ce client linphone, mais vous restez connecté sur vos autres clients</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="220"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="221"/>
         <source>manage_account_dialog_remove_account_title</source>
         <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
         <translation>Se déconnecter du compte ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="222"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="223"/>
         <source>manage_account_dialog_remove_account_message</source>
         <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</extracomment>
         <translation>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="131"/>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="279"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="280"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="317"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="318"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Supprimer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="326"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
         <source>manage_account_device_remove_confirm_dialog</source>
         <translation>Supprimer %1 ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="340"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="341"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
         <translation>Dernière connexion:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="358"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="359"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Pas d&apos;information</translation>
@@ -954,6 +955,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="97"/>
         <source>settings_call_forward_destination_choose</source>
         <extracomment>Forward to destination</extracomment>
         <translation>Transférer les appels vers :</translation>
@@ -1279,13 +1281,13 @@
         <translation>Appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="461"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="463"/>
         <source>call_history_options_accessible_name</source>
         <translation>Options de l&apos;</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="181"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="553"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="555"/>
         <source>menu_delete_history</source>
         <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
         <translation>Supprimer l&apos;historique</translation>
@@ -1331,98 +1333,98 @@
         <translation>Aucun appel dans votre historique</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="357"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="360"/>
         <source>return_to_call_history_accessible_name</source>
         <extracomment>Return to call history</extracomment>
         <translation>Retourner à l&apos;historique d&apos;appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="368"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="371"/>
         <source>call_action_start_new_call</source>
         <extracomment>&quot;Nouvel appel&quot;</extracomment>
         <translation>Nouvel appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="408"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="410"/>
         <source>call_start_group_call_title</source>
         <extracomment>&quot;Appel de groupe&quot;</extracomment>
         <translation>Appel de groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="410"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="412"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
         <translation>Lancer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="420"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="424"/>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="522"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="422"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="426"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="524"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="422"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="424"/>
         <source>group_call_error_must_have_name</source>
         <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
         <translation>Un nom doit être donné à l&apos;appel de groupe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="426"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="428"/>
         <source>group_call_error_not_connected</source>
         <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
         <translation>Vous n&apos;etes pas connecté</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="480"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="482"/>
         <source>menu_see_existing_contact</source>
         <extracomment>&quot;Show contact&quot;</extracomment>
         <translation>Voir le contact</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="482"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="484"/>
         <source>menu_add_address_to_contacts</source>
         <extracomment>&quot;Add to contacts&quot;</extracomment>
         <translation>Ajouter aux contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="504"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="506"/>
         <source>menu_copy_sip_address</source>
         <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
         <translation>Copier l&apos;adresse SIP</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="516"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="518"/>
         <source>sip_address_copied_to_clipboard_toast</source>
         <extracomment>Adresse copiée</extracomment>
         <translation>Adresse copiée</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="518"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="520"/>
         <source>sip_address_copied_to_clipboard_message</source>
         <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
         <translation>L&apos;adresse a été copié dans le presse-papiers</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="524"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="526"/>
         <source>sip_address_copy_to_clipboard_error</source>
         <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
         <translation>Erreur lors de la copie de l&apos;adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="646"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="648"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
         <translation>Appel manqué</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="649"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="651"/>
         <source>call_outgoing</source>
         <extracomment>&quot;Appel sortant&quot;</extracomment>
         <translation>Appel sortant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Call/CallPage.qml" line="651"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="653"/>
         <source>call_audio_incoming</source>
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Appel entrant</translation>
@@ -1699,7 +1701,7 @@
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="753"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1766"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1758"/>
         <source>call_action_show_dialer</source>
         <extracomment>&quot;Pavé numérique&quot;</extracomment>
         <translation>Pavé numérique</translation>
@@ -1717,14 +1719,14 @@
         <translation>Liste d&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1060"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1052"/>
         <source>Merger tous les appels</source>
         <extracomment>call_action_merge_calls</extracomment>
         <translation>Merger tous les appels</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="768"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1847"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1839"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
         <translation>Paramètres</translation>
@@ -1736,34 +1738,34 @@
         <translation>Partage de votre écran</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1216"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1208"/>
         <source>conference_share_link_title</source>
         <extracomment>Partager le lien de la réunion</extracomment>
         <translation>Partager le lien de la réunion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1220"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1212"/>
         <source>copied</source>
         <extracomment>Copié</extracomment>
         <translation>Copié</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1222"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1214"/>
         <source>information_popup_meeting_address_copied_to_clipboard</source>
         <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
         <translation>Le lien de la réunion a été copié dans le presse-papier</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1231"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1235"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1241"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1223"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1227"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1233"/>
         <source>conference_participants_list_title</source>
         <extracomment>&quot;Participants (%1)&quot;</extracomment>
         <translation>Participants (%1)</translation>
     </message>
     <message numerus="yes">
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1254"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1262"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1270"/>
         <source>group_call_participant_selected</source>
         <translation>
             <numerusform>%1 participant sélectionné</numerusform>
@@ -1771,7 +1773,7 @@
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1269"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1261"/>
         <source>meeting_schedule_add_participants_title</source>
         <translation>Ajouter des participants</translation>
     </message>
@@ -1829,148 +1831,148 @@
         <translation>Statistiques</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1414"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1415"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1406"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1407"/>
         <source>call_action_end_call</source>
         <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
         <translation>Terminer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1447"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1450"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1439"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <source>call_action_resume_call</source>
         <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
         <translation>Reprendre l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1449"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1450"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1441"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <source>call_action_pause_call</source>
         <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
         <translation>Mettre l&apos;appel en pause</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1481"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1482"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1473"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1474"/>
         <source>call_action_transfer_call</source>
         <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
         <translation>Transférer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1504"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1505"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1496"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1497"/>
         <source>call_action_start_new_call_hint</source>
         <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
         <translation>Initier un nouvel appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1527"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1528"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1519"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1520"/>
         <source>call_display_call_list_hint</source>
         <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
         <translation>Afficher la liste d&apos;appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1562"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1563"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1554"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1555"/>
         <source>call_deactivate_video_hint</source>
         <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
         <translation>Désactiver la vidéo</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1562"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1563"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1554"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1555"/>
         <source>call_activate_video_hint</source>
         <translation>Activer la vidéo</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1579"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1582"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1571"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1574"/>
         <source>call_activate_microphone</source>
         <extracomment>&quot;Activer le micro&quot;</extracomment>
         <translation>Activer le micro</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1581"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1582"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1573"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1574"/>
         <source>call_deactivate_microphone</source>
         <extracomment>&quot;Désactiver le micro&quot;</extracomment>
         <translation>Désactiver le micro</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1599"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1600"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1591"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1592"/>
         <source>call_share_screen_hint</source>
         <extracomment>Partager l&apos;écran…</extracomment>
         <translation>Partager l&apos;écran…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1622"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1623"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1614"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1615"/>
         <source>call_open_chat_hint</source>
         <extracomment>Open chat…</extracomment>
         <translation>Ouvrir le chat…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1650"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1651"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1642"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1643"/>
         <source>call_rise_hand_hint</source>
         <extracomment>&quot;Lever la main&quot;</extracomment>
         <translation>Lever la main</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1664"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1665"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1656"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1657"/>
         <source>call_send_reaction_hint</source>
         <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
         <translation>Envoyer une réaction</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1676"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1677"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1668"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1669"/>
         <source>call_manage_participants_hint</source>
         <extracomment>&quot;Gérer les participants&quot;</extracomment>
         <translation>Gérer les participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1698"/>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1699"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1690"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1691"/>
         <source>call_more_options_hint</source>
         <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
         <translation>Plus d&apos;options…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1730"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1722"/>
         <source>call_action_change_conference_layout</source>
         <extracomment>&quot;Modifier la disposition&quot;</extracomment>
         <translation>Modifier la disposition</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1744"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1736"/>
         <source>call_action_full_screen</source>
         <extracomment>&quot;Mode Plein écran&quot;</extracomment>
         <translation>Mode Plein écran</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1797"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1789"/>
         <source>call_action_stop_recording</source>
         <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
         <translation>Terminer l&apos;enregistrement</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1799"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1791"/>
         <source>call_action_record</source>
         <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
         <translation>Enregistrer l&apos;appel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1827"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1819"/>
         <source>call_activate_speaker_hint</source>
         <extracomment>&quot;Activer le son&quot;</extracomment>
         <translation>Activer le son</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1829"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1821"/>
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation>Désactiver le son</translation>
@@ -2758,6 +2760,15 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
     </message>
 </context>
 <context>
+    <name>ComboBox</name>
+    <message>
+        <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
+        <source>combobox_with_value_accessible_name</source>
+        <extracomment>%1 actual value %2</extracomment>
+        <translation>%1 valeur actuelle %2</translation>
+    </message>
+</context>
+<context>
     <name>ConferenceInfoCore</name>
     <message>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="587"/>
@@ -2943,71 +2954,71 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>ContactListItem</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="154"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
         <source>call_with_contact_name_accessible_button</source>
         <extracomment>&quot;Call %1&quot;</extracomment>
         <translation>Appeller %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="172"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="173"/>
         <source>video_call_with_contact_name_accessible_button</source>
         <extracomment>&quot;Video call %1&quot;</extracomment>
         <translation>Appel vidéo %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="195"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="196"/>
         <source>message_with_contact_name_accessible_button</source>
         <extracomment>&quot;Message %1&quot;</extracomment>
         <translation>Message %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="213"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="214"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Enlever des favoris&quot;</extracomment>
         <translation>Enlever des favoris</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="215"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="216"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Ajouter aux favoris</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="229"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="230"/>
         <source>Partager</source>
         <translation>Partager</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="242"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="243"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="244"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="245"/>
         <source>information_popup_vcard_creation_error</source>
         <extracomment>La création du fichier vcard a échoué</extracomment>
         <translation>La création du fichier vcard a échoué</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="248"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="249"/>
         <source>information_popup_vcard_creation_title</source>
         <extracomment>VCard créée</extracomment>
         <translation>VCard créée</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="250"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="251"/>
         <source>information_popup_vcard_creation_success</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard du contact enregistrée dans %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="252"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="253"/>
         <source>contact_sharing_email_title</source>
         <extracomment>Partage de contact</extracomment>
         <translation>Partage de contact</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="258"/>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="259"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Supprimer</translation>
@@ -3016,13 +3027,13 @@ en bout. Seul votre correspondant peut les déchiffrer.</translation>
 <context>
     <name>ContactListView</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="190"/>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="193"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
         <translation>Réduire %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="192"/>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="195"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
         <translation>Étendre %1</translation>
@@ -4499,84 +4510,90 @@ Expiration : %1</translation>
         <translation>ou envoyer un message …</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="328"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="318"/>
+        <source>searchbar_suggestions_accessible_name</source>
+        <extracomment>&quot;Searchbar suggestions&quot;</extracomment>
+        <translation>Suggestions de la barre de recherche</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="330"/>
         <source>do_not_disturb_accessible_name</source>
         <extracomment>&quot;Do not disturb&quot;</extracomment>
         <translation>Ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="346"/>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="489"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="348"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="491"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
         <translation>Désactiver ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="400"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="402"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="402"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="404"/>
         <source>no_voicemail_uri_error_message</source>
         <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
         <translation>L&apos;URI de messagerie vocale n&apos;est pas définie.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="415"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="417"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
         <translation>liste des comptes</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="453"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="455"/>
         <source>application_options_accessible_name</source>
         <extracomment>&quot;Application options&quot;</extracomment>
         <translation>Options de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="478"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="480"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
         <translation>Mon compte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="491"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="493"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
         <translation>Activer ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="506"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="508"/>
         <source>settings_title</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="522"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="524"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
         <translation>Enregistrements</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="533"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="535"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="548"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="550"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
         <translation>Quitter l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="553"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="555"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
         <translation>Quitter %1 ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="576"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="578"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Ajouter un compte</translation>
@@ -4725,19 +4742,43 @@ Expiration : %1</translation>
         <translation>Ajouter un titre</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="225"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="124"/>
+        <source>day_accessible_name</source>
+        <extracomment>Day</extracomment>
+        <translation>Jour</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="153"/>
+        <source>start_time_accessible_name</source>
+        <extracomment>Start time</extracomment>
+        <translation>Heure de début</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="168"/>
+        <source>end_time_accessible_name</source>
+        <extracomment>End time</extracomment>
+        <translation>Heure de fin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <source>timezone_accessible_name</source>
+        <extracomment>Timezone</extracomment>
+        <translation>Fuseau horaire</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="233"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
         <translation>Ajouter une description</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="276"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="284"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Ajouter des participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="338"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="346"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Envoyer une invitation aux participants</translation>
@@ -4984,6 +5025,7 @@ Expiration : %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="36"/>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="58"/>
         <source>settings_meetings_default_layout_title</source>
         <extracomment>&quot;Mode d’affichage par défaut&quot;</extracomment>
         <translation>Mode d’affichage par défaut</translation>
@@ -4995,13 +5037,13 @@ Expiration : %1</translation>
         <translation>Le mode d’affichage des participants en réunions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="62"/>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="63"/>
         <source>settings_meetings_show_past_meetings_title</source>
         <extracomment>Show past meetings</extracomment>
         <translation>Afficher les réunions passées</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="64"/>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="65"/>
         <source>settings_meetings_show_past_meetings_subtitle</source>
         <extracomment>Display past meetings in the meeting list</extracomment>
         <translation>Afficher les réunions passées dans la liste des réunions</translation>
@@ -5202,19 +5244,19 @@ Expiration : %1</translation>
 <context>
     <name>NumericPad</name>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="176"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="177"/>
         <source>numpad_longpress_accessible_name</source>
         <extracomment>%1 longpress %2</extracomment>
         <translation>%1 appui long %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="222"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
         <source>call_accessible_name</source>
         <extracomment>Call</extracomment>
         <translation>Appeler</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="247"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="245"/>
         <source>erase_accessible_name</source>
         <extracomment>Erase</extracomment>
         <translation>Effacer</translation>
@@ -5223,7 +5265,7 @@ Expiration : %1</translation>
 <context>
     <name>NumericPadPopup</name>
     <message>
-        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="73"/>
+        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="71"/>
         <source>close_numeric_pad_accessible_name</source>
         <extracomment>Close numeric pad</extracomment>
         <translation>Fermer le pavé numérique</translation>
@@ -6202,7 +6244,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Message vocal (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="623"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="624"/>
         <source>unknown_audio_device_name</source>
         <extracomment>&quot;Unknown device&quot;</extracomment>
         <translation>Appareil inconnu</translation>
@@ -6489,6 +6531,15 @@ Error in the chat</extracomment>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Impossible de créer le message vocal</translation>
+    </message>
+</context>
+<context>
+    <name>Voicemail</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
+        <source>voicemail_accessible_name</source>
+        <extracomment>&quot;Voicemail&quot;</extracomment>
+        <translation>Messagerie vocale</translation>
     </message>
 </context>
 <context>
