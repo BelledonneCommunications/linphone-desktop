@@ -173,7 +173,7 @@ bool Notifier::createNotification(Notifier::NotificationType type, QVariantMap d
 						    // to have the Window on Top and fullscreen independant
 						    window->setFlags((showAsTool ? Qt::Tool : Qt::WindowStaysOnTopHint) |
 						                     Qt::FramelessWindowHint);
-#ifdef Q_OS_LINUX || Q_OS_WIN
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
 						    window->setFlag(Qt::WindowDoesNotAcceptFocus);
 #endif
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)

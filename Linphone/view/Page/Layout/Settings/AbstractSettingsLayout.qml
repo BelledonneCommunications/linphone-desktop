@@ -100,7 +100,7 @@ Rectangle {
 			}
 		}
 	}
-	Flickable {
+	Control.ScrollView {
 		id: scrollView
 		anchors.left: parent.left
 		anchors.right: parent.right
@@ -108,6 +108,8 @@ Rectangle {
 		anchors.top: header.bottom
         anchors.topMargin: Utils.getSizeWithScreenRatio(16)
 		contentHeight: contentListView.contentHeight
+		// Workaround for the ScrollView to cover the whole page
+		Item{anchors.fill: parent}
 		Control.ScrollBar.vertical: ScrollBar {
 			active: contentListView.contentHeight > scrollView.height
 			visible: contentListView.contentHeight > scrollView.height

@@ -76,11 +76,25 @@ ListView {
         }
     }
 
-    onAtYBeginningChanged: if (atYBeginning && count !== 0) {
-        eventLogProxy.displayMore()
+    onAtYBeginningChanged: {
+        if (atYBeginning && count !== 0) {
+            eventLogProxy.displayMore()
+        }
     }
-    onAtYEndChanged: if (atYEnd && chat && count !== 0) {
-        chat.core.lMarkAsRead()
+    onAtYEndChanged: {
+        if (atYEnd && chat && count !== 0) {
+            chat.core.lMarkAsRead()
+        }
+    }
+
+    Connections {
+        // enabled: chat !== null
+        target: mainItem.chat ? mainItem.chat.core : null
+        function onUnreadMessagesCountChanged() {
+            if (mainItem.atYEnd){
+                mainItem.chat.core.lMarkAsRead()
+            }
+        }
     }
 
     model: EventLogProxy {

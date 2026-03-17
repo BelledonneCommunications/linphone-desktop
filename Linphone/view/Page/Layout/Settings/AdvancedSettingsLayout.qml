@@ -153,6 +153,7 @@ AbstractSettingsLayout {
 		id: audioCodecsComponent
 		ColumnLayout {
 			ListView {
+				id: audioCodecsList
 				Layout.preferredHeight: contentHeight
 				Layout.fillWidth: true
                 spacing: Utils.getSizeWithScreenRatio(20)
@@ -160,7 +161,7 @@ AbstractSettingsLayout {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
-					width: parent.width
+					width: audioCodecsList.width
                     height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"
