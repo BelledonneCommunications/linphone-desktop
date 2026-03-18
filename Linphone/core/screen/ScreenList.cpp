@@ -19,6 +19,8 @@
  */
 
 #include "ScreenList.hpp"
+#include "core/App.hpp"
+
 #include <QGuiApplication>
 #include <QPixmap>
 #include <QScreen>
@@ -28,6 +30,8 @@
 
 ScreenList::ScreenList(QObject *parent) : AbstractListProxy(parent) {
 	connect(this, &ScreenList::modeChanged, this, &ScreenList::update);
+	connect(App::getInstance(), &App::screenAdded, this, &ScreenList::update);
+	connect(App::getInstance(), &App::screenRemoved, this, &ScreenList::update);
 }
 
 ScreenList::~ScreenList() {
