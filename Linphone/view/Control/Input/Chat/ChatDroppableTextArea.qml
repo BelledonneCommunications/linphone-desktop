@@ -83,10 +83,22 @@ Control.Control {
 					id: emojiPickerButton
 					style: ButtonStyle.noBackground
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
+					popupY: - popup.height
 					popup.width: Utils.getSizeWithScreenRatio(393)
 					popup.height: Utils.getSizeWithScreenRatio(291)
 					popup.contentItem: EmojiPicker {
+						id: emojiPicker
 						editor: sendingTextArea
+					}
+					Connections {
+						target: emojiPickerButton.popup
+						function onOpened() {
+							emojiPicker.forceActiveFocus()
+						}
+						function onClosed() {
+							emojiPicker.clearSearchField()
+						}
+
 					}
 				}
 				BigButton {

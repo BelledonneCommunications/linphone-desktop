@@ -12,6 +12,7 @@ Button {
     property alias popupBackgroundColor: popupBackground.color
     property color backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
     property string popUpTitle: ""
+    property int popupY: height
     Accessible.name: popup.visible ?
     //: "Close %1 popup"
     qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :
@@ -135,7 +136,7 @@ Button {
     Control.Popup {
         id: popup
         x: 0
-        y: mainItem.height
+        y: mainItem.popupY
         visible: false
         closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
         padding: Utils.getSizeWithScreenRatio(10)
@@ -150,7 +151,7 @@ Button {
                 "y": 0
             };
             // Stay inside main window
-            y = Math.max(Math.min(winPosition.y + mainItem.Window.height - popupHeight, mainItem.height), winPosition.y);
+            y = Math.max(Math.min(winPosition.y + mainItem.Window.height - popupHeight, mainItem.popupY), winPosition.y);
             x = Math.max(Math.min(winPosition.x + mainItem.Window.width - popupWidth, 0), winPosition.x);
             // Avoid overlapping with popup button by going to the right (todo: check if left is better?)
             if (y < mainItem.height && y + popupHeight > 0) {

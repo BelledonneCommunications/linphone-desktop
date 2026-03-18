@@ -62,6 +62,21 @@ ColumnLayout {
             searchModel.append({path: searchResult[i]})
         }
     }
+    function clearSearchField() {
+        mainItem.searchMode = false
+        searchField.widthSize = 0
+        list.model = mainItem.categories
+        searchField.clear()
+    }
+    Keys.onPressed: event => {
+        if (event.text && (mainItem.activeFocus || mainItem.focus)) {
+            mainItem.searchMode = true
+            searchField.widthSize = categoriesRow.width - Utils.getSizeWithScreenRatio(25)
+            list.model = 1
+            searchField.focus = true
+            searchField.text = event.text
+        }
+    }
     RowLayout {
         id: categoriesRow
         Layout.preferredWidth: parent.width - Utils.getSizeWithScreenRatio(15)
@@ -95,10 +110,7 @@ ColumnLayout {
                 anchors.fill: parent
                 cursorShape: Qt.PointingHandCursor
                 onClicked: {
-                    mainItem.searchMode = false
-                    searchField.widthSize = 0
-                    list.model = mainItem.categories
-                    searchField.clear()
+                    mainItem.clearSearchField()
                 }
             }
         }
