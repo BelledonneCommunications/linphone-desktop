@@ -222,9 +222,6 @@ QString CoreModel::getFetchConfig(QString filePath, bool *error) {
 		}
 		if (filePath.isEmpty()) {
 			lWarning() << "Remote provisioning path cannot be retrieved. Command have been cleaned";
-			Utils::showInformationPopup(tr("info_popup_error_title"),
-			                            //: "Remote provisioning cannot be retrieved"
-			                            tr("fetching_config_failed_error_message"), false);
 			*error = true;
 		}
 	}
@@ -249,7 +246,9 @@ void CoreModel::useFetchConfig(QString filePath, bool askForConfirmation) {
 			    Qt::SingleShotConnection);
 		}
 	} else {
-		lWarning() << log().arg("Could not get file path for fetching config, return");
+		lWarning() << log().arg("Could not get file path for fetching config");
+		//: "Could not get file path for fetching config, return"
+		emit fetchConfigFailed(tr("fetching_config_empty_path_failure_error_message"));
 	}
 }
 

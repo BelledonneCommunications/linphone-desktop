@@ -441,6 +441,16 @@ void App::setSelf(QSharedPointer<App>(me)) {
 			    });
 		    }
 	    });
+	mCoreModelConnection->makeConnectToModel(&CoreModel::fetchConfigFailed, [this](const QString &message) {
+		if (mMainWindow) {
+			Utils::showInformationPopup(tr("info_popup_error_title"), message, false);
+		} else {
+			connect(
+			    this, &App::mainWindowChanged, this,
+			    [this, message] { Utils::showInformationPopup(tr("info_popup_error_title"), message, false); },
+			    Qt::SingleShotConnection);
+		}
+	});
 	mCoreModelConnection->makeConnectToModel(
 	    &CoreModel::accountAdded,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::Account> &account) {
@@ -822,31 +832,39 @@ void App::initCore() {
 					        firstOpen = false;
 					        lInfo() << log().arg("Checking remote provisioning");
 					        if (mIsRestarting) {
-						        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
-							        QMetaObject::invokeMethod(thread(), [this]() {
-								        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-								        auto message = CoreModel::getInstance()->mConfigMessage;
-								        //: not reachable
-								        if (message.isEmpty()) message = tr("configuration_error_detail");
-								        lWarning() << log().arg("Configuration failed (reason: %1)").arg(message);
-								        //: Error
-								        Utils::showInformationPopup(
-								            tr("info_popup_error_title"),
-								            //: Remote provisioning failed : %1
-								            tr("info_popup_configuration_failed_message").arg(message), false);
-							        });
-						        } else if (CoreModel::getInstance()->mConfigStatus ==
-						                   linphone::ConfiguringState::Successful) {
-							        lInfo() << log().arg("Configuration succeed");
-							        mPossiblyLookForAddedAccount = true;
-							        if (mAccountList && mAccountList->getCount() > 0) {
-								        auto defaultConnected =
-								            mAccountList->getDefaultAccountCore() &&
-								            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
-								                LinphoneEnums::RegistrationState::Ok;
-								        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-								                                  Q_ARG(QVariant, defaultConnected));
+						        auto handleConfigStatus = [this] {
+							        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
+								        QMetaObject::invokeMethod(thread(), [this]() {
+									        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+									        auto message = CoreModel::getInstance()->mConfigMessage;
+									        //: not reachable
+									        if (message.isEmpty()) message = tr("configuration_error_detail");
+									        lWarning() << log().arg("Configuration failed (reason: %1)").arg(message);
+									        //: Error
+									        Utils::showInformationPopup(
+									            tr("info_popup_error_title"),
+									            //: Remote provisioning failed : %1
+									            tr("info_popup_configuration_failed_message").arg(message), false);
+								        });
+							        } else if (CoreModel::getInstance()->mConfigStatus ==
+							                   linphone::ConfiguringState::Successful) {
+								        lInfo() << log().arg("Configuration succeed");
+								        mPossiblyLookForAddedAccount = true;
+								        if (mAccountList && mAccountList->getCount() > 0) {
+									        auto defaultConnected =
+									            mAccountList->getDefaultAccountCore() &&
+									            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
+									                LinphoneEnums::RegistrationState::Ok;
+									        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
+									                                  Q_ARG(QVariant, defaultConnected));
+								        }
 							        }
+						        };
+						        if (mMainWindow) {
+							        handleConfigStatus();
+						        } else {
+							        connect(this, &App::mainWindowChanged, this, handleConfigStatus,
+							                Qt::SingleShotConnection);
 						        }
 					        }
 					        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
