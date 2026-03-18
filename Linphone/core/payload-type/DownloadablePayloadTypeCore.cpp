@@ -148,7 +148,7 @@ bool DownloadablePayloadTypeCore::shouldDownloadUpdate() {
 	QFile versionFile(versionFilePath);
 
 	if (!versionFile.exists() && !QFileInfo::exists(codecsFolder + mInstallName)) {
-		lWarning() << log().arg("Codec `%1` is not installed.").arg(versionFilePath);
+		lInfo() << log().arg("Codec `%1` is not installed.").arg(versionFilePath);
 		return false;
 	}
 	if (!versionFile.open(QIODevice::ReadOnly)) {

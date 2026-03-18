@@ -389,7 +389,7 @@ void CoreModel::checkForUpdate(const std::string &applicationVersion, bool reque
 		lInfo() << log().arg("Checking for update for version") << applicationVersion;
 		getCore()->checkForUpdate(applicationVersion);
 	} else {
-		lWarning() << log().arg("Check for update settings is not set");
+		lInfo() << log().arg("Check for update settings is not set");
 	}
 }
 
