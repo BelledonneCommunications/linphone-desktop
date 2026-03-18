@@ -95,6 +95,7 @@ signals:
 	void bearerAccountAdded();
 	void unreadNotificationsChanged();
 	void requestFetchConfig(QString path, bool askForConfirmation);
+	void fetchConfigFailed(const QString &message);
 	void requestRestart();
 	void enabledLdapAddressBookSaved();
 	void magicSearchResultReceived(QString filter);
