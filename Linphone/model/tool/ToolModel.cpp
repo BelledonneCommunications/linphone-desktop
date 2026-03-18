@@ -583,7 +583,7 @@ void ToolModel::loadDownloadedCodecs() {
 				lWarning() << QStringLiteral("[ToolModel] Failed to load `%1` symbols.").arg(filename)
 				           << library.errorString();
 			else lInfo() << QStringLiteral("[ToolModel] Loaded `%1` symbols…").arg(filename);
-		} else lWarning() << QStringLiteral("[ToolModel] Found codec file `%1` that is not a library").arg(filename);
+		} else lInfo() << QStringLiteral("[ToolModel] Found codec file `%1` that is not a library").arg(filename);
 	}
 	CoreModel::getInstance()->getCore()->reloadMsPlugins("");
 	qInfo() << QStringLiteral("Finished loading downloaded codecs.");
