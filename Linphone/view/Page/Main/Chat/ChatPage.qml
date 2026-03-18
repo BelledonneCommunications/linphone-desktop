@@ -227,6 +227,10 @@ AbstractMainPage {
                             searchBar: searchBar
                             Control.ScrollBar.vertical: scrollbar
 
+                            onResearchDone: {
+                                searchBar.forceActiveFocus()
+                            }
+
                             onCurrentChatGuiChanged: {
                                 mainItem.selectedChatGui = currentChatGui
                             }

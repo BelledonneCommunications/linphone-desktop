@@ -37,10 +37,15 @@ ListView {
     signal markAllAsRead()
     signal chatClicked(ChatGui chat)
 
+    property bool makingResearch: false
+    signal researchDone()
+    onResearchDone: makingResearch = false
+
     model: ChatProxy {
         id: chatProxy
         filterText: mainItem.searchText
         onFilterTextChanged: {
+            mainItem.makingResearch = true
             chatToSelectLater = currentChatGui
         }
         onModelAboutToBeReset: {
@@ -58,6 +63,7 @@ ListView {
             } else {
                 selectChat(mainItem.currentChatGui)
             }
+            mainItem.researchDone()
         }
         onChatAdded: (chat) => {
             mainItem.chatToSelect = chat
