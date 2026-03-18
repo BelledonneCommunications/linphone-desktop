@@ -50,19 +50,21 @@ Item {
 	}
 
 	function setConferenceLayout() {
-		callLayout.sourceComponent = undefined	// unload old view before opening the new view to avoid conflicts in Video UI.
-		// If stop sharing screen, reset conference layout to the previous one
-		if (mainItem.conference && !mainItem.conference.core.isLocalScreenSharing && mainItem.lastConfLayoutBeforeSharing !== -1) {
-			mainItem.conferenceLayout = mainItem.lastConfLayoutBeforeSharing
-			mainItem.lastConfLayoutBeforeSharing = -1
-		}
-		callLayout.sourceComponent = conference
-			? conference.core.isScreenSharingEnabled || (mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker && participantDeviceCount > 1)
-				? activeSpeakerComponent
-				: participantDeviceCount <= 1
-					? waitingForOthersComponent
-					: gridComponent
-			: activeSpeakerComponent
+		Qt.callLater(function() {
+			callLayout.sourceComponent = undefined	// unload old view before opening the new view to avoid conflicts in Video UI.
+			// If stop sharing screen, reset conference layout to the previous one
+			if (mainItem.conference && !mainItem.conference.core.isLocalScreenSharing && mainItem.lastConfLayoutBeforeSharing !== -1) {
+				mainItem.conferenceLayout = mainItem.lastConfLayoutBeforeSharing
+				mainItem.lastConfLayoutBeforeSharing = -1
+			}
+			callLayout.sourceComponent = conference
+				? conference.core.isScreenSharingEnabled || (mainItem.conferenceLayout == LinphoneEnums.ConferenceLayout.ActiveSpeaker && participantDeviceCount > 1)
+					? activeSpeakerComponent
+					: participantDeviceCount <= 1
+						? waitingForOthersComponent
+						: gridComponent
+				: activeSpeakerComponent
+		})
 	}
 
 	Text {
