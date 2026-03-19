@@ -1,34 +1,40 @@
 import QtQuick
 import QtQuick.Effects
 import QtQuick.Layouts
+import QtQuick.Controls as Control
 import Linphone
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
-MouseArea {
+Control.Control {
 	id: mainItem
 	property string iconSource
 	property string title
 	property string subTitle
     property real iconSize: Utils.getSizeWithScreenRatio(32)
-	property bool shadowEnabled: containsMouse || activeFocus
+	property bool shadowEnabled: mouseArea.containsMouse || activeFocus
 	property bool arrowImageVisible: false
 	property alias image: image
-	hoverEnabled: true
+	property int titleLineCount: 1
+	signal clicked()
 	width: content.implicitWidth
 	height: content.implicitHeight
-	cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+	MouseArea {
+		id: mouseArea
+		anchors.fill: parent
+		hoverEnabled: true
+		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
+		onClicked: mainItem.clicked()
+	}
 	activeFocusOnTab: true
 	Keys.onPressed: (event) => {
 		if(event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return){
-			mainItem.clicked(undefined)
+			mainItem.clicked()
 			event.accepted = true
 		}
 	}
-	RowLayout {
+	contentItem: RowLayout {
 		id: content
-		anchors.verticalCenter: parent.verticalCenter
-		anchors.fill:parent
 		EffectImage {
 			id: image
 			Layout.preferredWidth: mainItem.iconSize
@@ -45,7 +51,7 @@ MouseArea {
             Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
 			Text {
 				Layout.fillWidth: true
-				maximumLineCount: 1
+				maximumLineCount: mainItem.titleLineCount
 				text: mainItem.title
 				color: DefaultStyle.main2_600
 				font: Typography.p2

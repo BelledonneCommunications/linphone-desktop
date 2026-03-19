@@ -100,7 +100,6 @@ AbstractMainPage {
 					//: "Version"
 					title: qsTr("help_about_version_title")
 					subTitle: AppCpp.shortApplicationVersion
-					onClicked: {}
 				}
 				Item{Layout.fillWidth: true}
 				MediumButton {
@@ -125,6 +124,7 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.world
+				titleLineCount: 2
                 //: "Contribuer à la traduction de %1"
                 title: qsTr("help_about_contribute_translations_title").arg(applicationName)
 				onClicked: {
