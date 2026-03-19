@@ -200,7 +200,6 @@ FocusScope {
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.search
                             checkable: true
-                            checkedImageColor: DefaultStyle.main1_500_main
                             onCheckedChanged: searchBarLayout.visible = checked
                             Connections {
                                 target: searchBarLayout
@@ -219,7 +218,6 @@ FocusScope {
                             style: ButtonStyle.noBackground
                             checkable: true
                             Layout.preferredWidth: width
-                            checkedImageColor: DefaultStyle.main1_500_main
                             icon.source: AppIcons.info
                             checked: detailsPanel.visible
                             onCheckedChanged: {
