@@ -20,7 +20,6 @@ AbstractMainPage {
         id: accountProxy
     }
     property AccountGui account: accountProxy.defaultAccount
-    property var state: account && account.core?.registrationState || 0
     property bool isRegistered: account ? account.core?.registrationState
                                           == LinphoneEnums.RegistrationState.Ok : false
 
@@ -106,7 +105,7 @@ AbstractMainPage {
         clip: true
         initialItem: chatListItem
         focus: true
-        onActiveFocusChanged: if (activeFocus) {
+        onActiveFocusChanged: if (activeFocus && currentItem) {
             currentItem.forceActiveFocus()
         }
     }

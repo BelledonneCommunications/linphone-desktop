@@ -572,8 +572,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           HideSettings)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           hideAccountSettings, HideAccountSettings)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, hideFps,
-	                           HideFps)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, hideFps,
+	                        HideFps)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           disableCallRecordings, DisableCallRecordings)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
@@ -597,16 +597,16 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, autoStart,
-	                           AutoStart)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, autoStart,
+	                        AutoStart)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, exitOnClose,
 	                           ExitOnClose)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           syncLdapContacts, SyncLdapContacts)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           configLocale, ConfigLocale)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
-	                           downloadFolder, DownloadFolder)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                        downloadFolder, DownloadFolder)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, int, shortcutCount,
 	                        ShortcutCount)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QVariantList,

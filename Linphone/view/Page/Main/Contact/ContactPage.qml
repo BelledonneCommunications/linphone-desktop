@@ -323,9 +323,9 @@ AbstractMainPage {
     Component {
         id: contactDetail
         Item {
+            objectName: "contactDetail"
             width: parent?.width
             height: parent?.height
-            property string objectName: "contactDetail"
             component ContactDetailLayout: ColumnLayout {
                 id: contactDetailLayout
                 spacing: Utils.getSizeWithScreenRatio(15)
@@ -866,7 +866,7 @@ AbstractMainPage {
     Component {
         id: contactEdition
         ContactEdition {
-            property string objectName: "contactEdition"
+            objectName: "contactEdition"
             onCloseEdition: redirectAddress => {
                 goToContactDetails()
                 if (redirectAddress) {

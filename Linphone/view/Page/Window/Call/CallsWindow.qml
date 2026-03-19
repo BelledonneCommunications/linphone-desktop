@@ -1330,7 +1330,7 @@ AbstractWindow {
             Component {
                 id: inCallItem
                 Loader {
-                    property string objectName: "inCallItem"
+                    objectName: "inCallItem"
                     asynchronous: true
                     sourceComponent: Item {
                         CallLayout {

@@ -31,7 +31,6 @@ class ListProxy : public AbstractListProxy<QSharedPointer<QObject>> {
 	Q_OBJECT
 
 public:
-	Q_PROPERTY(int count READ getCount NOTIFY countChanged)
 	ListProxy(QObject *parent = Q_NULLPTR);
 	virtual ~ListProxy();
 

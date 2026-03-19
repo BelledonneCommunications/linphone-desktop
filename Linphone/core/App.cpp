@@ -294,12 +294,6 @@ App::App(int &argc, char *argv[])
 	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
 	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
-	// CarshReporter must be call after app initialization like names.
-#ifdef HAVE_CRASH_HANDLER
-	CrashReporter::start();
-#else
-	lWarning() << "[Main] The application doesn't support the CrashReporter.";
-#endif
 
 	// If not OpenGL, createRender is never call.
 	QQuickWindow::setGraphicsApi(QSGRendererInterface::OpenGL);
