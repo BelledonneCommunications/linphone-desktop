@@ -88,7 +88,7 @@ Item {
 		active: mainItem.recording && !mainItem.chatMessageContentGui
 		property int duration: item?.core.duration || 0
 		property int captureVolume: item?.core.captureVolume || 0
-		property var state: item?.core.state
+		property var recorderState: item?.core.state
 
 		Connections {
 			target: mainItem
@@ -120,7 +120,7 @@ Item {
 				: chatMessageContentGui.core.fileDuration
 		progressPosition: 0
 		value: 0
-		recording: recorderLoader.state === LinphoneEnums.RecorderState.Running
+		recording: recorderLoader.recorderState === LinphoneEnums.RecorderState.Running
 		function refresh(){
 			if(soudPlayerLoader.item){
 				soudPlayerLoader.item.core.lRefreshPosition()

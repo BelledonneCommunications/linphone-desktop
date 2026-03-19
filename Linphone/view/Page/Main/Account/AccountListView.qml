@@ -25,7 +25,7 @@ ColumnLayout{
     signal editAccount(AccountGui account)
     readonly property var childrenWidth: Utils.getSizeWithScreenRatio(517)
 
-    readonly property real spacing: Utils.getSizeWithScreenRatio(16)
+    spacing: Utils.getSizeWithScreenRatio(16)
 	required property var getPreviousItem
 	required property var getNextItem
 	property AccountProxy  accountProxy
@@ -63,16 +63,15 @@ ColumnLayout{
 											index) : null
 		}
 	}
-
-	Repeater{
-		model: AccountProxy {
-			id: accountProxy
+	ColumnLayout {
+		Repeater{
+			model: AccountProxy {
+				id: accountProxy
+			}
+			delegate: contactDelegate
 		}
-		delegate: contactDelegate
 	}
 	HorizontalBar{
-		Layout.topMargin: mainItem.spacing
-		Layout.bottomMargin: mainItem.spacing
 		visible: addAccountButton.visible
 		color: DefaultStyle.main2_300
 	}

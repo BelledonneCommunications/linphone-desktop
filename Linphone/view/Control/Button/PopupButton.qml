@@ -8,9 +8,9 @@ import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 Button {
     id: mainItem
     property alias popup: popup
-    property bool shadowEnabled: mainItem.activeFocus && !keyboardFocus || hovered
+    shadowEnabled: mainItem.activeFocus && !keyboardFocus || hovered
     property alias popupBackgroundColor: popupBackground.color
-    property color backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
+    backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
     property string popUpTitle: ""
     property int popupY: height
     Accessible.name: popup.visible ?

@@ -14,7 +14,7 @@ Button {
 	color: style?.color?.normal || DefaultStyle.grey_500
 	pressedColor: checkedIconUrl ? color : style?.color?.pressed || DefaultStyle.grey_500
 	hoveredColor: checked ? Qt.darker(pressedColor, 1.05) : style?.color?.hovered || DefaultStyle.grey_500
-	property color backgroundColor: hovered
+	backgroundColor: hovered
 		? hoveredColor
 		: checked
 			? pressedColor

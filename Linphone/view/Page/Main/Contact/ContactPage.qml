@@ -336,9 +336,9 @@ AbstractMainPage {
     Component {
         id: contactDetail
         Item {
+            objectName: "contactDetail"
             width: parent?.width
             height: parent?.height
-            property string objectName: "contactDetail"
 
             function focusEditButton(){
                 contactDetail.button.forceActiveFocus(Qt.TabFocusReason)
@@ -928,7 +928,7 @@ AbstractMainPage {
     Component {
         id: contactEdition
         ContactEdition {
-            property string objectName: "contactEdition"
+            objectName: "contactEdition"
             onCloseEdition: redirectAddress => {
                 goToContactDetails(true)
                 if (redirectAddress) {

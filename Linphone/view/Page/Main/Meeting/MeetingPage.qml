@@ -145,7 +145,7 @@ AbstractMainPage {
 	Component {
 		id: listLayout
 		FocusScope{
-			property string objectName: "listLayout"
+			objectName: "listLayout"
 			property alias newConfButton: newConfButton
 			Control.StackView.onDeactivated: {
 				mainItem.selectedConference = null
