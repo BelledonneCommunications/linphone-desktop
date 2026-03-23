@@ -286,7 +286,7 @@ void CliModel::Command::execute(QHash<QString, QString> &args, CliModel *parent)
 void CliModel::Command::executeUri(QString address, QHash<QString, QString> args, CliModel *parent) {
 	QUrl url(address);
 	QString query = url.query();
-	lDebug() << QStringLiteral("CliModel : execute uri : %1").arg(query);
+	lInfo() << QStringLiteral("CliModel : execute uri : %1").arg(query);
 
 	QStringList parameters = query.split('&');
 	for (int i = 0; i < parameters.size(); ++i) {
@@ -304,9 +304,19 @@ void CliModel::Command::executeUri(QString address, QHash<QString, QString> args
 		}
 	}
 
-	args["sip-address"] = address.left(address.indexOf('?'));
-	lDebug() << "CliModel: getting sip address " << args["sip-address"];
-	parent->addProcess(ProcessCommand(*this, args, 0, parent));
+	QString sipAddress = address.left(address.indexOf('?'));
+	// We need to remove "sip:" in order to obtain an url with
+	// the domain as a suffix (interpretUrl will return the address as it is
+	// if starting by "sip:")
+	if (sipAddress.startsWith("sip:")) sipAddress.remove("sip:");
+	auto linphoneAddress = ToolModel::interpretUrl(sipAddress);
+	lInfo() << "CliModel: getting sip address " << (linphoneAddress ? linphoneAddress->asStringUriOnly() : "null !");
+	if (linphoneAddress) {
+		args["sip-address"] = Utils::coreStringToAppString(linphoneAddress->asStringUriOnly());
+		parent->addProcess(ProcessCommand(*this, args, 0, parent));
+	} else {
+		lWarning() << "CliModel: Could not get sip address from" << args["sip-address"] << "; not adding process";
+	}
 }
 
 // pUrl can be `anytoken?p1=x&p2=y` or `p1=x&p2=y`. It will only use p1 and p2
@@ -332,7 +342,8 @@ void CliModel::Command::executeUrl(const QString &pUrl, CliModel *parent) {
 			}
 		}
 	}
-	if (!authority.isEmpty()) args["sip-address"] = authority;
+	if (!authority.isEmpty())
+		args["sip-address"] = Utils::coreStringToAppString(ToolModel::interpretUrl(authority)->asStringUriOnly());
 	parent->addProcess(ProcessCommand(*this, args, 0, parent));
 }
 
