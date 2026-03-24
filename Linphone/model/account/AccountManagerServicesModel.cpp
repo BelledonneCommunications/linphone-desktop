@@ -37,6 +37,9 @@ AccountManagerServicesModel::AccountManagerServicesModel(
 
 AccountManagerServicesModel::~AccountManagerServicesModel() {
 	mustBeInLinphoneThread("~" + getClassName());
+	if (mRequest) {
+		mRequest->setSelf(nullptr);
+	}
 }
 
 void AccountManagerServicesModel::setRequestAndSubmit(
@@ -45,6 +48,7 @@ void AccountManagerServicesModel::setRequestAndSubmit(
 		disconnect(mRequest.get(), &AccountManagerServicesRequestModel::requestSuccessfull, this, nullptr);
 		disconnect(mRequest.get(), &AccountManagerServicesRequestModel::requestError, this, nullptr);
 		disconnect(mRequest.get(), &AccountManagerServicesRequestModel::devicesListFetched, this, nullptr);
+		mRequest->setSelf(nullptr);
 		mRequest = nullptr;
 	}
 	mRequest = Utils::makeQObject_ptr<AccountManagerServicesRequestModel>(request);
