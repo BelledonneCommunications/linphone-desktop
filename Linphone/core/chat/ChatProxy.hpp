@@ -30,7 +30,7 @@
 
 class ChatProxy : public SortFilterProxy, public AbstractObject {
 	Q_OBJECT
-	Q_PROPERTY(QAbstractItemModel *model WRITE setSourceModel NOTIFY modelChanged)
+	Q_PROPERTY(QAbstractItemModel *model READ sourceModel WRITE setSourceModel NOTIFY modelChanged)
 
 public:
 	ChatProxy(QObject *parent = Q_NULLPTR);
