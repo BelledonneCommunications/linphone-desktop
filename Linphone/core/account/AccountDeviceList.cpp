@@ -81,14 +81,8 @@ void AccountDeviceList::refreshDevices() {
 		auto requestDeviceList = [this] {
 			if (!mAccountManagerServicesModelConnection) return;
 			mAccountManagerServicesModelConnection->invokeToModel([this]() {
-				auto account = mAccountCore->getModel()->getMonitor();
-				auto identityAddress = account->getParams()->getIdentityAddress();
-				auto authinfo = account->findAuthInfo();
-				if (!authinfo) {
-					lWarning() << "[AccountDeviceList] No auth info found for address"
-					           << identityAddress->asStringUriOnly() << ", skipping device list request";
-					return;
-				}
+				auto identityAddress = mAccountCore->getModel()->getMonitor()->getParams()->getIdentityAddress();
+				auto authinfo = mAccountCore->getModel()->getMonitor()->findAuthInfo();
 				qDebug() << "[AccountDeviceList] request devices for address" << identityAddress->asStringUriOnly();
 				mAccountManagerServicesModel->getDeviceList(identityAddress);
 			});
