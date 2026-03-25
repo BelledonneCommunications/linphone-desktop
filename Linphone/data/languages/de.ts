@@ -3617,7 +3617,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../model/core/CoreModel.cpp" line="251"/>
         <source>fetching_config_empty_path_failure_error_message</source>
         <extracomment>&quot;Could not get file path for fetching config, return&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Der Dateipfad zum Abrufen der Konfiguration konnte nicht ermittelt werden</translation>
     </message>
 </context>
 <context>
@@ -5275,7 +5275,7 @@ Ablauf: %1</translation>
         <location filename="../../model/auth/OIDCModel.cpp" line="330"/>
         <source>oidc_authentication_empty_reply_error</source>
         <extracomment>OIDC reply is empty !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Antwort des OIDC-Servers ist leer!</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="340"/>

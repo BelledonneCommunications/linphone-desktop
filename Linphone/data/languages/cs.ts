@@ -2608,39 +2608,19 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>settings_chat_display_notification_content_title</source>
         <translation>Zobrazit obsah</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
+        <source>settings_chat_download_folder_title</source>
+        <translation>Složka pro stahování souborů</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
+        <source>settings_chat_download_folder_browse_button</source>
+        <translation>Procházet složky</translation>
+    </message>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Zobrazit</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Stáhnout nastavení</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Volat</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Zavěsit</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Odmítnout</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -5079,6 +5059,11 @@ Expirace : %1</translation>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>V konfiguraci OpenID nebyl nalezen žádný koncový bod tokenu</translation>
     </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="323"/>
+        <source>oidc_authentication_empty_reply_error</source>
+        <translation>Odpověď serveru OIDC je prázdná!</translation>
+    </message>
 </context>
 <context>
     <name>ParticipantListView</name>
@@ -5881,6 +5866,11 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation>Skrýt %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source>textfield_custom_button_accessible_name</source>
+        <translation>%1 tlačítko na %2</translation>
     </message>
 </context>
 <context>
@@ -7596,14 +7586,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 <context>
     <name>CoreModel</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Chyba</translation>
-    </message>
-    <message>
-        <location filename="../../model/core/CoreModel.cpp" line="222"/>
-        <source>fetching_config_failed_error_message</source>
-        <translation>Vzdálené nastavení nelze načíst</translation>
+        <location filename="../../model/core/CoreModel.cpp" line="251"/>
+        <source>fetching_config_empty_path_failure_error_message</source>
+        <translation>Nelze získat umístění souboru pro načtení konfigurace</translation>
     </message>
 </context>
 </TS>

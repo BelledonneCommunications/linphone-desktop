@@ -2604,36 +2604,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Pokaż</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Pobierz konfigurację</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Zadzwoń</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Odrzuć</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Akceptuj</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Odmów</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -3438,17 +3408,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
-    <message>
-        <location filename="../../model/core/CoreModel.cpp" line="224"/>
-        <source>info_popup_error_title</source>
-        <translation>Błąd</translation>
-    </message>
-    <message>
-        <location filename="../../model/core/CoreModel.cpp" line="226"/>
-        <source>fetching_config_failed_error_message</source>
-        <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CreationFormLayout</name>
