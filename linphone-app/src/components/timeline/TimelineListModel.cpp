@@ -262,14 +262,6 @@ void TimelineListModel::updateTimelines () {
 			chatRoom->markAsRead();
 		if(chatRoom->getState() == linphone::ChatRoom::State::Deleted)
 			return true;
-		if(!chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Basic)){
-			auto conferenceAddress = chatRoom->getConferenceAddress();
-			if( conferenceAddress && conferenceAddress->getDomain() == Constants::LinphoneDomain) {
-				QString conferenceAddressStr = Utils::coreStringToAppString(conferenceAddress->asStringUriOnly());
-				if( conferenceAddressStr.contains("conf-id"))
-					return true;
-			}
-		}
 		return false;
 	}); 
 	qInfo() << "Timelines cleaning :" << stepsTimer.restart() << "ms.";
