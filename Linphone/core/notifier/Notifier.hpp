@@ -30,6 +30,8 @@
 #include <linphone++/linphone.hh>
 // =============================================================================
 
+#include "core/notifier/AbstractNotificationBackend.hpp"
+
 class QMutex;
 class QQmlComponent;
 
@@ -39,15 +41,6 @@ class Notifier : public QObject, public AbstractObject {
 public:
 	Notifier(QObject *parent = Q_NULLPTR);
 	~Notifier();
-
-	enum NotificationType {
-		ReceivedMessage,
-		// ReceivedFileMessage,
-		ReceivedCall
-		// NewVersionAvailable,
-		// SnapshotWasTaken,
-		// RecordingCompleted
-	};
 
 	// void notifyReceivedCall(Call *call);
 	void notifyReceivedCall(const std::shared_ptr<linphone::Call> &call); // Call from Linphone
@@ -77,7 +70,7 @@ private:
 			this->timeout = timeout;
 		}
 		int getTimeout() const {
-			if (type == Notifier::ReceivedCall) {
+			if (type == AbstractNotificationBackend::ReceivedCall) {
 				// return CoreManager::getInstance()->getSettingsModel()->getIncomingCallTimeout();
 				return 30;
 			} else return timeout;
@@ -89,7 +82,7 @@ private:
 		int type;
 	};
 
-	bool createNotification(NotificationType type, QVariantMap data);
+	bool createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data);
 	void showNotification(QQuickWindow *notification, int timeout);
 
 	QHash<QString, int> mScreenHeightOffset;

@@ -1373,7 +1373,8 @@ AbstractWindow {
                         connectedCallButtons.visible = bottomButtonsLayout.visible
                         moreOptionsButtonVisibility = bottomButtonsLayout.visible
                         bottomButtonsLayout.layoutDirection = Qt.RightToLeft
-                    } else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit) {
+                    } else if (mainWindow.callState === LinphoneEnums.CallState.OutgoingInit
+                               || mainWindow.callState === LinphoneEnums.CallState.IncomingReceived) {
                         connectedCallButtons.visible = false
                         bottomButtonsLayout.layoutDirection = Qt.LeftToRight
                         moreOptionsButtonVisibility = false
@@ -1396,27 +1397,51 @@ AbstractWindow {
                 }
 
                 // End call button
-                BigButton {
-                    id: endCallButton
-                    focus: true
-                    Layout.row: 0
-                    icon.width: Utils.getSizeWithScreenRatio(32)
-                    icon.height: Utils.getSizeWithScreenRatio(32)
-                    //: "Terminer l'appel"
-                    ToolTip.text: qsTr("call_action_end_call")
-                    Accessible.name: qsTr("call_action_end_call")
-                    Layout.preferredWidth: Utils.getSizeWithScreenRatio(75)
-                    Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
-                    radius: Utils.getSizeWithScreenRatio(71)
-                    style: ButtonStyle.phoneRedLightBorder
-                    Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
-                    KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
-                    KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
-                    onClicked: {
-                        mainWindow.callTerminatedByUser = true
-                        mainWindow.endCall(mainWindow.call)
+                RowLayout {
+                    spacing: Utils.getSizeWithScreenRatio(10)
+                    BigButton {
+                        id: acceptCallButton
+                        visible: mainWindow.callState === LinphoneEnums.CallState.IncomingReceived
+                        Layout.row: 0
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
+                        //: "Accepter l'appel"
+                        ToolTip.text: qsTr("call_action_accept_call")
+                        Accessible.name: qsTr("call_action_accept_call")
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(75)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        radius: Utils.getSizeWithScreenRatio(71)
+                        style: ButtonStyle.phoneGreenLightBorder
+                        Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
+                        KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.backtab:endCallButton
+                        onClicked: {
+                            mainWindow.call.core.lAccept(false)
+                        }
+                    }
+                    BigButton {
+                        id: endCallButton
+                        focus: true
+                        Layout.row: 0
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
+                        //: "Terminer l'appel"
+                        ToolTip.text: qsTr("call_action_end_call")
+                        Accessible.name: qsTr("call_action_end_call")
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(75)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        radius: Utils.getSizeWithScreenRatio(71)
+                        style: ButtonStyle.phoneRedLightBorder
+                        Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
+                        KeyNavigation.tab: mainWindow.startingCall ? (acceptCallButton.visible ? acceptCallButton : videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
+                        onClicked: {
+                            mainWindow.callTerminatedByUser = true
+                            mainWindow.endCall(mainWindow.call)
+                        }
                     }
                 }
+
 
                 // -----------------------------------------------------------------------------
                 //  Group button: pauseCall, transfertCall, newCall, callList

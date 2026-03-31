@@ -228,7 +228,10 @@ foreach(T ${QT_PACKAGES})
 	target_link_libraries(${TARGET_NAME} PRIVATE Qt6::${T})
 endforeach()
 
-
+if (WIN32)
+	target_link_libraries(${TARGET_NAME} PRIVATE runtimeobject)
+	target_link_libraries(${TARGET_NAME} PRIVATE shlwapi propsys shell32)
+endif()
 
 configure_file("${CMAKE_CURRENT_SOURCE_DIR}/config.h.cmake" "${CMAKE_CURRENT_BINARY_DIR}/config.h")
 

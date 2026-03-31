@@ -1,35 +1,37 @@
-#include <QApplication>
-#include <QQmlApplicationEngine>
+#include <qloggingcategory.h>
+
+#ifdef _WIN32
+#include <Windows.h>
+FILE *gStream = NULL;
+#include <objbase.h>     // StringFromCLSID, CoTaskMemFree
+#include <propkey.h>     // PKEY_AppUserModel_ID, PKEY_AppUserModel_ToastActivatorCLSID
+#include <propvarutil.h> // InitPropVariantFromString, PropVariantClear
+#include <shlguid.h>     // CLSID_ShellLink
+#include <shobjidl.h>    // IShellLinkW, IPropertyStore
+#endif
 
 #include "core/App.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/path/Paths.hpp"
 
+#include "core/notifier/DesktopNotificationManagerCompat.hpp"
+#include "core/notifier/NotificationActivator.hpp"
+
+#include <QApplication>
 #include <QLocale>
+#include <QQmlApplicationEngine>
 #include <QSurfaceFormat>
 #include <QTranslator>
-#include <iostream>
-#include <qloggingcategory.h>
+
 #ifdef QT_QML_DEBUG
 #include <QQmlDebuggingEnabler>
+#include <QStandardPaths>
 #endif
 
-#ifdef _WIN32
-#include <Windows.h>
-FILE *gStream = NULL;
-#endif
+#define WIDEN2(x) L##x
+#define WIDEN(x) WIDEN2(x)
 
-#if QT_VERSION < QT_VERSION_CHECK(5, 15, 10)
-// From 5.15.2 to 5.15.10, sometimes, Accessibility freeze the application : Deactivate handlers.
-#define ACCESSBILITY_WORKAROUND
-#include <QAccessible>
-#include <QAccessibleEvent>
-
-void DummyUpdateHandler(QAccessibleEvent *event) {
-}
-void DummyRootObjectHandler(QObject *) {
-}
-#endif
+static const wchar_t *mAumid = WIDEN(APPLICATION_ID);
 
 void cleanStream() {
 #ifdef _WIN32
@@ -53,6 +55,19 @@ int main(int argc, char *argv[]) {
 	#endif
 	*/
 
+	// auto hrCom = RoInitialize(RO_INIT_MULTITHREADED);
+	// HRESULT hrCom = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	// qInfo() << "CoInitializeEx result:" << Qt::hex << hrCom;
+
+	qInfo() << "Thread ID:" << GetCurrentThreadId();
+	APTTYPE aptBefore;
+	APTTYPEQUALIFIER qualBefore;
+	CoGetApartmentType(&aptBefore, &qualBefore);
+	qInfo() << "ApartmentType BEFORE CoInitializeEx:" << aptBefore;
+
+	HRESULT hrCom = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+	qInfo() << "CoInitializeEx STA result:" << Qt::hex << hrCom;
+
 	// Useful to share camera on Fullscreen (other context) or multiscreens
 	lDebug() << "[Main] Setting ShareOpenGLContexts";
 	QApplication::setAttribute(Qt::AA_ShareOpenGLContexts);
@@ -67,7 +82,24 @@ int main(int argc, char *argv[]) {
 	lDebug() << "[Main] Setting application to UTF8";
 	setlocale(LC_CTYPE, ".UTF8");
 	lDebug() << "[Main] Creating application";
+
+	auto hr = DesktopNotificationManagerCompat::CreateStartMenuShortcut(mAumid, __uuidof(NotificationActivator));
+	if (FAILED(hr)) {
+		qWarning() << "CreateStartMenuShortcut failed:" << Qt::hex << hr;
+	}
+
+	//  Register AUMID and COM server (for a packaged app, this is a no-operation)
+	hr = DesktopNotificationManagerCompat::RegisterAumidAndComServer(L"Linphone", __uuidof(NotificationActivator));
+	if (FAILED(hr)) {
+		qWarning() << "RegisterAumidAndComServer failed:" << Qt::hex << hr;
+	}
+
 	auto app = QSharedPointer<App>::create(argc, argv);
+
+	hr = DesktopNotificationManagerCompat::RegisterActivator();
+	if (FAILED(hr)) {
+		qWarning() << "RegisterActivator failed:" << Qt::hex << hr;
+	}
 
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);

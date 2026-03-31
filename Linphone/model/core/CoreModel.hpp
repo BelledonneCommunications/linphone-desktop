@@ -40,7 +40,6 @@
 
 // =============================================================================
 
-class AbstractEventCountNotifier;
 class EventCountNotifier;
 
 class CoreModel : public ::Listener<linphone::Core, linphone::CoreListener>,

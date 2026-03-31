@@ -47,6 +47,7 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/logger/QtLogger.cpp
 	core/login/LoginPage.cpp
 	core/notifier/Notifier.cpp
+	core/notifier/AbstractNotificationBackend.cpp
 	core/path/Paths.cpp
 	core/phone-number/PhoneNumber.cpp
 	core/phone-number/PhoneNumberList.cpp
@@ -128,6 +129,12 @@ else() # Use QDBus for Linux
 		core/singleapplication/singleapplication.h	#Added for Moc
 		core/singleapplication/SingleApplicationDBusPrivate.hpp
 		core/singleapplication/SingleApplicationDBus.cpp)
+endif()
+if(WIN32)
+	list(APPEND _LINPHONEAPP_SOURCES
+		core/notifier/NotificationActivator.cpp
+		core/notifier/DesktopNotificationManagerCompat.cpp
+		core/notifier/WindowsNotificationBackend.cpp)
 endif()
 if(APPLE)
 	list(APPEND _LINPHONEAPP_SOURCES core/event-count-notifier/EventCountNotifierMacOs.m)

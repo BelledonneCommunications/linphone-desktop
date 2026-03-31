@@ -40,7 +40,7 @@ public:
 	virtual bool nativeEventFilter(const QByteArray &eventType, void *message, qintptr *result) override;
 
 signals:
-	void sessionUnlocked();
+	void sessionLockedChanged(bool locked);
 };
 
 #endif // LOCKEVENTFILTER_H

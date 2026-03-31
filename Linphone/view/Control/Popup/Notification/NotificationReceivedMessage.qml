@@ -21,7 +21,6 @@ Notification {
 	property string avatarUri: notificationData?.avatarUri
 	property string chatRoomName: notificationData?.chatRoomName ? notificationData.chatRoomName : ""
 	property string remoteAddress: notificationData?.remoteAddress ? notificationData.remoteAddress : ""
-	property string chatRoomAddress: notificationData?.chatRoomAddress ? notificationData.chatRoomAddress : ""
 	property bool isGroupChat: notificationData?.isGroupChat ? notificationData.isGroupChat : false
 	property string message: notificationData?.message ? notificationData.message : ""
 	Connections {

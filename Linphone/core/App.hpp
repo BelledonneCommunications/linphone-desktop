@@ -43,6 +43,7 @@ class Notifier;
 class QQuickWindow;
 class QSystemTrayIcon;
 class DefaultTranslatorCore;
+class NotificationBackend;
 
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
@@ -197,10 +198,17 @@ public:
 	QString getSdkVersion();
 	QString getQtVersion() const;
 
+	NotificationBackend *getNotificationBackend() const;
+
 	Q_INVOKABLE void checkForUpdate(bool requestedByUser = false);
 
 	float getScreenRatio() const;
 	Q_INVOKABLE void setScreenRatio(float ratio);
+
+#ifdef Q_OS_WIN
+	void setSessionLocked(bool locked);
+	bool getSessionLocked() const;
+#endif
 
 #ifdef Q_OS_LINUX
 	Q_INVOKABLE void exportDesktopFile();
@@ -233,7 +241,7 @@ signals:
 	void remainingTimeBeforeOidcTimeoutChanged();
 	void currentAccountChanged();
 #ifdef Q_OS_WIN
-	void sessionUnlocked();
+	void sessionLockedChanged();
 #endif
 	// void executeCommand(QString command);
 
@@ -248,6 +256,7 @@ private:
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
 	EventCountNotifier *mEventCountNotifier = nullptr;
+	NotificationBackend *mNotificationBackend = nullptr;
 	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
@@ -278,6 +287,8 @@ private:
 	float mScreenRatio = 1;
 	QTimer mOIDCRefreshTimer;
 	int mRemainingTimeBeforeOidcTimeout = 0;
-
+#ifdef Q_OS_WIN
+	bool mSessionLocked = false;
+#endif
 	DECLARE_ABSTRACT_OBJECT
 };

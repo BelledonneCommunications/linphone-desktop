@@ -122,6 +122,10 @@
 #include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
+#if defined(Q_OS_WIN)
+#include "core/notifier/WindowsNotificationBackend.hpp"
+#endif
+
 DEFINE_ABSTRACT_OBJECT(App)
 
 #ifdef Q_OS_LINUX
@@ -614,6 +618,10 @@ int App::getEventCount() const {
 	return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
 
+NotificationBackend *App::getNotificationBackend() const {
+	return mNotificationBackend;
+}
+
 //-----------------------------------------------------------
 //		Initializations
 //-----------------------------------------------------------
@@ -743,6 +751,8 @@ void App::initCore() {
 			    mNotifier = new Notifier(mEngine);
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
+
+			    mNotificationBackend = new NotificationBackend(this);
 
 			    auto initLists = [this] {
 				    if (mCoreStarted) {
@@ -1086,7 +1096,6 @@ void App::clean() {
 	mDateUpdateTimer.stop();
 #ifdef Q_OS_WIN
 	removeNativeEventFilter(mLockEventFilter);
-	delete mLockEventFilter;
 #endif
 	if (mEngine) {
 		mEngine->clearComponentCache();
@@ -1698,8 +1707,9 @@ void App::setSysTrayIcon() {
 
 //
 #ifdef Q_OS_WIN
-	if (!mLockEventFilter) mLockEventFilter = new LockEventFilter();
-	connect(mLockEventFilter, &LockEventFilter::sessionUnlocked, this, [this] { emit sessionUnlocked(); });
+	if (!mLockEventFilter) mLockEventFilter = new LockEventFilter(this);
+	connect(mLockEventFilter, &LockEventFilter::sessionLockedChanged, this,
+	        [this](bool locked) { setSessionLocked(locked); });
 	installNativeEventFilter(mLockEventFilter);
 #endif
 }
@@ -1806,6 +1816,20 @@ float App::getScreenRatio() const {
 void App::setScreenRatio(float ratio) {
 	mScreenRatio = ratio;
 }
+
+#ifdef Q_OS_WIN
+void App::setSessionLocked(bool locked) {
+	if (mSessionLocked != locked) {
+		mSessionLocked = locked;
+		emit sessionLockedChanged();
+	}
+}
+
+bool App::getSessionLocked() const {
+	return mSessionLocked;
+}
+
+#endif
 
 QAction *App::createMarkAsReadAction(QQuickWindow *window) {
 	QAction *markAllReadAction = new QAction(tr("mark_all_read_action"), window);

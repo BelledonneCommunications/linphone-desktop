@@ -27,12 +27,8 @@ bool LockEventFilter::nativeEventFilter(const QByteArray &eventType, void *messa
 #ifdef Q_OS_WIN
 	MSG *msg = static_cast<MSG *>(message);
 	if (msg->message == WM_WTSSESSION_CHANGE) {
-		if (msg->wParam == WTS_SESSION_LOCK) {
-			return true;
-		} else {
-			emit sessionUnlocked();
-			return true;
-		}
+		emit sessionLockedChanged(msg->wParam == WTS_SESSION_LOCK);
+		return true;
 	}
 #endif
 

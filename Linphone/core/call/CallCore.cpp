@@ -123,6 +123,7 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 	auto remoteAddress = call->getCallLog()->getRemoteAddress();
 	mRemoteAddress = Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 	mRemoteUsername = Utils::coreStringToAppString(remoteAddress->getUsername());
+	mCallId = Utils::coreStringToAppString(call->getCallLog()->getCallId());
 	auto linphoneFriend = ToolModel::findFriendByAddress(remoteAddress);
 	if (linphoneFriend)
 		mRemoteName = Utils::coreStringToAppString(
@@ -518,6 +519,10 @@ QString CallCore::getRemoteAddress() const {
 
 QString CallCore::getLocalAddress() const {
 	return mLocalAddress;
+}
+
+QString CallCore::getCallId() const {
+	return mCallId;
 }
 
 LinphoneEnums::CallStatus CallCore::getStatus() const {

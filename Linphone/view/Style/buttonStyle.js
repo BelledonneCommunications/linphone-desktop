@@ -137,6 +137,11 @@
 			pressed: Linphone.DefaultStyle.grey_0
 		}
 	}
+	var phoneGreenLightBorder =  Object.assign({
+		borderColor : {
+			keybaordFocused: Linphone.DefaultStyle.main2_0
+		}
+	}, phoneGreen)
 
 // Checkable
 	var checkable = {
