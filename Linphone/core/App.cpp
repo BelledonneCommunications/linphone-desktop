@@ -418,6 +418,8 @@ void App::setSelf(QSharedPointer<App>(me)) {
 					        },
 					        Qt::SingleShotConnection);
 				    }
+			    } else if (gstate == linphone::GlobalState::Off) {
+				    CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
 			    }
 		    });
 	    });
@@ -495,6 +497,8 @@ void App::setSelf(QSharedPointer<App>(me)) {
 					    },
 					    Qt::SingleShotConnection);
 				}
+			} else if (state == linphone::GlobalState::Off) {
+				CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
 			}
 		});
 	});
@@ -691,6 +695,8 @@ void App::initCore() {
 			    // QML
 			    mEngine = new QQmlApplicationEngine(this);
 			    assert(mEngine);
+			    lDebug() << log().arg("Starting HID devices detection");
+			    CoreModel::getInstance()->getCore()->startHidDevicesDetection();
 			    // Provide `+custom` folders for custom components and `5.9` for old components.
 			    QStringList selectors("custom");
 			    const QVersionNumber &version = QLibraryInfo::version();
