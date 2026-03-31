@@ -260,7 +260,8 @@ void TimelineListModel::updateTimelines () {
 	allChatRooms.remove_if([](std::shared_ptr<linphone::ChatRoom> chatRoom){
 		if( ChatRoomModel::isTerminated(chatRoom) && chatRoom->getUnreadMessagesCount() > 0)
 			chatRoom->markAsRead();
-		if(chatRoom->getState() == linphone::ChatRoom::State::Deleted)
+		if(chatRoom->getState() == linphone::ChatRoom::State::Deleted
+			|| (chatRoom->getState() == linphone::ChatRoom::State::Terminated && chatRoom->getHistorySize() == 0))
 			return true;
 		return false;
 	}); 
@@ -411,9 +412,12 @@ void TimelineListModel::onChatRoomStateChanged(const std::shared_ptr<linphone::C
 	}else if(state == linphone::ChatRoom::State::Deleted || state == linphone::ChatRoom::State::Terminated){
 		auto timeline = getTimeline(chatRoom, false);
 		if(timeline) {
-			if(timeline->getChatRoomModel())
-				timeline->getChatRoomModel()->resetMessageCount();
-			if(state == linphone::ChatRoom::State::Deleted){
+			auto chatRoomModel = timeline->getChatRoomModel();
+			if(chatRoomModel)
+				chatRoomModel->resetMessageCount();
+			if(state == linphone::ChatRoom::State::Deleted
+				|| (state == linphone::ChatRoom::State::Terminated && chatRoomModel && chatRoomModel->getChatRoom()->getHistorySize() == 0)
+			){
 				remove(timeline);// This will call removeRows()
 			}
 		}

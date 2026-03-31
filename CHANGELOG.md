@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## 5.3.4 - 2026-03-31
 
 ### Fixed
-- Remove old "conf-id" filtering for chat rooms
+- Remove old "conf-id" filtering for chat rooms.
+- Remove empty chatrooms if Terminated.
 
 ### Changed
 - Update SDK to 5.4.102
