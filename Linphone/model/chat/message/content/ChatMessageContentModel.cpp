@@ -92,6 +92,8 @@ bool ChatMessageContentModel::downloadFile(const QString &name, QString *error) 
 		case linphone::ChatMessage::State::DeliveredToUser:
 		case linphone::ChatMessage::State::Displayed:
 		case linphone::ChatMessage::State::FileTransferDone:
+		case linphone::ChatMessage::State::FileTransferError:
+		case linphone::ChatMessage::State::FileTransferCancelling:
 			break;
 		case linphone::ChatMessage::State::FileTransferInProgress:
 			return true;
