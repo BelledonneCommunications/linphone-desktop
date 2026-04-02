@@ -6,6 +6,7 @@
 #include "core/call/CallGui.hpp"
 #include "core/chat/ChatGui.hpp"
 #include "core/event-filter/LockEventFilter.hpp"
+#include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
 #ifdef Q_OS_WIN
@@ -15,6 +16,9 @@
 #endif
 
 #include <QDebug>
+#include <QPainter>
+#include <QStandardPaths>
+#include <QSvgRenderer>
 
 using namespace Microsoft::WRL;
 using namespace ABI::Windows::UI::Notifications;
@@ -35,6 +39,29 @@ void NotificationBackend::flushPendingNotifications() {
 		sendNotification(notif.type, notif.data);
 	}
 	mPendingNotifications.clear();
+}
+
+QString getIconAsPng(const QString &imagePath, const QSize &size = QSize(64, 64)) {
+	// Convertit "image://internal/phone-disconnect.svg" en ":/data/image/phone-disconnect.svg"
+	QString resourcePath = imagePath;
+	if (imagePath.startsWith("image://internal/"))
+		resourcePath = ":/data/image/" + imagePath.mid(QString("image://internal/").length());
+
+	QSvgRenderer renderer(resourcePath);
+	if (!renderer.isValid()) return QString();
+
+	QImage image(size, QImage::Format_ARGB32_Premultiplied);
+	image.fill(Qt::transparent);
+	QPainter painter(&image);
+	renderer.render(&painter);
+	painter.end();
+
+	QString outPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/linphone_" +
+	                  QFileInfo(resourcePath).baseName() + ".png";
+
+	if (!QFile::exists(outPath)) image.save(outPath, "PNG");
+
+	return outPath;
 }
 
 void NotificationBackend::sendMessageNotification(QVariantMap data) {
@@ -131,16 +158,22 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 
 	// Incoming call
 	auto callDescription = tr("incoming_call").toStdWString();
+
 	QList<ToastButton> actions;
-	actions.append(ToastButton(tr("accept_button"), "accept"));
-	actions.append(ToastButton(tr("decline_button"), "decline"));
+	QString declineIcon = getIconAsPng(Utils::getAppIcon("endCall").toString());
+	QString acceptIcon = getIconAsPng(Utils::getAppIcon("phone").toString());
+	actions.append(ToastButton(tr("accept_button"), "accept", acceptIcon));
+	actions.append(ToastButton(tr("decline_button"), "decline", declineIcon));
 	std::wstring wActions;
 	if (!actions.isEmpty()) {
 		wActions += L"<actions>";
 		for (const auto &action : actions) {
 			std::wstring wLabel = action.label.toStdWString();
 			std::wstring wArg = action.argument.toStdWString();
-			wActions += L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\"/>";
+			std::wstring wIcon = action.icon.toStdWString();
+			qDebug() << "toast icon action" << wIcon;
+			wActions +=
+			    L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\" imageUri=\"" + wIcon + L"\"/>";
 		}
 		wActions += L"</actions>";
 	}

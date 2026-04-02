@@ -9,9 +9,11 @@
 struct ToastButton {
 	QString label;
 	QString argument;
-	ToastButton(QString title, QString arg) {
-		label = title;
-		argument = arg;
+	QString icon;
+	ToastButton(QString label, QString arg, QString icon = QString()) {
+		this->label = label;
+		this->argument = arg;
+		this->icon = icon;
 	}
 };
 

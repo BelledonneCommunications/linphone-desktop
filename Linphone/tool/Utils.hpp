@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QSize>
 #include <QString>
 
 #include "Constants.hpp"

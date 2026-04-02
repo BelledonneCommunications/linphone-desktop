@@ -1811,6 +1811,7 @@ QUrl Utils::getAppIcon(const QString &iconName) {
 		QQmlComponent component(App::getInstance()->mEngine, QUrl("qrc:/qt/qml/Linphone/view/Style/AppIcons.qml"));
 		appIconsSingleton = component.create();
 	}
+
 	return QQmlProperty::read(appIconsSingleton, iconName).value<QUrl>();
 }
 
