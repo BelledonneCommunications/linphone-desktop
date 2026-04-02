@@ -43,8 +43,9 @@ class Notifier;
 class QQuickWindow;
 class QSystemTrayIcon;
 class DefaultTranslatorCore;
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 class NotificationBackend;
-
+#endif
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
@@ -197,8 +198,9 @@ public:
 	QString getGitBranchName();
 	QString getSdkVersion();
 	QString getQtVersion() const;
-
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 	NotificationBackend *getNotificationBackend() const;
+#endif
 
 	Q_INVOKABLE void checkForUpdate(bool requestedByUser = false);
 
@@ -256,7 +258,9 @@ private:
 	Thread *mLinphoneThread = nullptr;
 	Notifier *mNotifier = nullptr;
 	EventCountNotifier *mEventCountNotifier = nullptr;
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 	NotificationBackend *mNotificationBackend = nullptr;
+#endif
 	QSystemTrayIcon *mSystemTrayIcon = nullptr;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;

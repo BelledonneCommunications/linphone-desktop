@@ -135,7 +135,7 @@ if(WIN32)
 		core/notifier/NotificationActivator.cpp
 		core/notifier/DesktopNotificationManagerCompat.cpp
 		core/notifier/WindowsNotificationBackend.cpp)
-else()
+elseif (UNIX AND NOT APPLE)
 	list(APPEND _LINPHONEAPP_SOURCES
 		core/notifier/SysTrayNotificationBackend.cpp)
 endif()

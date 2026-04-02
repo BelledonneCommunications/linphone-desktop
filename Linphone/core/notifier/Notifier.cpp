@@ -30,7 +30,11 @@
 #include <QTimer>
 
 #include "Notifier.hpp"
+#ifdef Q_OS_WIN
 #include "WindowsNotificationBackend.hpp"
+#elif defined(Q_OS_LINUX)
+#include "SysTrayNotificationBackend.hpp"
+#endif
 
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
@@ -129,8 +133,10 @@ Notifier::~Notifier() {
 
 bool Notifier::createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data) {
 	mMutex->lock();
-	// Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
-#ifdef Q_OS_WIN
+	mustBeInMainThread(log().arg(Q_FUNC_INFO));
+
+// Q_ASSERT(mInstancesNumber <= MaxNotificationsNumber);
+#if defined(Q_OS_WIN)
 
 	auto notifBackend = App::getInstance()->getNotificationBackend();
 	if (!notifBackend) {
@@ -143,98 +149,100 @@ bool Notifier::createNotification(AbstractNotificationBackend::NotificationType 
 
 	if (mInstancesNumber >= MaxNotificationsNumber) { // Check existing instances.
 		qWarning() << QStringLiteral("Unable to create another notification.");
-		QList<QScreen *> allScreens = QGuiApplication::screens();
-		if (allScreens.size() > 0) { // Ensure to have a screen to avoid errors
-			QQuickItem *previousWrapper = nullptr;
-			bool showAsTool = false;
+		mMutex->unlock();
+		return false;
+	}
+	QList<QScreen *> allScreens = QGuiApplication::screens();
+	if (allScreens.size() > 0) { // Ensure to have a screen to avoid errors
+		QQuickItem *previousWrapper = nullptr;
+		bool showAsTool = false;
 #ifdef Q_OS_MACOS
-			for (auto w : QGuiApplication::topLevelWindows()) {
-				if (w->visibility() == QWindow::FullScreen) {
-					showAsTool = true;
-					w->raise(); // Used to get focus on Mac (On Mac, A Tool is hidden if the app has not focus and the
-					// only way to rid it is to use Widget Attributes(Qt::WA_MacAlwaysShowToolWindow) that is not
-					// available)
-				}
-			}
-#endif
-			for (int i = 0; i < allScreens.size(); ++i) {
-
-				++mInstancesNumber;
-				// Use QQuickView to create a visual root object that is
-				// independant from current application Window
-				QScreen *screen = allScreens[i];
-				auto engine = App::getInstance()->mEngine;
-				const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
-				QObject::connect(
-				    engine, &QQmlApplicationEngine::objectCreated, this,
-				    [this, url, screen, engine, type, data, showAsTool](QObject *obj, const QUrl &objUrl) {
-					    if (!obj && url == objUrl) {
-						    lCritical() << "[App] Notifier.qml couldn't be load.";
-						    engine->deleteLater();
-						    exit(-1);
-					    } else {
-						    auto window = qobject_cast<QQuickWindow *>(obj);
-						    if (window) {
-							    window->setParent(nullptr);
-							    window->setProperty(NotificationPropertyData, data);
-							    window->setScreen(screen);
-							    // Don't use Popup for flags : it could lead to error in geometry. On Mac, Using Tool
-							    // ensure to have the Window on Top and fullscreen independant
-							    window->setFlags((showAsTool ? Qt::Tool : Qt::WindowStaysOnTopHint) |
-							                     Qt::FramelessWindowHint);
-#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
-							    window->setFlag(Qt::WindowDoesNotAcceptFocus);
-#endif
-							    //						    for (auto it = data.begin(); it != data.end(); ++it)
-							    //							    window->setProperty(it.key().toLatin1(), it.value());
-							    const int timeout = Notifications[type].getTimeout() * 1000;
-							    auto updateNotificationCoordinates = [this, window, screen](int width, int height) {
-								    auto screenHeightOffset =
-								        screen ? mScreenHeightOffset.value(screen->name()) : 0; // Access optimization
-								    QRect availableGeometry = screen->availableGeometry();
-
-								    window->setX(availableGeometry.x() +
-								                 (availableGeometry.width() -
-								                  width)); //*screen->devicePixelRatio()); when using manual scaler
-								    window->setY(availableGeometry.y() + availableGeometry.height() -
-								                 screenHeightOffset - height);
-							    };
-							    updateNotificationCoordinates(window->width(), window->height());
-							    auto screenHeightOffset =
-							        screen ? mScreenHeightOffset.take(screen->name()) : 0; // Access optimization
-							    mScreenHeightOffset.insert(screen->name(), screenHeightOffset + window->height());
-							    QObject::connect(window, &QQuickWindow::closing, window, [this, window] {
-								    qDebug() << "closing notification";
-								    deleteNotification(QVariant::fromValue(window));
-							    });
-							    QObject::connect(window, &QQuickWindow::visibleChanged, window, [this](bool visible) {
-								    lInfo() << log().arg("Notification visible changed") << visible;
-							    });
-							    QObject::connect(window, &QQuickWindow::activeChanged, window, [this, window] {
-								    lInfo() << log().arg("Notification active changed") << window->isActive();
-							    });
-							    QObject::connect(window, &QQuickWindow::visibilityChanged, window,
-							                     [this](QWindow::Visibility visibility) {
-								                     lInfo()
-								                         << log().arg("Notification visibility changed") << visibility;
-							                     });
-							    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
-								    lInfo() << log().arg("Notification width changed") << width;
-							    });
-							    QObject::connect(window, &QQuickWindow::heightChanged, window, [this](int height) {
-								    lInfo() << log().arg("Notification height changed") << height;
-							    });
-							    lInfo() << QStringLiteral("Create notification:") << window;
-							    showNotification(window, timeout);
-						    }
-					    }
-				    },
-				    static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::SingleShotConnection));
-				lDebug() << log().arg("Engine loading notification");
-				engine->load(url);
+		for (auto w : QGuiApplication::topLevelWindows()) {
+			if (w->visibility() == QWindow::FullScreen) {
+				showAsTool = true;
+				w->raise(); // Used to get focus on Mac (On Mac, A Tool is hidden if the app has not focus and the
+				// only way to rid it is to use Widget Attributes(Qt::WA_MacAlwaysShowToolWindow) that is not
+				// available)
 			}
 		}
+#endif
+		for (int i = 0; i < allScreens.size(); ++i) {
+
+			++mInstancesNumber;
+			// Use QQuickView to create a visual root object that is
+			// independant from current application Window
+			QScreen *screen = allScreens[i];
+			auto engine = App::getInstance()->mEngine;
+			const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
+			QObject::connect(
+			    engine, &QQmlApplicationEngine::objectCreated, this,
+			    [this, url, screen, engine, type, data, showAsTool](QObject *obj, const QUrl &objUrl) {
+				    if (!obj && url == objUrl) {
+					    lCritical() << "[App] Notifier.qml couldn't be load.";
+					    engine->deleteLater();
+					    exit(-1);
+				    } else {
+					    auto window = qobject_cast<QQuickWindow *>(obj);
+					    if (window) {
+						    window->setParent(nullptr);
+						    window->setProperty(NotificationPropertyData, data);
+						    window->setScreen(screen);
+						    // Don't use Popup for flags : it could lead to error in geometry. On Mac, Using Tool
+						    // ensure to have the Window on Top and fullscreen independant
+						    window->setFlags((showAsTool ? Qt::Tool : Qt::WindowStaysOnTopHint) |
+						                     Qt::FramelessWindowHint);
+#if defined(Q_OS_LINUX) || defined(Q_OS_WIN)
+						    window->setFlag(Qt::WindowDoesNotAcceptFocus);
+#endif
+						    //						    for (auto it = data.begin(); it != data.end(); ++it)
+						    //							    window->setProperty(it.key().toLatin1(), it.value());
+						    const int timeout = Notifications[type].getTimeout() * 1000;
+						    auto updateNotificationCoordinates = [this, window, screen](int width, int height) {
+							    auto screenHeightOffset =
+							        screen ? mScreenHeightOffset.value(screen->name()) : 0; // Access optimization
+							    QRect availableGeometry = screen->availableGeometry();
+
+							    window->setX(availableGeometry.x() +
+							                 (availableGeometry.width() -
+							                  width)); //*screen->devicePixelRatio()); when using manual scaler
+							    window->setY(availableGeometry.y() + availableGeometry.height() - screenHeightOffset -
+							                 height);
+						    };
+						    updateNotificationCoordinates(window->width(), window->height());
+						    auto screenHeightOffset =
+						        screen ? mScreenHeightOffset.take(screen->name()) : 0; // Access optimization
+						    mScreenHeightOffset.insert(screen->name(), screenHeightOffset + window->height());
+						    QObject::connect(window, &QQuickWindow::closing, window, [this, window] {
+							    qDebug() << "closing notification";
+							    deleteNotification(QVariant::fromValue(window));
+						    });
+						    QObject::connect(window, &QQuickWindow::visibleChanged, window, [this](bool visible) {
+							    lInfo() << log().arg("Notification visible changed") << visible;
+						    });
+						    QObject::connect(window, &QQuickWindow::activeChanged, window, [this, window] {
+							    lInfo() << log().arg("Notification active changed") << window->isActive();
+						    });
+						    QObject::connect(window, &QQuickWindow::visibilityChanged, window,
+						                     [this](QWindow::Visibility visibility) {
+							                     lInfo() << log().arg("Notification visibility changed") << visibility;
+						                     });
+						    QObject::connect(window, &QQuickWindow::widthChanged, window, [this](int width) {
+							    lInfo() << log().arg("Notification width changed") << width;
+						    });
+						    QObject::connect(window, &QQuickWindow::heightChanged, window, [this](int height) {
+							    lInfo() << log().arg("Notification height changed") << height;
+						    });
+						    lInfo() << QStringLiteral("Create notification:") << window;
+						    showNotification(window, timeout);
+					    }
+				    }
+			    },
+			    static_cast<Qt::ConnectionType>(Qt::QueuedConnection | Qt::SingleShotConnection));
+			lDebug() << log().arg("Engine loading notification");
+			engine->load(url);
+		}
 	}
+
 #endif
 	mMutex->unlock();
 	return true;

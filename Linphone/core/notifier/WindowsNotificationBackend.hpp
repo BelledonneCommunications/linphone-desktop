@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QObject>
 #include <QString>
 
 class NotificationBackend : public AbstractNotificationBackend {

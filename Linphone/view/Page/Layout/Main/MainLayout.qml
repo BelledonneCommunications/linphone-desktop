@@ -529,6 +529,7 @@ Item {
                                         text: qsTr("recordings_title")
                                         icon.source: AppIcons.recordFill
                                         onClicked: {
+                                            settingsMenuButton.popup.close()
                                             UtilsCpp.openNativeDialog(UtilsCpp.getCaptureDirpaths())
                                             // fileDialog.folder = UtilsCpp.getCaptureDirpaths()
                                             // fileDialog.open()

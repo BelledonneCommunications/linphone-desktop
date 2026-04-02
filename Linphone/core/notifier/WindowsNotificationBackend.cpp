@@ -1,6 +1,3 @@
-#include "tool/Utils.hpp"
-
-// #include "NotificationActivator.hpp"
 #include "WindowsNotificationBackend.hpp"
 #include "core/App.hpp"
 #include "core/call/CallGui.hpp"
@@ -9,16 +6,11 @@
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
-#ifdef Q_OS_WIN
 #include "DesktopNotificationManagerCompat.hpp"
 #include <windows.foundation.h>
 #include <windows.ui.notifications.h>
-#endif
 
 #include <QDebug>
-#include <QPainter>
-#include <QStandardPaths>
-#include <QSvgRenderer>
 
 using namespace Microsoft::WRL;
 using namespace ABI::Windows::UI::Notifications;
@@ -39,29 +31,6 @@ void NotificationBackend::flushPendingNotifications() {
 		sendNotification(notif.type, notif.data);
 	}
 	mPendingNotifications.clear();
-}
-
-QString getIconAsPng(const QString &imagePath, const QSize &size = QSize(64, 64)) {
-	// Convertit "image://internal/phone-disconnect.svg" en ":/data/image/phone-disconnect.svg"
-	QString resourcePath = imagePath;
-	if (imagePath.startsWith("image://internal/"))
-		resourcePath = ":/data/image/" + imagePath.mid(QString("image://internal/").length());
-
-	QSvgRenderer renderer(resourcePath);
-	if (!renderer.isValid()) return QString();
-
-	QImage image(size, QImage::Format_ARGB32_Premultiplied);
-	image.fill(Qt::transparent);
-	QPainter painter(&image);
-	renderer.render(&painter);
-	painter.end();
-
-	QString outPath = QStandardPaths::writableLocation(QStandardPaths::TempLocation) + "/linphone_" +
-	                  QFileInfo(resourcePath).baseName() + ".png";
-
-	if (!QFile::exists(outPath)) image.save(outPath, "PNG");
-
-	return outPath;
 }
 
 void NotificationBackend::sendMessageNotification(QVariantMap data) {
@@ -221,8 +190,9 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	if (FAILED(hr)) qWarning() << "puting tag on toast failed";
 
 	connect(call->mCore.get(), &CallCore::stateChanged, this, [this, call, notifier, toast] {
-		if (call->mCore->getState() == LinphoneEnums::CallState::End) {
-			qDebug() << "Call ended, remove toast";
+		if (call->mCore->getState() == LinphoneEnums::CallState::End ||
+		    call->mCore->getState() == LinphoneEnums::CallState::Error) {
+			qDebug() << "Call ended or error, remove toast";
 			auto callId = call->mCore->getCallId();
 			call->deleteLater();
 

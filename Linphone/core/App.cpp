@@ -122,9 +122,9 @@
 #include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
-#if defined(Q_OS_WIN)
+#ifdef Q_OS_WIN
 #include "core/notifier/WindowsNotificationBackend.hpp"
-#else
+#elif defined(Q_OS_LINUX)
 #include "core/notifier/SysTrayNotificationBackend.hpp"
 #endif
 
@@ -569,7 +569,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	                                         });
 	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
 		qDebug() << "App: force oidc timeout";
-		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance() -> forceOidcTimeout(); });
+		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
 	});
 	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStarted, [this]() {
 		qDebug() << "App: oidc timer started";
@@ -620,9 +620,11 @@ int App::getEventCount() const {
 	return mEventCountNotifier ? mEventCountNotifier->getEventCount() : 0;
 }
 
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 NotificationBackend *App::getNotificationBackend() const {
 	return mNotificationBackend;
 }
+#endif
 
 //-----------------------------------------------------------
 //		Initializations
@@ -754,7 +756,9 @@ void App::initCore() {
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 
+#if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 			    mNotificationBackend = new NotificationBackend(this);
+#endif
 
 			    auto initLists = [this] {
 				    if (mCoreStarted) {

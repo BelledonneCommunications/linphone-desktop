@@ -4,8 +4,8 @@
 #include "tool/AbstractObject.hpp"
 #include <QHash>
 #include <QObject>
+#include <QSize>
 #include <QString>
-
 struct ToastButton {
 	QString label;
 	QString argument;
@@ -22,6 +22,8 @@ class AbstractNotificationBackend : public QObject, public AbstractObject {
 public:
 	AbstractNotificationBackend(QObject *parent = Q_NULLPTR);
 	~AbstractNotificationBackend() = default;
+
+	QString getIconAsPng(const QString &imagePath, const QSize &size = QSize(64, 64));
 
 	enum NotificationType {
 		ReceivedMessage,
