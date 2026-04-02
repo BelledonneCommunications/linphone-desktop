@@ -203,6 +203,9 @@ public:
 	static QString getApplicationProduct();
 	static QString getOsProduct();
 
+	Q_INVOKABLE static QString getCaptureDirpaths();
+	Q_INVOKABLE static void openNativeDialog(QString currentFolder = QString());
+
 	static QList<QSharedPointer<DownloadablePayloadTypeCore>> getDownloadableVideoPayloadTypes();
 	static void checkDownloadedCodecsUpdates();
 

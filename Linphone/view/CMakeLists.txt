@@ -86,6 +86,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Display/Participant/ParticipantDeviceListView.qml
 	view/Control/Display/Participant/ParticipantInfoListView.qml
 	view/Control/Display/Participant/ParticipantListView.qml
+	view/Control/Display/Record/RecordListView.qml
 	view/Control/Display/Settings/SettingsMenuItem.qml
 
 	view/Control/Form/Login/LoginForm.qml
@@ -182,6 +183,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Main/Contact/ContactPage.qml
 	view/Page/Main/Help/HelpPage.qml
 	view/Page/Main/Meeting/MeetingPage.qml
+	view/Page/Main/Record/RecordPage.qml
 	view/Page/Main/Start/WelcomePage.qml
 
 	view/Page/Window/AbstractWindow.qml

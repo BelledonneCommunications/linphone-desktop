@@ -629,6 +629,24 @@ QString Utils::getOsProduct() {
 	return product + "/" + version;
 }
 
+QString Utils::getCaptureDirpaths() {
+	return Paths::getCapturesDirPath();
+}
+
+void Utils::openNativeDialog(QString currentFolder) {
+	const QString path = currentFolder.isEmpty() ? QDir::homePath() : currentFolder;
+#if defined(Q_OS_WIN)
+	// Explorer avec le dossier sélectionné
+	QProcess::startDetached("explorer.exe", {QDir::toNativeSeparators(path)});
+
+#elif defined(Q_OS_MACOS)
+	QProcess::startDetached("open", {path});
+
+#else // Linux
+	QProcess::startDetached("xdg-open", {path});
+#endif
+}
+
 QString Utils::getCountryName(const QLocale::Territory &p_country) {
 	QString countryName;
 	switch (p_country) {
@@ -2012,7 +2030,8 @@ QDateTime Utils::getOffsettedUTC(const QDateTime &date) {
 }
 
 QString Utils::toTimeString(QDateTime date, const QString &format) {
-	// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the offset.
+	// Issue : date.toString() will not print the good time in timezones. Get it from date and add ourself the
+	// offset.
 	return getOffsettedUTC(date).toString(format);
 }
 QString Utils::getSafeFilePath(const QString &filePath, bool *soFarSoGood) {

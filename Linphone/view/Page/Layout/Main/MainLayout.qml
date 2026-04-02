@@ -2,6 +2,7 @@ import QtCore
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
+import Qt.labs.platform 1.1
 import QtQuick.Effects
 
 import Linphone
@@ -514,15 +515,26 @@ Item {
                                         KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(2) : null
                                         KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(2) : null
                                     }
+                                    // FileDialog {
+                                    //     id: fileDialog
+                                    //     folder: UtilsCpp.getCaptureDirpaths()
+                                    // }
                                     IconLabelButton {
                                         id: recordsButton
                                         Layout.fillWidth: true
-                                        visible: false// !SettingsCpp.disableCallRecordings
+                                        visible: !SettingsCpp.disableCallRecordings
                                         icon.width: Utils.getSizeWithScreenRatio(32)
                                         icon.height: Utils.getSizeWithScreenRatio(32)
                                         //: "Enregistrements"
                                         text: qsTr("recordings_title")
-                                        icon.source: AppIcons.micro
+                                        icon.source: AppIcons.recordFill
+                                        onClicked: {
+                                            UtilsCpp.openNativeDialog(UtilsCpp.getCaptureDirpaths())
+                                            // fileDialog.folder = UtilsCpp.getCaptureDirpaths()
+                                            // fileDialog.open()
+                                            // var page = recordingsPageComponent.createObject(parent);
+                                            // openContextualMenuComponent(page)
+                                        }
                                         KeyNavigation.up: visibleChildren.length != 0 ? settingsMenuButton.getPreviousItem(3) : null
                                         KeyNavigation.down: visibleChildren.length != 0 ? settingsMenuButton.getNextItem(3) : null
                                     }
@@ -747,6 +759,17 @@ Item {
                                 mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
                             }
                         }
+                    }
+                }
+                Component {
+                    id: recordingsPageComponent
+                    RecordPage {
+                        // onGoBack: {
+                        //     closeContextualMenuComponent()
+                        //     if(FocusNavigator.doesLastFocusWasKeyboard()){
+                        //         mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
+                        //     }
+                        // }
                     }
                 }
                 Component {
