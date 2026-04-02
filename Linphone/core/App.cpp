@@ -124,6 +124,8 @@
 
 #if defined(Q_OS_WIN)
 #include "core/notifier/WindowsNotificationBackend.hpp"
+#else
+#include "core/notifier/SysTrayNotificationBackend.hpp"
 #endif
 
 DEFINE_ABSTRACT_OBJECT(App)

@@ -2,20 +2,20 @@
 
 #ifdef _WIN32
 #include <Windows.h>
+#include <shlguid.h>  // CLSID_ShellLink
+#include <shobjidl.h> // IShellLinkW, IPropertyStore
+
 FILE *gStream = NULL;
+#include "core/notifier/DesktopNotificationManagerCompat.hpp"
+#include "core/notifier/NotificationActivator.hpp"
 #include <objbase.h>     // StringFromCLSID, CoTaskMemFree
 #include <propkey.h>     // PKEY_AppUserModel_ID, PKEY_AppUserModel_ToastActivatorCLSID
 #include <propvarutil.h> // InitPropVariantFromString, PropVariantClear
-#include <shlguid.h>     // CLSID_ShellLink
-#include <shobjidl.h>    // IShellLinkW, IPropertyStore
 #endif
 
 #include "core/App.hpp"
 #include "core/logger/QtLogger.hpp"
 #include "core/path/Paths.hpp"
-
-#include "core/notifier/DesktopNotificationManagerCompat.hpp"
-#include "core/notifier/NotificationActivator.hpp"
 
 #include <QApplication>
 #include <QLocale>
@@ -59,6 +59,7 @@ int main(int argc, char *argv[]) {
 	// HRESULT hrCom = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
 	// qInfo() << "CoInitializeEx result:" << Qt::hex << hrCom;
 
+#if defined _WIN32
 	qInfo() << "Thread ID:" << GetCurrentThreadId();
 	APTTYPE aptBefore;
 	APTTYPEQUALIFIER qualBefore;
@@ -67,6 +68,18 @@ int main(int argc, char *argv[]) {
 
 	HRESULT hrCom = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 	qInfo() << "CoInitializeEx STA result:" << Qt::hex << hrCom;
+
+	auto hr = DesktopNotificationManagerCompat::CreateStartMenuShortcut(mAumid, __uuidof(NotificationActivator));
+	if (FAILED(hr)) {
+		qWarning() << "CreateStartMenuShortcut failed:" << Qt::hex << hr;
+	}
+
+	//  Register AUMID and COM server (for a packaged app, this is a no-operation)
+	hr = DesktopNotificationManagerCompat::RegisterAumidAndComServer(L"Linphone", __uuidof(NotificationActivator));
+	if (FAILED(hr)) {
+		qWarning() << "RegisterAumidAndComServer failed:" << Qt::hex << hr;
+	}
+#endif
 
 	// Useful to share camera on Fullscreen (other context) or multiscreens
 	lDebug() << "[Main] Setting ShareOpenGLContexts";
@@ -83,23 +96,14 @@ int main(int argc, char *argv[]) {
 	setlocale(LC_CTYPE, ".UTF8");
 	lDebug() << "[Main] Creating application";
 
-	auto hr = DesktopNotificationManagerCompat::CreateStartMenuShortcut(mAumid, __uuidof(NotificationActivator));
-	if (FAILED(hr)) {
-		qWarning() << "CreateStartMenuShortcut failed:" << Qt::hex << hr;
-	}
-
-	//  Register AUMID and COM server (for a packaged app, this is a no-operation)
-	hr = DesktopNotificationManagerCompat::RegisterAumidAndComServer(L"Linphone", __uuidof(NotificationActivator));
-	if (FAILED(hr)) {
-		qWarning() << "RegisterAumidAndComServer failed:" << Qt::hex << hr;
-	}
-
 	auto app = QSharedPointer<App>::create(argc, argv);
 
+#if defined _WIN32
 	hr = DesktopNotificationManagerCompat::RegisterActivator();
 	if (FAILED(hr)) {
 		qWarning() << "RegisterActivator failed:" << Qt::hex << hr;
 	}
+#endif
 
 #ifdef ACCESSBILITY_WORKAROUND
 	QAccessible::installUpdateHandler(DummyUpdateHandler);

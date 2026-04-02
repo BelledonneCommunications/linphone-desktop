@@ -43,10 +43,6 @@ public:
 	};
 
 protected:
-	virtual void sendNotification(const QString &title = QString(),
-	                              const QString &message = QString(),
-	                              const QList<ToastButton> &actions = {}) = 0;
-
 	virtual void sendNotification(NotificationType type, QVariantMap data) = 0;
 	static const QHash<int, Notification> Notifications;
 

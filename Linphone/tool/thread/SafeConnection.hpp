@@ -154,7 +154,6 @@ public:
 	}
 
 	bool tryLock() {
-		if (!this) return false;
 		mLocker.lock();
 		auto coreLocked = mCore.lock();
 		auto modelLocked = mModel.lock();

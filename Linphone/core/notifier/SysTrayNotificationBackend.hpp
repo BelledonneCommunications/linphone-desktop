@@ -1,5 +1,5 @@
-#ifndef WINDOWSNOTIFICATIONBACKEND_HPP
-#define WINDOWSNOTIFICATIONBACKEND_HPP
+#ifndef SYSTRAYNOTIFICATIONBACKEND_HPP
+#define SYSTRAYNOTIFICATIONBACKEND_HPP
 
 #include "AbstractNotificationBackend.hpp"
 #include <QDebug>
@@ -21,7 +21,6 @@ public:
 
 	void sendCallNotification(QVariantMap data);
 	void sendMessageNotification(QVariantMap data);
-	// void sendMessageNotification(QVariantMap data);
 
 	void sendNotification(NotificationType type, QVariantMap data) override;
 
@@ -35,4 +34,4 @@ private:
 	QList<PendingNotification> mPendingNotifications;
 };
 
-#endif // WINDOWSNOTIFICATIONBACKEND_HPP
+#endif // SYSTRAYNOTIFICATIONBACKEND_HPP
