@@ -10,12 +10,27 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.1.2] - 2026-04-03
+
+### Added
+- New setting to enable or disable auto check for new version on start
+- Accessibility improvements (visible focus on buttons to facilitate key navigation, start call by pressing Enter...)
+
+### Fixed
+- UI improvements and fixes
+- Crash and bug fixes
+- Notifications stealing focus on MacOS
+
+### Changed
+- Handle both arm64 and Intel compilations for MacOS
+- SDK version is now 5.4.104
+- Qt version is now 6.10.2 (Qt < 6.9 is deprecated because of the emojis rendering)
 
 ## [6.1.1] - 2026-02-25
 
 ### Added
 - Configuration : The app now supports multiple commands in the same file (for calling a command just after account configuration)
-- New parameters : 
+- New settings : 
     - hide the content of a new received message
     - choose the folder of the attachments
 
