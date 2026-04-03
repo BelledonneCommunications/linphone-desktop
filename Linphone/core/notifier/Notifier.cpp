@@ -349,17 +349,19 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	auto callLog = call->getCallLog();
 	auto displayName = callLog && callLog->getConferenceInfo()
 	                       ? Utils::coreStringToAppString(callLog->getConferenceInfo()->getSubject())
-	                       : ToolModel::getDisplayName(call->getRemoteAddress());
+	                       : ToolModel::getDisplayName(remoteAddress);
+	auto remoteAddrString = Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
 
 	// Accessibility alert
 	//: New call from %1
 	AccessibilityHelper::announceMessage(tr("new_call_alert_accessible_name").arg(displayName));
 
-	App::postCoreAsync([this, gui, displayName]() {
+	App::postCoreAsync([this, gui, displayName, remoteAddrString]() {
 		mustBeInMainThread(getClassName());
 		QVariantMap map;
 
 		map["displayName"].setValue(displayName);
+		map["remoteAddress"].setValue(remoteAddrString);
 		map["call"].setValue(gui);
 
 		CREATE_NOTIFICATION(AbstractNotificationBackend::ReceivedCall, map)

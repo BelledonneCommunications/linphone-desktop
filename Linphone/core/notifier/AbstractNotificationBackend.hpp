@@ -23,8 +23,6 @@ public:
 	AbstractNotificationBackend(QObject *parent = Q_NULLPTR);
 	~AbstractNotificationBackend() = default;
 
-	QString getIconAsPng(const QString &imagePath, const QSize &size = QSize(64, 64));
-
 	enum NotificationType {
 		ReceivedMessage,
 		ReceivedCall

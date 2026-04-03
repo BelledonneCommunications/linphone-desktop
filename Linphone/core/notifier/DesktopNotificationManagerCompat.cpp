@@ -43,7 +43,7 @@ using namespace Microsoft::WRL::Wrappers;
 
 namespace DesktopNotificationManagerCompat {
 HRESULT RegisterComServer(GUID clsid, const wchar_t exePath[]);
-HRESULT RegisterAumidInRegistry(const wchar_t *aumid);
+HRESULT RegisterAumidInRegistry(const wchar_t *aumid, const wchar_t *iconPath = nullptr);
 HRESULT EnsureRegistered();
 bool IsRunningAsUwp();
 
@@ -100,7 +100,7 @@ HRESULT CreateStartMenuShortcut(const wchar_t *aumid, GUID clsid) {
 	return persistFile->Save(shortcutPath, TRUE);
 }
 
-HRESULT RegisterAumidInRegistry(const wchar_t *aumid) {
+HRESULT RegisterAumidInRegistry(const wchar_t *aumid, const wchar_t *iconPath) {
 	std::wstring keyPath = std::wstring(L"Software\\Classes\\AppUserModelId\\") + aumid;
 
 	HKEY key;
@@ -114,11 +114,16 @@ HRESULT RegisterAumidInRegistry(const wchar_t *aumid) {
 	res = ::RegSetValueExW(key, L"DisplayName", 0, REG_SZ, reinterpret_cast<const BYTE *>(displayName),
 	                       static_cast<DWORD>((wcslen(displayName) + 1) * sizeof(wchar_t)));
 
+	if (iconPath != nullptr) {
+		res = ::RegSetValueExW(key, L"IconUri", 0, REG_SZ, reinterpret_cast<const BYTE *>(iconPath),
+		                       static_cast<DWORD>((wcslen(iconPath) + 1) * sizeof(wchar_t)));
+	}
+
 	::RegCloseKey(key);
 	return HRESULT_FROM_WIN32(res);
 }
 
-HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid) {
+HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid, const wchar_t *iconPath) {
 	// If running as Desktop Bridge
 	qDebug() << QString("CLSID : {%1-%2-%3-%4%5-%6%7%8%9%10%11}")
 	                .arg(clsid.Data1, 8, 16, QChar('0'))
@@ -168,7 +173,7 @@ HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid) {
 	RETURN_IF_FAILED(RegisterComServer(clsid, exePath));
 
 	qInfo() << "Register aumid in registry";
-	RETURN_IF_FAILED(RegisterAumidInRegistry(aumid));
+	RETURN_IF_FAILED(RegisterAumidInRegistry(aumid, iconPath));
 
 	s_registeredAumidAndComServer = true;
 	return S_OK;

@@ -31,7 +31,7 @@ FILE *gStream = NULL;
 #define WIDEN2(x) L##x
 #define WIDEN(x) WIDEN2(x)
 
-static const wchar_t *mAumid = WIDEN(APPLICATION_ID);
+static const wchar_t *mAumid = WIDEN(APPLICATION_NAME);
 
 void cleanStream() {
 #ifdef _WIN32
@@ -69,13 +69,8 @@ int main(int argc, char *argv[]) {
 	HRESULT hrCom = CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
 	qInfo() << "CoInitializeEx STA result:" << Qt::hex << hrCom;
 
-	auto hr = DesktopNotificationManagerCompat::CreateStartMenuShortcut(mAumid, __uuidof(NotificationActivator));
-	if (FAILED(hr)) {
-		qWarning() << "CreateStartMenuShortcut failed:" << Qt::hex << hr;
-	}
-
 	//  Register AUMID and COM server (for a packaged app, this is a no-operation)
-	hr = DesktopNotificationManagerCompat::RegisterAumidAndComServer(L"Linphone", __uuidof(NotificationActivator));
+	auto hr = DesktopNotificationManagerCompat::RegisterAumidAndComServer(mAumid, __uuidof(NotificationActivator));
 	if (FAILED(hr)) {
 		qWarning() << "RegisterAumidAndComServer failed:" << Qt::hex << hr;
 	}

@@ -79,7 +79,7 @@ uint NotificationBackend::sendCallNotification(QVariantMap data) {
 	// Actions : paires (clé, label)
 	QStringList actions = {"accept", tr("accept_button"), "decline", tr("decline_button")};
 
-	QString appIcon = getIconAsPng(Utils::getAppIcon("logo").toString());
+	QString appIcon = Utils::getIconAsPng(Utils::getAppIcon("logo").toString());
 	// QString appIcon = QString("call-start"); // icône freedesktop standard
 
 	QDBusReply<uint> reply = mInterface->call(QString("Notify"),

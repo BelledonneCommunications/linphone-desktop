@@ -34,7 +34,7 @@ HRESULT CreateStartMenuShortcut(const wchar_t *aumid, GUID clsid);
 /// </summary>
 /// <param name="aumid">An AUMID that uniquely identifies your application.</param>
 /// <param name="clsid">The CLSID of your NotificationActivator class.</param>
-HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid);
+HRESULT RegisterAumidAndComServer(const wchar_t *aumid, GUID clsid, const wchar_t *iconPath = nullptr);
 
 /// <summary>
 /// Registers your module to handle COM activations. Call this upon application startup.
