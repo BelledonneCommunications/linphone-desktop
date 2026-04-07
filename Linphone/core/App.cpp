@@ -1242,14 +1242,7 @@ static QObject *findParentWindow(QObject *item) {
 }
 
 bool App::notify(QObject *receiver, QEvent *event) {
-	bool done = true;
-	try {
-		done = QApplication::notify(receiver, event);
-	} catch (const std::exception &ex) {
-		lFatal() << log().arg("Exception has been catch in notify: %1").arg(ex.what());
-	} catch (...) {
-		lFatal() << log().arg("Generic exeption has been catch in notify");
-	}
+	bool done = QApplication::notify(receiver, event);
 	if (event->type() == QEvent::MouseButtonPress) {
 		auto window = findParentWindow(receiver);
 		if (getMainWindow() == window && mAccountList) {
