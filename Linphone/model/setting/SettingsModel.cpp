@@ -214,10 +214,6 @@ void SettingsModel::accessCallSettings() {
 	emit captureDeviceChanged(getCaptureDevice());
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
-
-	// Video
-	CoreModel::getInstance()->getCore()->reloadVideoDevices();
-	emit videoDevicesChanged(getVideoDevices());
 }
 
 void SettingsModel::updateCallSettings() {
@@ -232,9 +228,6 @@ void SettingsModel::updateCallSettings() {
 	emit captureDeviceChanged(getCaptureDevice());
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
-
-	// Video
-	emit videoDevicesChanged(getVideoDevices());
 }
 
 void SettingsModel::closeCallSettings() {
