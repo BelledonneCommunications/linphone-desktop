@@ -199,6 +199,8 @@ public:
 	// Debug
 	Q_INVOKABLE static void forceCrash();
 
+	static QJsonObject decodeJwtPayload(const QString &token);
+
 	//	QDir findDirectoryByName(QString startPath, QString name);
 
 	static QString getApplicationProduct();

@@ -49,7 +49,6 @@ include:
   - '.gitlab-ci-files/windows-desktop.yml'
   - '.gitlab-ci-files/macosx-desktop.yml'
 
-
 stages:
   - build
   - package

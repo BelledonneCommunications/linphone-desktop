@@ -26,6 +26,11 @@
 #include "model/core/CoreModel.hpp"
 #include "tool/Utils.hpp"
 
+#include <QByteArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QString>
+
 // =============================================================================
 
 static constexpr char OIDCScope[] = "offline_access";
@@ -351,6 +356,17 @@ void OIDCModel::setBearers() {
 
 	auto accessBearer = linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(idToken()), timeT);
 	mAuthInfo->setAccessToken(accessBearer);
+	auto decoded = Utils::decodeJwtPayload(Utils::coreStringToAppString(accessBearer->getToken()));
+	auto username = decoded["preferred_username"].toString();
+	if (username.isEmpty()) {
+		auto username = decoded["username"].toString();
+	}
+	if (!username.isEmpty()) {
+		qDebug() << "Username found in bearer access token, set in authInfo" << username;
+		mAuthInfo->setUsername(Utils::appStringToCoreString(username));
+	} else {
+		lWarning() << "Username not found in bearer access token, account removal could failed";
+	}
 
 	if (mOidc.refreshToken() != nullptr) {
 

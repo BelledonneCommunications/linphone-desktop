@@ -2335,3 +2335,19 @@ void Utils::forceCrash() {
 	lInfo() << "throwing segmentation fault for debug";
 	raise(SIGSEGV);
 }
+
+QJsonObject Utils::decodeJwtPayload(const QString &token) {
+	QStringList parts = token.split('.');
+	if (parts.size() < 2) return {};
+
+	// Le payload est la 2ème partie, en base64url
+	QString payload = parts[1];
+	// base64url -> base64 standard
+	payload.replace('-', '+').replace('_', '/');
+	// Padding
+	while (payload.size() % 4 != 0)
+		payload += '=';
+
+	QByteArray decoded = QByteArray::fromBase64(payload.toUtf8());
+	return QJsonDocument::fromJson(decoded).object();
+}
