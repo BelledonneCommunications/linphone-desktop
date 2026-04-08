@@ -909,6 +909,21 @@
         <extracomment>Call %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="262"/>
+        <source>notification_missed_call_title</source>
+        <translation>Chamada perdida</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="264"/>
+        <source>call_outgoing</source>
+        <translation>Chamada de saída</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
+        <source>call_audio_incoming</source>
+        <translation>Chamada recebida</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -2145,8 +2160,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
         <translation>Erro</translation>
     </message>
 </context>
@@ -2335,6 +2350,11 @@ Error</extracomment>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="298"/>
+        <source>dialog_cancel</source>
+        <translation>Cancelar</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2470,36 +2490,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Mostrar</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Chamar</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2961,12 +2951,6 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
         <source>contact_details_medias_subtitle</source>
@@ -3403,6 +3387,13 @@ Error</extracomment>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <translation>Copiado</translation>
     </message>
 </context>
 <context>
@@ -4297,6 +4288,16 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Sucesso</translation>
     </message>
 </context>
 <context>
@@ -5538,12 +5539,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7386,10 +7381,26 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>NumericPad</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Erro</translation>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Chamar</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Gravar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
+        <source>meeting_info_join_title</source>
+        <translation>Participar da reunião</translation>
     </message>
 </context>
 </TS>

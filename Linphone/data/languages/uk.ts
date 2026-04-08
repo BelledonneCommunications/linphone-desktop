@@ -7,7 +7,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="67"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="86"/>
@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти налаштування %1</translation>
     </message>
 </context>
 <context>
@@ -145,6 +145,16 @@
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Не вдалося додати обліковий запис.</translation>
     </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="144"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>URI вихідного проксі-сервера недійсний. Переконайтеся, що він відповідає такому формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язковий)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <translation>URI реєстратора недійсний. Переконайтеся, що він відповідає наступному формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язковий)</translation>
+    </message>
 </context>
 <context>
     <name>AccountModel</name>
@@ -152,37 +162,37 @@
         <location filename="../../model/account/AccountModel.cpp" line="253"/>
         <source>set_mwi_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера голосової пошти, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="292"/>
         <source>set_server_address_failed_error_message</source>
         <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="309"/>
         <source>set_outbound_proxy_uri_failed_error_message</source>
         <extracomment>Unable to set outbound proxy uri, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити вихідний проксі-сервер URI з адреси %1. Переконайтеся, що він відповідає наступному формату: sip:host&gt;:&lt;порт&gt;;transport=&lt;транспорт&gt; (:&lt;порт&gt; необов&apos;язково)</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="418"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера розмов, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="440"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу сервера зустрічей, не вдалося створити адресу з %1</translation>
     </message>
     <message>
         <location filename="../../model/account/AccountModel.cpp" line="487"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося встановити адресу голосової пошти, не вдалося створити адресу з %1</translation>
     </message>
 </context>
 <context>
@@ -302,12 +312,22 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="345"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Інформація відсутня</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
         <source>copied</source>
         <translation>Скопійовано</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <translation>Вашу SIP-адресу скопійовано в буфер обміну</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <translation>Помилка копіювання вашої SIP-адреси</translation>
     </message>
 </context>
 <context>
@@ -397,18 +417,18 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="127"/>
         <source>account_settings_registrar_uri_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URI реєстратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="140"/>
         <source>account_settings_sip_proxy_url_title</source>
-        <translation type="unfinished"></translation>
+        <translation>URI вихідного SIP-проксі</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="145"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Якщо це поле заповнено, вихідний проксі-сервер буде ввімкнено автоматично. Залиште це поле порожнім, щоб вимкнути його.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="157"/>
@@ -458,6 +478,16 @@
         <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
         <translation>URL-адреса сервера Lime</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
+        <source>mwi_server_address_tooltip</source>
+        <translation>Адреса сервера MWI, який надсилає сповіщення SIP для відображення індикаторів нової голосової пошти</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
+        <source>voicemail_address_tooltip</source>
+        <translation>SIP-адреса, набрана під час натискання кнопки голосової пошти</translation>
+    </message>
 </context>
 <context>
     <name>AddParticipantsForm</name>
@@ -472,17 +502,17 @@
         <source>add_participant_selected_count</source>
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
         </translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
         <source>remove_participant_accessible_name</source>
         <extracomment>Remove participant %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Видалити учасника %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
@@ -561,7 +591,7 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="103"/>
         <source>download_apply_remote_provisioning_accessible_name</source>
         <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Завантаження та застосування віддаленого налаштування</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="116"/>
@@ -629,13 +659,13 @@
         <location filename="../../core/App.cpp" line="660"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Помилка віддаленого налаштування: %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="654"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>недоступний</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="926"/>
@@ -707,7 +737,42 @@
     <message>
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <translation type="unfinished"></translation>
+        <translation>Позначити як прочитане</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="536"/>
+        <source>info_popup_error_checking_update</source>
+        <translation>Сталася помилка під час перевірки оновлення. Будь ласка, спробуйте пізніше або зверніться до служби підтримки.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="543"/>
+        <source>info_popup_new_version_download_label</source>
+        <translation>Завантажте це!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="546"/>
+        <source>info_popup_new_version_available_title</source>
+        <translation>Доступна нова версія!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="548"/>
+        <source>info_popup_new_version_available_message</source>
+        <translation>Нова версія Linphone (%1) доступна за посиланням %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="556"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <translation>Оновлено</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="558"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <translation>Версія застосунку актуальна</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1688"/>
+        <source>check_for_update</source>
+        <translation>Перевірити наявність оновлень</translation>
     </message>
 </context>
 <context>
@@ -832,37 +897,37 @@
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="73"/>
         <source>settings_call_forward_activate_title</source>
         <extracomment>&quot;Forward calls&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Переадресація дзвінків</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="75"/>
         <source>settings_call_forward_activate_subtitle</source>
         <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Переадресація дзвінків на голосову пошту або номер / SIP-адресу</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="82"/>
         <source>settings_call_forward_destination_choose</source>
         <extracomment>Forward to destination</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Переадресація дзвінків на:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="32"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="59"/>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="94"/>
         <source>settings_call_forward_to_voicemail</source>
-        <translation type="unfinished"></translation>
+        <translation>Голосова пошта</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="95"/>
         <source>settings_call_forward_to_sipaddress</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер / SIP-адреса</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="132"/>
         <source>settings_call_forward_sipaddress_title</source>
         <extracomment>SIP Address</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Номер / SIP-адреса:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="133"/>
@@ -872,7 +937,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="51"/>
         <source>settings_call_forward_address_cannot_be_empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Номер або SIP-адреса обов&apos;язкові</translation>
     </message>
 </context>
 <context>
@@ -908,7 +973,22 @@
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="207"/>
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Виклик %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="262"/>
+        <source>notification_missed_call_title</source>
+        <translation>Пропущено дзвінок</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="264"/>
+        <source>call_outgoing</source>
+        <translation>Вихідний дзвінок</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
+        <source>call_audio_incoming</source>
+        <translation>Вихідний виклик</translation>
     </message>
 </context>
 <context>
@@ -961,12 +1041,12 @@
         <location filename="../../core/call/CallList.cpp" line="104"/>
         <source>remote_group_call</source>
         <extracomment>Remote group call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Віддалений груповий виклик</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation type="unfinished"></translation>
+        <translation>Локальний груповий виклик</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -977,7 +1057,7 @@
         <location filename="../../core/call/CallList.cpp" line="113"/>
         <source>info_popup_merge_calls_failed_message</source>
         <extracomment>Failed to merge calls !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Не вдалося об&apos;єднати виклики!</translation>
     </message>
 </context>
 <context>
@@ -1010,25 +1090,25 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
         <source>transfer_call_name_accessible_name</source>
         <extracomment>Transfer call %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Переадресація виклику %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="116"/>
         <source>resume_call_name_accessible_name</source>
         <extracomment>Resume %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Відновити %1 виклик</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="118"/>
         <source>pause_call_name_accessible_name</source>
         <extracomment>Pause %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Призупинити %1 виклик</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="141"/>
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Завершити %1 виклик</translation>
     </message>
 </context>
 <context>
@@ -1037,19 +1117,19 @@
         <location filename="../../model/call/CallModel.cpp" line="348"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Немає відповіді</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="352"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>403: Заборонений ресурс</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="356"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Тайм-аут запиту</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="360"/>
@@ -1085,13 +1165,13 @@
         <location filename="../../model/call/CallModel.cpp" line="380"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Користувача не можна турбувати</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="384"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Тимчасово недоступно</translation>
     </message>
     <message>
         <location filename="../../model/call/CallModel.cpp" line="388"/>
@@ -1110,7 +1190,7 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
         <source>call_forward_to_address_info_voicemail</source>
-        <translation type="unfinished"></translation>
+        <translation>Голосова пошта</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
@@ -1632,10 +1712,10 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
         </translation>
     </message>
     <message>
@@ -2131,6 +2211,11 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Видалити</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
+        <source>menu_edit_chat_message</source>
+        <translation>Редагувати</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2147,8 +2232,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
         <translation>Помилка</translation>
     </message>
 </context>
@@ -2339,6 +2424,11 @@ Error</extracomment>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="298"/>
+        <source>dialog_cancel</source>
+        <translation>Скасувати</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2474,36 +2564,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Відобразити</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Отримання конфігурації</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Виклик</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Завершити</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Прийняти</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Відхилити</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2742,6 +2802,11 @@ Error</extracomment>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Видалити</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
+        <source>call_with_contact_name_accessible_button</source>
+        <translation>Виклик %1</translation>
+    </message>
 </context>
 <context>
     <name>ContactListView</name>
@@ -2963,12 +3028,6 @@ Error</extracomment>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
         <translation>Посада:</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Медіа</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
@@ -3408,6 +3467,13 @@ Error</extracomment>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Не вдалося завантажити трасування. Ви можете поділитися файлами трасування безпосередньо з каталогу: %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <translation>Скопійовано</translation>
+    </message>
 </context>
 <context>
     <name>DecoratedTextField</name>
@@ -3688,7 +3754,7 @@ Error</extracomment>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="39"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
@@ -3754,6 +3820,11 @@ Error</extracomment>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Усунення несправностей</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
+        <source>help_check_for_update_button_label</source>
+        <translation>Перевірити наявність оновлень</translation>
     </message>
 </context>
 <context>
@@ -3995,7 +4066,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
@@ -4302,6 +4373,16 @@ Error</extracomment>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Помилка</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Успіх</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4340,6 +4421,11 @@ Error</extracomment>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Надіслати запрошення учасникам</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <source>timezone_accessible_name</source>
+        <translation>Часовий пояс</translation>
     </message>
 </context>
 <context>
@@ -4537,10 +4623,10 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
         </translation>
     </message>
     <message>
@@ -5149,7 +5235,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
@@ -5286,7 +5372,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>
@@ -5405,20 +5491,20 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="397"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI вихідного SIP-проксі</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Якщо це поле заповнено, вихідний проксі-сервер буде ввімкнено автоматично. Залиште це поле порожнім, щоб вимкнути його.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI реєстратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
@@ -5547,12 +5633,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7412,10 +7492,151 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>NumericPad</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Помилка</translation>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Виклик</translation>
+    </message>
+</context>
+<context>
+    <name>RecordListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
+        <source>meeting_info_cancelled</source>
+        <translation>Нараду скасовано</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
+        <source>meetings_list_no_meeting_for_today</source>
+        <translation>Наради на сьогодні відсутні</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
+        <source>meetings_search_hint</source>
+        <translation>Знайти нараду</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
+        <source>meetings_empty_list</source>
+        <translation>Нарада відсутня</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
+        <source>meeting_schedule_title</source>
+        <translation>Нова нарада</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
+        <source>create</source>
+        <translation>Створити</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <translation>Будь ласка, введіть назву та оберіть хоча б одного учасника</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
+        <source>meeting_schedule_duration_error_toast</source>
+        <translation>Кінець конференції має бути нещодавнішим за її початок</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
+        <source>meeting_schedule_creation_in_progress</source>
+        <translation>Створення триває…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
+        <source>meeting_info_created_toast</source>
+        <translation>Нараду успішно створено</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
+        <source>meeting_failed_to_schedule_toast</source>
+        <translation>Не вдалося створити нараду!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Зберегти</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
+        <source>saved</source>
+        <translation>Збережено</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
+        <source>meeting_info_updated_toast</source>
+        <translation>Нараду оновлено</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
+        <source>meeting_schedule_edit_in_progress</source>
+        <translation>Триває оновлення інформації про нараду…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
+        <source>meeting_failed_to_edit_toast</source>
+        <translation>Не вдалося оновити нараду!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <translation>Додати учасників</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
+        <source>group_call_participant_selected</source>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
+        <source>meeting_info_delete</source>
+        <translation>Видалити нараду</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <translation>URI наради скопійовано</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
+        <source>meeting_schedule_timezone_title</source>
+        <translation>Часовий пояс</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
+        <source>meeting_info_organizer_label</source>
+        <translation>Організатор</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
+        <source>meeting_info_join_title</source>
+        <translation>Приєднатись до наради</translation>
+    </message>
+</context>
+<context>
+    <name>Voicemail</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
+        <source>voicemail_accessible_name</source>
+        <translation>Голосова пошта</translation>
     </message>
 </context>
 </TS>

@@ -2170,8 +2170,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
         <translation>Error</translation>
     </message>
 </context>
@@ -2495,36 +2495,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2983,12 +2953,6 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="578"/>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4318,6 +4282,11 @@ Error</extracomment>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Error</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -5558,12 +5527,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7406,10 +7369,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>RecordPage</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Error</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Desar</translation>
     </message>
 </context>
 </TS>

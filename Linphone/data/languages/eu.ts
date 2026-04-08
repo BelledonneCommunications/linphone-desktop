@@ -909,6 +909,21 @@
         <extracomment>Call %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="262"/>
+        <source>notification_missed_call_title</source>
+        <translation>Dei galdua</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="264"/>
+        <source>call_outgoing</source>
+        <translation>Irteerako deia</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
+        <source>call_audio_incoming</source>
+        <translation>Sarrerako deia</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -1631,9 +1646,9 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
         </translation>
     </message>
     <message>
@@ -2129,6 +2144,11 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Ezabatu</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
+        <source>menu_edit_chat_message</source>
+        <translation>Editatu</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2145,8 +2165,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
         <translation>Errorea</translation>
     </message>
 </context>
@@ -2335,6 +2355,11 @@ Error</extracomment>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="298"/>
+        <source>dialog_cancel</source>
+        <translation>Utzi</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2470,36 +2495,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Erakutsi</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Eskuratu konfigurazioa</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Deitu</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Eskegi</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Onartu</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Ukatu</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2961,12 +2956,6 @@ Error</extracomment>
         <translation>Lanpostua:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Multimedia</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
         <source>contact_details_medias_subtitle</source>
@@ -3403,6 +3392,13 @@ Error</extracomment>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Aztarnak igotzeak huts egin du. Aztarnen fitxategiak zuzenean parteka ditzakezu karpeta honetatik: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <translation>Kopiatuta</translation>
     </message>
 </context>
 <context>
@@ -4303,6 +4299,16 @@ Error</extracomment>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Errorea</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Ondo joan da</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4341,6 +4347,11 @@ Error</extracomment>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Bidali gonbidapena parte-hartzaileei</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <source>timezone_accessible_name</source>
+        <translation>Timezone-a</translation>
     </message>
 </context>
 <context>
@@ -4538,9 +4549,9 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
         </translation>
     </message>
     <message>
@@ -5411,14 +5422,14 @@ Proiektu komertzial batean gaitzeko, jarri gurekin harremanetan.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eremu hau betetzen bada, irteerako proxya automatikoki aktibatuko da. Utzi hutsik desaktibatzeko.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erregistratu URIa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
@@ -5547,12 +5558,6 @@ Proiektu komertzial batean gaitzeko, jarri gurekin harremanetan.</translation>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7395,10 +7400,167 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>NumericPad</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Errorea</translation>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Deitu</translation>
+    </message>
+</context>
+<context>
+    <name>RecordListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
+        <source>meeting_info_cancelled</source>
+        <translation>Bilera bertan behera utzi da</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
+        <source>meetings_list_no_meeting_for_today</source>
+        <translation>Ez dago bilerarik gaur</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
+        <source>record_list_empty</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
+        <source>record_list_title</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
+        <source>meetings_search_hint</source>
+        <translation>Bilatu bilera</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
+        <source>list_filter_no_result_found</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
+        <source>meetings_empty_list</source>
+        <translation>Ez dago bilerarik</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
+        <source>meeting_schedule_title</source>
+        <translation>Bilera berria</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
+        <source>create</source>
+        <translation>Sortu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
+        <source>information_popup_error_title</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <translation>Mesedez, bete izenburua eta hautatu gutxienez parte-hartzaile bat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
+        <source>meeting_schedule_duration_error_toast</source>
+        <translation>Konferentziaren amaiera hasiera baino berriago izan behar da</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
+        <source>meeting_schedule_creation_in_progress</source>
+        <translation>Sorkuntza martxan…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
+        <source>meeting_info_created_toast</source>
+        <translation>Bilera behar bezala sortu da</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
+        <source>meeting_failed_to_schedule_toast</source>
+        <translation>Bilera sortzeak huts egin du!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Gorde</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
+        <source>saved</source>
+        <translation>Gordeta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
+        <source>meeting_info_updated_toast</source>
+        <translation>Bilera eguneratuta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
+        <source>meeting_schedule_edit_in_progress</source>
+        <translation>Bileraren eguneraketa martxan…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
+        <source>meeting_failed_to_edit_toast</source>
+        <translation>Bilera eguneratzeak huts egin du!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <translation>Gehitu partaideak</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
+        <source>group_call_participant_selected</source>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
+        <source>meeting_info_delete</source>
+        <translation>Ezabatu bilera</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <translation>Bileraren URIa kopiatu da</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
+        <source>meeting_schedule_timezone_title</source>
+        <translation>Timezone-a</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
+        <source>meeting_info_organizer_label</source>
+        <translation>Antolatzailea</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
+        <source>meeting_info_join_title</source>
+        <translation>Batu bilerara</translation>
     </message>
 </context>
 </TS>

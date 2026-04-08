@@ -975,6 +975,21 @@
         <extracomment>Call %1</extracomment>
         <translation>Hovor %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="262"/>
+        <source>notification_missed_call_title</source>
+        <translation>Zmeškaný hovor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="264"/>
+        <source>call_outgoing</source>
+        <translation>Odchozí hovor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
+        <source>call_audio_incoming</source>
+        <translation>Příchozí hovor</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -2201,6 +2216,11 @@
         <source>chat_message_send_again</source>
         <translation>Znovu odeslat</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
+        <source>menu_edit_chat_message</source>
+        <translation>Upravit</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2217,14 +2237,14 @@
         <translation>Nelze otevřít soubor: neznámé umístění %1</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
-        <translation>Chyba</translation>
-    </message>
-    <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="105"/>
         <source>download_file_default_error</source>
         <translation>Chyba při stahování souboru %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
     </message>
 </context>
 <context>
@@ -2446,6 +2466,21 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 píše…</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="298"/>
+        <source>dialog_cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="380"/>
+        <source>info_toast_deleted_title</source>
+        <translation>Smazáno</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="382"/>
+        <source>info_toast_deleted_message</source>
+        <translation>Zpráva byla smazána</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2593,39 +2628,34 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
         <translation>Automaticky stahovat přenesené nebo přijaté soubory v konverzacích</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="23"/>
+        <source>settings_chat_notifications_title</source>
+        <translation>Notifikace</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
+        <source>settings_chat_download_folder_browse_button</source>
+        <translation>Procházet složky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
+        <source>settings_chat_download_folder_title</source>
+        <translation>Složka pro stahování souborů</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <translation>Zobrazit obsah</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="82"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <translation>Zobrazit obsah přijaté zprávy</translation>
+    </message>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Zobrazit</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Stáhnout nastavení</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Volat</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Zavěsit</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Přijmout</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Odmítnout</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2864,6 +2894,11 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Smazat</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
+        <source>call_with_contact_name_accessible_button</source>
+        <translation>Hovor %1</translation>
+    </message>
 </context>
 <context>
     <name>ContactListView</name>
@@ -3087,12 +3122,6 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <translation>Zaměstnání:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Média</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="631"/>
         <source>contact_details_medias_subtitle</source>
@@ -3193,6 +3222,11 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
         <translation>Smazat kontakt</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="625"/>
+        <source>contact_details_medias_and_documents_title</source>
+        <translation>Média a dokumenty</translation>
     </message>
 </context>
 <context>
@@ -3534,6 +3568,13 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="148"/>
         <source>settings_debug_qt_version_title</source>
         <translation>Verze Qt</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <translation>Zkopírováno</translation>
     </message>
 </context>
 <context>
@@ -4441,6 +4482,31 @@ Expirace : %1</translation>
         <source>group_infos_manage_participants</source>
         <translation>Účastníci</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <translation>Chyba při nastavování účastníků!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Hotovo</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
+        <source>info_popup_manage_participant_updated_message</source>
+        <translation>Účastníci aktualizováni</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <translation>Použít</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4479,6 +4545,11 @@ Expirace : %1</translation>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Odeslání pozvánky účastníkům</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <source>timezone_accessible_name</source>
+        <translation>Časová zóna</translation>
     </message>
 </context>
 <context>
@@ -4918,6 +4989,11 @@ Expirace : %1</translation>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Nová zpráva v místnosti %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="429"/>
+        <source>new_chat_room_message</source>
+        <translation>Přijata nová zpráva!</translation>
     </message>
 </context>
 <context>
@@ -5694,12 +5770,6 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <translation>Zahájit skupinový hovor?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Tato konverzace není šifrována!</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
@@ -5842,6 +5912,11 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation>Skrýt %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="230"/>
+        <source>textfield_custom_button_accessible_name</source>
+        <translation>%1 tlačítko na %2</translation>
     </message>
 </context>
 <context>
@@ -7556,15 +7631,199 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>RecordPage</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Chyba</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
+        <source>meetings_empty_list</source>
+        <translation>Žádná schůzka</translation>
     </message>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="222"/>
-        <source>fetching_config_failed_error_message</source>
-        <translation>Vzdálené nastavení nelze načíst</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
+        <source>meeting_schedule_title</source>
+        <translation>Nová schůzka</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
+        <source>create</source>
+        <translation>Vytvořit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
+        <source>information_popup_error_title</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
+        <source>record_list_empty</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
+        <source>record_list_title</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
+        <source>meetings_search_hint</source>
+        <translation>Najít schůzku</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
+        <source>list_filter_no_result_found</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <translation>Vyplňte prosím název a vyberte alespoň jednoho účastníka</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
+        <source>meeting_schedule_duration_error_toast</source>
+        <translation>Konec musí být později než začátek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
+        <source>meeting_schedule_creation_in_progress</source>
+        <translation>Probíhá vytváření…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
+        <source>meeting_info_created_toast</source>
+        <translation>Schůzka úspěšně vytvořena</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
+        <source>meeting_failed_to_schedule_toast</source>
+        <translation>Vytvoření schůzky selhalo!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
+        <source>saved</source>
+        <translation>Uloženo</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
+        <source>meeting_info_updated_toast</source>
+        <translation>Schůzka upravena</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
+        <source>meeting_schedule_edit_in_progress</source>
+        <translation>Probíhá úprava schůzky…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
+        <source>meeting_failed_to_edit_toast</source>
+        <translation>Úprava schůzky selhala!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <translation>Přidat účastníky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
+        <source>meeting_schedule_add_participants_apply</source>
+        <translation>Použít</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
+        <source>group_call_participant_selected</source>
+        <translation>
+            <numerusform>%1 vybraný účastník</numerusform>
+            <numerusform>%1 vybraní účastníci</numerusform>
+            <numerusform>%1 vybraných účastníků</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
+        <source>meeting_info_delete</source>
+        <translation>Smazat schůzku</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <translation>URI schůzky zkopírováno</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
+        <source>meeting_schedule_timezone_title</source>
+        <translation>Časová zóna</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
+        <source>meeting_info_organizer_label</source>
+        <translation>Organizátor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
+        <source>meeting_info_join_title</source>
+        <translation>Připojit ke schůzce</translation>
+    </message>
+</context>
+<context>
+    <name>ContactSharedFiles</name>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="22"/>
+        <source>contact_shared_medias_title</source>
+        <translation>Sdílená média</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
+        <source>contact_shared_documents_title</source>
+        <translation>Sdílené dokumenty</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="45"/>
+        <source>close_accessible_name</source>
+        <translation>Zavřít %1</translation>
+    </message>
+</context>
+<context>
+    <name>NumericPad</name>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Volat</translation>
+    </message>
+</context>
+<context>
+    <name>RecordListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
+        <source>meeting_info_cancelled</source>
+        <translation>Schůzka zrušena</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
+        <source>meetings_list_no_meeting_for_today</source>
+        <translation>Dnes žádná schůzka</translation>
+    </message>
+</context>
+<context>
+    <name>Voicemail</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
+        <source>voicemail_accessible_name</source>
+        <translation>Hlasová schránka</translation>
     </message>
 </context>
 </TS>

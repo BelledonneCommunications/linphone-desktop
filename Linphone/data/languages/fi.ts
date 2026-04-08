@@ -2455,36 +2455,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2946,12 +2916,6 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="601"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="614"/>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="632"/>
         <source>contact_details_medias_subtitle</source>
@@ -3289,17 +3253,6 @@ Error</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
-    <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../model/core/CoreModel.cpp" line="222"/>
-        <source>fetching_config_failed_error_message</source>
-        <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>CreationFormLayout</name>
@@ -5532,12 +5485,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="38"/>
         <source>chat_view_group_call_toast_message</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="122"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>

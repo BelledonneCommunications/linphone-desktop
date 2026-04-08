@@ -929,6 +929,21 @@
         <extracomment>Call %1</extracomment>
         <translation>Ligar para %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="262"/>
+        <source>notification_missed_call_title</source>
+        <translation>Chamada perdida</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="264"/>
+        <source>call_outgoing</source>
+        <translation>Chamada de saída</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
+        <source>call_audio_incoming</source>
+        <translation>Chamada recebida</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -2149,6 +2164,11 @@
         <extracomment>&quot;Delete&quot;</extracomment>
         <translation>Apagar</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
+        <source>menu_edit_chat_message</source>
+        <translation>Editar</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2165,8 +2185,8 @@
         <translation>Não foi possível abrir o arquivo: caminho %1 desconhecido</translation>
     </message>
     <message>
-        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="108"/>
-        <source>info_popup_error_titile</source>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
         <translation>Erro</translation>
     </message>
 </context>
@@ -2357,6 +2377,21 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <extracomment>%1 is writing…</extracomment>
         <translation>%1 está escrevendo…</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="298"/>
+        <source>dialog_cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="380"/>
+        <source>info_toast_deleted_title</source>
+        <translation>Apagado</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="382"/>
+        <source>info_toast_deleted_message</source>
+        <translation>Esta mensagem foi apagada</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2492,36 +2527,6 @@ Apenas seu correspondente pode descriptografá-las.</translation>
 </context>
 <context>
     <name>CliModel</name>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="39"/>
-        <source>show_function_description</source>
-        <translation>Exibir</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="40"/>
-        <source>fetch_config_function_description</source>
-        <translation>Obter configuração</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="41"/>
-        <source>call_function_description</source>
-        <translation>Chamada</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="42"/>
-        <source>bye_function_description</source>
-        <translation>Encerrar</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="43"/>
-        <source>accept_function_description</source>
-        <translation>Aceitar</translation>
-    </message>
-    <message>
-        <location filename="../../model/cli/CliModel.cpp" line="44"/>
-        <source>decline_function_description</source>
-        <translation>Recusar</translation>
-    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2760,6 +2765,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Apagar</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
+        <source>call_with_contact_name_accessible_button</source>
+        <translation>Ligar para %1</translation>
+    </message>
 </context>
 <context>
     <name>ContactListView</name>
@@ -2981,12 +2991,6 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
         <translation>Trabalho:</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="600"/>
-        <source>contact_details_medias_title</source>
-        <extracomment>&quot;Medias&quot;</extracomment>
-        <translation>Metade</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="613"/>
@@ -3425,6 +3429,13 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>settings_debug_share_logs_error</source>
         <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
         <translation>Falha no upload de rastreamentos. Você pode compartilhar arquivos de rastreamento diretamente do seguinte diretório: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <translation>Copiado</translation>
     </message>
 </context>
 <context>
@@ -4320,6 +4331,21 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>group_infos_manage_participants</source>
         <translation>Participantes</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
+        <source>info_popup_success_title</source>
+        <translation>Sucesso</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <translation>Aplicar</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4358,6 +4384,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Enviar um convite para os participantes</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <source>timezone_accessible_name</source>
+        <translation>Fuso horário</translation>
     </message>
 </context>
 <context>
@@ -5565,12 +5596,6 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="37"/>
         <source>chat_view_group_call_toast_message</source>
         <translation>Iniciar uma chamada em grupo?</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="121"/>
-        <source>unencrypted_conversation_warning</source>
-        <extracomment>This conversation is not encrypted !</extracomment>
-        <translation>Esta conversa não está criptografada!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="407"/>
@@ -7412,10 +7437,168 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+</context>
+<context>
+    <name>ContactSharedFiles</name>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="220"/>
-        <source>info_popup_error_title</source>
-        <translation>Erro</translation>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
+        <source>contact_shared_documents_title</source>
+        <translation>Documentos compartilhados</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="45"/>
+        <source>close_accessible_name</source>
+        <translation>Fechar %1</translation>
+    </message>
+</context>
+<context>
+    <name>NumericPad</name>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Chamar</translation>
+    </message>
+</context>
+<context>
+    <name>RecordListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
+        <source>meeting_info_cancelled</source>
+        <translation>Conferência cancelada</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
+        <source>meetings_list_no_meeting_for_today</source>
+        <translation>Nenhuma reunião para hoje</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
+        <source>meetings_search_hint</source>
+        <translation>Encontrar reunião</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
+        <source>meetings_empty_list</source>
+        <translation>Sem reunião</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
+        <source>meeting_schedule_title</source>
+        <translation>Nova reunião</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
+        <source>create</source>
+        <translation>Criar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <translation>Preencha o título e selecione pelo menos um participante</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
+        <source>meeting_schedule_duration_error_toast</source>
+        <translation>O fim da conferência deve ser mais recente do que o seu início</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
+        <source>meeting_schedule_creation_in_progress</source>
+        <translation>Criando a reunião…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
+        <source>meeting_info_created_toast</source>
+        <translation>Conferência criada com sucesso</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
+        <source>meeting_failed_to_schedule_toast</source>
+        <translation>Falha ao criar conferência!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
+        <source>save</source>
+        <translation>Salvar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
+        <source>saved</source>
+        <translation>Salvo</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
+        <source>meeting_info_updated_toast</source>
+        <translation>Conferência atualizada</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
+        <source>meeting_schedule_edit_in_progress</source>
+        <translation>Atualização de conferência em progresso…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
+        <source>meeting_failed_to_edit_toast</source>
+        <translation>Falha ao atualizar conferência!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <translation>Adicionar participantes</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
+        <source>meeting_schedule_add_participants_apply</source>
+        <translation>Aplicar</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
+        <source>group_call_participant_selected</source>
+        <translation>
+            <numerusform>%1 participante selecionado</numerusform>
+            <numerusform>%1 participantes selecionados</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
+        <source>meeting_info_delete</source>
+        <translation>Apagar conferência</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <translation>URI da conferência copiado</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
+        <source>meeting_schedule_timezone_title</source>
+        <translation>Fuso horário</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
+        <source>meeting_info_organizer_label</source>
+        <translation>Organizador</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
+        <source>meeting_info_join_title</source>
+        <translation>Entrar na conferência</translation>
+    </message>
+</context>
+<context>
+    <name>Voicemail</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
+        <source>voicemail_accessible_name</source>
+        <translation>Correio de voz</translation>
     </message>
 </context>
 </TS>

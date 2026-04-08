@@ -5682,13 +5682,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
-        <translation type="unfinished">Réunion annulée</translation>
+        <translation>Réunion annulée</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
         <source>meetings_list_no_meeting_for_today</source>
         <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
-        <translation type="unfinished">Aucune réunion aujourd&apos;hui</translation>
+        <translation>Aucune réunion aujourd&apos;hui</translation>
     </message>
 </context>
 <context>
@@ -5697,43 +5697,43 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
         <source>record_list_empty</source>
         <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pas de token trouvé</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
         <source>record_list_title</source>
         <extracomment>&quot;Records&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pas de token trouvé</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
         <source>meetings_search_hint</source>
         <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
-        <translation type="unfinished">Rechercher une réunion</translation>
+        <translation>Rechercher une réunion</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation type="unfinished">Aucun résultat…</translation>
+        <translation>Pas de token trouvé</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
         <source>meetings_empty_list</source>
         <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
-        <translation type="unfinished">Aucune réunion</translation>
+        <translation>Aucune réunion</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
         <source>meeting_schedule_title</source>
         <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
-        <translation type="unfinished">Nouvelle réunion</translation>
+        <translation>Nouvelle réunion</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
         <source>create</source>
-        <translation type="unfinished">Créer</translation>
+        <translation>Créer</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
@@ -5743,87 +5743,87 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de token trouvé</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
-        <translation type="unfinished">Veuillez saisir un titre et sélectionner au moins un participant</translation>
+        <translation>Veuillez saisir un titre et sélectionner au moins un participant</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
-        <translation type="unfinished">La fin de la conférence doit être plus récente que son début</translation>
+        <translation>La fin de la conférence doit être plus récente que son début</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
         <source>meeting_schedule_creation_in_progress</source>
         <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
-        <translation type="unfinished">Création de la réunion en cours…</translation>
+        <translation>Création de la réunion en cours…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
         <source>meeting_info_created_toast</source>
         <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
-        <translation type="unfinished">Réunion planifiée avec succès</translation>
+        <translation>Réunion planifiée avec succès</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>meeting_failed_to_schedule_toast</source>
         <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
-        <translation type="unfinished">Échec de création de la réunion !</translation>
+        <translation>Échec de création de la réunion&#x202f;!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
         <source>save</source>
-        <translation type="unfinished">Enregistrer</translation>
+        <translation>Enregistrer</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
-        <translation type="unfinished">Enregistré</translation>
+        <translation>Enregistré</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
         <source>meeting_info_updated_toast</source>
         <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
-        <translation type="unfinished">Réunion mise à jour</translation>
+        <translation>Réunion mise à jour</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
-        <translation type="unfinished">Modification de la réunion en cours…</translation>
+        <translation>Modification de la réunion en cours…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
         <source>meeting_failed_to_edit_toast</source>
         <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
-        <translation type="unfinished">Échec de la modification de la réunion !</translation>
+        <translation>Échec de la modification de la réunion&#x202f;!</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation type="unfinished">Ajouter des participants</translation>
+        <translation>Ajouter des participants</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
         <source>meeting_schedule_add_participants_apply</source>
-        <translation type="unfinished">Appliquer</translation>
+        <translation>Appliquer</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
+        <translation>
             <numerusform>%1 participant sélectionné</numerusform>
             <numerusform>%1 participants sélectionnés</numerusform>
         </translation>
@@ -5832,31 +5832,31 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
-        <translation type="unfinished">Supprimer la réunion</translation>
+        <translation>Supprimer la réunion</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
-        <translation type="unfinished">Adresse de la réunion copiée</translation>
+        <translation>Adresse de la réunion copiée</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
-        <translation type="unfinished">Fuseau horaire</translation>
+        <translation>Fuseau horaire</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
-        <translation type="unfinished">Organisateur</translation>
+        <translation>Organisateur</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation type="unfinished">Rejoindre la réunion</translation>
+        <translation>Rejoindre la réunion</translation>
     </message>
 </context>
 <context>
