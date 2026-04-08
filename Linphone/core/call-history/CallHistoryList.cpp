@@ -57,7 +57,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 	mModelConnection = SafeConnection<CallHistoryList, CoreModel>::create(me, CoreModel::getInstance());
 
 	mModelConnection->makeConnectToCore(&CallHistoryList::lUpdate, [this](bool signalReset) {
-		mustBeInMainThread(log().arg(Q_FUNC_INFO));
+		mustBeInMainThread(log().arg(Q_FUNC_INFO) + "lUpdate");
 		if (signalReset) emit listAboutToBeReset();
 		mModelConnection->invokeToModel([this]() {
 			mustBeInLinphoneThread(Q_FUNC_INFO);
@@ -73,7 +73,7 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 				callLogs->push_front(model);
 			}
 			mModelConnection->invokeToCore([this, callLogs]() {
-				mustBeInMainThread(Q_FUNC_INFO);
+				mustBeInMainThread(log().arg(Q_FUNC_INFO));
 				beginResetModel();
 				mList.clear();
 				for (auto &item : *callLogs) {
@@ -94,10 +94,11 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 			    lInfo() << "call log does not refer to current account, return";
 			    return;
 		    }
-		    emit lUpdate(false);
+		    mModelConnection->invokeToCore([this]() { lUpdate(false); });
 		    // auto callLogCore = createCallHistoryCore(callLog);
 		    // mModelConnection->invokeToCore([this, callLogCore]() {
-		    //     auto oldLog = std::find_if(mList.begin(), mList.end(), [callLogCore](QSharedPointer<QObject> log) {
+		    //     auto oldLog = std::find_if(mList.begin(), mList.end(), [callLogCore](QSharedPointer<QObject> log)
+		    //     {
 		    // 	    return (callLogCore)->mCallId == log.objectCast<CallHistoryCore>()->mCallId;
 		    //     });
 		    //     toConnect(callLogCore.get());

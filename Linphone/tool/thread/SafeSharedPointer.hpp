@@ -57,7 +57,8 @@ public:
 		}
 	}
 	void unlock() {
-		if (mCountRef == 0) qWarning() << "[SafeConnection] too much unlocking";
+		if (mCountRef == 0)
+			qWarning() << "[SafeConnection] too much unlocking on " << QString(typeid(A).name()) << "pointer";
 		else if (--mCountRef == 0) {
 			mQData = nullptr;
 			mStdData = nullptr;

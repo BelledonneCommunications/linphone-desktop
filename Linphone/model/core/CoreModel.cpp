@@ -445,6 +445,7 @@ void CoreModel::onAuthenticationRequested(const std::shared_ptr<linphone::Core> 
 			}
 			connect(oidcModel, &OIDCModel::timeoutTimerStopped, this, [this] { emit timeoutTimerStopped(); });
 			connect(this, &CoreModel::forceOidcTimeout, oidcModel, [this, oidcModel] {
+				lDebug() << log().arg("Force OIDC timeout");
 				if (oidcModel->isTimerRunning()) {
 					oidcModel->forceTimeout();
 				}

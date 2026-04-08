@@ -66,6 +66,9 @@ public:
 	App(int &argc, char *argv[]);
 	~App();
 	void setSelf(QSharedPointer<App>(me));
+	void resetConnections();
+	void connectCoreModel();
+	void connectCliModel();
 	static App *getInstance();
 	static Thread *getLinphoneThread();
 	Notifier *getNotifier() const;
@@ -135,7 +138,7 @@ public:
 	void initLocale();
 	void initCppInterfaces();
 	void initFonts();
-	void restart();
+	void restartCore();
 	bool autoStartEnabled();
 	void setSysTrayIcon();
 	QSystemTrayIcon *getSystemTrayIcon() const {
@@ -146,7 +149,7 @@ public:
 	QString getLocaleAsString();
 
 	void onLoggerInitialized();
-	void sendCommand();
+	void sendCommand(bool firstStart = true);
 
 	bool getCoreStarted() const;
 	void setCoreStarted(bool started);
@@ -242,6 +245,7 @@ signals:
 	void lForceOidcTimeout();
 	void remainingTimeBeforeOidcTimeoutChanged();
 	void currentAccountChanged();
+	void restartCoreRequested();
 #ifdef Q_OS_WIN
 	void sessionLockedChanged();
 #endif

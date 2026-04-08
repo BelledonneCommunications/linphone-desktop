@@ -105,6 +105,10 @@ public:
 		me->setSelf(me);
 		return me;
 	}
+	void setModel(std::shared_ptr<B> model) {
+		mModel = model;
+		mModelObject = model.get();
+	}
 
 	SafeSharedPointer<A> mCore;
 	SafeSharedPointer<B> mModel;

@@ -341,6 +341,19 @@ App::App(int &argc, char *argv[])
 	mOIDCRefreshTimer.setInterval(1000);
 	mOIDCRefreshTimer.setSingleShot(false);
 
+	connect(this, &App::restartCoreRequested, this, [this] {
+		initCore();
+		if (mCliModelConnection) mCliModelConnection->disconnect();
+		if (mCoreModelConnection) {
+			mCoreModelConnection->disconnect();
+			mCoreModelConnection->setModel(CoreModel::getInstance());
+		}
+		// reset connections with the new CoreModel
+		resetConnections();
+		sendCommand(false);
+		setIsRestarting(false);
+	});
+
 #ifdef Q_OS_LINUX
 	exportDesktopFile();
 #endif
@@ -349,10 +362,16 @@ App::App(int &argc, char *argv[])
 App::~App() {
 }
 
-void App::setSelf(QSharedPointer<App>(me)) {
-	mCoreModelConnection = SafeConnection<App, CoreModel>::create(me, CoreModel::getInstance());
+void App::resetConnections() {
+	connectCoreModel();
+	connectCliModel();
+}
+
+void App::connectCoreModel() {
+	Q_ASSERT(mCoreModelConnection);
 	mCoreModelConnection->makeConnectToModel(&CoreModel::callCreated,
 	                                         [this](const std::shared_ptr<linphone::Call> &call) {
+		                                         lDebug() << "Call created in core, get calls window";
 		                                         if (call->getDir() == linphone::Call::Dir::Incoming) return;
 		                                         auto callCore = CallCore::create(call);
 		                                         mCoreModelConnection->invokeToCore([this, callCore] {
@@ -367,7 +386,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCoreModelConnection->makeConnectToModel(&CoreModel::requestRestart, [this]() {
 		mCoreModelConnection->invokeToCore([this]() {
 			lInfo() << log().arg("Restarting");
-			restart();
+			restartCore();
 		});
 	});
 	mCoreModelConnection->makeConnectToModel(&CoreModel::requestFetchConfig, [this](QString path,
@@ -404,6 +423,7 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	    &CoreModel::globalStateChanged,
 	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
 		    mCoreModelConnection->invokeToCore([this, gstate] {
+			    lInfo() << log().arg("Core global state changed :") << (int)gstate;
 			    setCoreStarted(gstate == linphone::GlobalState::On);
 			    if (gstate == linphone::GlobalState::Configuring) {
 				    if (mMainWindow) {
@@ -578,9 +598,9 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	connect(&mOIDCRefreshTimer, &QTimer::timeout, this, [this]() {
 		mCoreModelConnection->invokeToModel([this] { CoreModel::getInstance()->refreshOidcRemainingTime(); });
 	});
+}
 
-	//---------------------------------------------------------------------------------------------
-	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
+void App::connectCliModel() {
 	mCliModelConnection->makeConnectToCore(&App::receivedMessage, [this](int, const QByteArray &byteArray) {
 		QString command(byteArray);
 		if (command.isEmpty()) {
@@ -594,6 +614,14 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	mCliModelConnection->makeConnectToModel(&CliModel::showMainWindow, [this]() {
 		mCliModelConnection->invokeToCore([this]() { Utils::smartShowWindow(getMainWindow()); });
 	});
+}
+
+void App::setSelf(QSharedPointer<App>(me)) {
+	mCoreModelConnection = SafeConnection<App, CoreModel>::create(me, CoreModel::getInstance());
+	connectCoreModel();
+	//---------------------------------------------------------------------------------------------
+	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
+	connectCliModel();
 }
 
 App *App::getInstance() {
@@ -675,10 +703,12 @@ void App::initCore() {
 		    lInfo() << log().arg("Starting Core");
 		    CoreModel::getInstance()->start();
 		    ToolModel::loadDownloadedCodecs();
-		    lDebug() << log().arg("Creating SettingsModel");
-		    SettingsModel::create();
-		    lDebug() << log().arg("Creating SettingsCore");
-		    settings = SettingsCore::create();
+		    if (!settings) {
+			    lDebug() << log().arg("Creating SettingsModel");
+			    SettingsModel::create();
+			    lDebug() << log().arg("Creating SettingsCore");
+			    settings = SettingsCore::create();
+		    }
 		    // Update the download folder if set in the configuration file
 		    CoreModel::getInstance()->setPathsAfterCreation();
 		    lDebug() << log().arg("Checking downloaded codecs updates");
@@ -701,8 +731,11 @@ void App::initCore() {
 	lWarning() << "[Main] The application doesn't support the CrashReporter.";
 #endif
 			    // QML
-			    mEngine = new QQmlApplicationEngine(this);
-			    assert(mEngine);
+			    if (!mEngine) {
+				    mEngine = new QQmlApplicationEngine(this);
+				    assert(mEngine);
+			    }
+			    mSettings = settings;
 			    // Provide `+custom` folders for custom components and `5.9` for old components.
 			    QStringList selectors("custom");
 			    const QVersionNumber &version = QLibraryInfo::version();
@@ -715,22 +748,22 @@ void App::initCore() {
 #ifdef APPLICATION_VENDOR
 			    mEngine->rootContext()->setContextProperty("applicationVendor", APPLICATION_VENDOR);
 #else
-				mEngine->rootContext()->setContextProperty("applicationVendor", "");
+					mEngine->rootContext()->setContextProperty("applicationVendor", "");
 #endif
 #ifdef APPLICATION_LICENCE
 			    mEngine->rootContext()->setContextProperty("applicationLicence", APPLICATION_LICENCE);
 #else
-				mEngine->rootContext()->setContextProperty("applicationLicence", "");
+					mEngine->rootContext()->setContextProperty("applicationLicence", "");
 #endif
 #ifdef APPLICATION_LICENCE_URL
 			    mEngine->rootContext()->setContextProperty("applicationLicenceUrl", APPLICATION_LICENCE_URL);
 #else
-				mEngine->rootContext()->setContextProperty("applicationLicenceUrl", "");
+					mEngine->rootContext()->setContextProperty("applicationLicenceUrl", "");
 #endif
 #ifdef COPYRIGHT_RANGE_DATE
 			    mEngine->rootContext()->setContextProperty("copyrightRangeDate", COPYRIGHT_RANGE_DATE);
 #else
-				mEngine->rootContext()->setContextProperty("copyrightRangeDate", "");
+					mEngine->rootContext()->setContextProperty("copyrightRangeDate", "");
 #endif
 			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
@@ -746,12 +779,12 @@ void App::initCore() {
 			    mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
 
 			    // Enable notifications.
-			    mNotifier = new Notifier(mEngine);
+			    if (!mNotifier) mNotifier = new Notifier(mEngine);
 			    mEngine->setObjectOwnership(settings.get(), QQmlEngine::CppOwnership);
 			    mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
-			    mNotificationBackend = new NotificationBackend(this);
+			    if (!mNotificationBackend) mNotificationBackend = new NotificationBackend(this);
 #endif
 
 			    auto initLists = [this] {
@@ -790,7 +823,6 @@ void App::initCore() {
 			    } else connect(this, &App::coreStartedChanged, this, initLists);
 
 			    // if (!mSettings) {
-			    mSettings = settings;
 			    setLocale(settings->getConfigLocale());
 			    setAutoStart(settings->getAutoStart());
 			    setQuitOnLastWindowClosed(settings->getExitOnClose());
@@ -814,81 +846,85 @@ void App::initCore() {
 			    //     setQuitOnLastWindowClosed(settings->getExitOnClose());
 			    // }
 			    const QUrl url("qrc:/qt/qml/Linphone/view/Page/Window/Main/MainWindow.qml");
-			    QObject::connect(
-			        mEngine, &QQmlApplicationEngine::objectCreated, this,
-			        [this, url](QObject *obj, const QUrl &objUrl) {
-				        if (url == objUrl) {
-					        if (!obj) {
-						        lCritical() << log().arg("MainWindow.qml couldn't be load. The app will exit");
-						        exit(-1);
-					        }
-					        auto window = qobject_cast<QQuickWindow *>(obj);
-					        setMainWindow(window);
+			    if (!mMainWindow) {
+				    QObject::connect(
+				        mEngine, &QQmlApplicationEngine::objectCreated, this,
+				        [this, url](QObject *obj, const QUrl &objUrl) {
+					        if (url == objUrl) {
+						        if (!obj) {
+							        lCritical() << log().arg("MainWindow.qml couldn't be load. The app will exit");
+							        exit(-1);
+						        }
+						        auto window = qobject_cast<QQuickWindow *>(obj);
+						        setMainWindow(window);
 #if defined(__APPLE__)
-					        setMacOSDockActions();
+						        setMacOSDockActions();
 #else
-					        // Enable TrayIconSystem.
-					        if (!QSystemTrayIcon::isSystemTrayAvailable())
-						        qWarning("System tray not found on this system.");
-					        else setSysTrayIcon();
+								// Enable TrayIconSystem.
+								if (!QSystemTrayIcon::isSystemTrayAvailable())
+									qWarning("System tray not found on this system.");
+								else setSysTrayIcon();
 #endif // if defined(__APPLE__)
 
-					        static bool firstOpen = true;
-					        if (!firstOpen || !mParser->isSet("minimized")) {
-						        lDebug() << log().arg("Openning window");
-						        if (window) window->show();
-					        } else lInfo() << log().arg("Stay minimized");
-					        firstOpen = false;
-					        lInfo() << log().arg("Checking remote provisioning");
-					        if (mIsRestarting) {
-						        auto handleConfigStatus = [this] {
-							        if (CoreModel::getInstance()->mConfigStatus == linphone::ConfiguringState::Failed) {
-								        QMetaObject::invokeMethod(thread(), [this]() {
-									        mustBeInMainThread(log().arg(Q_FUNC_INFO));
-									        auto message = CoreModel::getInstance()->mConfigMessage;
-									        //: not reachable
-									        if (message.isEmpty()) message = tr("configuration_error_detail");
-									        lWarning() << log().arg("Configuration failed (reason: %1)").arg(message);
-									        //: Error
-									        Utils::showInformationPopup(
-									            tr("info_popup_error_title"),
-									            //: Remote provisioning failed : %1
-									            tr("info_popup_configuration_failed_message").arg(message), false);
-								        });
-							        } else if (CoreModel::getInstance()->mConfigStatus ==
-							                   linphone::ConfiguringState::Successful) {
-								        lInfo() << log().arg("Configuration succeed");
-								        mPossiblyLookForAddedAccount = true;
-								        if (mAccountList && mAccountList->getCount() > 0) {
-									        auto defaultConnected =
-									            mAccountList->getDefaultAccountCore() &&
-									            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
-									                LinphoneEnums::RegistrationState::Ok;
-									        QMetaObject::invokeMethod(mMainWindow, "openMainPage", Qt::DirectConnection,
-									                                  Q_ARG(QVariant, defaultConnected));
+						        static bool firstOpen = true;
+						        if (!firstOpen || !mParser->isSet("minimized")) {
+							        lDebug() << log().arg("Openning window");
+							        if (window) window->show();
+						        } else lInfo() << log().arg("Stay minimized");
+						        firstOpen = false;
+						        lInfo() << log().arg("Checking remote provisioning");
+						        if (mIsRestarting) {
+							        auto handleConfigStatus = [this] {
+								        if (CoreModel::getInstance()->mConfigStatus ==
+								            linphone::ConfiguringState::Failed) {
+									        QMetaObject::invokeMethod(thread(), [this]() {
+										        mustBeInMainThread(log().arg(Q_FUNC_INFO));
+										        auto message = CoreModel::getInstance()->mConfigMessage;
+										        //: not reachable
+										        if (message.isEmpty()) message = tr("configuration_error_detail");
+										        lWarning()
+										            << log().arg("Configuration failed (reason: %1)").arg(message);
+										        //: Error
+										        Utils::showInformationPopup(
+										            tr("info_popup_error_title"),
+										            //: Remote provisioning failed : %1
+										            tr("info_popup_configuration_failed_message").arg(message), false);
+									        });
+								        } else if (CoreModel::getInstance()->mConfigStatus ==
+								                   linphone::ConfiguringState::Successful) {
+									        lInfo() << log().arg("Configuration succeed");
+									        mPossiblyLookForAddedAccount = true;
+									        if (mAccountList && mAccountList->getCount() > 0) {
+										        auto defaultConnected =
+										            mAccountList->getDefaultAccountCore() &&
+										            mAccountList->getDefaultAccountCore()->getRegistrationState() ==
+										                LinphoneEnums::RegistrationState::Ok;
+										        QMetaObject::invokeMethod(mMainWindow, "openMainPage",
+										                                  Qt::DirectConnection,
+										                                  Q_ARG(QVariant, defaultConnected));
+									        }
 								        }
+							        };
+							        if (mMainWindow) {
+								        handleConfigStatus();
+							        } else {
+								        connect(this, &App::mainWindowChanged, this, handleConfigStatus,
+								                Qt::SingleShotConnection);
 							        }
-						        };
-						        if (mMainWindow) {
-							        handleConfigStatus();
-						        } else {
-							        connect(this, &App::mainWindowChanged, this, handleConfigStatus,
-							                Qt::SingleShotConnection);
 						        }
+						        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
+						        window->show();
+						        window->requestActivate();
+
+						        //---------------------------------------------------------------------------------------------
+						        lDebug() << log().arg("Creating KeyboardShortcuts");
+						        KeyboardShortcuts::create(getMainWindow());
 					        }
-					        if (mSettings->autoCheckForUpdateOnStart()) checkForUpdate();
-					        setIsRestarting(false);
-					        window->show();
-					        window->requestActivate();
+				        },
+				        Qt::QueuedConnection);
 
-					        //---------------------------------------------------------------------------------------------
-					        lDebug() << log().arg("Creating KeyboardShortcuts");
-					        KeyboardShortcuts::create(getMainWindow());
-				        }
-			        },
-			        Qt::QueuedConnection);
-
-			    mEngine->load(url);
+				    mEngine->load(url);
+			    }
 		    });
 	    },
 	    Qt::BlockingQueuedConnection);
@@ -1115,33 +1151,28 @@ void App::clean() {
 		delete mLinphoneThread;
 	}
 }
-void App::restart() {
+void App::restartCore() {
+	setIsRestarting(true);
 	mCoreModelConnection->invokeToModel([this]() {
 		FriendsManager::getInstance()->clearMaps();
 		CoreModel::getInstance()->getCore()->stop();
-		mCoreModelConnection->invokeToCore([this]() {
-			setIsRestarting(true);
+		mCoreModelConnection->invokeToCore([this] {
 			if (mAccountList) mAccountList->resetData();
 			if (mCallList) mCallList->resetData();
 			if (mCallHistoryList) mCallHistoryList->resetData();
 			if (mChatList) mChatList->resetData();
 			if (mConferenceInfoList) mConferenceInfoList->resetData();
 			closeCallsWindow();
-			setMainWindow(nullptr);
+			// setMainWindow(nullptr);
 			setCoreStarted(false);
 			mEngine->clearComponentCache();
 			mEngine->clearSingletons();
-			delete mEngine;
-			mEngine = nullptr;
-			// if (mSettings) mSettings.reset();
-			initCore();
-			// Retrieve self from current Core/Model connection and reset Qt connections.
-			// auto oldConnection = mCoreModelConnection;
-			// oldConnection->mCore.lock();
-			// auto me = oldConnection->mCore.mQData;
-			// setSelf(me);
-			// oldConnection->mCore.unlock();
-			exit((int)StatusCode::gRestartCode);
+			// delete mEngine;
+			// mEngine = nullptr;
+			// clean();
+			// mLinphoneThread = new Thread(this);
+			// mCoreModelConnection->disconnect();
+			emit restartCoreRequested();
 		});
 	});
 }
@@ -1186,10 +1217,10 @@ void App::createCommandParser() {
 	});
 }
 // Should be call only at first start
-void App::sendCommand() {
+void App::sendCommand(bool firstStart) {
 	auto arguments = mParser->positionalArguments();
 	if (mParser->isSet("fetch-config")) arguments << "fetch-config=" + mParser->value("fetch-config");
-	static bool firstStart = true; // We can't erase positional arguments. So we get them on each restart.
+	// static bool firstStart = true; // We can't erase positional arguments. So we get them on each restart.
 	if (firstStart) {
 		firstStart = false;
 		if (isSecondary()) { // Send to primary

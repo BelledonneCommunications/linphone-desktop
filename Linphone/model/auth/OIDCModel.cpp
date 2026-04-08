@@ -286,7 +286,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 }
 
 void OIDCModel::forceTimeout() {
-	lWarning() << log().arg("Froce timeout for OpenID connection.");
+	lInfo() << log().arg("Froce timeout for OpenID connection.");
 	stopTimeoutTimer();
 	dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 	CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
@@ -311,7 +311,7 @@ void OIDCModel::stopTimeoutTimer() {
 void OIDCModel::openIdConfigReceived() {
 	auto reply = dynamic_cast<QNetworkReply *>(sender());
 	auto replyArray = reply->readAll();
-	lInfo() << log().arg("Reply :") << replyArray;
+	lDebug() << log().arg("Reply :") << replyArray;
 	auto document = QJsonDocument::fromJson(replyArray);
 	if (document.isNull()) {
 		lWarning() << log().arg("Reply is empty");
