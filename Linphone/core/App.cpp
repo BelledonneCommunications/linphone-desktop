@@ -343,13 +343,6 @@ App::App(int &argc, char *argv[])
 
 	connect(this, &App::restartCoreRequested, this, [this] {
 		initCore();
-		if (mCliModelConnection) mCliModelConnection->disconnect();
-		if (mCoreModelConnection) {
-			mCoreModelConnection->disconnect();
-			mCoreModelConnection->setModel(CoreModel::getInstance());
-		}
-		// reset connections with the new CoreModel
-		resetConnections();
 		sendCommand(false);
 		setIsRestarting(false);
 	});
@@ -360,11 +353,6 @@ App::App(int &argc, char *argv[])
 }
 
 App::~App() {
-}
-
-void App::resetConnections() {
-	connectCoreModel();
-	connectCliModel();
 }
 
 void App::connectCoreModel() {
@@ -691,7 +679,11 @@ void App::init() {
 void App::initCore() {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	// Core. Manage the logger so it must be instantiate at first.
-	CoreModel::create("", mLinphoneThread);
+	if (!CoreModel::getInstance()) CoreModel::create("", mLinphoneThread);
+	else {
+		lDebug() << "CoreModel already exists, juste start core";
+		// CoreModel::getInstance()->getCore()->start();
+	}
 	if (mParser->isSet("verbose")) QtLogger::enableVerbose(true);
 	if (mParser->isSet("qt-logs-only")) QtLogger::enableQtOnly(true);
 	qDebug() << "linphone thread is" << mLinphoneThread;
@@ -769,14 +761,16 @@ void App::initCore() {
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
 			    mEngine->rootContext()->setContextProperty("FocusNavigator", new FocusNavigator(mEngine));
 
-			    initCppInterfaces();
-			    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
-			    mEngine->addImageProvider(EmojiProvider::ProviderId, new EmojiProvider());
-			    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
-			    mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
-			    mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
-			    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
-			    mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
+			    if (!isRestarting()) {
+				    initCppInterfaces();
+				    mEngine->addImageProvider(ImageProvider::ProviderId, new ImageProvider());
+				    mEngine->addImageProvider(EmojiProvider::ProviderId, new EmojiProvider());
+				    mEngine->addImageProvider(AvatarProvider::ProviderId, new AvatarProvider());
+				    mEngine->addImageProvider(ScreenProvider::ProviderId, new ScreenProvider());
+				    mEngine->addImageProvider(WindowProvider::ProviderId, new WindowProvider());
+				    mEngine->addImageProvider(WindowIconProvider::ProviderId, new WindowIconProvider());
+				    mEngine->addImageProvider(ThumbnailProvider::ProviderId, new ThumbnailProvider());
+			    }
 
 			    // Enable notifications.
 			    if (!mNotifier) mNotifier = new Notifier(mEngine);
@@ -1165,8 +1159,8 @@ void App::restartCore() {
 			closeCallsWindow();
 			// setMainWindow(nullptr);
 			setCoreStarted(false);
-			mEngine->clearComponentCache();
-			mEngine->clearSingletons();
+			// mEngine->clearComponentCache();
+			// mEngine->clearSingletons();
 			// delete mEngine;
 			// mEngine = nullptr;
 			// clean();

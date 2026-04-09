@@ -66,7 +66,6 @@ public:
 	App(int &argc, char *argv[]);
 	~App();
 	void setSelf(QSharedPointer<App>(me));
-	void resetConnections();
 	void connectCoreModel();
 	void connectCliModel();
 	static App *getInstance();
