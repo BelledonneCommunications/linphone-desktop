@@ -274,6 +274,9 @@ signals:
 	void messageReceived(const std::shared_ptr<linphone::Core> &core,
 	                     const std::shared_ptr<linphone::ChatRoom> &room,
 	                     const std::shared_ptr<linphone::ChatMessage> &message);
+	void messageSent(const std::shared_ptr<linphone::Core> &core,
+	                 const std::shared_ptr<linphone::ChatRoom> &room,
+	                 const std::shared_ptr<const linphone::EventLog> &message);
 	void messagesReceived(const std::shared_ptr<linphone::Core> &core,
 	                      const std::shared_ptr<linphone::ChatRoom> &room,
 	                      const std::list<std::shared_ptr<linphone::ChatMessage>> &messages);

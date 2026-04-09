@@ -249,6 +249,25 @@ void ChatCore::setSelf(const QSharedPointer<ChatCore> &me) {
 			    emit lUpdateLastUpdatedTime();
 		    });
 	    });
+	mChatModelConnection->makeConnectToModel(
+	    &ChatModel::chatMessageSent, [this](const std::shared_ptr<linphone::ChatRoom> &chatRoom,
+	                                        const std::shared_ptr<const linphone::EventLog> &eventLog) {
+		    if (!mChatModel) {
+			    lWarning() << log().arg("Chat model is null !");
+			    return;
+		    } else if (!mChatModelConnection) {
+			    lWarning() << log().arg("Connection between Core and Model is null !");
+			    return;
+		    }
+		    if (mChatModel->getMonitor() != chatRoom) return;
+		    lInfo() << log().arg("Chat message sent in chatroom") << this << mChatModel->getTitle();
+		    QList<QSharedPointer<EventLogCore>> list;
+		    if (eventLog) {
+			    emit CoreModel::getInstance()->messageSent(CoreModel::getInstance()->getCore(), chatRoom, eventLog);
+		    } else {
+			    lWarning() << log().arg("message sent : event log is null");
+		    }
+	    });
 
 	mChatModelConnection->makeConnectToCore(&ChatCore::lMarkAsRead, [this]() {
 		auto lastActiveWindow = Utils::getLastActiveWindow();
