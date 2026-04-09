@@ -44,6 +44,9 @@ AbstractMainPage {
                     UtilsCpp.showInformationPopup(qsTr("info_popup_error_title"),
                                                     //: Chat room creation failed !
                                                     qsTr("info_popup_chatroom_creation_failed"), false)
+                } else if (remoteChat.core.state === LinphoneEnums.ChatRoomState.Created) {
+                    console.log("chat room state Created, open chat in right panel")
+                    mainItem.selectedChatGui = remoteChat
                 }
             }
         }

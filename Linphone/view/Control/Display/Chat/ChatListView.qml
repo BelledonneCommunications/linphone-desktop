@@ -99,6 +99,8 @@ ListView {
         if (index === -1 && force === true && chatGui) {
             if (chatProxy.addChatInList(chatGui)) {
                 var index = chatProxy.findChatIndex(chatGui)
+            } else {
+                console.log("could not add chat in list !")
             }
         }
         mainItem.currentIndex = index
