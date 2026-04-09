@@ -5371,42 +5371,42 @@ Ablauf: %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="357"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="358"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Neuer Anruf von %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="413"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="414"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation>Sprachnachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="414"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
         <source>new_file_message</source>
         <translation>Datei empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="417"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="418"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Konferenzeinladung erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="439"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="440"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
         <translation>Neue Nachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="442"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="443"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="470"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="471"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Neue Nachricht im Chat %1</translation>

@@ -137,7 +137,9 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	QString declineIcon = Utils::getIconAsPng(Utils::getAppIcon("endCall").toString());
 	QString acceptIcon = Utils::getIconAsPng(Utils::getAppIcon("phone").toString());
 	auto appIcon = Utils::getIconAsPng(Utils::getAppIcon("logo").toString()).toStdWString();
+	//: Accept
 	actions.append(ToastButton(tr("accept_button"), "accept", acceptIcon));
+	//: Decline
 	actions.append(ToastButton(tr("decline_button"), "decline", declineIcon));
 	std::wstring wActions;
 	if (!actions.isEmpty()) {
