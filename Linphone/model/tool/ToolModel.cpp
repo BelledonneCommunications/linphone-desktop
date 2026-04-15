@@ -657,7 +657,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	params->enableChat(true);
 	params->enableGroup(false);
 	//: Dummy subject
-	params->setSubject("Dummy subject");
+	params->setSubject(Utils::appStringToCoreString(tr("Dummy subject")));
 	params->setAccount(account);
 	params->enableAudio(false);
 	params->enableVideo(false);

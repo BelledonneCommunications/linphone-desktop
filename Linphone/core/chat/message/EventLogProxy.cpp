@@ -62,9 +62,9 @@ void EventLogProxy::setSourceModel(QAbstractItemModel *model) {
 				lInfo() << "Found index by id, request highlight at index" << proxyIndex;
 				emit foundMessagById(proxyIndex);
 			} else {
-				Utils::showInformationPopup("info_popup_error_title",
+				Utils::showInformationPopup(tr("info_popup_error_title"),
 				                            //: Original message not found. It may have been deleted
-				                            "info_popup_reply_message_not_found_error");
+				                            tr("info_popup_reply_message_not_found_error"));
 			}
 		});
 		connect(newEventLogList, &EventLogList::eventInsertedByUser, this, [this, newEventLogList](int i) {

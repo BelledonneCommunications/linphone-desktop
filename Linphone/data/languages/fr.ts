@@ -2470,6 +2470,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="182"/>
         <source></source>
+        <extracomment>from %1 to %2 (UTC%3)</extracomment>
         <translation>de %1 à %2 (UTC%3)</translation>
     </message>
     <message>
@@ -4002,6 +4003,20 @@ Expiration : %1</translation>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="164"/>
         <source>conference_participant_set_admin_event</source>
         <translation>%1 est maintenant admin</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Erreur</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="67"/>
+        <source>info_popup_reply_message_not_found_error</source>
+        <extracomment>Original message not found. It may have been deleted</extracomment>
+        <translation>Le message original n&apos;a pas été trouvé. Il a pu être supprimé</translation>
     </message>
 </context>
 <context>
@@ -5904,135 +5919,153 @@ Expiration : %1</translation>
 <context>
     <name>RegisterPage</name>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="21"/>
+        <source>phone_number_validation_not_available_title</source>
+        <extracomment>Phone number validation not available</extracomment>
+        <translation>Validation par téléphone indisponible</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="23"/>
+        <source>phone_number_validation_not_available_text</source>
+        <extracomment>Phone number validation is not available, please use email account creation process</extracomment>
+        <translation>La validation par téléphone est indisponible, veuillez utiliser le processus de création de compte avec email</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="25"/>
+        <source>register_with_email_button</source>
+        <extracomment>Register with an email</extracomment>
+        <translation>S&apos;enregistrer avec un email</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="64"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
         <translation>Retour</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="76"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;Inscription</extracomment>
         <translation>Inscription</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="77"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="95"/>
         <source>assistant_already_have_an_account</source>
         <translation>Déjà un compte ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="85"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="103"/>
         <source>assistant_account_login</source>
         <translation>Connexion</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="107"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="125"/>
         <source>assistant_account_register_with_phone_number</source>
         <translation>S&apos;inscrire avec un numéro de téléphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="109"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="127"/>
         <source>assistant_account_register_with_email</source>
         <translation>S&apos;inscrire avec un email</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="138"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="147"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="156"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="165"/>
         <source>username</source>
         <translation>Nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="147"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="182"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="196"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="220"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="236"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="165"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="200"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="214"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="238"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
         <translation>%1 requit</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="158"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
         <source>domain</source>
         <translation>Domaine</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="179"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="182"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="194"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="197"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="200"/>
         <source>phone_number</source>
         <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
         <translation>Numéro de téléphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="188"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="196"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="206"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="214"/>
         <source>email</source>
         <translation>Email</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="210"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="220"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="228"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="238"/>
         <source>password</source>
         <translation>Mot de passe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="227"/>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="236"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="245"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
         <source>assistant_account_register_password_confirmation</source>
         <extracomment>&quot;Confirmation mot de passe&quot;</extracomment>
         <translation>Confirmation mot de passe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="272"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="290"/>
         <source>assistant_dialog_cgu_and_privacy_policy_message</source>
         <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
         <translation>J&apos;accepte les %1 et la %2</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="274"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="292"/>
         <source>assistant_dialog_general_terms_label</source>
         <extracomment>&quot;conditions d&apos;utilisation&quot;</extracomment>
         <translation>conditions d&apos;utilisation</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="276"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="294"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
         <translation>politique de confidentialité</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="311"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="329"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
         <translation>Créer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="316"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="334"/>
         <source>assistant_account_create_missing_username_error</source>
         <extracomment>&quot;Veuillez entrer un nom d&apos;utilisateur&quot;</extracomment>
         <translation>Veuillez entrer un nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="320"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="338"/>
         <source>assistant_account_create_missing_password_error</source>
         <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
         <translation>Veuillez entrer un mot de passe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="324"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="342"/>
         <source>assistant_account_create_confirm_password_error</source>
         <extracomment>&quot;Les mots de passe sont différents&quot;</extracomment>
         <translation>Les mots de passe sont différents</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="328"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="346"/>
         <source>assistant_account_create_missing_number_error</source>
         <extracomment>&quot;Veuillez entrer un numéro de téléphone&quot;</extracomment>
         <translation>Veuillez entrer un numéro de téléphone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="332"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="350"/>
         <source>assistant_account_create_missing_email_error</source>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Veuillez entrer un email</translation>
@@ -6434,6 +6467,28 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
     </message>
 </context>
 <context>
+    <name>SoundPlayerModel</name>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="65"/>
+        <source>sound_player_pause_error</source>
+        <extracomment>Unable to pause</extracomment>
+        <translation>Impossible de mettre en pause</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="87"/>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="107"/>
+        <source>sound_player_open_error</source>
+        <extracomment>Unable to open: `%1`</extracomment>
+        <translation>Impossible d&apos;ouvrir : &quot;%1&quot;</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="92"/>
+        <source>sound_player_play_error</source>
+        <extracomment>Unable to play %1</extracomment>
+        <translation>Impossible de jouer %1</translation>
+    </message>
+</context>
+<context>
     <name>Sticker</name>
     <message>
         <location filename="../../view/Control/Display/Sticker.qml" line="136"/>
@@ -6503,6 +6558,12 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <source>unknown_audio_device_name</source>
         <extracomment>&quot;Unknown device&quot;</extracomment>
         <translation>Appareil inconnu</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="660"/>
+        <source>Dummy subject</source>
+        <extracomment>Dummy subject</extracomment>
+        <translation>Sujet par défaut</translation>
     </message>
     <message>
         <location filename="../../model/tool/ToolModel.cpp" line="548"/>

@@ -175,10 +175,10 @@ ColumnLayout {
 						}
 					}
 					Text {
-						//: from %1 to %2 (UTC%3)
 						property string offsetFromUtc: conferenceInfo.timeZoneModel.offsetFromUtc > 0
 							? "+" + conferenceInfo.timeZoneModel.offsetFromUtc/3600
 							: conferenceInfo.timeZoneModel.offsetFromUtc/3600
+						//: from %1 to %2 (UTC%3)
 						text: qsTr("").arg(
 								conferenceInfo.dateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(
 								conferenceInfo.endDateTime.toLocaleString(Qt.locale(), "hh:mm")).arg(offsetFromUtc)

@@ -62,7 +62,7 @@ SoundPlayerModel::~SoundPlayerModel() {
 void SoundPlayerModel::pause() {
 	if (mMonitor->pause()) {
 		//: Unable to pause
-		emit errorChanged("sound_player_pause_error");
+		emit errorChanged(tr("sound_player_pause_error"));
 		emit playbackStateChanged(LinphoneEnums::PlaybackState::ErrorState);
 		return;
 	}
@@ -84,12 +84,12 @@ bool SoundPlayerModel::play(QString source, bool fromStart) {
 	if (!open(source)) {
 		lWarning() << QStringLiteral("[SoundPlayerModel] %1 Unable to open: `%2`").arg(Q_FUNC_INFO).arg(source);
 		//: Unable to open: `%1`
-		emit errorChanged(QString("sound_player_open_error").arg(source));
+		emit errorChanged(tr("sound_player_open_error").arg(source));
 		return false;
 	}
 	if (mMonitor->start()) {
 		//: Unable to play %1
-		emit errorChanged(QString("sound_player_play_error").arg(source));
+		emit errorChanged(tr("sound_player_play_error").arg(source));
 		emit playbackStateChanged(LinphoneEnums::PlaybackState::ErrorState);
 		return false;
 	}
@@ -104,7 +104,7 @@ void SoundPlayerModel::seek(QString source, int offset) {
 	if (!open(source)) {
 		lWarning() << QStringLiteral("[SoundPlayerModel] %1 Unable to open: `%2`").arg(Q_FUNC_INFO).arg(source);
 		//: Unable to open: `%1`
-		emit errorChanged(QString("sound_player_open_error").arg(source));
+		emit errorChanged(tr("sound_player_open_error").arg(source));
 		return;
 	}
 	mMonitor->seek(offset);
