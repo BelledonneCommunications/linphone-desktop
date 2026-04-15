@@ -23,6 +23,8 @@
 #include "ChatList.hpp"
 #include "core/App.hpp"
 
+#include <QTimer>
+
 DEFINE_ABSTRACT_OBJECT(ChatProxy)
 
 ChatProxy::ChatProxy(QObject *parent) {
@@ -50,7 +52,8 @@ void ChatProxy::setSourceModel(QAbstractItemModel *model) {
 				emit chatAdded(new ChatGui(chatCore));
 			}
 		});
-		connect(newChatList, &ChatList::dataChanged, this, [this] { invalidate(); });
+		connect(newChatList, &ChatList::dataChanged, this,
+		        [this] { QTimer::singleShot(0, this, [this] { invalidate(); }); });
 		newChatList->lUpdate();
 	}
 	QSortFilterProxyModel::setSourceModel(newChatList);
