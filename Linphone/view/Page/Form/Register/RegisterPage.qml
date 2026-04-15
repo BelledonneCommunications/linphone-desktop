@@ -15,6 +15,21 @@ LoginLayout {
 	readonly property string phoneNumber: phoneNumberInput.phoneNumber
 	readonly property string email: emailInput.text
 
+	Dialog {
+		id: phoneNumberNotAvailableDialog
+		//: Phone number validation not available
+		title: qsTr("phone_number_validation_not_available_title")
+		//: Phone number validation is not available, please use email account creation process
+		text: qsTr("phone_number_validation_not_available_text")
+		//: Register with an email
+		firstButtonText: qsTr("register_with_email_button")
+		onAccepted: {
+			bar.setCurrentIndex(1)
+			close()
+		}
+		onRejected: close()
+	}
+
 	Connections {
 		target: RegisterPageCpp
 		function onErrorInField(field, errorMessage) {
@@ -28,6 +43,9 @@ LoginLayout {
 		function onRegisterNewAccountFailed(errorMessage) {
 			console.log("register failed", errorMessage)
 			otherErrorText.setText(errorMessage)
+		}
+		function onPhoneNumberValidationNotAvailable() {
+			phoneNumberNotAvailableDialog.open()
 		}
 	}
 
@@ -99,8 +117,8 @@ LoginLayout {
             spacing: Utils.getSizeWithScreenRatio(50)
 
 			TabBar {
-				Layout.fillWidth: true
 				id: bar
+				Layout.fillWidth: true
     			spacing: Utils.getSizeWithScreenRatio(40)
                 Layout.rightMargin: Math.max(Utils.getSizeWithScreenRatio(5), Utils.getSizeWithScreenRatio(127 - ((127/(DefaultStyle.defaultWidth - mainWindow.minimumWidth))*(DefaultStyle.defaultWidth-mainWindow.width))))
                 // "S'inscrire avec un numéro de téléphone"

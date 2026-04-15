@@ -311,7 +311,9 @@ void AccountManager::registerNewAccount(const QString &username,
 		    } else if (request->getType() ==
 		               linphone::AccountManagerServicesRequest::Type::SendPhoneNumberLinkingCodeBySms) {
 			    lInfo() << "[AccountManager] error sending code to phone number" << errorMessage;
-			    if (parameterErrors) {
+			    if (statusCode == 422) {
+				    emit phoneNumberValidationNotAvailable();
+			    } else if (parameterErrors) {
 				    for (const std::string &key : parameterErrors->getKeys()) {
 					    emit errorInField(Utils::coreStringToAppString(key),
 					                      Utils::coreStringToAppString(errorMessage));

@@ -86,6 +86,14 @@ void RegisterPage::registerNewAccount(const QString &username,
 				        accountManager = nullptr;
 			        }
 		        });
+		connect(accountManager, &AccountManager::phoneNumberValidationNotAvailable, this,
+		        [this, accountManager]() mutable {
+			        App::postCoreAsync([this]() { emit phoneNumberValidationNotAvailable(); });
+			        if (accountManager) {
+				        accountManager->deleteLater();
+				        accountManager = nullptr;
+			        }
+		        });
 		connect(accountManager, &AccountManager::tokenConversionSucceed, this,
 		        [this, accountManager, address](QString convertedToken) {
 			        App::postCoreAsync([this, convertedToken, address]() {

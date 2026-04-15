@@ -53,6 +53,7 @@ signals:
 	                               const QString &sipIdentityAddress);
 	void registerNewAccountFailed(const QString &error);
 	void errorInField(const QString &field, const QString &error);
+	void phoneNumberValidationNotAvailable();
 	void tokenConversionSucceed();
 	void linkingNewAccountWithCodeSucceed();
 	void linkingNewAccountWithCodeFailed(const QString &error);

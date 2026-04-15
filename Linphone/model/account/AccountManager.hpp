@@ -66,6 +66,7 @@ signals:
 	void errorInField(const QString &field, const QString &error);
 	void linkingNewAccountWithCodeSucceed();
 	void linkingNewAccountWithCodeFailed(const QString &error);
+	void phoneNumberValidationNotAvailable();
 
 private:
 	std::shared_ptr<AccountModel> mAccountModel;
