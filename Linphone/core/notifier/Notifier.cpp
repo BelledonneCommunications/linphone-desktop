@@ -461,7 +461,12 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			}
 		}
 
-		auto chatCore = ChatCore::create(room);
+		auto chatCore =
+		    App::getInstance()->getChatList()->findChatById(Utils::coreStringToAppString(room->getIdentifier()));
+		if (!chatCore) {
+			lWarning() << "chat was not found in chat list, create one";
+			chatCore = ChatCore::create(room);
+		}
 
 		App::postCoreAsync([this, txt, chatCore, remoteAddress]() {
 			mustBeInMainThread(getClassName());

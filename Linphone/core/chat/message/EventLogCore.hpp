@@ -73,6 +73,9 @@ public:
 
 	std::shared_ptr<EventLogModel> getModel() const;
 
+	static bool isEventHandled(const std::shared_ptr<const linphone::EventLog> &eventLog,
+	                           const std::shared_ptr<linphone::ChatRoom> &chatRoom);
+
 private:
 	DECLARE_ABSTRACT_OBJECT
 	QString mEventId;

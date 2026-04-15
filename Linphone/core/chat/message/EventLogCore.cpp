@@ -171,3 +171,49 @@ void EventLogCore::computeEvent(const std::shared_ptr<const linphone::EventLog> 
 			mHandled = false;
 	}
 }
+
+bool EventLogCore::isEventHandled(const std::shared_ptr<const linphone::EventLog> &eventLog,
+                                  const std::shared_ptr<linphone::ChatRoom> &chatRoom) {
+	mustBeInLinphoneThread("EventLogCore::isEventHandled");
+	auto handled = true;
+	auto participantAddress = eventLog->getParticipantAddress() ? eventLog->getParticipantAddress() : nullptr;
+
+	switch (eventLog->getType()) {
+		case linphone::EventLog::Type::ConferenceCreated:
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) ||
+			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
+				handled = false;
+			break;
+		case linphone::EventLog::Type::ConferenceTerminated:
+			if (chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::OneToOne) ||
+			    !chatRoom->hasCapability((int)linphone::ChatRoom::Capabilities::Conference))
+				handled = false;
+			break;
+		case linphone::EventLog::Type::ConferenceParticipantAdded:
+			break;
+		case linphone::EventLog::Type::ConferenceParticipantRemoved:
+			break;
+		case linphone::EventLog::Type::ConferenceSecurityEvent: {
+			if (eventLog->getSecurityEventType() != linphone::EventLog::SecurityEventType::SecurityLevelDowngraded) {
+				handled = false;
+			}
+			break;
+		}
+		case linphone::EventLog::Type::ConferenceEphemeralMessageEnabled:
+			break;
+		case linphone::EventLog::Type::ConferenceEphemeralMessageLifetimeChanged:
+			handled = eventLog->getEphemeralMessageLifetime() != 0; // Disabled is sent in case of 0.
+			break;
+		case linphone::EventLog::Type::ConferenceEphemeralMessageDisabled:
+			break;
+		case linphone::EventLog::Type::ConferenceSubjectChanged:
+			break;
+		case linphone::EventLog::Type::ConferenceParticipantSetAdmin:
+			break;
+		case linphone::EventLog::Type::ConferenceParticipantUnsetAdmin:
+			break;
+		default:
+			handled = false;
+	}
+	return handled;
+}

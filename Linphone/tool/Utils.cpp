@@ -1630,7 +1630,12 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 		if (!callModel) return QVariant();
 		auto linphoneChatRoom = ToolModel::lookupCurrentCallChat(callModel);
 		if (linphoneChatRoom) {
-			auto chatCore = ChatCore::create(linphoneChatRoom);
+			auto chatCore = App::getInstance()->getChatList()->findChatById(
+			    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
+			if (!chatCore) {
+				lWarning() << "Utils::getCurrentCallChat : chat was not found in chat list, create one";
+				chatCore = ChatCore::create(linphoneChatRoom);
+			}
 			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			// Only try to create chatroom if 1-1 call
@@ -1641,7 +1646,12 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << callModel->getRemoteAddress()->asStringUriOnly();
 				auto id = linphoneChatRoom->getIdentifier();
-				auto chatCore = ChatCore::create(linphoneChatRoom);
+				auto chatCore = App::getInstance()->getChatList()->findChatById(
+				    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
+				if (!chatCore) {
+					lWarning() << "Utils::getCurrentCallChat : chat was not found in chat list, create one";
+					chatCore = ChatCore::create(linphoneChatRoom);
+				}
 				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with"
@@ -1663,14 +1673,24 @@ VariantObject *Utils::getChatForAddress(QString address) {
 		linAddr->clean();
 		auto linphoneChatRoom = ToolModel::lookupChatForAddress(linAddr);
 		if (linphoneChatRoom) {
-			auto chatCore = ChatCore::create(linphoneChatRoom);
+			auto chatCore = App::getInstance()->getChatList()->findChatById(
+			    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
+			if (!chatCore) {
+				lWarning() << "Utils::getChatForAddress : chat was not found in chat list, create one";
+				chatCore = ChatCore::create(linphoneChatRoom);
+			}
 			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			lInfo() << "[Utils] Did not find existing chat room, create one";
 			linphoneChatRoom = ToolModel::createChatForAddress(linAddr);
 			if (linphoneChatRoom != nullptr) {
 				lInfo() << "[Utils] Chatroom created with" << linAddr->asStringUriOnly();
-				auto chatCore = ChatCore::create(linphoneChatRoom);
+				auto chatCore = App::getInstance()->getChatList()->findChatById(
+				    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
+				if (!chatCore) {
+					lWarning() << "Utils::getChatForAddress : chat was not found in chat list, create one";
+					chatCore = ChatCore::create(linphoneChatRoom);
+				}
 				return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 			} else {
 				lWarning() << "[Utils] Failed to create 1-1 conversation with" << linAddr->asStringUriOnly() << "!";
@@ -1700,7 +1720,12 @@ VariantObject *Utils::createGroupChat(QString subject, QStringList participantAd
 		}
 		auto linphoneChatRoom = ToolModel::createGroupChatRoom(subject, addresses);
 		if (linphoneChatRoom) {
-			auto chatCore = ChatCore::create(linphoneChatRoom);
+			auto chatCore = App::getInstance()->getChatList()->findChatById(
+			    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
+			if (!chatCore) {
+				lWarning() << "Utils::createGroupChat : chat was not found in chat list, create one";
+				chatCore = ChatCore::create(linphoneChatRoom);
+			}
 			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 		} else {
 			return QVariant();
@@ -1745,7 +1770,12 @@ VariantObject *Utils::getChatForCallLog(CallHistoryGui *callLog) {
 		if (!model) return QVariant();
 		auto chatRoom = model->getChatRoom();
 		if (!chatRoom) return QVariant();
-		auto chatCore = ChatCore::create(chatRoom);
+		auto chatCore =
+		    App::getInstance()->getChatList()->findChatById(Utils::coreStringToAppString(chatRoom->getIdentifier()));
+		if (!chatCore) {
+			lWarning() << "Utils::getChatForCallLog : chat was not found in chat list, create one";
+			chatCore = ChatCore::create(chatRoom);
+		}
 		return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();
 	});
 	data->requestValue();

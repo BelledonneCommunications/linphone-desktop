@@ -43,6 +43,7 @@ public:
 	void disconnectItem(QSharedPointer<ChatCore> chat);
 
 	int findChatIndex(ChatGui *chat);
+	QSharedPointer<ChatCore> findChatById(const QString &id);
 	bool addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSignal);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 

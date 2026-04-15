@@ -116,6 +116,11 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 			if (!currentAccount) {
 				mModelConnection->invokeToCore([this, chats]() {
+					for (auto &chat : getSharedList<ChatCore>()) {
+						if (chat) {
+							disconnectItem(chat);
+						}
+					}
 					beginResetModel();
 					mList.clear();
 					endResetModel();
@@ -137,13 +142,13 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			}
 			mModelConnection->invokeToCore([this, chats]() {
 				mustBeInMainThread(getClassName());
-				beginResetModel();
-				mList.clear();
 				for (auto &chat : getSharedList<ChatCore>()) {
 					if (chat) {
 						disconnectItem(chat);
 					}
 				}
+				beginResetModel();
+				mList.clear();
 				for (auto &chat : *chats) {
 					connectItem(chat);
 					mList.append(chat);
@@ -184,8 +189,15 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			lInfo() << log().arg("Chat room to add does not match the current filter, return");
 			return;
 		}
-		auto chatCore = ChatCore::create(room);
-		mModelConnection->invokeToCore([this, chatCore, sendAddSignal] { addChatInList(chatCore, sendAddSignal); });
+		auto identifier = Utils::coreStringToAppString(room->getIdentifier());
+		auto chatList = getSharedList<ChatCore>();
+		auto it = std::find_if(chatList.begin(), chatList.end(), [identifier](const QSharedPointer<ChatCore> item) {
+			return item && item->getIdentifier() == identifier;
+		});
+		if (it == chatList.end()) {
+			auto chatCore = ChatCore::create(room);
+			mModelConnection->invokeToCore([this, chatCore, sendAddSignal] { addChatInList(chatCore, sendAddSignal); });
+		}
 	};
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::messageReceived,
@@ -239,26 +251,27 @@ int ChatList::findChatIndex(ChatGui *chatGui) {
 	return it == chatList.end() ? -1 : std::distance(chatList.begin(), it);
 }
 
+QSharedPointer<ChatCore> ChatList::findChatById(const QString &id) {
+	auto chatList = getSharedList<ChatCore>();
+	auto it = std::find_if(chatList.begin(), chatList.end(),
+	                       [id](const QSharedPointer<ChatCore> item) { return item->getIdentifier() == id; });
+	return it == chatList.end() ? nullptr : *it;
+}
+
 bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSignal) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (chatCore->getIdentifier().isEmpty()) {
 		lWarning() << "ChatRoom with invalid identifier cannot be added to the list, return";
 		return false;
 	}
-	auto chatList = getSharedList<ChatCore>();
-	auto it = std::find_if(chatList.begin(), chatList.end(), [chatCore](const QSharedPointer<ChatCore> item) {
-		return item && chatCore && item->getIdentifier() == chatCore->getIdentifier();
-	});
-	if (it == chatList.end()) {
-		connectItem(chatCore);
-		lInfo() << "Add ChatRoom" << chatCore->getTitle();
-		add(chatCore);
-		if (emitAddSignal) {
-			CoreModel::getInstance()->mChatRoomBeingCreated = nullptr;
-			emit chatAdded(chatCore);
-		}
-		return true;
+	connectItem(chatCore);
+	lInfo() << "Add ChatRoom" << chatCore->getTitle();
+	add(chatCore);
+	if (emitAddSignal) {
+		CoreModel::getInstance()->mChatRoomBeingCreated = nullptr;
+		emit chatAdded(chatCore);
 	}
+	return true;
 	return false;
 }
 
