@@ -5421,7 +5421,7 @@ Ablauf: %1</translation>
         <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="471"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="476"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Neue Nachricht im Chat %1</translation>
@@ -6728,7 +6728,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 <context>
     <name>Utils</name>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2319"/>
+        <location filename="../../tool/Utils.cpp" line="2349"/>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 Minute</numerusform>
@@ -6736,7 +6736,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2320"/>
+        <location filename="../../tool/Utils.cpp" line="2350"/>
         <source>nHour</source>
         <translation>
             <numerusform>%1 Stunde</numerusform>
@@ -6744,8 +6744,8 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2321"/>
-        <location filename="../../tool/Utils.cpp" line="2322"/>
+        <location filename="../../tool/Utils.cpp" line="2351"/>
+        <location filename="../../tool/Utils.cpp" line="2352"/>
         <source>nDay</source>
         <translation>
             <numerusform>%1 Tag</numerusform>
@@ -6753,7 +6753,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2323"/>
+        <location filename="../../tool/Utils.cpp" line="2353"/>
         <source>nWeek</source>
         <translation>
             <numerusform>%1 Woche</numerusform>
@@ -6761,7 +6761,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2324"/>
+        <location filename="../../tool/Utils.cpp" line="2354"/>
         <source>nSeconds</source>
         <translation>
             <numerusform>%1 Sekunde</numerusform>
@@ -6777,7 +6777,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
     <message>
         <location filename="../../tool/Utils.cpp" line="205"/>
         <location filename="../../tool/Utils.cpp" line="216"/>
-        <location filename="../../tool/Utils.cpp" line="1679"/>
+        <location filename="../../tool/Utils.cpp" line="1699"/>
         <source>information_popup_error_title</source>
         <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Fehler</translation>
@@ -6857,64 +6857,64 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1680"/>
+        <location filename="../../tool/Utils.cpp" line="1700"/>
         <source>information_popup_chatroom_creation_error_message</source>
         <translation>1-zu-1-Konversation mit %1 konnte nicht erstellt werden!</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1927"/>
+        <location filename="../../tool/Utils.cpp" line="1957"/>
         <source>contact_presence_status_available</source>
         <translation>Verfügbar </translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1930"/>
+        <location filename="../../tool/Utils.cpp" line="1960"/>
         <source>contact_presence_status_away</source>
         <translation>Abwesend</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1933"/>
+        <location filename="../../tool/Utils.cpp" line="1963"/>
         <source>contact_presence_status_busy</source>
         <translation>Beschäftigt</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1936"/>
+        <location filename="../../tool/Utils.cpp" line="1966"/>
         <source>contact_presence_status_do_not_disturb</source>
         <translation>Nicht stören</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1939"/>
+        <location filename="../../tool/Utils.cpp" line="1969"/>
         <source>contact_presence_status_offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2165"/>
+        <location filename="../../tool/Utils.cpp" line="2195"/>
         <source>chat_message_edit_error</source>
         <extracomment>Cannot edit to invalid message</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2171"/>
+        <location filename="../../tool/Utils.cpp" line="2201"/>
         <source>info_popup_edited_message_error</source>
         <extracomment>Could not send edited message : %1</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2198"/>
+        <location filename="../../tool/Utils.cpp" line="2228"/>
         <source>info_popup_send_edited_message_error_message</source>
         <extracomment>Failed to create edited message</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2230"/>
+        <location filename="../../tool/Utils.cpp" line="2260"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
         <translation>Fehler mit der Aufzeichnung</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2091"/>
-        <location filename="../../tool/Utils.cpp" line="2123"/>
-        <location filename="../../tool/Utils.cpp" line="2167"/>
-        <location filename="../../tool/Utils.cpp" line="2232"/>
+        <location filename="../../tool/Utils.cpp" line="2121"/>
+        <location filename="../../tool/Utils.cpp" line="2153"/>
+        <location filename="../../tool/Utils.cpp" line="2197"/>
+        <location filename="../../tool/Utils.cpp" line="2262"/>
         <source>chat_error</source>
         <extracomment>Error creating or opening the chat
 ----------
@@ -6922,62 +6922,62 @@ Error in the chat</extracomment>
         <translation>Fehler im Chat</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2089"/>
+        <location filename="../../tool/Utils.cpp" line="2119"/>
         <source>chat_message_forward_error</source>
         <extracomment>Cannot forward an invalid message</extracomment>
         <translation>Eine ungültige Nachricht kann nicht weitergeleitet werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2093"/>
-        <location filename="../../tool/Utils.cpp" line="2108"/>
-        <location filename="../../tool/Utils.cpp" line="2125"/>
-        <location filename="../../tool/Utils.cpp" line="2152"/>
-        <location filename="../../tool/Utils.cpp" line="2169"/>
-        <location filename="../../tool/Utils.cpp" line="2196"/>
-        <location filename="../../tool/Utils.cpp" line="2234"/>
-        <location filename="../../tool/Utils.cpp" line="2248"/>
+        <location filename="../../tool/Utils.cpp" line="2123"/>
+        <location filename="../../tool/Utils.cpp" line="2138"/>
+        <location filename="../../tool/Utils.cpp" line="2155"/>
+        <location filename="../../tool/Utils.cpp" line="2182"/>
+        <location filename="../../tool/Utils.cpp" line="2199"/>
+        <location filename="../../tool/Utils.cpp" line="2226"/>
+        <location filename="../../tool/Utils.cpp" line="2264"/>
+        <location filename="../../tool/Utils.cpp" line="2278"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2095"/>
+        <location filename="../../tool/Utils.cpp" line="2125"/>
         <source>info_popup_forward_message_error</source>
         <extracomment>Could not forward message : %1</extracomment>
         <translation>Nachricht konnte nicht weitergeleitet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2110"/>
+        <location filename="../../tool/Utils.cpp" line="2140"/>
         <source>info_popup_send_forward_message_error_message</source>
         <extracomment>Failed to create forward message</extracomment>
         <translation>Weiterleitungsnachricht konnte nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2121"/>
+        <location filename="../../tool/Utils.cpp" line="2151"/>
         <source>chat_message_reply_error</source>
         <extracomment>Cannot reply to invalid message</extracomment>
         <translation>Auf eine ungültige Nachricht kann nicht geantwortet werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2127"/>
+        <location filename="../../tool/Utils.cpp" line="2157"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
         <translation>Antwort konnte nicht gesendet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2154"/>
+        <location filename="../../tool/Utils.cpp" line="2184"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
         <translation>Antwort konnte nicht erstellt werden</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2236"/>
+        <location filename="../../tool/Utils.cpp" line="2266"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
         <translation>Sprachnachricht konnte nicht gesendet werden: %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2250"/>
+        <location filename="../../tool/Utils.cpp" line="2280"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Nachricht aus der Aufnahme konnte nicht erstellt werden</translation>
