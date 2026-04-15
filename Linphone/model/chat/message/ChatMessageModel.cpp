@@ -34,7 +34,7 @@ ChatMessageModel::ChatMessageModel(const std::shared_ptr<linphone::ChatMessage> 
     : ::Listener<linphone::ChatMessage, linphone::ChatMessageListener>(chatMessage, parent) {
 	// lDebug() << "[ChatMessageModel] new" << this << " / SDKModel=" << chatMessage.get();
 	mustBeInLinphoneThread(getClassName());
-	mEphemeralTimer.setInterval(60);
+	mEphemeralTimer.setInterval(1000);
 	mEphemeralTimer.setSingleShot(false);
 	if (mMonitor->getEphemeralExpireTime() != 0) mEphemeralTimer.start();
 	mChatRoom = mMonitor->getChatRoom();
