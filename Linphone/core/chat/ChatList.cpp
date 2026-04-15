@@ -125,6 +125,13 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			}
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
 			for (auto it : linphoneChatRooms) {
+				auto state = it->getState();
+				if (state == linphone::ChatRoom::State::CreationFailed ||
+				    state == linphone::ChatRoom::State::CreationPending ||
+				    state == linphone::ChatRoom::State::TerminationPending ||
+				    state == linphone::ChatRoom::State::Instantiated) {
+					continue;
+				}
 				auto model = createChatCore(it);
 				chats->push_back(model);
 			}
