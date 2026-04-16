@@ -103,7 +103,7 @@
     <message>
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
-        <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
+        <extracomment>&quot;Erreur lors de la récupération des appareils : %1&quot;</extracomment>
         <translation>Fehler beim Abrufen der Geräte</translation>
     </message>
 </context>
@@ -300,54 +300,60 @@
         <translation>Internationale Vorwahl*</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="194"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="198"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
         <translation>Konto trennen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="202"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="206"/>
         <source>manage_account_delete_message</source>
         <translation>Ihr Konto wird aus diesem Linphone-Client entfernt, bleibt jedoch auf Ihren anderen Geräten verbunden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="221"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="225"/>
         <source>manage_account_dialog_remove_account_title</source>
         <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
         <translation>Vom Konto abmelden?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="223"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="227"/>
         <source>manage_account_dialog_remove_account_message</source>
         <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://sip.linphone.org</extracomment>
         <translation>Wenn Sie Ihr Konto dauerhaft löschen möchten, besuchen Sie: https://sip.linphone.org</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="131"/>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="280"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="291"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="318"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
+        <source>no_device_message</source>
+        <extracomment>No device fetched</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="329"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
         <translation>Löschen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="327"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="338"/>
         <source>manage_account_device_remove_confirm_dialog</source>
         <translation>%1 löschen?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="341"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="352"/>
         <source>manage_account_device_last_connection</source>
         <extracomment>&quot;Dernière connexion:&quot;</extracomment>
         <translation>Letzte Anmeldung:</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="359"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="370"/>
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>Keine Information</translation>
@@ -3214,103 +3220,103 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation>Vertrauenslevel erhöhen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="146"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="147"/>
         <source>contact_dialog_devices_trust_popup_message</source>
-        <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
+        <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.</extracomment>
         <translation>Um das Vertrauenslevel zu erhöhen müssen Sie Ihren Kontakt anrufen und einen Code bestätigen.&lt;br&gt;&lt;br&gt;Sie sind dabei, &quot;%1&quot; anzurufen. Möchten Sie fortfahren?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="155"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="156"/>
         <source>popup_do_not_show_again</source>
         <extracomment>Ne plus afficher</extracomment>
         <translation>Nicht mehr anzeigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="170"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="171"/>
         <source>cancel</source>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="176"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="177"/>
         <source>dialog_call</source>
         <extracomment>&quot;Appeler&quot;</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="193"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="194"/>
         <source>contact_dialog_devices_trust_help_title</source>
         <extracomment>&quot;Niveau de confiance&quot;</extracomment>
         <translation>Vertrauenslevel</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="195"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="196"/>
         <source>contact_dialog_devices_trust_help_message</source>
         <extracomment>&quot;Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. &lt;br&gt;Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.&quot;</extracomment>
         <translation>Überprüfen Sie die Geräte Ihres Kontakts um sicherzustellen, dass Ihre Kommunikation sicher und unkompromittiert ist. Wenn alle Geräte überprüft sind, erreichen Sie das höchste Vertrauenslevel.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="218"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="219"/>
         <source>dialog_ok</source>
         <extracomment>&quot;Ok&quot;</extracomment>
         <translation>Ok</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="247"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="248"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Kontakte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="269"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="270"/>
         <source>create_contact_accessible_name</source>
         <extracomment>Create new contact</extracomment>
         <translation>Neuen Kontakt erstellen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="288"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="289"/>
         <source>search_bar_look_for_contact_text</source>
         <extracomment>Rechercher un contact</extracomment>
         <translation>Kontakt suchen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="300"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="301"/>
         <source>list_filter_no_result_found</source>
         <extracomment>Aucun résultat…</extracomment>
         <translation>Kein Ergebnis…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="302"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="303"/>
         <source>contact_list_empty</source>
         <extracomment>Aucun contact pour le moment</extracomment>
         <translation>Zurzeit keine Kontakte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="369"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="370"/>
         <source>more_info_accessible_name</source>
         <extracomment>More info %1</extracomment>
         <translation>Weitere Informationen %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="386"/>
         <source>expand_accessible_name</source>
         <extracomment>Expand %1</extracomment>
         <translation>Vergrößern %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="625"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="626"/>
         <source>contact_details_medias_and_documents_title</source>
         <extracomment>&quot;Medias &amp; documents&quot;</extracomment>
         <translation>Medien &amp; Dokumente</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="383"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="384"/>
         <source>shrink_accessible_name</source>
         <extracomment>Shrink %1</extracomment>
         <translation>Verkleinern %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="405"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="807"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="406"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="808"/>
         <source>contact_details_edit</source>
         <extracomment>Edit
 ----------
@@ -3318,19 +3324,19 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation>Bearbeiten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="419"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="420"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="430"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="431"/>
         <source>contact_message_action</source>
         <extracomment>&quot;Message&quot;</extracomment>
         <translation>Nachricht</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="444"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="445"/>
         <source>contact_video_call_action</source>
         <extracomment>&quot;Appel vidéo&quot;</extracomment>
         <translation>Videoanruf</translation>
@@ -3356,25 +3362,25 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation type="vanished">Offline</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="493"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="494"/>
         <source>contact_details_numbers_and_addresses_title</source>
         <extracomment>&quot;Coordonnées&quot;</extracomment>
         <translation>Kontaktinformationen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="549"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="550"/>
         <source>call_adress_accessible_name</source>
         <extracomment>Call address %1</extracomment>
         <translation>Adresse %1 anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="582"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="583"/>
         <source>contact_details_company_name</source>
         <extracomment>&quot;Société :&quot;</extracomment>
         <translation>Unternehmen :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="603"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="604"/>
         <source>contact_details_job_title</source>
         <extracomment>&quot;Poste :&quot;</extracomment>
         <translation>Beruf :</translation>
@@ -3385,110 +3391,110 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation type="vanished">Medien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="641"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="661"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="642"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="662"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Show shared medias&quot;</extracomment>
         <translation>Geteilte Medien anzeigen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="680"/>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="700"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="681"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="701"/>
         <source>contact_details_documents_subtitle</source>
         <extracomment>&quot;Show shared documents&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="707"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="708"/>
         <source>contact_details_trust_title</source>
         <extracomment>&quot;Confiance&quot;</extracomment>
         <translation>Vertrauen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="714"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="715"/>
         <source>contact_dialog_devices_trust_title</source>
         <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
         <translation>Vertrauenslevel - Verifizierte Geräte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="723"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="724"/>
         <source>contact_details_no_device_found</source>
         <extracomment>&quot;Aucun appareil&quot;</extracomment>
         <translation>Kein Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="748"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="749"/>
         <source>contact_device_without_name</source>
         <extracomment>&quot;Appareil inconnu&quot;</extracomment>
         <translation>Unbekanntes Gerät</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="769"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="770"/>
         <source>contact_make_call_check_device_trust</source>
         <extracomment>&quot;Vérifier&quot;</extracomment>
         <translation>Überprüfen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="771"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="772"/>
         <source>verify_device_accessible_name</source>
         <extracomment>Verify %1 device</extracomment>
         <translation>Gerät %1 verifizieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="797"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="798"/>
         <source>contact_details_actions_title</source>
         <extracomment>&quot;Autres actions&quot;</extracomment>
         <translation>Weitere Aktionen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="827"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="828"/>
         <source>contact_details_remove_from_favourites</source>
         <extracomment>&quot;Retirer des favoris&quot;</extracomment>
         <translation>Aus Favoriten entfernen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="829"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="830"/>
         <source>contact_details_add_to_favourites</source>
         <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
         <translation>Zu Favoriten hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="846"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="847"/>
         <source>contact_details_share</source>
         <extracomment>&quot;Partager&quot;</extracomment>
         <translation>Teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="857"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="858"/>
         <source>information_popup_error_title</source>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="859"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="860"/>
         <source>contact_details_share_error_mesage</source>
         <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
         <translation>VCard-Erstellung fehlgeschlagen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="864"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="865"/>
         <source>contact_details_share_success_title</source>
         <extracomment>&quot;VCard créée&quot;</extracomment>
         <translation>VCard erstellt</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="866"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="867"/>
         <source>contact_details_share_success_mesage</source>
         <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
         <translation>VCard wurde in %1 gespeichert</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="869"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="870"/>
         <source>contact_details_share_email_title</source>
         <extracomment>&quot;Partage de contact&quot;</extracomment>
         <translation>Kontakt teilen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="910"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="911"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
         <translation>Kontakt löschen</translation>
@@ -4921,19 +4927,19 @@ Ablauf: %1</translation>
         <translation>Zeitzone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="233"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="232"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
         <translation>Beschreibung hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="284"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="283"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Teilnehmer hinzufügen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="346"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="345"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Einladung an Teilnehmer senden</translation>
