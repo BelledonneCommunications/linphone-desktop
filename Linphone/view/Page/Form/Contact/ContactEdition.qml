@@ -293,6 +293,7 @@ MainRightPanel {
 					}
 					delegate: FormItemLayout {
 						label: modelData.label
+						Layout.fillWidth: true
 						contentItem: RowLayout {
 							id: addressLayout
                             spacing: Utils.getSizeWithScreenRatio(10)

@@ -127,7 +127,7 @@ void LimitProxy::setMaxDisplayItems(int maxItems) {
 		emit maxDisplayItemsChanged();
 
 		if (model && getDisplayCount(modelCount) != oldCount) {
-			invalidate();
+			invalidateFilter();
 		}
 	}
 }

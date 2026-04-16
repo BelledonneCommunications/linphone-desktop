@@ -238,7 +238,10 @@ FocusScope {
                     columns: mainItem.call ? 1 : children.length
                     rows: 1
                     onVisibleChanged: {
-                        if(!visible) chatMessagesSearchBar.clearText()
+                        if(!visible) {
+                            chatMessagesSearchBar.clearText()
+                            chatMessagesListView.filterText = ""
+                        }
                         else chatMessagesSearchBar.forceActiveFocus()
                     }
                     columnSpacing: Utils.getSizeWithScreenRatio(50)

@@ -36,7 +36,6 @@ Button {
 			id: textItem
 			horizontalAlignment: Text.AlignLeft
 			verticalAlignment: Text.AlignVCenter
-			Layout.preferredWidth: textMetrics.advanceWidth
 			Layout.fillWidth: true
 			wrapMode: Text.WrapAnywhere
 			text: mainItem.text
