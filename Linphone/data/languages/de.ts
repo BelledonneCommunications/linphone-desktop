@@ -3010,50 +3010,50 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <translation>Beruf</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="318"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="350"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="319"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="351"/>
         <source>sip_address</source>
         <translation>SIP-Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="328"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="329"/>
         <source>sip_address_number_accessible_name</source>
         <extracomment>&quot;SIP address number %1&quot;</extracomment>
         <translation>SIP-Adressen-Nummer %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="343"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
         <source>remove_sip_address_accessible_name</source>
         <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
         <translation>Lösche SIP-Adresse %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="374"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="375"/>
         <source>new_sip_address_accessible_name</source>
         <extracomment>&quot;New SIP address&quot;</extracomment>
         <translation>Neue SIP Adresse</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="411"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="412"/>
         <source>phone_number_number_accessible_name</source>
         <extracomment>&quot;Phone number number %1&quot;</extracomment>
         <translation>Telefonnummer %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="426"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="427"/>
         <source>remove_phone_number_accessible_name</source>
         <extracomment>Remove phone number %1</extracomment>
         <translation>Lösche Telefonnummer %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="457"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="458"/>
         <source>new_phone_number_accessible_name</source>
         <extracomment>&quot;New phone number&quot;</extracomment>
         <translation>Neue Telefonnummer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="408"/>
-        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="434"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="409"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="435"/>
         <source>phone</source>
         <extracomment>&quot;Téléphone&quot;</extracomment>
         <translation>Telefon</translation>
@@ -6464,36 +6464,36 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <translation>Start a group call ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="486"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="489"/>
         <source>reply_to_label</source>
         <extracomment>Reply to %1</extracomment>
         <translation>Auf %1 antworten</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="487"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="490"/>
         <source>conversation_editing_message_title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="706"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="709"/>
         <source>shared_medias_title</source>
         <extracomment>Shared medias</extracomment>
         <translation>Geteilte Medien</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="708"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="711"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
         <translation>Geteilte Dokumente</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="737"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="740"/>
         <source>forward_to_title</source>
         <extracomment>Forward to…</extracomment>
         <translation>Weiterleiten an…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="771"/>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="774"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konversationen</translation>
