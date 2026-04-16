@@ -9,7 +9,7 @@ Control.Switch {
     id: mainItem
     hoverEnabled: true
     property bool keyboardFocus: FocusHelper.keyboardFocus
-    property bool shadowEnabled: mainItem.hovered || mainItem.activeFocus && !keyboardFocus
+    property bool shadowEnabled: enabled && mainItem.hovered || mainItem.activeFocus && !keyboardFocus
     // Text properties
     font {
         pixelSize: Typography.p1.pixelSize

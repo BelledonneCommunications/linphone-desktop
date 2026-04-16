@@ -183,6 +183,10 @@ AbstractSettingsLayout {
 				subTitleText: account?.core.humaneReadableRegistrationStateExplained
 				propertyName: "registerEnabled"
 				propertyOwnerGui: account
+				Binding on checked {
+					when: account?.core.registrationState === LinphoneEnums.RegistrationState.Failed
+					value: false
+				}
 			}
 			RowLayout {
 				id:mainItem
@@ -264,6 +268,13 @@ AbstractSettingsLayout {
                     Layout.alignment: Qt.AlignHCenter
                     visible: devices.loading
                 }
+
+				Text {
+					visible: devices.count === 0
+					font: Typography.h3m
+					//: No device fetched
+					text: qsTr("no_device_message")
+				}
 
 				Repeater {
 					id: devices

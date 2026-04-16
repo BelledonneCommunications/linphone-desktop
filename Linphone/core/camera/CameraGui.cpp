@@ -147,22 +147,24 @@ void CameraGui::updateSDKRenderer(QQuickFramebufferObject::Renderer *renderer) {
 			});
 		} break;
 		case Call: {
-			App::postModelAsync([qmlName = mQmlName, callGui = mCallGui, renderer]() {
-				auto call = callGui->getCore()->getModel()->getMonitor();
-				if (call) {
-					lInfo() << "[Camera] (" << qmlName << ") Camera to CallModel";
-					call->setNativeVideoWindowId(renderer);
-				}
-			});
+			if (mCallGui)
+				App::postModelAsync([qmlName = mQmlName, callGui = mCallGui, renderer]() {
+					auto call = callGui->getCore()->getModel()->getMonitor();
+					if (call) {
+						lInfo() << "[Camera] (" << qmlName << ") Camera to CallModel";
+						call->setNativeVideoWindowId(renderer);
+					}
+				});
 		} break;
 		case Device: {
-			App::postModelAsync([qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, renderer]() {
-				auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
-				if (device) {
-					lInfo() << "[Camera] (" << qmlName << ") Camera to ParticipantDevice";
-					device->setNativeVideoWindowId(renderer);
-				}
-			});
+			if (mCallGui)
+				App::postModelAsync([qmlName = mQmlName, participantDeviceGui = mParticipantDeviceGui, renderer]() {
+					auto device = participantDeviceGui->getCore()->getModel()->getMonitor();
+					if (device) {
+						lInfo() << "[Camera] (" << qmlName << ") Camera to ParticipantDevice";
+						device->setNativeVideoWindowId(renderer);
+					}
+				});
 		} break;
 		default: {
 		}

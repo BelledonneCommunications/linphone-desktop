@@ -226,7 +226,6 @@ FocusScope {
 					id: descriptionEdit
 					Layout.fillWidth: true
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(275)
-					Layout.preferredHeight: contentHeight
                     leftPadding: Utils.getSizeWithScreenRatio(8)
                     rightPadding: Utils.getSizeWithScreenRatio(8)
                     //: "Ajouter une description"

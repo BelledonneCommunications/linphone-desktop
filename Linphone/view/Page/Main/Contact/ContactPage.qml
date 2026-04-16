@@ -142,7 +142,8 @@ AbstractMainPage {
         onAboutToHide: neverDisplayAgainCheckbox.checked = false
         //: "Augmenter la confiance"
         title: qsTr("contact_dialog_devices_trust_popup_title")
-        //: "Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.<br><br>Vous êtes sur le point d’appeler “%1” voulez vous continuer ?"
+        //: "Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.
+        // Vous êtes sur le point d’appeler “%1” voulez vous continuer ?"
         text: qsTr("contact_dialog_devices_trust_popup_message").arg(verifyDevicePopup.deviceName)
         buttons: RowLayout {
             RowLayout {

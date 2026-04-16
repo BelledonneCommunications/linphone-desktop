@@ -56,7 +56,14 @@ void AccountManagerServicesModel::setRequestAndSubmit(
 	connect(mRequest.get(), &AccountManagerServicesRequestModel::requestSuccessfull, this,
 	        &AccountManagerServicesModel::requestSuccessfull);
 	connect(mRequest.get(), &AccountManagerServicesRequestModel::requestError, this,
-	        &AccountManagerServicesModel::requestError);
+	        [this](const std::shared_ptr<const linphone::AccountManagerServicesRequest> &request, int statusCode,
+	               const std::string &errorMessage,
+	               const std::shared_ptr<const linphone::Dictionary> &parameterErrors) {
+		        mRequest->setSelf(nullptr);
+		        mRequest->deleteLater();
+		        mRequest = nullptr;
+		        emit requestError(request, statusCode, errorMessage, parameterErrors);
+	        });
 	connect(mRequest.get(), &AccountManagerServicesRequestModel::devicesListFetched, this,
 	        &AccountManagerServicesModel::devicesListFetched);
 	mRequest->submit();
