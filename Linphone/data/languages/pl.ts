@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>Błąd podczas pobierania urządzeń</translation>
+        <translation type="unfinished">Błąd podczas pobierania urządzeń</translation>
     </message>
 </context>
 <context>
@@ -2953,7 +2953,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="129"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>Aby zwiększyć poziom zaufania, musisz zadzwonić na urządzenia swoich kontaktów i zweryfikować kod.&lt;br&gt;&lt;br&gt;Zamierzasz zadzwonić do „%1”. Czy chcesz kontynuować?</translation>
+        <translation type="unfinished">Aby zwiększyć poziom zaufania, musisz zadzwonić na urządzenia swoich kontaktów i zweryfikować kod.&lt;br&gt;&lt;br&gt;Zamierzasz zadzwonić do „%1”. Czy chcesz kontynuować?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="138"/>
@@ -7689,6 +7689,52 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
         <source>meeting_info_join_title</source>
         <translation>Dołącz do spotkania</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
+        <source>list_filter_no_result_found</source>
+        <translation>Brak wyników…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
+        <source>record_list_title</source>
+        <translation>Nagrania</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
+        <source>information_popup_error_title</source>
+        <translation>Błąd</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>Połączenie Przychodzące</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Akceptuj</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>Odmów</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Błąd</translation>
     </message>
 </context>
 </TS>

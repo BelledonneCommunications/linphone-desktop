@@ -7377,5 +7377,23 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>save</source>
         <translation>Desar</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
+        <source>information_popup_error_title</source>
+        <translation>Error</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Error</translation>
+    </message>
 </context>
 </TS>

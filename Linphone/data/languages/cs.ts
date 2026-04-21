@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>Chyba při načítání zařízení</translation>
+        <translation type="unfinished">Chyba při načítání zařízení</translation>
     </message>
 </context>
 <context>
@@ -487,6 +487,11 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
         <source>voicemail_address_tooltip</source>
         <translation>SIP adresa vytočená po kliknutí na tlačítko hlasové schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="282"/>
+        <source>account_settings_ccmp_server_url_title</source>
+        <translation>URL CCMP serveru</translation>
     </message>
 </context>
 <context>
@@ -966,6 +971,11 @@
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Videohovor</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
+        <source>contact_conversation_action</source>
+        <translation>Konverzace</translation>
+    </message>
 </context>
 <context>
     <name>CallHistoryListView</name>
@@ -989,6 +999,11 @@
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
         <source>call_audio_incoming</source>
         <translation>Příchozí hovor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="260"/>
+        <source>call_history_entry_accessible_name</source>
+        <translation>%1 – %2 – %3 – šipka vpravo pro tlačítko zpětného volání</translation>
     </message>
 </context>
 <context>
@@ -1910,6 +1925,11 @@
         <source>call_deactivate_speaker_hint</source>
         <extracomment>&quot;Désactiver le son&quot;</extracomment>
         <translation>Ztlumit reproduktor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="530"/>
+        <source>conference_end_to_end_encrypted</source>
+        <translation>Schůzka s koncovým šifrováním</translation>
     </message>
 </context>
 <context>
@@ -2985,7 +3005,7 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>Pro zvýšení úrovně důvěryhodnosti je třeba zavolat na zařízení kontaktu a ověřit kód.&lt;br&gt;&lt;br&gt;Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
+        <translation type="unfinished">Pro zvýšení úrovně důvěryhodnosti je třeba zavolat na zařízení kontaktu a ověřit kód.&lt;br&gt;&lt;br&gt;Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -4467,7 +4487,7 @@ Expirace : %1</translation>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Pokus o připojení k jednotnému přihlášení na webové stránce ...</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -7658,17 +7678,17 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Chyba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
         <source>record_list_empty</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Žádný záznam</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
         <source>record_list_title</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Záznamy</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
@@ -7678,7 +7698,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation>Žádný výsledek…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
@@ -7824,6 +7844,45 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
         <source>voicemail_accessible_name</source>
         <translation>Hlasová schránka</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>Příchozí hovor</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Přijmout</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>Odmítnout</translation>
+    </message>
+</context>
+<context>
+    <name>AbstractSettingsMenu</name>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="52"/>
+        <source>back_previous_menu_accessible_name</source>
+        <translation>Zpět do předchozího menu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="76"/>
+        <source>settings_page_selection_accessible_name</source>
+        <translation>Výběr stránky nastavení</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Chyba</translation>
     </message>
 </context>
 </TS>

@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>检索设备时出错</translation>
+        <translation type="unfinished">检索设备时出错</translation>
     </message>
 </context>
 <context>
@@ -2820,7 +2820,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>要提高信任级别，您必须呼叫联系人的设备并验证代码。&lt;br&gt;&lt;br&gt;您将要呼叫“%1”，是否要继续？</translation>
+        <translation type="unfinished">要提高信任级别，您必须呼叫联系人的设备并验证代码。&lt;br&gt;&lt;br&gt;您将要呼叫“%1”，是否要继续？</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -7410,12 +7410,12 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
         <source>record_list_empty</source>
-        <translation> </translation>
+        <translation type="unfinished"> </translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
         <source>record_list_title</source>
-        <translation> </translation>
+        <translation>录音</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
@@ -7425,7 +7425,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
-        <translation> </translation>
+        <translation>没有结果…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
@@ -7451,7 +7451,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
-        <translation> </translation>
+        <translation>错误</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
@@ -7536,6 +7536,32 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
         <source>meeting_info_join_title</source>
         <translation>加入会议</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>来电</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>接受</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>拒绝</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>错误</translation>
     </message>
 </context>
 </TS>

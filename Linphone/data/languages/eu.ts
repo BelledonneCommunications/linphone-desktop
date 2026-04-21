@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>Errorea gailak lortzerakoan</translation>
+        <translation type="unfinished">Errorea gailak lortzerakoan</translation>
     </message>
 </context>
 <context>
@@ -2819,7 +2819,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>Konfiantza-maila handitzeko, zure kontaktuaren gailuetara deitu eta kode bat baliozkotu behar duzu.&lt;br&gt;&lt;br&gt;&quot;% 1&quot; deitzear zaude, jarraitu nahi duzu?</translation>
+        <translation type="unfinished">Konfiantza-maila handitzeko, zure kontaktuaren gailuetara deitu eta kode bat baliozkotu behar duzu.&lt;br&gt;&lt;br&gt;&quot;% 1&quot; deitzear zaude, jarraitu nahi duzu?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -7427,12 +7427,12 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
         <source>record_list_empty</source>
-        <translation>Ez da tokenik aurkitu</translation>
+        <translation type="unfinished">Ez da tokenik aurkitu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
         <source>record_list_title</source>
-        <translation>Ez da tokenik aurkitu</translation>
+        <translation>Grabazioak</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
@@ -7442,7 +7442,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
-        <translation>Ez da tokenik aurkitu</translation>
+        <translation>Ez dago emaitzarik…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
@@ -7468,7 +7468,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
-        <translation>Ez da tokenik aurkitu</translation>
+        <translation>Errorea</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
@@ -7561,6 +7561,32 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
         <source>meeting_info_join_title</source>
         <translation>Batu bilerara</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>Sarrerako deia</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Onartu</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>Ukatu</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Errorea</translation>
     </message>
 </context>
 </TS>

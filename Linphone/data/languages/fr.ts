@@ -5722,13 +5722,13 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>
         <source>record_list_empty</source>
         <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
-        <translation>Pas de token trouvé</translation>
+        <translation type="unfinished">Pas de token trouvé</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
         <source>record_list_title</source>
         <extracomment>&quot;Records&quot;</extracomment>
-        <translation>Pas de token trouvé</translation>
+        <translation>Enregistrements</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
@@ -5740,7 +5740,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
-        <translation>Pas de token trouvé</translation>
+        <translation>Aucun résultat…</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
@@ -5768,7 +5768,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
-        <translation>Pas de token trouvé</translation>
+        <translation>Erreur</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>

@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation>Erro ao recuperar dispositivos</translation>
+        <translation type="unfinished">Erro ao recuperar dispositivos</translation>
     </message>
 </context>
 <context>
@@ -2856,7 +2856,7 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation>Para aumentar o nível de confiança, você deve ligar para os dispositivos do seu contato e validar um código.&lt;br&gt;&lt;br&gt;Você está prestes a ligar para &quot;%1&quot;. Deseja continuar?</translation>
+        <translation type="unfinished">Para aumentar o nível de confiança, você deve ligar para os dispositivos do seu contato e validar um código.&lt;br&gt;&lt;br&gt;Você está prestes a ligar para &quot;%1&quot;. Deseja continuar?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -7592,6 +7592,26 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_info_join_title</source>
         <translation>Entrar na conferência</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="62"/>
+        <source>record_list_title</source>
+        <translation>Gravações</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
+        <source>list_filter_no_result_found</source>
+        <translation>Nenhum resultado…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="342"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="345"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
+        <source>information_popup_error_title</source>
+        <translation>Erro</translation>
+    </message>
 </context>
 <context>
     <name>Voicemail</name>
@@ -7599,6 +7619,32 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
         <source>voicemail_accessible_name</source>
         <translation>Correio de voz</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>Chamada recebida</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Aceitar</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>Recusar</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Erro</translation>
     </message>
 </context>
 </TS>
