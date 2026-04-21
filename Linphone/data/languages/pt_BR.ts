@@ -4300,6 +4300,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <source>info_popup_success_title</source>
         <translation>Sucesso</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
+        <source>apply_button_text</source>
+        <translation>Aplicar</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>

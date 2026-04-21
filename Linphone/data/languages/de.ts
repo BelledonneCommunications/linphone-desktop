@@ -536,7 +536,7 @@
         <comment>0</comment>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
-            <numerusform>%1 ausgewählte Teilnehmer</numerusform>
+            <numerusform>%1 ausgewählter Teilnehmer</numerusform>
             <numerusform>%1 ausgewählte Teilnehmer</numerusform>
         </translation>
     </message>
@@ -5275,7 +5275,7 @@ Ablauf: %1</translation>
         <location filename="../../model/auth/OIDCModel.cpp" line="330"/>
         <source>oidc_authentication_empty_reply_error</source>
         <extracomment>OIDC reply is empty !</extracomment>
-        <translation>Die Antwort des OIDC-Servers ist leer!</translation>
+        <translation>Die OIDC-Server-Antwort ist leer!</translation>
     </message>
     <message>
         <location filename="../../model/auth/OIDCModel.cpp" line="340"/>

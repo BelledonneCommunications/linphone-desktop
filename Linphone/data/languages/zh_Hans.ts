@@ -3655,7 +3655,7 @@ Error</extracomment>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="39"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
@@ -3962,7 +3962,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
@@ -4259,7 +4259,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation type="unfinished"> </translation>
+        <translation> </translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -5144,7 +5144,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
@@ -5281,7 +5281,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>返回</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>

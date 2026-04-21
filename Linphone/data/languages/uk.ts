@@ -1175,7 +1175,7 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="246"/>
         <source>call_forward_to_address_info_voicemail</source>
-        <translation type="unfinished"></translation>
+        <translation>Голосова пошта</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
@@ -1697,10 +1697,10 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
         </translation>
     </message>
     <message>
@@ -3723,7 +3723,7 @@ Error</extracomment>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="39"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
@@ -3789,6 +3789,11 @@ Error</extracomment>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Усунення несправностей</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
+        <source>help_check_for_update_button_label</source>
+        <translation>Перевірити наявність оновлень</translation>
     </message>
 </context>
 <context>
@@ -4030,7 +4035,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
@@ -4582,10 +4587,10 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%1 вибраний учасник</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
+            <numerusform>%1 вибраних учасників</numerusform>
         </translation>
     </message>
     <message>
@@ -5194,7 +5199,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="46"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
@@ -5331,7 +5336,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
         <source>return_accessible_name</source>
         <extracomment>Return</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Повернутись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>
@@ -5450,20 +5455,20 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="397"/>
         <source>login_proxy_server_url</source>
         <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI вихідного SIP-проксі</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Якщо це поле заповнено, вихідний проксі-сервер буде ввімкнено автоматично. Залиште це поле порожнім, щоб вимкнути його.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URI реєстратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>

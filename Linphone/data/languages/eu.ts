@@ -1631,9 +1631,9 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1135"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1143"/>
         <source>group_call_participant_selected</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
         </translation>
     </message>
     <message>
@@ -4258,7 +4258,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="207"/>
         <source>oidc_connection_waiting_message</source>
-        <translation type="unfinished">Ez da tokenik aurkitu</translation>
+        <translation>Ez da tokenik aurkitu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Main/MainWindow.qml" line="220"/>
@@ -4533,9 +4533,9 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Partaide %1 aukeratuta</numerusform>
+            <numerusform>%1 partaide aukeratuta</numerusform>
         </translation>
     </message>
     <message>
@@ -5406,14 +5406,14 @@ Proiektu komertzial batean gaitzeko, jarri gurekin harremanetan.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="392"/>
         <source>login_proxy_server_url_tooltip</source>
         <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Eremu hau betetzen bada, irteerako proxya automatikoki aktibatuko da. Utzi hutsik desaktibatzeko.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="405"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="410"/>
         <source>login_registrar_uri</source>
         <extracomment>&quot;Registrar URI&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Erregistratu URIa</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="418"/>
