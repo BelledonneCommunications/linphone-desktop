@@ -39,6 +39,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	App::getInstance()->mEngine->setObjectOwnership(this, QQmlEngine::CppOwnership);
 	// Should be call from model Thread
 	mustBeInLinphoneThread(getClassName());
+	auto core = CoreModel::getInstance()->getCore();
 	// Init data
 	auto address = account->getContactAddress();
 	mContactAddress = address ? Utils::coreStringToAppString(account->getContactAddress()->asStringUriOnly()) : "";
@@ -47,7 +48,7 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	mIdentityAddress = identityAddress ? Utils::coreStringToAppString(identityAddress->asStringUriOnly()) : "";
 	mPictureUri = Utils::coreStringToAppString(params->getPictureUri());
 	mRegistrationState = LinphoneEnums::fromLinphone(account->getState());
-	mIsDefaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount() == account;
+	mIsDefaultAccount = core->getDefaultAccount() == account;
 	mUnreadNotifications = account->getMissedCallsCount() + account->getUnreadChatMessageCount();
 	mDisplayName = Utils::coreStringToAppString(identityAddress->getDisplayName());
 	mPublishEnabled = params->publishEnabled();
@@ -90,13 +91,12 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 	// Add listener
 	mAccountModel = Utils::makeQObject_ptr<AccountModel>(account); // OK
 	mAccountModel->setSelf(mAccountModel);
-	mExplicitPresence = LinphoneEnums::fromString(
-	    Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getConfig()->getString(
-	        ToolModel::configAccountSection(account), "explicit_presence", "")));
-	mPresenceNote = Utils::coreStringToAppString(CoreModel::getInstance()->getCore()->getConfig()->getString(
-	    ToolModel::configAccountSection(account), "presence_note", ""));
-	mMaxPresenceNoteSize = CoreModel::getInstance()->getCore()->getConfig()->getInt(
-	    ToolModel::configAccountSection(account), "max_presence_note_size", 140);
+	mExplicitPresence = LinphoneEnums::fromString(Utils::coreStringToAppString(
+	    core->getConfig()->getString(ToolModel::configAccountSection(account), "explicit_presence", "")));
+	mPresenceNote = Utils::coreStringToAppString(
+	    core->getConfig()->getString(ToolModel::configAccountSection(account), "presence_note", ""));
+	mMaxPresenceNoteSize =
+	    core->getConfig()->getInt(ToolModel::configAccountSection(account), "max_presence_note_size", 140);
 	mPresence = mAccountModel->getPresence();
 	mNotificationsAllowed = mAccountModel->getNotificationsAllowed();
 	mDialPlan = Utils::createDialPlanVariant("", " ");

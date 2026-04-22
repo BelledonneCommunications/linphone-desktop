@@ -248,7 +248,7 @@ Item {
                                 magicSearchBar.clearText();
                             }
                         }
-
+                        
                         onTextChanged: {
                             if (text.length != 0)
                                 listPopup.open();
@@ -706,6 +706,10 @@ Item {
                                         console.log("open chat requested, open", chat.core.title);
                                         chatPage.openChatRequested(chat);
                                     }
+                                }
+                                onSelectedChatGuiChanged: {
+                                    magicSearchBar.clearText()
+                                    magicSearchBar.focus = false;
                                 }
                             }
                             onLoaded: {

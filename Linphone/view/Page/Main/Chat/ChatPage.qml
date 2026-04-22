@@ -87,10 +87,12 @@ AbstractMainPage {
     onNoItemButtonPressed: goToNewChat()
     signal newChatItemOpen()
 
-    showDefaultItem: listStackView.currentItem
+    showDefaultItem: mainItem.selectedChatGui == null
+                     && listStackView.currentItem
                      && listStackView.currentItem.objectName == "chatListItem"
                      && listStackView.currentItem.listView.count === 0
                      && !listStackView.currentItem.listView.loading || false
+
 
     function goToNewChat() {
         if (listStackView.currentItem

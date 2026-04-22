@@ -264,6 +264,7 @@ QSharedPointer<ConferenceInfoCore> ConferenceInfoList::getCurrentDateConfInfo(bo
 
 QSharedPointer<ConferenceInfoCore>
 ConferenceInfoList::build(const std::shared_ptr<linphone::ConferenceInfo> &conferenceInfo) {
+	mustBeInLinphoneThread(Q_FUNC_INFO);
 	auto me = CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress();
 	std::list<std::shared_ptr<linphone::ParticipantInfo>> participants = conferenceInfo->getParticipantInfos();
 	bool haveMe = conferenceInfo->getOrganizer()->weakEqual(me);

@@ -1676,7 +1676,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 			auto chatCore = App::getInstance()->getChatList()->findChatById(
 			    Utils::coreStringToAppString(linphoneChatRoom->getIdentifier()));
 			if (!chatCore) {
-				lWarning() << "Utils::getChatForAddress : chat was not found in chat list, create one";
+				lInfo() << "Utils::getChatForAddress : chat was not found in chat list, create one";
 				chatCore = ChatCore::create(linphoneChatRoom);
 			}
 			return chatCore ? QVariant::fromValue(new ChatGui(chatCore)) : QVariant();

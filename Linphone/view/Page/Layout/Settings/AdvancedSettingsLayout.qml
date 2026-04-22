@@ -161,7 +161,7 @@ AbstractSettingsLayout {
 					filterType: PayloadTypeProxy.Audio | PayloadTypeProxy.NotDownloadable
 				}
 				delegate: SwitchSetting {
-					width: audioCodecsList.width
+					width: audioCodecsList ? audioCodecsList.width : 0
                     height: Utils.getSizeWithScreenRatio(32)
 					titleText: Utils.capitalizeFirstLetter(modelData.core.mimeType)
 					subTitleText: modelData.core.clockRate + " Hz"

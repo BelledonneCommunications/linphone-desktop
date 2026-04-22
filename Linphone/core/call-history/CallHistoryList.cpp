@@ -111,10 +111,10 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 	    });
 	mModelConnection->makeConnectToCore(&CallHistoryList::lRemoveEntriesForAddress, [this](QString address) {
 		mModelConnection->invokeToModel([this, address]() {
-			if (auto account = CoreModel::getInstance()->getCore()->getDefaultAccount()) {
+			auto core = CoreModel::getInstance()->getCore();
+			if (auto account = core->getDefaultAccount()) {
 				auto linAddress = ToolModel::interpretUrl(address);
 				if (linAddress) {
-					auto core = CoreModel::getInstance()->getCore();
 					auto accountAddress = account->getParams() ? account->getParams()->getIdentityAddress() : nullptr;
 					if (accountAddress)
 						for (auto &callLog : core->getCallHistory(linAddress, accountAddress)) {

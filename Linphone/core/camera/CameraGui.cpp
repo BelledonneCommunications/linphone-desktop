@@ -52,7 +52,7 @@ CameraGui::~CameraGui() {
 	mRefreshTimer.stop();
 	if (mIsPreview) {
 		lDebug() << "[CameraGui] Deactivation";
-		CoreModel::getInstance()->getCore()->enableVideoPreview(false);
+		App::postModelBlock([] { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
 	}
 	setWindowIdLocation(None);
 }

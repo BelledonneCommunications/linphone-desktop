@@ -51,7 +51,7 @@ ListView {
     }
 
     Button {
-        visible: !mainItem.lastItemVisible
+        visible: !mainItem.lastItemVisible && !atYEnd
         icon.source: AppIcons.downArrow
         leftPadding: Utils.getSizeWithScreenRatio(20)
         rightPadding: Utils.getSizeWithScreenRatio(20)
@@ -221,7 +221,7 @@ ListView {
     header: Control.Control {
         visible: composeLayout.composingName !== "" && composeLayout.composingName !== undefined
         width: mainItem.width
-        // height: visible ? contentItem.implicitHeight + topPadding + bottomPadding : 0
+        height: visible ? composeLayout.height + topPadding + bottomPadding : 0
         z: mainItem.z + 2
         topPadding: Utils.getSizeWithScreenRatio(5)
         bottomPadding: Utils.getSizeWithScreenRatio(5)
@@ -232,6 +232,7 @@ ListView {
         contentItem: RowLayout {
             id: composeLayout
             property var composingName: mainItem.chat?.core.composingName
+            height: childrenRect.height
             Avatar {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)

@@ -81,7 +81,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 	mModelConnection->makeConnectToCore(&CallList::lMergeAll, [this]() {
 		mModelConnection->invokeToModel([this]() {
 			auto core = CoreModel::getInstance()->getCore();
-			auto currentCalls = CoreModel::getInstance()->getCore()->getCalls();
+			auto currentCalls = core->getCalls();
 			std::shared_ptr<linphone::Conference> conference = nullptr;
 
 			// Search a managable conference from calls
@@ -93,7 +93,7 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 				}
 			}
 
-			auto currentCall = CoreModel::getInstance()->getCore()->getCurrentCall();
+			auto currentCall = core->getCurrentCall();
 			bool enablingVideo = false;
 			if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
 			if (!conference) {
