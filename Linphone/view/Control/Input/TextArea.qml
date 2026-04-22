@@ -33,6 +33,19 @@ Control.Control {
 	property alias text: textEdit.text
 
 	signal editingFinished()
+	function clear() {
+		textEdit.clear()
+	}
+	function paste() {
+		textEdit.paste()
+	}
+	function copy() {
+		textEdit.copy()
+	}
+	function cut() {
+		textEdit.cut()
+	}
+	onActiveFocusChanged: if(activeFocus) textEdit.forceActiveFocus()
 
 	
 	Component.onCompleted: {
@@ -62,6 +75,7 @@ Control.Control {
 	contentItem: TextEdit {
 		id: textEdit
 		onEditingFinished: mainItem.editingFinished()
+		Keys.forwardTo: mainItem
 		Text {
 			// anchors.verticalCenter: mainItem.verticalCenter
 			text: mainItem.placeholderText
