@@ -57,20 +57,25 @@ void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
 				emit currentCallChanged();
 				return;
 			}
-			if (callCore) callCore->disconnect(mParticipants.get());
-			callCore = nullptr;
+			if (callCore) {
+				disconnect(callCore, &CallCore::conferenceChanged, mParticipants.get(), nullptr);
+				callCore->deleteLater();
+			}
 		}
 		mCurrentCall = call;
-		if (mCurrentCall) callCore = mCurrentCall->getCore();
-		if (callCore) {
-			connect(callCore, &CallCore::conferenceChanged, mParticipants.get(), [this, callCore]() {
-				auto conference = callCore->getConferenceCore();
+		if (mCurrentCall) {
+			auto newCallCore = mCurrentCall->getCore();
+			if (newCallCore) {
+				connect(newCallCore, &CallCore::conferenceChanged, mParticipants.get(), [this, newCallCore]() {
+					if (!newCallCore) lCritical() << log().arg("Call core is null inside its own connect !");
+					auto conference = newCallCore->getConferenceCore();
+					lDebug() << log().arg("Set conference") << this << " => " << conference;
+					mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+				});
+				auto conference = newCallCore->getConferenceCore();
 				lDebug() << log().arg("Set conference") << this << " => " << conference;
 				mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
-			});
-			auto conference = callCore->getConferenceCore();
-			lDebug() << log().arg("Set conference") << this << " => " << conference;
-			mParticipants->setConferenceModel(conference ? conference->getModel() : nullptr);
+			}
 		}
 		emit currentCallChanged();
 	}
