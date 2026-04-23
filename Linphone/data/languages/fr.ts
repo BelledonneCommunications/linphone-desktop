@@ -6534,66 +6534,66 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>ToolModel</name>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="331"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="332"/>
         <source>call_error_uninterpretable_sip_address</source>
         <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
         <translation>L&apos;adresse n&apos;est pas interprétable comme une adresse SIP</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="406"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="407"/>
         <source>group_call_error_no_account</source>
         <translation>Impossible de créer l&apos;appel de groupe, le compte par défaut n&apos;est pas défini</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="436"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="437"/>
         <source>group_call_error_participants_invite</source>
         <translation>Impossible d&apos;inviter les participants à l&apos;appel de groupe</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="440"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="441"/>
         <source>group_call_error_creation</source>
         <translation>L&apos;appel de groupe n&apos;a pas pu être créé</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="540"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="541"/>
         <source>voice_recording_duration</source>
         <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
         <translation>Message vocal (%1)</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="623"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="624"/>
         <source>unknown_audio_device_name</source>
         <extracomment>&quot;Unknown device&quot;</extracomment>
         <translation>Appareil inconnu</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="660"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="661"/>
         <source>Dummy subject</source>
         <extracomment>Dummy subject</extracomment>
         <translation>Sujet par défaut</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="548"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="549"/>
         <source>conference_invitation</source>
         <translation>Invitation à une réunion</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="552"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="553"/>
         <source>conference_invitation_cancelled</source>
         <translation>Annulation d&apos;une réunion</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="550"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="551"/>
         <source>conference_invitation_updated</source>
         <translation>Modification d&apos;une réunion</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="563"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="564"/>
         <source>conversation_message_content_deleted_label</source>
         <translation>&lt;i&gt;Le message a été supprimé&lt;/i&gt;</translation>
     </message>
     <message>
-        <location filename="../../model/tool/ToolModel.cpp" line="562"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="563"/>
         <source>conversation_message_content_deleted_by_us_label</source>
         <translation>&lt;i&gt;Vous avez supprimé le message&lt;/i&gt;</translation>
     </message>
