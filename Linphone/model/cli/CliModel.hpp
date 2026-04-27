@@ -49,6 +49,7 @@ public:
 	void cliBye(QHash<QString, QString> args);
 	void cliAccept(QHash<QString, QString> args);
 	void cliDecline(QHash<QString, QString> args);
+	void cliUseSips(QHash<QString, QString> args);
 
 	static QRegularExpression mRegExpArgs;
 	static QRegularExpression mRegExpFunctionName;
@@ -130,7 +131,7 @@ public:
 		UrlFormat
 	};
 
-	void executeCommand(const QString &command);
+	void executeCommand(QString command);
 signals:
 	void showMainWindow();
 

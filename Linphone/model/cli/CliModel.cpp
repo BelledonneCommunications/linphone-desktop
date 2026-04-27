@@ -35,6 +35,20 @@
 DEFINE_ABSTRACT_OBJECT(CliModel)
 
 std::shared_ptr<CliModel> CliModel::gCliModel;
+
+const QString deprecatedConfigURI = QString(EXECUTABLE_NAME).toLower() + "-config";
+QStringList validSchemes = {QString("sip"),
+                            "sip-" + QString(EXECUTABLE_NAME).toLower(),
+                            QString("sips"),
+                            "sips-" + QString(EXECUTABLE_NAME).toLower(),
+                            QString(EXECUTABLE_NAME).toLower() + "-sip",
+                            QString(EXECUTABLE_NAME).toLower() + "-sips",
+                            QString("tel"),
+                            QString("callto"),
+                            deprecatedConfigURI};
+
+QStringList deprecatedSchemes = {"sips-" + QString(EXECUTABLE_NAME).toLower(), deprecatedConfigURI};
+
 QMap<QString, CliModel::Command> CliModel::mCommands{
     createCommand("show", QT_TR_NOOP("show_function_description"), &CliModel::cliShow, {}, true),
     createCommand("fetch-config", QT_TR_NOOP("fetch_config_function_description"), &CliModel::cliFetchConfig, {}, true),
@@ -42,9 +56,10 @@ QMap<QString, CliModel::Command> CliModel::mCommands{
     createCommand("bye", QT_TR_NOOP("bye_function_description"), &CliModel::cliBye, {}, true),
     createCommand("accept", QT_TR_NOOP("accept_function_description"), &CliModel::cliAccept, {}, true),
     createCommand("decline", QT_TR_NOOP("decline_function_description"), &CliModel::cliDecline, {}, true),
+    createCommand("use-sips", QT_TR_NOOP("use_sips_function_description"), &CliModel::cliUseSips, {}, true),
     /*
-    createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference, {
-        { "sip-address", {} }, { "conference-id", {} }
+    createCommand("initiate-conference", QT_TR_NOOP("initiateConferenceFunctionDescription"), cliInitiateConference,
+    { { "sip-address", {} }, { "conference-id", {} }
     }),
     createCommand("join-conference", QT_TR_NOOP("joinConferenceFunctionDescription"), cliJoinConference, {
         { "sip-address", {} }, { "conference-id", {} }, { "display-name", {} }
@@ -101,6 +116,7 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 	const QStringList texts = match.capturedTexts();
 
 	const QString functionName = texts[1];
+	const QString functionKey = texts[0];
 	if (!mCommands.contains(functionName)) {
 		if (!isOptional) lWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
 		return QString("");
@@ -117,6 +133,8 @@ QHash<QString, QString> CliModel::parseArgs(const QString &command) {
 	while (it.hasNext()) {
 		QRegularExpressionMatch match = it.next();
 		if (match.hasMatch()) {
+			lInfo() << "arg parsed" << match.captured(1)
+			        << (match.captured(2).isEmpty() ? match.captured(3) : match.captured(2));
 			args[match.captured(1)] = (match.captured(2).isEmpty() ? match.captured(3) : match.captured(2));
 		}
 	}
@@ -211,6 +229,9 @@ void CliModel::cliDecline(QHash<QString, QString> args) {
 	}
 }
 
+void CliModel::cliUseSips(QHash<QString, QString> args) {
+}
+
 /*
 QString CoreModel::getFetchConfig(QCommandLineParser *parser) {
     QString filePath = parser->value("fetch-config");
@@ -289,7 +310,9 @@ void CliModel::Command::executeUri(QString address, QHash<QString, QString> args
 		lDebug() << QStringLiteral("CliModel : Detecting parameter : %1").arg(parameter[0]);
 		QHash<QString, QString> args = parent->parseArgs(parameters[i]);
 		for (auto it = args.begin(); it != args.end(); ++it) {
+			qDebug() << "process arg" << it.key() << it.value();
 			auto subfonction = parent->parseFunctionName(it.key(), true);
+			qDebug() << "subfonction" << subfonction;
 			if (!subfonction.isEmpty()) {
 				QHash<QString, QString> arg;
 				arg[it.key()] = QByteArray::fromBase64(it.value().toUtf8());
@@ -368,10 +391,9 @@ QString CliModel::Command::getFunctionSyntax() const {
 
 //--------------------------------------------------------------------
 
-void CliModel::executeCommand(const QString &command) { //, CommandFormat *format) {
+void CliModel::executeCommand(QString command) { //, CommandFormat *format) {
 	// Detect if command is a CLI by testing commands
 	const QString &functionName = parseFunctionName(command, false);
-	const QString configURI = QString(EXECUTABLE_NAME).toLower() + "-config";
 	if (!functionName.isEmpty()) { // It is a CLI
 		lInfo() << log().arg("Detecting cli command: `%1`…").arg(command);
 		QHash<QString, QString> args = parseArgs(command);
@@ -390,6 +412,15 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 		// mCommands[functionName].execute(args, this);
 		//  if (format) *format = CliFormat;
 	} else { // It is a URI
+		if (command.startsWith("sip:") || command.startsWith("sips:")) {
+			auto query = command.split('?');
+			if (query.size() > 1 && !query[1].isEmpty()) {
+				lWarning() << log().arg("sip and sips scheme does not take arguments into account anymore. Use sip-" +
+				                        QString(EXECUTABLE_NAME).toLower() + " instead.");
+				command = query[0];
+				lInfo() << "Command has been reduced to " << command;
+			}
+		}
 		QStringList tempSipAddress = command.split(':');
 		QString scheme = "sip";
 		QString transformedCommand; // In order to pass bellesip parsing, set scheme to 'sip:'.
@@ -398,10 +429,8 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 		} else {
 			scheme = tempSipAddress[0].toLower();
 			bool ok = false;
-			for (const QString &validScheme :
-			     {QString("sip"), "sip-" + QString(EXECUTABLE_NAME).toLower(), QString("sips"),
-			      "sips-" + QString(EXECUTABLE_NAME).toLower(), QString(EXECUTABLE_NAME).toLower() + "-sip",
-			      QString(EXECUTABLE_NAME).toLower() + "-sips", QString("tel"), QString("callto"), configURI})
+			lInfo() << log().arg("Using scheme %1").arg(scheme);
+			for (const QString &validScheme : validSchemes)
 				if (scheme == validScheme) {
 					ok = true;
 					break;
@@ -409,17 +438,42 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			if (!ok) {
 				qWarning()
 				    << QStringLiteral("Not a valid URI: `%1` Unsupported scheme: `%2`.").arg(command).arg(scheme);
+				Utils::showInformationPopup("info_popup_error_title",
+				                            //: "Not a valid URI: `%1` Unsupported scheme: `%2`."
+				                            tr("info_popup_cli_unsupported_scheme_message").arg(command).arg(scheme),
+				                            false);
 				return;
+			}
+			bool deprecated = false;
+			for (const QString &deprecatedScheme : deprecatedSchemes)
+				if (scheme == deprecatedScheme) {
+					deprecated = true;
+					break;
+				}
+			if (deprecated) {
+				lWarning() << scheme
+				           << "is deprecated. It will be removed in a further version. Use sip-" +
+				                  QString(EXECUTABLE_NAME).toLower()
+				           << "instead.";
 			}
 			tempSipAddress[0] = "sip";
 			transformedCommand = tempSipAddress.join(':');
 		}
-		if (scheme == configURI) {
+		if (scheme == deprecatedConfigURI) {
+			lWarning() << scheme
+			           << "is deprecated and will be removed in a further version. Please use sip-" +
+			                  QString(EXECUTABLE_NAME).toLower()
+			           << "with" << QString(EXECUTABLE_NAME).toLower() + "-fetch-config as an argument.";
 			QHash<QString, QString> args = parseArgs(command);
 			QString fetchUrl;
-			if (args.contains("fetch-config")) fetchUrl = QByteArray::fromBase64(args["fetch-config"].toUtf8());
-			else {
-				QUrl url(command.mid(configURI.size() + 1)); // Remove 'exec-config:'
+			if (args.contains("fetch-config") || args.contains(QString(EXECUTABLE_NAME).toLower() + "fetch-config")) {
+				if (args.contains("fetch-config"))
+					lWarning() << "\"fetch-config\" argument is deprecated and will be removed in further version. "
+					              "Please use \"" +
+					                  QString(EXECUTABLE_NAME).toLower() + "fetch-config\" instead";
+				fetchUrl = QByteArray::fromBase64(args["fetch-config"].toUtf8());
+			} else {
+				QUrl url(command.mid(deprecatedConfigURI.size() + 1)); // Remove 'exec-config:'
 				if (url.scheme().isEmpty()) url.setScheme("https");
 				fetchUrl = url.toString();
 			}
@@ -443,19 +497,89 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 				    Utils::appStringToCoreString(qAddress)); // Test if command is an address
 			}
 			// if (format) *format = UriFormat;
+
 			lInfo() << log().arg("Detecting URI command: `%1`…").arg(command);
 			QString functionName;
 			if (address) {
-				functionName = Utils::coreStringToAppString(address->getHeader("method")).isEmpty()
-				                   ? QStringLiteral("call")
-				                   : Utils::coreStringToAppString(address->getHeader("method"));
+				bool useCallHeader = false;
+				if (!Utils::coreStringToAppString(address->getHeader("method")).isEmpty()) {
+					if (scheme == "sip" || scheme == "sips") {
+						useCallHeader = true;
+					} else {
+						lWarning() << "\"method\" argument is deprecated. Use \"" + QString(EXECUTABLE_NAME).toLower() +
+						                  "-action\" instead.";
+						//: Deprecated
+						// Utils::showInformationPopup(
+						//     tr("cli_command_deprecated_title"),
+						//     //: "\"method\" argument is deprecated and will be removed in further version. Use" <<
+						//     //: QString(EXECUTABLE_NAME).toLower() + "\"-action\" instead."
+						//     tr("cli_command_deprecated_message"), false);
+						functionName = Utils::coreStringToAppString(address->getHeader("method"));
+					}
+
+				} else if (!Utils::coreStringToAppString(
+				                address->getHeader(QString(EXECUTABLE_NAME).toLower().toStdString() + "-action"))
+				                .isEmpty()) {
+					if (scheme == "sip" || scheme == "sips") {
+						useCallHeader = true;
+					} else {
+						functionName = Utils::coreStringToAppString(
+						    address->getHeader(QString(EXECUTABLE_NAME).toLower().toStdString() + "-action"));
+					}
+				} else if (!Utils::coreStringToAppString(
+				                address->getHeader(QString(EXECUTABLE_NAME).toLower().toStdString() + "-fetch-config"))
+				                .isEmpty()) {
+					if (scheme == "sip" || scheme == "sips") {
+						useCallHeader = true;
+					} else {
+						functionName = "fetch-config";
+					}
+				} else if (!Utils::coreStringToAppString(
+				                address->getHeader(QString(EXECUTABLE_NAME).toLower().toStdString() + "-use-sips"))
+				                .isEmpty()) {
+					if (scheme == "sip" || scheme == "sips") {
+						useCallHeader = true;
+					} else {
+						functionName = "use-sips";
+					}
+				} else functionName = QStringLiteral("call");
+				if (useCallHeader) {
+					lWarning() << log().arg(
+					    "sip and sips scheme does not take arguments into account anymore. Use sip-" +
+					    QString(EXECUTABLE_NAME).toLower() + " instead.");
+					functionName = QStringLiteral("call");
+				}
+
 			} else {
 				QStringList fields = command.split('?');
 				if (fields.size() > 1) {
-					fields = fields[1].split('&');
-					for (int i = 0; i < fields.size() && functionName.isEmpty(); ++i) {
-						QStringList data = fields[i].split('=');
-						if (data[0] == "method" && data.size() > 1) functionName = data[1];
+					if (scheme == "sip" || scheme == "sips") {
+						lWarning() << log().arg(
+						    "sip and sips scheme does not take arguments into account anymore. Use sip-" +
+						    QString(EXECUTABLE_NAME).toLower() + " instead.");
+					} else {
+						fields = fields[1].split('&');
+						for (int i = 0; i < fields.size() && functionName.isEmpty(); ++i) {
+							QStringList data = fields[i].split('=');
+							if (data[0] == "method" && data.size() > 1) {
+								lWarning() << "\"method\" argument is deprecated. Use \"" +
+								                  QString(EXECUTABLE_NAME).toLower() + "-action\" instead.";
+								//: Deprecated
+								// Utils::showInformationPopup(
+								//     tr("cli_command_deprecated_title"),
+								//     //: "\"method\" argument is deprecated and will be removed in further
+								//     version. Use"
+								//     <<
+								//     //: QString(EXECUTABLE_NAME).toLower() + "\"-action\" instead."
+								//     tr("cli_command_deprecated_message"), false);
+								functionName = data[1];
+							} else if (data[0].startsWith(QString(EXECUTABLE_NAME).toLower() + "-") &&
+							           data.size() > 1) {
+								auto methodName = data[0].remove(QString(EXECUTABLE_NAME).toLower() + "-");
+								lInfo() << "Detecting parameter method" << methodName;
+								functionName = data[1];
+							}
+						}
 					}
 					if (functionName.isEmpty()) functionName = "call";
 				}
@@ -472,9 +596,16 @@ void CliModel::executeCommand(const QString &command) { //, CommandFormat *forma
 			QHash<QString, QString> headers;
 			if (address) {
 				// TODO: check if there is too much headers.
+				lInfo() << "scheme is" << scheme;
+				// TODO check ici qu'on met pas fetch-oconfig ou au dessus dans les getHeaders
 				for (const auto &argName : mCommands[functionName].mArgsScheme.keys()) {
-					const std::string header = address->getHeader(Utils::appStringToCoreString(argName));
-					headers[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
+					if (scheme == "sip" && scheme == "sips") {
+						lWarning() << log().arg("This scheme does not support arguments");
+						break;
+					} else {
+						const std::string header = address->getHeader(Utils::appStringToCoreString(argName));
+						headers[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
+					}
 				}
 				mCommands[functionName].executeUri(qAddress, headers, this);
 			} else mCommands[functionName].executeUrl(command, this);
