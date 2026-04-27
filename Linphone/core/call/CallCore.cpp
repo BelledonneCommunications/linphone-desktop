@@ -185,6 +185,8 @@ CallCore::~CallCore() {
 	lDebug() << "[CallCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
 	emit mCallModel->removeListener();
+	mCallModel->deleteLater();
+	mCallModelConnection->deleteLater();
 }
 
 void CallCore::setSelf(QSharedPointer<CallCore> me) {
