@@ -1614,6 +1614,10 @@ bool App::event(QEvent *event) {
 				handleAccountActivity(accountCore);
 			}
 		}
+		auto state = static_cast<QApplicationStateChangeEvent *>(event);
+		if (state->applicationState() == Qt::ApplicationActive) {
+			Utils::smartShowWindow(getLastActiveWindow());
+		}
 	}
 
 	return SingleApplication::event(event);
