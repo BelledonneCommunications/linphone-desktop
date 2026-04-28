@@ -36,6 +36,15 @@ DEFINE_ABSTRACT_OBJECT(CliModel)
 
 std::shared_ptr<CliModel> CliModel::gCliModel;
 
+QByteArray decodeBase64Url(QString input) {
+	QUrl url(input);
+	// if url is not encoded return it as it is
+	if (url.isValid() && !url.scheme().isEmpty()) {
+		return QUrl::fromPercentEncoding(input.toUtf8()).toUtf8();
+	}
+	return QByteArray::fromBase64(input.toUtf8());
+}
+
 const QString deprecatedConfigURI = QString(EXECUTABLE_NAME).toLower() + "-config";
 QStringList validSchemes = {QString("sip"),
                             "sip-" + QString(EXECUTABLE_NAME).toLower(),
@@ -115,7 +124,7 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 	// const QStringList texts = mRegExpFunctionName.capturedTexts();
 	const QStringList texts = match.capturedTexts();
 
-	const QString functionName = texts[1];
+	QString functionName = texts[1];
 	const QString functionKey = texts[0];
 	if (!mCommands.contains(functionName)) {
 		if (!isOptional) lWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
@@ -146,6 +155,11 @@ void CliModel::cliShow(QHash<QString, QString> args) {
 }
 
 void CliModel::cliFetchConfig(QHash<QString, QString> args) {
+	lInfo() << "Execute fetch-config with arg" << args["fetch-config"];
+	if (args["fetch-config"].isEmpty()) {
+		lWarning() << "Fetch config has no url to process, return";
+		return;
+	}
 	if (args.contains("fetch-config")) {
 		if (CoreModel::getInstance()->getCore()->getGlobalState() != linphone::GlobalState::On)
 			connect(
@@ -315,7 +329,7 @@ void CliModel::Command::executeUri(QString address, QHash<QString, QString> args
 			qDebug() << "subfonction" << subfonction;
 			if (!subfonction.isEmpty()) {
 				QHash<QString, QString> arg;
-				arg[it.key()] = QByteArray::fromBase64(it.value().toUtf8());
+				arg[it.key()] = decodeBase64Url(it.value());
 				lDebug() << "parsing parameters" << it.key() << it.value();
 				parent->addProcess(ProcessCommand(mCommands[it.key()], arg, 1, parent));
 			}
@@ -351,12 +365,16 @@ void CliModel::Command::executeUrl(const QString &pUrl, CliModel *parent) {
 		lDebug() << QStringLiteral("CliModel : Detecting parameter : %1").arg(parameter[0]);
 		QHash<QString, QString> args = parent->parseArgs(parameters[i]);
 		for (auto it = args.begin(); it != args.end(); ++it) {
-			auto subfonction = parent->parseFunctionName(it.key(), true);
+			QString functionName = it.key();
+			if (functionName.startsWith(QString(EXECUTABLE_NAME).toLower() + "-"))
+				functionName.remove(QString(EXECUTABLE_NAME).toLower() + "-");
+			lDebug() << "Find function in" << it.key() << it.value();
+			auto subfonction = parent->parseFunctionName(functionName, true);
 			if (!subfonction.isEmpty()) {
 				QHash<QString, QString> arg;
-				arg[it.key()] = QByteArray::fromBase64(it.value().toUtf8());
-				lDebug() << "parsing parameters" << it.key() << it.value();
-				parent->addProcess(ProcessCommand(mCommands[it.key()], arg, 1, parent));
+				arg[functionName] = decodeBase64Url(it.value());
+				lDebug() << "parsing parameters" << functionName << it.value();
+				parent->addProcess(ProcessCommand(mCommands[functionName], arg, 1, parent));
 			}
 		}
 	}
@@ -471,7 +489,7 @@ void CliModel::executeCommand(QString command) { //, CommandFormat *format) {
 					lWarning() << "\"fetch-config\" argument is deprecated and will be removed in further version. "
 					              "Please use \"" +
 					                  QString(EXECUTABLE_NAME).toLower() + "fetch-config\" instead";
-				fetchUrl = QByteArray::fromBase64(args["fetch-config"].toUtf8());
+				fetchUrl = decodeBase64Url(args["fetch-config"]);
 			} else {
 				QUrl url(command.mid(deprecatedConfigURI.size() + 1)); // Remove 'exec-config:'
 				if (url.scheme().isEmpty()) url.setScheme("https");
@@ -575,9 +593,13 @@ void CliModel::executeCommand(QString command) { //, CommandFormat *format) {
 								functionName = data[1];
 							} else if (data[0].startsWith(QString(EXECUTABLE_NAME).toLower() + "-") &&
 							           data.size() > 1) {
-								auto methodName = data[0].remove(QString(EXECUTABLE_NAME).toLower() + "-");
-								lInfo() << "Detecting parameter method" << methodName;
-								functionName = data[1];
+								functionName = data[0];
+								functionName.remove(QString(EXECUTABLE_NAME).toLower() + "-");
+								lInfo() << "Detecting parameter method" << functionName;
+								if (functionName == "action") {
+									functionName = data[1];
+									lInfo() << "Using method" << functionName;
+								}
 							}
 						}
 					}
@@ -597,18 +619,19 @@ void CliModel::executeCommand(QString command) { //, CommandFormat *format) {
 			if (address) {
 				// TODO: check if there is too much headers.
 				lInfo() << "scheme is" << scheme;
-				// TODO check ici qu'on met pas fetch-oconfig ou au dessus dans les getHeaders
 				for (const auto &argName : mCommands[functionName].mArgsScheme.keys()) {
 					if (scheme == "sip" && scheme == "sips") {
 						lWarning() << log().arg("This scheme does not support arguments");
 						break;
 					} else {
 						const std::string header = address->getHeader(Utils::appStringToCoreString(argName));
-						headers[argName] = QByteArray::fromBase64(QByteArray(header.c_str(), int(header.length())));
+						headers[argName] = decodeBase64Url(QByteArray(header.c_str(), int(header.length())));
 					}
 				}
 				mCommands[functionName].executeUri(qAddress, headers, this);
-			} else mCommands[functionName].executeUrl(command, this);
+			} else {
+				mCommands[functionName].executeUrl(command, this);
+			}
 		}
 	}
 	runProcess();
