@@ -89,6 +89,7 @@ char *Utils::rstrstr(const char *a, const char *b) {
 }
 
 VariantObject *Utils::getDisplayName(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	QStringList splitted = address.split(":");
 	if (splitted.size() > 0 && splitted[0] == "sip") splitted.removeFirst();
 	VariantObject *data = nullptr;
@@ -171,6 +172,7 @@ QString Utils::getInitials(const QString &username, int letterCount) {
 }
 
 VariantObject *Utils::findLocalAccountByAddress(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("findLocalAccountByAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
@@ -269,6 +271,7 @@ void Utils::showInformationPopup(const QString &title,
 }
 
 VariantObject *Utils::haveAccount() {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *result = new VariantObject("haveAccount");
 	if (!result) return nullptr;
 	// Using connect ensure to have sender() and receiver() alive.
@@ -437,6 +440,7 @@ QString Utils::formatDateElapsedTime(const QDateTime &date) {
 }
 
 VariantObject *Utils::interpretUrl(QString uri) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("interpretUrl", uri);
 	if (!data) return nullptr;
 	data->makeRequest([uri]() -> QVariant {
@@ -459,6 +463,7 @@ bool Utils::isValidURL(const QString &url) {
 }
 
 VariantObject *Utils::findAvatarByAddress(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("findAvatarByAddress", "");
 	if (!data) return nullptr;
 	data->makeRequest([address]() -> QVariant {
@@ -484,6 +489,7 @@ VariantObject *Utils::findAvatarByAddress(const QString &address) {
 }
 
 VariantObject *Utils::findFriendByAddress(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("findFriendByAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
@@ -506,6 +512,7 @@ VariantObject *Utils::findFriendByAddress(const QString &address) {
 }
 
 VariantObject *Utils::getFriendSecurityLevel(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
@@ -526,6 +533,7 @@ VariantObject *Utils::getFriendSecurityLevel(const QString &address) {
 }
 
 VariantObject *Utils::getFriendAddressSecurityLevel(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("getFriendAddressSecurityLevel");
 	if (!data) return nullptr;
 	data->makeRequest([address]() {
@@ -1494,6 +1502,7 @@ int Utils::getYear(const QDate &date) {
 }
 
 VariantObject *Utils::isMe(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("isMe", QVariant(false));
 	if (!data) return nullptr;
 	data->makeRequest([address]() { return QVariant::fromValue(ToolModel::isMe(address)); });
@@ -1501,6 +1510,7 @@ VariantObject *Utils::isMe(const QString &address) {
 	return data;
 }
 VariantObject *Utils::isLocal(const QString &address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("isLocal", QVariant(false));
 	data->makeRequest([address]() { return QVariant(ToolModel::isLocal(address)); });
 	data->requestValue();
@@ -1623,6 +1633,7 @@ Utils::createFriendDeviceVariant(const QString &name, const QString &address, Li
 }
 
 VariantObject *Utils::getCurrentCallChat(CallGui *call) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("lookupCurrentCallChat");
 	if (!data) return nullptr;
 	if (!call || !call->mCore) return nullptr;
@@ -1665,6 +1676,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 }
 
 VariantObject *Utils::getChatForAddress(QString address) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("lookupCurrentCallChat");
 	if (!data) return nullptr;
 	data->makeRequest([address, data]() {
@@ -1709,6 +1721,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 }
 
 VariantObject *Utils::createGroupChat(QString subject, QStringList participantAddresses) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("lookupCurrentCallChat");
 	if (!data) return nullptr;
 	data->makeRequest([subject, participantAddresses, data]() {
@@ -1762,6 +1775,7 @@ void Utils::openChat(ChatGui *chat) {
 }
 
 VariantObject *Utils::getChatForCallLog(CallHistoryGui *callLog) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	if (!callLog || !callLog->mCore) return nullptr;
 	VariantObject *data = new VariantObject("lookupCurrentCallChat");
 	if (!data) return nullptr;
@@ -1984,6 +1998,7 @@ VariantObject *Utils::encodeTextToQmlRichFormat(const QString &text,
 	for(auto format : QImageReader::supportedImageFormats())
 	    imageFormat.append(QString::fromLatin1(format).toUpper());
 	    */
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("encodeTextToQmlRichFormat");
 	if (!data) return nullptr;
 	auto primaryColor = getDefaultStyleColor("info_500_main");
@@ -2232,6 +2247,7 @@ void Utils::sendReplaceMessage(ChatMessageGui *message, ChatGui *chatGui, QStrin
 }
 
 VariantObject *Utils::createVoiceRecordingMessage(RecorderGui *recorderGui, ChatGui *chatGui) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	VariantObject *data = new VariantObject("createVoiceRecordingMessage");
 	if (!data) return nullptr;
 	data->makeRequest([recorderCore = recorderGui ? recorderGui->getCore() : nullptr,
