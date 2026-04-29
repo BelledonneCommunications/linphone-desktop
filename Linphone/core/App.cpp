@@ -373,7 +373,7 @@ void App::connectCoreModel() {
 	                                         });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::requestRestart, [this]() {
 		mCoreModelConnection->invokeToCore([this]() {
-			lInfo() << log().arg("Restarting");
+			lInfo() << log().arg("Restarting core");
 			restartCore();
 		});
 	});
@@ -413,24 +413,12 @@ void App::connectCoreModel() {
 		    mCoreModelConnection->invokeToCore([this, gstate] {
 			    lInfo() << log().arg("Core global state changed :") << (int)gstate;
 			    setCoreStarted(gstate == linphone::GlobalState::On);
+			    setCoreGlobalState((int)gstate);
 			    if (gstate == linphone::GlobalState::Configuring) {
-				    if (mMainWindow) {
-					    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
-				    } else {
-					    connect(
-					        this, &App::mainWindowChanged, this,
-					        [this] {
-						        mCoreModelConnection->invokeToModel([this] {
-							        auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
-							        if (gstate == linphone::GlobalState::Configuring)
-								        mCoreModelConnection->invokeToCore([this] {
-									        if (mMainWindow)
-										        QMetaObject::invokeMethod(mMainWindow, "openSSOPage",
-										                                  Qt::DirectConnection);
-								        });
-						        });
-					        },
-					        Qt::SingleShotConnection);
+				    if (mEngine) {
+					    // Force cleaning components when configuring for the buttons styles to be reset
+					    mEngine->clearSingletons();
+					    mEngine->clearComponentCache();
 				    }
 			    }
 		    });
@@ -490,26 +478,8 @@ void App::connectCoreModel() {
 	mCoreModelConnection->invokeToModel([this]() {
 		auto state = CoreModel::getInstance()->getCore()->getGlobalState();
 		mCoreModelConnection->invokeToCore([this, state] {
+			setCoreGlobalState((int)state);
 			setCoreStarted(state == linphone::GlobalState::On);
-			if (state == linphone::GlobalState::Configuring) {
-				if (mMainWindow) {
-					QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
-				} else {
-					connect(
-					    this, &App::mainWindowChanged, this,
-					    [this] {
-						    mCoreModelConnection->invokeToModel([this] {
-							    auto gstate = CoreModel::getInstance()->getCore()->getGlobalState();
-							    if (gstate == linphone::GlobalState::Configuring)
-								    mCoreModelConnection->invokeToCore([this] {
-									    if (mMainWindow)
-										    QMetaObject::invokeMethod(mMainWindow, "openSSOPage", Qt::DirectConnection);
-								    });
-						    });
-					    },
-					    Qt::SingleShotConnection);
-				}
-			}
 		});
 	});
 
@@ -1159,8 +1129,8 @@ void App::restartCore() {
 			closeCallsWindow();
 			// setMainWindow(nullptr);
 			setCoreStarted(false);
-			// mEngine->clearComponentCache();
-			// mEngine->clearSingletons();
+			mEngine->clearSingletons();
+			mEngine->clearComponentCache();
 			// delete mEngine;
 			// mEngine = nullptr;
 			// clean();
@@ -1248,6 +1218,17 @@ void App::setCoreStarted(bool started) {
 	if (mCoreStarted != started) {
 		mCoreStarted = started;
 		emit coreStartedChanged(mCoreStarted);
+	}
+}
+
+int App::getCoreGlobalState() const {
+	return mCoreGlobalState;
+}
+
+void App::setCoreGlobalState(int state) {
+	if (mCoreGlobalState != state) {
+		mCoreGlobalState = state;
+		emit coreGlobalStateChanged(mCoreGlobalState);
 	}
 }
 

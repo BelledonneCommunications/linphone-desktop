@@ -302,6 +302,8 @@ bool ToolModel::createCall(const QString &sipAddress,
                            const QHash<QString, QString> &headers,
                            linphone::MediaEncryption mediaEncryption,
                            QString *errorMessage) {
+	lInfo() << "ToolModel: create call with" << sipAddress;
+
 	bool waitRegistrationForCall = true; // getSettingsModel()->getWaitRegistrationForCall()
 
 	std::shared_ptr<linphone::Core> core = CoreModel::getInstance()->getCore();

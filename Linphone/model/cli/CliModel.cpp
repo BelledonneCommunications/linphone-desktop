@@ -125,6 +125,8 @@ QString CliModel::parseFunctionName(const QString &command, bool isOptional) {
 	const QStringList texts = match.capturedTexts();
 
 	QString functionName = texts[1];
+	if (functionName.startsWith(QString(EXECUTABLE_NAME).toLower() + "-"))
+		functionName.remove(QString(EXECUTABLE_NAME).toLower() + "-");
 	const QString functionKey = texts[0];
 	if (!mCommands.contains(functionName)) {
 		if (!isOptional) lWarning() << QStringLiteral("This command doesn't exist: `%1`.").arg(functionName);
@@ -329,9 +331,9 @@ void CliModel::Command::executeUri(QString address, QHash<QString, QString> args
 			qDebug() << "subfonction" << subfonction;
 			if (!subfonction.isEmpty()) {
 				QHash<QString, QString> arg;
-				arg[it.key()] = decodeBase64Url(it.value());
-				lDebug() << "parsing parameters" << it.key() << it.value();
-				parent->addProcess(ProcessCommand(mCommands[it.key()], arg, 1, parent));
+				arg[subfonction] = decodeBase64Url(it.value());
+				lDebug() << "parsing parameters" << subfonction << it.value();
+				parent->addProcess(ProcessCommand(mCommands[subfonction], arg, 1, parent));
 			}
 		}
 	}

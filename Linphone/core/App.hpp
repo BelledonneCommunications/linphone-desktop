@@ -49,6 +49,7 @@ class NotificationBackend;
 class App : public SingleApplication, public AbstractObject {
 	Q_OBJECT
 	Q_PROPERTY(bool coreStarted READ getCoreStarted WRITE setCoreStarted NOTIFY coreStartedChanged)
+	Q_PROPERTY(int coreGlobalState READ getCoreGlobalState WRITE setCoreGlobalState NOTIFY coreGlobalStateChanged)
 	Q_PROPERTY(AccountList *accounts READ getAccounts NOTIFY accountsChanged)
 	Q_PROPERTY(AccountGui *currentAccount READ getCurrentAccount NOTIFY currentAccountChanged)
 	Q_PROPERTY(CallList *calls READ getCalls NOTIFY callsChanged)
@@ -153,6 +154,9 @@ public:
 	bool getCoreStarted() const;
 	void setCoreStarted(bool started);
 
+	int getCoreGlobalState() const;
+	void setCoreGlobalState(int state);
+
 	bool isRestarting() const;
 	void setIsRestarting(bool restarting);
 
@@ -231,6 +235,7 @@ public:
 signals:
 	void mainWindowChanged();
 	void coreStartedChanged(bool coreStarted);
+	void coreGlobalStateChanged(int coreGlobalState);
 	void isRestartingChanged(bool restarting);
 	void accountsChanged();
 	void defaultAccountChanged();
@@ -284,6 +289,7 @@ private:
 	QSharedPointer<SafeConnection<App, CliModel>> mCliModelConnection;
 	bool mAutoStart = false;
 	bool mCoreStarted = false;
+	int mCoreGlobalState = 0;
 	bool mIsRestarting = false;
 	bool mPossiblyLookForAddedAccount = false;
 	QLocale mLocale = QLocale::system();

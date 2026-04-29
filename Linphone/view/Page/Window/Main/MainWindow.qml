@@ -36,7 +36,7 @@ AbstractWindow {
 	// }
 
 	function openMainPage(connectionSucceed){
-		if (mainWindowStackView.currentItem.objectName !== "mainPage") mainWindowStackView.replace(mainPage, StackView.Immediate)
+		if (!mainStackViewLoader.item || !mainStackViewLoader.item.currentItem || mainStackViewLoader.item.currentItem.objectName !== "mainPage") mainStackViewLoader.item.replace(mainPage, StackView.Immediate)
         //: "Connexion réussie"
         if (connectionSucceed) mainWindow.showInformationPopup(qsTr("information_popup_connexion_succeed_title"),
                                                                //: "Vous êtes connecté en mode %1"
@@ -46,27 +46,27 @@ AbstractWindow {
 	}
 	function goToCallHistory() {
 		openMainPage()
-		mainWindowStackView.currentItem.goToCallHistory()
+		mainStackViewLoader.item.currentItem.goToCallHistory()
 	}
 	function goToNewCall() {
 		openMainPage()
-		mainWindowStackView.currentItem.goToNewCall()
+		mainStackViewLoader.item.currentItem.goToNewCall()
 	}
 	function displayContactPage(contactAddress) {
 		openMainPage()
-		mainWindowStackView.currentItem.displayContactPage(contactAddress)
+		mainStackViewLoader.item?.currentItem.displayContactPage(contactAddress)
 	}
 	function displayCreateContactPage(name, contactAddress) {
 		openMainPage()
-		mainWindowStackView.currentItem.createContact(name, contactAddress)
+		mainStackViewLoader.item?.currentItem.createContact(name, contactAddress)
 	}
 	function displayChatPage(contactAddress) {
 		openMainPage()
-		mainWindowStackView.currentItem.displayChatPage(contactAddress)
+		mainStackViewLoader.item?.currentItem.displayChatPage(contactAddress)
 	}
 	function openChat(chat) {
 		openMainPage()
-		mainWindowStackView.currentItem.openChat(chat)
+		mainStackViewLoader.item?.currentItem.openChat(chat)
 	}
 	function transferCallSucceed() {
 		openMainPage()
@@ -78,26 +78,22 @@ AbstractWindow {
 	function initStackViewItem() {
         if(accountProxy && accountProxy.isInitialized) {
             if (accountProxy.haveAccount) openMainPage()
-            else if (SettingsCpp.getFirstLaunch()) mainWindowStackView.replace(welcomePage, StackView.Immediate)
-            else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainWindowStackView.replace(sipLoginPage, StackView.Immediate)
-            else mainWindowStackView.replace(loginPage, StackView.Immediate)
+            else if (SettingsCpp.getFirstLaunch()) mainStackViewLoader.item.replace(welcomePage, StackView.Immediate)
+            else if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin) mainStackViewLoader.item.replace(sipLoginPage, StackView.Immediate)
+            else mainStackViewLoader.item.replace(loginPage, StackView.Immediate)
         }
     }
 	
 	function goToLogin() {
 		if (SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin)
-			mainWindowStackView.replace(sipLoginPage)
+			mainStackViewLoader.item.replace(sipLoginPage)
 		else
-			mainWindowStackView.replace(loginPage)
-	}
-
-	function openSSOPage() {
-		mainWindowStackView.replace(ssoPage)
+			mainStackViewLoader.item.replace(loginPage)
 	}
 
 	function scheduleMeeting(subject, addresses) {
 		openMainPage()
-		mainWindowStackView.currentItem.scheduleMeeting(subject, addresses)
+		mainStackViewLoader.item.currentItem.scheduleMeeting(subject, addresses)
 	}
 
 	property bool authenticationPopupOpened: false
@@ -114,8 +110,8 @@ AbstractWindow {
 
 	function reauthenticateAccount(identity, domain, callback){
 		if (authenticationPopupOpened) return
-		if (mainWindowStackView.currentItem.objectName === "loginPage" 
-		|| mainWindowStackView.currentItem.objectName === "sipLoginPage")
+		if (mainStackViewLoader.item?.currentItem.objectName === "loginPage" 
+		|| mainStackViewLoader.item?.currentItem.objectName === "sipLoginPage")
 			return
 		console.log("Showing authentication dialog")
 		var popup = authenticationPopupComp.createObject(mainWindow, {"identity": identity, "domain": domain, "callback":callback})	// Callback ownership is not passed
@@ -156,11 +152,50 @@ AbstractWindow {
 		}
 	}
 
-	StackView {
-		id: mainWindowStackView
+	Loader {
+		id: mainStackViewLoader
+		active: AppCpp.coreStarted
 		anchors.fill: parent
-        initialItem: splashScreen
+		sourceComponent: mainStackViewComp
 	}
+
+	Loader {
+		anchors.fill: parent
+		active: !AppCpp.coreStarted
+		sourceComponent: splashScreen
+	}
+
+	Loader {
+		anchors.fill: parent
+		active: AppCpp.coreGlobalState === 4
+		sourceComponent: ssoPage
+	}
+
+	Component {
+		id: mainStackViewComp
+		StackView {
+			id: mainWindowStackView
+			// H264 Cisco codec download
+			PayloadTypeProxy {
+				id: downloadableVideoPayloadTypeProxy
+				filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
+			}
+			Repeater {
+				id: codecDownloader
+				model: null
+				Item {
+					Component.onCompleted: {
+						if (modelData.core.mimeType == "H264")
+							Utils.openCodecOnlineInstallerDialog(mainWindow, modelData.core)
+					}
+				}
+			}
+			function proposeH264CodecsDownload() {
+				codecDownloader.model = downloadableVideoPayloadTypeProxy
+			}
+		}
+	}
+
 	Component {
 		id: splashScreen
 		Rectangle {
@@ -228,8 +263,8 @@ AbstractWindow {
 		LoginPage {
 			objectName: "loginPage"
 			onGoBack: openMainPage()
-			onUseSIPButtonClicked: mainWindowStackView.push(sipLoginPage)
-			onGoToRegister: mainWindowStackView.replace(registerPage)
+			onUseSIPButtonClicked: mainStackViewLoader.item.push(sipLoginPage)
+			onGoToRegister: mainStackViewLoader.item.replace(registerPage)
             showBackButton: false
             StackView.onActivated: if (mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
@@ -242,9 +277,9 @@ AbstractWindow {
 				if(SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin){
 					openMainPage()
 				}else
-					mainWindowStackView.pop()
+					mainStackViewLoader.item.pop()
 			}
-			onGoToRegister: mainWindowStackView.replace(registerPage)
+			onGoToRegister: mainStackViewLoader.item.replace(registerPage)
             showBackButton: false
             StackView.onActivated: if (!SettingsCpp.assistantGoDirectlyToThirdPartySipAccountLogin || mainWindow.accountProxy?.haveAccount) showBackButton = true
 		}
@@ -258,7 +293,7 @@ AbstractWindow {
 			Connections {
 				target: RegisterPageCpp
 				function onNewAccountCreationSucceed(withEmail, address, sipIdentityAddress) {
-					mainWindowStackView.push(checkingPage, {"registerWithEmail": withEmail, "address": address, "sipIdentityAddress": sipIdentityAddress})
+					mainStackViewLoader.item.push(checkingPage, {"registerWithEmail": withEmail, "address": address, "sipIdentityAddress": sipIdentityAddress})
 				}
 				function onRegisterNewAccountFailed(errorMessage) {
                     //: "Erreur lors de la création"
@@ -273,7 +308,7 @@ AbstractWindow {
 		id: checkingPage
 		RegisterCheckingPage {
 			id: registerCheckingPage
-			onReturnToRegister: mainWindowStackView.pop()
+			onReturnToRegister: mainStackViewLoader.item.pop()
 			onSendCode: (code) => {
 				RegisterPageCpp.linkNewAccountUsingCode(code, registerWithEmail, sipIdentityAddress)
 			}
@@ -322,25 +357,6 @@ AbstractWindow {
 			}
 			// StackView.onActivated: connectionSecured(0) // TODO : connect to cpp part when ready
 		}
-	}
-
-	// H264 Cisco codec download
-	PayloadTypeProxy {
-		id: downloadableVideoPayloadTypeProxy
-		filterType: PayloadTypeProxy.Video | PayloadTypeProxy.Downloadable
-	}
-	Repeater {
-		id: codecDownloader
-		model: null
-		Item {
-			Component.onCompleted: {
-				if (modelData.core.mimeType == "H264")
-					Utils.openCodecOnlineInstallerDialog(mainWindow, modelData.core)
-			}
-		}
-	}
-	function proposeH264CodecsDownload() {
-		codecDownloader.model = downloadableVideoPayloadTypeProxy
 	}
 
 }
