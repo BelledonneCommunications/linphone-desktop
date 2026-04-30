@@ -692,145 +692,145 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="388"/>
+        <location filename="../../core/App.cpp" line="374"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Möchten Sie die Remote-Konfiguration von dieser Adresse herunterladen und anwenden?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="437"/>
-        <location filename="../../core/App.cpp" line="445"/>
-        <location filename="../../core/App.cpp" line="449"/>
-        <location filename="../../core/App.cpp" line="507"/>
-        <location filename="../../core/App.cpp" line="853"/>
+        <location filename="../../core/App.cpp" line="423"/>
+        <location filename="../../core/App.cpp" line="431"/>
+        <location filename="../../core/App.cpp" line="435"/>
+        <location filename="../../core/App.cpp" line="493"/>
+        <location filename="../../core/App.cpp" line="859"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Fehler</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="438"/>
-        <location filename="../../core/App.cpp" line="855"/>
+        <location filename="../../core/App.cpp" line="424"/>
+        <location filename="../../core/App.cpp" line="861"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote-Provisionierung fehlgeschlagen: %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="510"/>
+        <location filename="../../core/App.cpp" line="496"/>
         <source>info_popup_error_checking_update</source>
         <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
         <translation>Fehler bei der Update-Prüfung. Bitte später erneut versuchen oder Support-Team kontaktieren.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="517"/>
+        <location filename="../../core/App.cpp" line="503"/>
         <source>info_popup_new_version_download_label</source>
         <extracomment>Download it !</extracomment>
         <translation>Herunterladen!</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="520"/>
+        <location filename="../../core/App.cpp" line="506"/>
         <source>info_popup_new_version_available_title</source>
         <extracomment>New version available !</extracomment>
         <translation>Neue Version verfügbar!</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="522"/>
+        <location filename="../../core/App.cpp" line="508"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
         <translation>Eine neue Version von Linphone (%1) ist unter %1 verfügbar</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="530"/>
+        <location filename="../../core/App.cpp" line="516"/>
         <source>info_popup_version_up_to_date_title</source>
         <extracomment>Up to date</extracomment>
         <translation>Auf dem neuesten Stand</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="532"/>
+        <location filename="../../core/App.cpp" line="518"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Ihre Version ist auf dem neuesten Stand</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="848"/>
+        <location filename="../../core/App.cpp" line="854"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>nicht erreichbar</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1148"/>
+        <location filename="../../core/App.cpp" line="1154"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>Ein kostenloses Open-Source SIP Video-Telefon.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1150"/>
+        <location filename="../../core/App.cpp" line="1156"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Kommandozeilen-Befehl an die Anwendung schicken</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1154"/>
+        <location filename="../../core/App.cpp" line="1160"/>
         <source>command_line_option_show_help</source>
         <translation>Zeige Hilfe</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1159"/>
+        <location filename="../../core/App.cpp" line="1165"/>
         <source>command_line_option_show_app_version</source>
         <translation>App-Version anzeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1167"/>
+        <location filename="../../core/App.cpp" line="1173"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Abzurufende Linphone-Konfigurationsdatei angeben. Sie wird mit der aktuellen Konfiguration zusammengeführt.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1169"/>
+        <location filename="../../core/App.cpp" line="1175"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, Pfad oder Datei</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1174"/>
+        <location filename="../../core/App.cpp" line="1180"/>
         <source>command_line_option_minimized</source>
         <translation>Minimieren</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1177"/>
+        <location filename="../../core/App.cpp" line="1183"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Debug-Informationen auf der Standardausgabe ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1180"/>
+        <location filename="../../core/App.cpp" line="1186"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Nur Anwendungs-Logs ausgeben</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1656"/>
+        <location filename="../../core/App.cpp" line="1662"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Ausblenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1656"/>
+        <location filename="../../core/App.cpp" line="1662"/>
         <source>show_action</source>
         <translation>Zeigen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1671"/>
+        <location filename="../../core/App.cpp" line="1677"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Beenden</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1689"/>
+        <location filename="../../core/App.cpp" line="1695"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Auf Updates prüfen</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1838"/>
+        <location filename="../../core/App.cpp" line="1844"/>
         <source>mark_all_read_action</source>
         <translation>Alle als gelesen markieren</translation>
     </message>
@@ -927,25 +927,25 @@
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="748"/>
+        <location filename="../../core/call/CallCore.cpp" line="749"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="751"/>
+        <location filename="../../core/call/CallCore.cpp" line="752"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation>Nichts</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="754"/>
+        <location filename="../../core/call/CallCore.cpp" line="755"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="757"/>
+        <location filename="../../core/call/CallCore.cpp" line="758"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>Post-quantum ZRTP</translation>
@@ -5398,42 +5398,42 @@ Ablauf: %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="358"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="356"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>Neuer Anruf von %1</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="414"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="412"/>
         <source>new_voice_message</source>
         <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
         <translation>Sprachnachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="415"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="413"/>
         <source>new_file_message</source>
         <translation>Datei empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="418"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="416"/>
         <source>new_conference_invitation</source>
         <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
         <translation>Konferenzeinladung erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="440"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="438"/>
         <source>new_chat_room_message</source>
         <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
         <translation>Neue Nachricht empfangen!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="443"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="441"/>
         <source>new_chat_room_messages</source>
         <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
         <translation>Neue Nachrichten erhalten!</translation>
     </message>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="476"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="474"/>
         <source>new_message_alert_accessible_name</source>
         <extracomment>New message on chatroom %1</extracomment>
         <translation>Neue Nachricht im Chat %1</translation>
@@ -7140,25 +7140,25 @@ Error in the chat</extracomment>
         <translation>Code des Kontakts :</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="222"/>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="223"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match_text</source>
         <extracomment>&quot;Le code fourni ne correspond pas.&quot;</extracomment>
         <translation>Der angegebene Code stimmt nicht überein.</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="233"/>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="234"/>
         <source>call_dialog_zrtp_security_alert_message</source>
         <extracomment>&quot;La confidentialité de votre appel peut être compromise !&quot;</extracomment>
         <translation>Die Vertraulichkeit Ihres Anrufs könnte gefährdet sein!</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="246"/>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="247"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match</source>
         <extracomment>&quot;Aucune correspondance&quot;</extracomment>
         <translation>Keine Übereinstimmung</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="263"/>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="264"/>
         <source>call_action_hang_up</source>
         <extracomment>&quot;Raccrocher&quot;</extracomment>
         <translation>Auflegen</translation>
