@@ -59,7 +59,7 @@ void ParticipantDeviceProxy::setCurrentCall(CallGui *call) {
 			}
 			if (callCore) {
 				disconnect(callCore, &CallCore::conferenceChanged, mParticipants.get(), nullptr);
-				callCore->deleteLater();
+				callCore = nullptr;
 			}
 		}
 		mCurrentCall = call;
