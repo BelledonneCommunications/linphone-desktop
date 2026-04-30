@@ -342,11 +342,9 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		}
 		accountModel->deleteLater();
 	}
-
 	auto model = CallCore::create(call);
-	auto gui = new CallGui(model);
-	gui->moveToThread(App::getInstance()->thread());
 	auto callLog = call->getCallLog();
+	auto callId = callLog ? callLog->getCallId() : std::string();
 	auto displayName = callLog && callLog->getConferenceInfo()
 	                       ? Utils::coreStringToAppString(callLog->getConferenceInfo()->getSubject())
 	                       : ToolModel::getDisplayName(remoteAddress);
@@ -357,10 +355,10 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	//: New call from %1
 	AccessibilityHelper::announceMessage(tr("new_call_alert_accessible_name").arg(displayName));
 
-	App::postCoreAsync([this, gui, displayName, remoteAddrString]() {
+	App::postCoreAsync([this, model, displayName, remoteAddrString]() {
 		mustBeInMainThread(getClassName());
 		QVariantMap map;
-
+		auto gui = new CallGui(model);
 		map["displayName"].setValue(displayName);
 		map["remoteAddress"].setValue(remoteAddrString);
 		map["call"].setValue(gui);

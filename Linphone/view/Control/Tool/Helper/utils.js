@@ -156,7 +156,7 @@ function isDescendant(child, parent) {
 
 // Retrieve first focusable item of an Item. If no item found, return undefined
 function getFirstFocusableItemInItem(item) {
-  if (!item) return unedfined;
+  if (!item) return undefined;
   var next = item.nextItemInFocusChain();
   if (next && isDescendant(next, item)){
       return next;

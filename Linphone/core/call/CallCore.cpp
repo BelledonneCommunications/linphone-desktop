@@ -184,8 +184,8 @@ CallCore::CallCore(const std::shared_ptr<linphone::Call> &call) : QObject(nullpt
 CallCore::~CallCore() {
 	lDebug() << "[CallCore] delete" << this;
 	mustBeInMainThread("~" + getClassName());
+	mCallModelConnection->disconnect();
 	emit mCallModel->removeListener();
-	mCallModel->deleteLater();
 }
 
 void CallCore::setSelf(QSharedPointer<CallCore> me) {
@@ -721,6 +721,7 @@ void CallCore::setLocalToken(const QString &Token) {
 
 void CallCore::setRemoteTokens(const QStringList &token) {
 	if (mRemoteTokens != token) {
+		lInfo() << "set zrtp remote tokens" << token;
 		mRemoteTokens = token;
 		emit remoteTokensChanged();
 	}

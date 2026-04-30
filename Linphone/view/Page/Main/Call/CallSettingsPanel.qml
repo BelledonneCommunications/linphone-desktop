@@ -12,8 +12,8 @@ Control.Page {
 	property alias customHeaderButtons: customButtonLayout.children
 	property int contentItemHeight: scrollview.height
 	property bool closeButtonVisible: true
-	property Item firstContentFocusableItem: undefined
-	property Item lastContentFocusableItem: undefined
+	property var firstContentFocusableItem: undefined
+	property var lastContentFocusableItem: undefined
 	clip: true
 
 	property string headerTitleText

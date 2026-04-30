@@ -24,7 +24,7 @@ AbstractWindow {
 
     // Chat related to call
     property var chatObj
-    property ChatGui chat: chatObj ? chatObj.value : null
+    property ChatGui chat: chatObj && chatObj.value || null
 
     property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
     property bool cameraEnabled: call && call.core.cameraEnabled

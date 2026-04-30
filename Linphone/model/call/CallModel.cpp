@@ -340,7 +340,7 @@ void CallModel::updateConferenceVideoLayout() {
 		// TODO : change layout for grid/active speaker in settings
 		lDebug() << "Updating layout from " << mConferenceVideoLayout << " into " << newLayout;
 		mConferenceVideoLayout = newLayout;
-		emit conferenceVideoLayoutChanged(mConferenceVideoLayout);
+		emit conferenceVideoLayoutChanged(newLayout);
 	}
 }
 

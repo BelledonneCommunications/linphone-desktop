@@ -357,20 +357,6 @@ App::~App() {
 
 void App::connectCoreModel() {
 	Q_ASSERT(mCoreModelConnection);
-	mCoreModelConnection->makeConnectToModel(&CoreModel::callCreated,
-	                                         [this](const std::shared_ptr<linphone::Call> &call) {
-		                                         lDebug() << "Call created in core, get calls window";
-		                                         if (call->getDir() == linphone::Call::Dir::Incoming) return;
-		                                         auto callCore = CallCore::create(call);
-		                                         mCoreModelConnection->invokeToCore([this, callCore] {
-			                                         auto callGui = new CallGui(callCore);
-			                                         auto win = getOrCreateCallsWindow(QVariant::fromValue(callGui));
-			                                         Utils::smartShowWindow(win);
-			                                         auto mainwin = getMainWindow();
-			                                         QMetaObject::invokeMethod(mainwin, "callCreated");
-			                                         lDebug() << "App : call created" << callGui;
-		                                         });
-	                                         });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::requestRestart, [this]() {
 		mCoreModelConnection->invokeToCore([this]() {
 			lInfo() << log().arg("Restarting core");
@@ -771,12 +757,32 @@ void App::initCore() {
 					    });
 					    if (!mCallList) setCallList(CallList::create());
 					    else mCallList->lUpdate();
+					    connect(mCallList.get(), &CallList::currentCallChanged, this, [this] {
+						    auto callCore = mCallList->getCurrentCallCore();
+						    if (!callCore || callCore->getDir() == LinphoneEnums::CallDir::Incoming) return;
+						    lDebug() << "Call created in core, get calls window";
+						    mCoreModelConnection->invokeToCore([this, callCore] {
+							    auto callGui = new CallGui(callCore);
+							    auto win = getOrCreateCallsWindow(QVariant::fromValue(callGui));
+							    Utils::smartShowWindow(win);
+							    auto mainwin = getMainWindow();
+							    QMetaObject::invokeMethod(mainwin, "callCreated");
+							    lDebug() << "App : call created" << callGui;
+						    });
+					    });
 					    if (!mChatList) setChatList(ChatList::create());
 					    else mChatList->lUpdate();
 					    disconnect(this, &App::coreStartedChanged, this, nullptr);
 				    } else {
-					    if (mAccountList) mAccountList->resetData();
-					    if (mCallList) mCallList->resetData();
+					    if (mAccountList) {
+						    disconnect(mAccountList.get(), &AccountList::defaultAccountChanged, this, nullptr);
+						    disconnect(mAccountList.get(), &AccountList::unreadNotificationsChanged, this, nullptr);
+						    mAccountList->resetData();
+					    }
+					    if (mCallList) {
+						    disconnect(mCallList.get(), &CallList::currentCallChanged, this, nullptr);
+						    mCallList->resetData();
+					    }
 					    if (mCallHistoryList) mCallHistoryList->resetData();
 					    if (mChatList) mChatList->resetData();
 					    if (mConferenceInfoList) mConferenceInfoList->resetData();

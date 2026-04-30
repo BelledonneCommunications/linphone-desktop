@@ -117,12 +117,9 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 					conference->addParticipants(currentCalls);
 				}
 			}
-			// emit lUpdate();
 		});
 	});
 
-	mModelConnection->makeConnectToModel(&CoreModel::firstCallStarted,
-	                                     [this]() { mModelConnection->invokeToCore([this]() { lUpdate(); }); });
 	mModelConnection->makeConnectToModel(&CoreModel::lastCallEnded, [this]() {
 		mModelConnection->invokeToCore([this]() {
 			setHaveCall(false);
@@ -134,7 +131,10 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 		mModelConnection->invokeToCore([this, model]() {
 			// We set the current here and not on firstCallStarted event because we don't want to add unicity check
 			// while keeping the same model between list and current call.
-			if (mList.size() == 0) setCurrentCallCore(model);
+			if (mList.size() == 0) {
+				setCurrentCallCore(model);
+			}
+			setHaveCall(mList.size() > 0);
 			add(model);
 		});
 	});

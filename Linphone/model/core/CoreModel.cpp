@@ -489,7 +489,7 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 	    core->getCallsNb() == 0) { // Disable tones in DND mode if no more calls are running.
 		SettingsModel::getInstance()->setCallToneIndicationsEnabled(false);
 	}
-	App::postModelAsync([core]() {
+	App::postCoreAsync([core]() {
 		auto accounts = App::getInstance()->getAccountList();
 		if (!accounts) return;
 		for (int i = 0; i < accounts->rowCount(); ++i) {

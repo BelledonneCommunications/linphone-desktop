@@ -67,7 +67,9 @@ bool CallProxy::getHaveCall() const {
 void CallProxy::setSourceModel(QAbstractItemModel *model) {
 	auto oldCallList = qobject_cast<CallList *>(sourceModel());
 	if (oldCallList) {
-		disconnect(oldCallList);
+		disconnect(oldCallList, &CallList::currentCallChanged, this, nullptr);
+		disconnect(oldCallList, &CallList::haveCallChanged, this, nullptr);
+		disconnect(this, &CallProxy::lMergeAll, oldCallList, nullptr);
 	}
 	auto newCallList = dynamic_cast<CallList *>(model);
 	if (newCallList) {
