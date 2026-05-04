@@ -851,23 +851,30 @@
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="69"/>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>password</source>
         <translation>Passwort</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="87"/>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
+        <source>mandatory_field_accessible_name</source>
+        <extracomment>%1 mandatory</extracomment>
+        <translation type="unfinished">%1 ist verpflichtend</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
         <source>cancel</source>
         <extracomment>&quot;Annuler</extracomment>
         <translation>Abbrechen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="97"/>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="99"/>
         <source>assistant_account_login</source>
         <extracomment>Connexion</extracomment>
         <translation>Anmelden</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="105"/>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="107"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>Veuillez saisir un mot de passe</extracomment>
         <translation>Bitte Passwort eingeben</translation>
@@ -2859,7 +2866,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <extracomment>%1 actual value %2</extracomment>
+        <extracomment>%1 current value %2</extracomment>
         <translation>%1 aktueller Wert %2</translation>
     </message>
 </context>
@@ -4452,6 +4459,7 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
         <translation>%1 ist verpflichtend</translation>
@@ -4686,7 +4694,7 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="349"/>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="492"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="493"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
         <translation>Nicht stören deaktivieren</translation>
@@ -4715,48 +4723,48 @@ Ablauf: %1</translation>
         <translation>App-Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="481"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="482"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
         <translation>Mein Konto</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="494"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="495"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
         <translation>Nicht stören aktivieren</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="509"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="510"/>
         <source>settings_title</source>
         <translation>Einstellungen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="529"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="530"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
         <translation>Aufnahmen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="548"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="549"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Hilfe</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="563"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="564"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
         <translation>App beenden</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="568"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="569"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
         <translation>%1 beenden?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="591"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="592"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Konto hinzufügen</translation>
@@ -5630,13 +5638,13 @@ Ablauf: %1</translation>
 <context>
     <name>PopupButton</name>
     <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="18"/>
+        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
         <source>close_popup_panel_accessible_name</source>
         <extracomment>&quot;Close %1 popup&quot;</extracomment>
         <translation>%1-Popup schließen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="20"/>
+        <location filename="../../view/Control/Button/PopupButton.qml" line="21"/>
         <source>open_popup_panel_accessible_name</source>
         <extracomment>&quot;Open %1&quot; popup</extracomment>
         <translation>%1-Popup öffnen</translation>
@@ -6147,18 +6155,21 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="290"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
         <source>assistant_dialog_cgu_and_privacy_policy_message</source>
         <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
         <translation>Ich akzeptiere %1 und %2</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="292"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
         <source>assistant_dialog_general_terms_label</source>
         <extracomment>&quot;conditions d&apos;utilisation&quot;</extracomment>
         <translation>Allgemeine Geschäftsbedingungen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="294"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
         <translation>Datenschutzrichtlinie</translation>
@@ -6260,6 +6271,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="216"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
@@ -6396,13 +6408,19 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
 <context>
     <name>SearchBar</name>
     <message>
-        <location filename="../../view/Control/Input/SearchBar.qml" line="131"/>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="79"/>
+        <source>search_bar_accessible_name</source>
+        <extracomment>Search bar : %1</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="133"/>
         <source>open_dialer_acccessibility_label</source>
         <extracomment>&quot;Open dialer&quot;</extracomment>
         <translation>Wähltastatur öffnen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/SearchBar.qml" line="151"/>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="153"/>
         <source>clear_text_input_acccessibility_label</source>
         <extracomment>&quot;Clear text input&quot;</extracomment>
         <translation>Texteingabe löschen</translation>
@@ -6734,6 +6752,15 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../model/tool/ToolModel.cpp" line="663"/>
         <source>Dummy subject</source>
         <extracomment>Dummy subject</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>UnreadNotification</name>
+    <message>
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="17"/>
+        <source>unread_notification_accessible_name</source>
+        <extracomment>Unread notification badge : %1 unread</extracomment>
         <translation type="unfinished"></translation>
     </message>
 </context>
