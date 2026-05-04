@@ -82,6 +82,7 @@ bool ChatProxy::addChatInList(ChatGui *chatGui) {
 }
 
 bool ChatProxy::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
+	if (!mFilterText.isEmpty()) return false;
 	auto l = getItemAtSource<ChatList, ChatCore>(sourceLeft.row());
 	auto r = getItemAtSource<ChatList, ChatCore>(sourceRight.row());
 	if (l && r) return l->getLastUpdatedTime() > r->getLastUpdatedTime();
