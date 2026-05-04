@@ -43,7 +43,7 @@ ColumnLayout {
 				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
 				onAccepted: connectionButton.trigger()
-				Accessible.name: qsTr("password")
+				Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 			}
 			TemporaryText {
 				id: errorText

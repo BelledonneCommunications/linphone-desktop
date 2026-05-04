@@ -75,6 +75,8 @@ FocusScope {
 		property bool keyboardFocus: FocusHelper.keyboardFocus
 		
 		property string searchText
+		//: Search bar : %1
+		Accessible.name: qsTr("search_bar_accessible_name").arg(placeholderText)
 
 		focus: true
 		placeholderText: mainItem.placeholderText

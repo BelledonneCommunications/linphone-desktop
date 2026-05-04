@@ -13,6 +13,7 @@ Button {
     backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
     property string popUpTitle: ""
     property int popupY: height
+    Accessible.role: Accessible.ButtonMenu
     Accessible.name: popup.visible ?
     //: "Close %1 popup"
     qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :

@@ -39,6 +39,7 @@ Popup {
 	}
 	contentItem: RowLayout {
         spacing: Utils.getSizeWithScreenRatio(24)
+		focus: true
 		Accessible.role: Accessible.AlertMessage
 		Accessible.name: "%1, %2".arg(mainItem.title).arg(mainItem.description)
 		EffectImage {

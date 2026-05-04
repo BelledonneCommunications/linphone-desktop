@@ -44,10 +44,9 @@ Control.ComboBox {
 
     function generateAccessibleName() {
         return currentText ?
-            //: %1 actual value %2
+            //: %1 current value %2
             qsTr("combobox_with_value_accessible_name").arg(accessibleLabel).arg(currentText) :
-            accessibleLabel
-            
+            accessibleLabel 
     }
 
     onConstantImageSourceChanged: if (constantImageSource)
@@ -206,6 +205,7 @@ Control.ComboBox {
                 // anchors.right: listView.right
                 property string valueText: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
                 Accessible.name: valueText
+                Accessible.role: Accessible.MenuItem
                 RowLayout {
                     anchors.fill: parent
                     EffectImage {

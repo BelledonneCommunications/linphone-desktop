@@ -294,7 +294,7 @@ LoginLayout {
                             .arg(("<a href='%1'><font color='DefaultStyle.main2_600'>%2</font></a>").arg(ConstantsCpp.PrivatePolicyUrl).arg(qsTr("assistant_dialog_privacy_policy_label")))
 						CheckBox {
 							id: termsCheckBox
-							Accessible.name: acceptCguAndPrivacyPolicyItem.associatedText
+							Accessible.name: qsTr("assistant_dialog_cgu_and_privacy_policy_message").arg(qsTr("assistant_dialog_general_terms_label")).arg(qsTr("assistant_dialog_privacy_policy_label"))
                         }
                         Text {
 							id: privacyLinkText

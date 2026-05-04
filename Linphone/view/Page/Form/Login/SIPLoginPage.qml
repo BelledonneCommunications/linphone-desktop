@@ -213,7 +213,7 @@ LoginLayout {
 									width: parent.width
 									KeyNavigation.up: usernameEdit
 									KeyNavigation.down: domainEdit
-									Accessible.name: qsTr("password")
+									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 								}
 							}
 							FormItemLayout {

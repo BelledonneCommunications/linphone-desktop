@@ -10,6 +10,11 @@ Control.Control {
     width: Utils.getSizeWithScreenRatio(14)
     height: Utils.getSizeWithScreenRatio(14)
     visible: unread > 0
+    focus: true
+    focusPolicy: Qt.TabFocus
+    activeFocusOnTab: true
+    //: Unread notification badge : %1 unread
+    Accessible.name: qsTr("unread_notification_accessible_name").arg(unread)
     background: Item {
         anchors.fill: parent
         Rectangle {

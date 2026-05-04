@@ -75,6 +75,8 @@ Dialog {
                 width: parent.width
                 isError: passwordItem.errorTextVisible
                 KeyNavigation.down: cancelButton
+                //: %1 mandatory
+			    Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
             }
         }
 	}

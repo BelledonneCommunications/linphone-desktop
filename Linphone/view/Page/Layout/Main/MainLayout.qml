@@ -454,6 +454,7 @@ Item {
                             popup.padding: Utils.getSizeWithScreenRatio(14)
                             //: "Application options"
                             popUpTitle: qsTr("application_options_accessible_name")
+                            popup.Accessible.role: Accessible.PopupMenu
                             popup.contentItem: FocusScope {
                                 id: popupFocus
                                 implicitHeight: settingsButtons.implicitHeight
