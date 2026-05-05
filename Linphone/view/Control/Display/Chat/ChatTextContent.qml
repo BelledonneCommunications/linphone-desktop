@@ -19,7 +19,7 @@ TextEdit {
 	// the cursor stays IBeam
 	onVisibleChanged: if (!visible) UtilsCpp.restoreGlobalCursor()
 	font {
-		pixelSize: (contentGui && UtilsCpp.isOnlyEmojis(contentGui.core.text)) ? Typography.h1.pixelSize : Typography.p1.pixelSize
+		pixelSize: (contentGui && UtilsCpp.isOnlyEmojis(contentGui.core.utf8Text)) ? Typography.h1.pixelSize : Typography.p1.pixelSize
 		weight: Typography.p1.weight
 	}	
 	// property int removeWarningFromBindingLoop : implicitWidth	// Just a dummy variable to remove meaningless binding loop on implicitWidth
@@ -28,7 +28,7 @@ TextEdit {
 	textMargin: 0
 	readOnly: true
 	selectByMouse: true
-	
+
 	text: contentGui.core.richFormatText
 	onSearchedTextPartChanged: {
 		contentGui.core.setSearchedTextPart(searchedTextPart)

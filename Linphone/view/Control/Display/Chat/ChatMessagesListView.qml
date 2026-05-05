@@ -12,7 +12,6 @@ ListView {
     id: mainItem
     spacing: Utils.getSizeWithScreenRatio(4)
     property ChatGui chat
-    onChatChanged: loading = true
     property color backgroundColor
     property bool lastItemVisible: false
     property int lastIndexFoundWithFilter: -1
@@ -105,6 +104,9 @@ ListView {
         initialDisplayItems: 20
         displayItemsStep: 20
         onModelAboutToBeReset: {
+            loading = true
+        }
+        onChatAboutToChange: {
             loading = true
         }
         onModelReset: loading = false

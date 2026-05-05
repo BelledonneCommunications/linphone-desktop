@@ -84,7 +84,12 @@ ChatGui *EventLogProxy::getChatGui() {
 
 void EventLogProxy::setChatGui(ChatGui *chat) {
 	auto model = dynamic_cast<EventLogList *>(sourceModel());
-	if (model) model->setChatGui(chat);
+	if (model) {
+		if (!chat && !model->getChatCore() || model->getChatCore() != chat->mCore) {
+			emit chatAboutToChange();
+			model->setChatGui(chat);
+		}
+	}
 }
 
 EventLogGui *EventLogProxy::getEventAtIndex(int i) {

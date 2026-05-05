@@ -63,7 +63,7 @@ ListView {
                 selectChat(mainItem.chatToSelect)
                 mainItem.chatToSelect = null
             } else {
-                mainItem.currentChatGui = model.getAt(mainItem.currentIndex)
+                mainItem.currentChatGui = chatProxy.getAt(mainItem.currentIndex)
                 selectChat(mainItem.currentChatGui)
             }
             mainItem.researchDone()

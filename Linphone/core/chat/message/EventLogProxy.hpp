@@ -84,6 +84,7 @@ signals:
 	void indexWithFilterFound(int index);
 	void foundMessagById(int index);
 	void chatGuiChanged();
+	void chatAboutToChange();
 	void countChanged();
 	void initialDisplayItemsChanged();
 	void maxDisplayItemsChanged();
