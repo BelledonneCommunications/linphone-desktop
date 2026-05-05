@@ -5,6 +5,8 @@ import QtQuick.Controls.Basic as Control
 import Linphone
 import UtilsCpp
 import SettingsCpp
+import CustomControls 1.0
+
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
@@ -18,7 +20,7 @@ ListView {
     property alias chatProxy: chatProxy
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
 
-    property ChatGui currentChatGui: model.getAt(currentIndex) || null
+    property ChatGui currentChatGui: null
     onCurrentChatGuiChanged: positionViewAtIndex(currentIndex, ListView.Center)
     property ChatGui chatToSelect: null
     property ChatGui chatToSelectLater: null
@@ -61,6 +63,7 @@ ListView {
                 selectChat(mainItem.chatToSelect)
                 mainItem.chatToSelect = null
             } else {
+                mainItem.currentChatGui = model.getAt(mainItem.currentIndex)
                 selectChat(mainItem.currentChatGui)
             }
             mainItem.researchDone()
@@ -72,6 +75,7 @@ ListView {
             var index = mainItem.currentIndex
             mainItem.currentIndex = -1
             mainItem.currentIndex = index
+            currentChatGui = model.getAt(mainItem.currentIndex)
         }
         onLayoutChanged: {
             loading = false
@@ -104,6 +108,7 @@ ListView {
             }
         }
         mainItem.currentIndex = index
+        currentChatGui = model.getAt(currentIndex) || null
     }
 
     // remove binding loop
@@ -157,6 +162,7 @@ ListView {
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(63)
+
         Connections {
             target: mainItem
             function onMarkAllAsRead() {modelData.core.lMarkAsRead()}
@@ -322,9 +328,12 @@ ListView {
                     }
 					UnreadNotification {
                         id: unreadCount
+                        //: %1 chat
+                        badgeType: qsTr("chat").arg(modelData.core.title)
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(14)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(14)
                         unread: modelData?.core.unreadMessagesCount || false
+                        activeFocusOnTab: false
                     }
                     EffectImage {
                         visible: modelData?.core.lastMessage && modelData?.core.lastMessageState !== LinphoneEnums.ChatMessageState.StateIdle
@@ -351,8 +360,11 @@ ListView {
                 // z: 1
                 popup.x: 0
                 popup.padding: Utils.getSizeWithScreenRatio(10)
-                visible: mouseArea.containsMouse || hovered || popup.opened
+                visible: mouseArea.containsMouse || mouseArea.hovered || popup.opened || mouseArea.keyboardFocus
                 enabled: visible
+                focus: true
+                activeFocusOnTab:true
+                focusPolicy: Qt.StrongFocus
                 popup.contentItem: ColumnLayout {
 					IconLabelButton {
                         //: "Mute"
@@ -448,6 +460,16 @@ ListView {
             hoverEnabled: true
             anchors.fill: parent
             acceptedButtons: Qt.RightButton | Qt.LeftButton
+            // focus: true
+            focusPolicy: Qt.StrongFocus
+	        property bool keyboardFocus: FocusHelper.keyboardFocus
+            onKeyboardFocusChanged: {
+                mainItem.currentIndex = index
+            }
+            //: %1 chat %2
+            Accessible.name: qsTr("focused_chat_accessible_label").arg(modelData.core.title).arg(unreadCount.unread > 0 
+            //: : %1 unread messages
+            ? qsTr("unread_messages_accessible_label").arg(unreadCount.unread) : "")
             onContainsMouseChanged: {
                 if (containsMouse)
                     mainItem.lastMouseContainsIndex = index
@@ -459,12 +481,28 @@ ListView {
                 opacity: 0.7
                 radius: Utils.getSizeWithScreenRatio(8)
                 color: mainItem.currentIndex === index ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-                visible: mainItem.lastMouseContainsIndex === index || mainItem.currentIndex === index
+                visible: mainItem.lastMouseContainsIndex === index || mainItem.currentIndex === index || mouseArea.keyboardFocus
+                border.color: DefaultStyle.main2_900
+                border.width: mouseArea.keyboardFocus ? Utils.getSizeWithScreenRatio(3) : 0
             }
-            onPressed: {
+            Rectangle {
+                anchors.fill: parent
+                radius: Utils.getSizeWithScreenRatio(8)
+                color: "transparent"
+                visible: mouseArea.keyboardFocus
+                border.color: DefaultStyle.main2_900
+                border.width: Utils.getSizeWithScreenRatio(3)
+            }
+            onClicked: {
                 if (pressedButtons & Qt.RightButton) {
                     chatroomPopup.open()
                 } else {
+                    console.log("set current", index, modelData.core.title)
+                    mainItem.chatClicked(modelData)
+                }
+            }
+            Keys.onPressed: (event) => {
+                if (event.key == Qt.Key_Enter || event.key == Qt.Key_Space || event.key == Qt.Key_Return) {
                     mainItem.chatClicked(modelData)
                 }
             }

@@ -13,8 +13,12 @@ Control.Control {
     focus: true
     focusPolicy: Qt.TabFocus
     activeFocusOnTab: true
-    //: Unread notification badge : %1 unread
-    Accessible.name: qsTr("unread_notification_accessible_name").arg(unread)
+    // Replace badgeType with the name of the data it concerns (e.g. messages, calls...)
+    // for accessibility announce
+    //: Unread
+    property string badgeType: qsTr("unread")
+    //: %1 notification badge : %2 unread
+    Accessible.name: qsTr("unread_notification_accessible_name").arg(badgeType).arg(unread)
     background: Item {
         anchors.fill: parent
         Rectangle {
@@ -22,6 +26,8 @@ Control.Control {
             anchors.fill: parent
             radius: width/2
             color: DefaultStyle.danger_500_main
+            border.color: DefaultStyle.main2_900
+            border.width: mainItem.activeFocus ? Utils.getSizeWithScreenRatio(2) : 0
         }
         MultiEffect {
             id: shadow

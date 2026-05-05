@@ -102,6 +102,7 @@ Control.TabBar {
 			focusPolicy: Qt.StrongFocus
 			activeFocusOnTab: true
 			UnreadNotification {
+				badgeType: modelData.label
 				unread: !defaultAccount 
 				? -1
 				: index === 0 

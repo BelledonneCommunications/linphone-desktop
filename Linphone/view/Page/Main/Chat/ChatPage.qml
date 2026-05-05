@@ -154,7 +154,7 @@ AbstractMainPage {
                         focus: true
                         popup.x: 0
                         KeyNavigation.right: newChatButton
-                        KeyNavigation.down: listStackView
+                        KeyNavigation.down: searchBar
                         popup.contentItem: ColumnLayout {
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -178,6 +178,7 @@ AbstractMainPage {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
                         icon.width: Utils.getSizeWithScreenRatio(28)
                         icon.height: Utils.getSizeWithScreenRatio(28)
+                        KeyNavigation.left: chatListMenu
                         KeyNavigation.down: searchBar
                         onClicked: {
                             console.debug("[ChatPage]User: create new chat")

@@ -12,6 +12,7 @@ ListView {
     id: mainItem
     spacing: Utils.getSizeWithScreenRatio(4)
     property ChatGui chat
+    onChatChanged: loading = true
     property color backgroundColor
     property bool lastItemVisible: false
     property int lastIndexFoundWithFilter: -1
