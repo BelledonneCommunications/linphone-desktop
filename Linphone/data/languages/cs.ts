@@ -89,7 +89,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation type="unfinished">Chyba při načítání zařízení</translation>
+        <translation>Chyba při načítání zařízení: %1</translation>
     </message>
 </context>
 <context>
@@ -328,6 +328,11 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
         <source>account_settings_sip_address_copied_error_message</source>
         <translation>Chyba při kopírování vaší SIP adresy</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
+        <source>no_device_message</source>
+        <translation>Nebylo načteno žádné zařízení</translation>
     </message>
 </context>
 <context>
@@ -1931,6 +1936,17 @@
         <source>conference_end_to_end_encrypted</source>
         <translation>Schůzka s koncovým šifrováním</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="532"/>
+        <source>conference_srtp_point_to_point_encrypted</source>
+        <translation>Šifrovaná schůzka typu bod-bod (SRTP)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1409"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1410"/>
+        <source>call_action_accept_call</source>
+        <translation>Zvednout hovor</translation>
+    </message>
 </context>
 <context>
     <name>CarddavSettingsLayout</name>
@@ -2241,6 +2257,11 @@
         <source>menu_edit_chat_message</source>
         <translation>Upravit</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="316"/>
+        <source>conversation_message_edited_label</source>
+        <translation>Upraveno</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessageContentCore</name>
@@ -2501,6 +2522,21 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>info_toast_deleted_message</source>
         <translation>Zpráva byla smazána</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="269"/>
+        <source>conversation_dialog_delete_chat_message_title</source>
+        <translation>Smazat tuto zprávu?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="277"/>
+        <source>conversation_dialog_delete_locally_label</source>
+        <translation>Pro mě</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="288"/>
+        <source>conversation_dialog_delete_for_everyone_label</source>
+        <translation>Pro všechny</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2676,6 +2712,11 @@ proto nezveřejňujte žádné citlivé informace!</translation>
 </context>
 <context>
     <name>CliModel</name>
+    <message>
+        <location filename="../../model/cli/CliModel.cpp" line="443"/>
+        <source>info_popup_cli_unsupported_scheme_message</source>
+        <translation>Žádný token nenalezen</translation>
+    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -2919,6 +2960,16 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>call_with_contact_name_accessible_button</source>
         <translation>Hovor %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="173"/>
+        <source>video_call_with_contact_name_accessible_button</source>
+        <translation>Videohovor %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="196"/>
+        <source>message_with_contact_name_accessible_button</source>
+        <translation>Zpráva %1</translation>
+    </message>
 </context>
 <context>
     <name>ContactListView</name>
@@ -3005,7 +3056,8 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation type="unfinished">Pro zvýšení úrovně důvěryhodnosti je třeba zavolat na zařízení kontaktu a ověřit kód.&lt;br&gt;&lt;br&gt;Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
+        <translation>Pro zvýšení úrovně důvěryhodnosti je třeba zavolat na zařízení kontaktu a ověřit kód.
+Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -3247,6 +3299,12 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="625"/>
         <source>contact_details_medias_and_documents_title</source>
         <translation>Média a dokumenty</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="681"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="701"/>
+        <source>contact_details_documents_subtitle</source>
+        <translation>Zobrazit sdílené dokumenty</translation>
     </message>
 </context>
 <context>
@@ -3595,6 +3653,28 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
         <source>copied</source>
         <translation>Zkopírováno</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="136"/>
+        <source>settings_debug_app_version_copied_message</source>
+        <translation>Verze aplikace byla zkopírována do schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="184"/>
+        <source>settings_debug_qt_version_copied_message</source>
+        <translation>Verze Qt byla zkopírována do schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="160"/>
+        <source>settings_debug_sdk_version_copied_message</source>
+        <translation>Verze SDK byla zkopírována do schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="166"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="190"/>
+        <source>settings_debug_copy_tooltip</source>
+        <translation>Zkopírovat text</translation>
     </message>
 </context>
 <context>
@@ -4410,6 +4490,11 @@ Expirace : %1</translation>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Přidat účet</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="319"/>
+        <source>searchbar_suggestions_accessible_name</source>
+        <translation>Návrhy ve vyhledávacím poli</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4570,6 +4655,21 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
         <source>timezone_accessible_name</source>
         <translation>Časová zóna</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="124"/>
+        <source>day_accessible_name</source>
+        <translation>Den</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="153"/>
+        <source>start_time_accessible_name</source>
+        <translation>Počáteční čas</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="168"/>
+        <source>end_time_accessible_name</source>
+        <translation>Konečný čas</translation>
     </message>
 </context>
 <context>
@@ -4823,6 +4923,16 @@ Expirace : %1</translation>
         <source>settings_meetings_default_layout_subtitle</source>
         <extracomment>&quot;Le mode d’affichage des participants en réunions&quot;</extracomment>
         <translation>Jak se zobrazují účastníci schůzek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="63"/>
+        <source>settings_meetings_show_past_meetings_title</source>
+        <translation>Zobrazit minulé schůzky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="65"/>
+        <source>settings_meetings_show_past_meetings_subtitle</source>
+        <translation>Zobrazit minulé schůzky v seznamu schůzek</translation>
     </message>
 </context>
 <context>
@@ -5129,6 +5239,11 @@ Expirace : %1</translation>
         <source>oidc_authentication_no_token_found_in_config_error</source>
         <extracomment>No token endpoint found in OpenID configuration</extracomment>
         <translation>V konfiguraci OpenID nebyl nalezen žádný koncový bod tokenu</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="319"/>
+        <source>oidc_authentication_empty_reply_error</source>
+        <translation>Odpověď OIDC je prázdná!</translation>
     </message>
 </context>
 <context>
@@ -5519,6 +5634,21 @@ Expirace : %1</translation>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Zadejte prosím e-mail</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="21"/>
+        <source>phone_number_validation_not_available_title</source>
+        <translation>Ověření telefonního čísla není dostupné</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="23"/>
+        <source>phone_number_validation_not_available_text</source>
+        <translation>Ověření telefonního čísla není dostupné, použijte prosím postup pro vytvoření e-mailového účtu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="25"/>
+        <source>register_with_email_button</source>
+        <translation>Registrace pomocí e-mailu</translation>
+    </message>
 </context>
 <context>
     <name>SIPLoginPage</name>
@@ -5666,6 +5796,11 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
         <translation>ID pro ověření (je-li odlišné)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="224"/>
+        <source>sip_address_domain_tooltip</source>
+        <translation>Doména SIP (např.: sip.example.com)</translation>
     </message>
 </context>
 <context>
@@ -5818,6 +5953,11 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konverzace</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="490"/>
+        <source>conversation_editing_message_title</source>
+        <translation>Zpráva se právě upravuje</translation>
     </message>
 </context>
 <context>
@@ -5987,6 +6127,21 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation_updated</source>
         <translation>Změna schůzky</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="661"/>
+        <source>Dummy subject</source>
+        <translation>Fiktivní předmět</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="564"/>
+        <source>conversation_message_content_deleted_label</source>
+        <translation>&lt;i&gt;Tato zpráva byla smazána&lt;/i&gt;</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="563"/>
+        <source>conversation_message_content_deleted_by_us_label</source>
+        <translation>&lt;i&gt;Smazali jste tuto zprávu&lt;/i&gt;</translation>
     </message>
 </context>
 <context>
@@ -6236,6 +6391,21 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Nepodařilo se vytvořit zprávu ze záznamu</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2195"/>
+        <source>chat_message_edit_error</source>
+        <translation>Nelze upravit neplatnou zprávu</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2201"/>
+        <source>info_popup_edited_message_error</source>
+        <translation>Nelze odeslat upravenou zprávu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2228"/>
+        <source>info_popup_send_edited_message_error_message</source>
+        <translation>Vytvoření upravené zprávy se nezdařilo</translation>
     </message>
 </context>
 <context>
@@ -7651,6 +7821,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>CoreModel</name>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="250"/>
+        <source>fetching_config_empty_path_failure_error_message</source>
+        <translation>Nelze získat cestu k souboru pro načtení nastavení, návrat</translation>
+    </message>
 </context>
 <context>
     <name>RecordPage</name>
@@ -7824,6 +7999,16 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>call_accessible_name</source>
         <translation>Volat</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="245"/>
+        <source>erase_accessible_name</source>
+        <translation>Vymazat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="177"/>
+        <source>numpad_longpress_accessible_name</source>
+        <translation>%1 dlouhé stisknutí %2</translation>
+    </message>
 </context>
 <context>
     <name>RecordListView</name>
@@ -7883,6 +8068,51 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
         <source>info_popup_error_title</source>
         <translation>Chyba</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="67"/>
+        <source>info_popup_reply_message_not_found_error</source>
+        <translation>Původní zpráva nebyla nalezena. Možná byla smazána</translation>
+    </message>
+</context>
+<context>
+    <name>NumericPadPopup</name>
+    <message>
+        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="60"/>
+        <source>numeric_pad_accessible_name</source>
+        <translation>Číselná klávesnice</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="71"/>
+        <source>close_numeric_pad_accessible_name</source>
+        <translation>Zavřít číselnou klávesnici</translation>
+    </message>
+</context>
+<context>
+    <name>SoundPlayerModel</name>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="87"/>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="107"/>
+        <source>sound_player_open_error</source>
+        <translation>Nelze otevřít: `%1`</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="65"/>
+        <source>sound_player_pause_error</source>
+        <translation>Nelze pozastavit</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="92"/>
+        <source>sound_player_play_error</source>
+        <translation>Nelze přehrát %1</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBox</name>
+    <message>
+        <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
+        <source>combobox_with_value_accessible_name</source>
+        <translation>%1 aktuální hodnota %2</translation>
     </message>
 </context>
 </TS>

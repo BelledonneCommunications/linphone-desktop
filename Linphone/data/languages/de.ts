@@ -104,7 +104,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils : %1&quot;</extracomment>
-        <translation type="unfinished">Fehler beim Abrufen der Geräte</translation>
+        <translation>Fehler beim Abrufen der Geräte : %1</translation>
     </message>
 </context>
 <context>
@@ -333,7 +333,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
         <source>no_device_message</source>
         <extracomment>No device fetched</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Gerät abgerufen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="329"/>
@@ -2858,7 +2858,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../model/cli/CliModel.cpp" line="463"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
         <extracomment>&quot;Not a valid URI: `%1` Unsupported scheme: `%2`.&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
 </context>
 <context>
@@ -3236,7 +3236,8 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="147"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.</extracomment>
-        <translation type="unfinished">Um das Vertrauenslevel zu erhöhen müssen Sie Ihren Kontakt anrufen und einen Code bestätigen.&lt;br&gt;&lt;br&gt;Sie sind dabei, &quot;%1&quot; anzurufen. Möchten Sie fortfahren?</translation>
+        <translation>Um das Vertrauenslevel zu erhöhen müssen Sie Ihren Kontakt anrufen und einen Code bestätigen.
+Sie sind dabei, &quot;%1&quot; anzurufen. Möchten Sie fortfahren?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="156"/>
@@ -4126,7 +4127,7 @@ Ablauf: %1</translation>
         <location filename="../../core/chat/message/EventLogProxy.cpp" line="67"/>
         <source>info_popup_reply_message_not_found_error</source>
         <extracomment>Original message not found. It may have been deleted</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ursprüngliche Nachricht nicht gefunden. Möglicherweise wurde sie gelöscht</translation>
     </message>
 </context>
 <context>
@@ -6059,19 +6060,19 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="21"/>
         <source>phone_number_validation_not_available_title</source>
         <extracomment>Phone number validation not available</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Die Überprüfung der Telefonnummer ist nicht verfügbar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="23"/>
         <source>phone_number_validation_not_available_text</source>
         <extracomment>Phone number validation is not available, please use email account creation process</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Telefonnummernüberprüfung ist nicht verfügbar, bitte verwenden Sie den E-Mail-Registrierungsprozess</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="25"/>
         <source>register_with_email_button</source>
         <extracomment>Register with an email</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mit E-Mail registrieren</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="64"/>
@@ -6631,20 +6632,20 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="65"/>
         <source>sound_player_pause_error</source>
         <extracomment>Unable to pause</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Pausieren nicht möglich</translation>
     </message>
     <message>
         <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="87"/>
         <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="107"/>
         <source>sound_player_open_error</source>
         <extracomment>Unable to open: `%1`</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht geöffnet werden: `%1`</translation>
     </message>
     <message>
         <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="92"/>
         <source>sound_player_play_error</source>
         <extracomment>Unable to play %1</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht abgespielt werden %1</translation>
     </message>
 </context>
 <context>
@@ -6752,7 +6753,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../model/tool/ToolModel.cpp" line="663"/>
         <source>Dummy subject</source>
         <extracomment>Dummy subject</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dummy-Betreff</translation>
     </message>
 </context>
 <context>

@@ -2495,6 +2495,11 @@ Error</extracomment>
 </context>
 <context>
     <name>CliModel</name>
+    <message>
+        <location filename="../../model/cli/CliModel.cpp" line="443"/>
+        <source>info_popup_cli_unsupported_scheme_message</source>
+        <translation>Ez da tokenik aurkitu</translation>
+    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
