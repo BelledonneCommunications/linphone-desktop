@@ -1011,6 +1011,21 @@ int SettingsModel::getTextMessageFontSize() const {
 	return mConfig->getInt(UiSection, "text_message_font_size", Constants::DefaultFontPointSize);
 }
 
+QString SettingsModel::getDownloadFolder() const {
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "download_folder", ""));
+}
+
+void SettingsModel::setDownloadFolder(const QString &downloadFolder) {
+	if (getDownloadFolder() != downloadFolder) {
+		QString copy = downloadFolder;
+		if (!copy.endsWith(QDir::separator())) copy.append(QDir::separator());
+		mConfig->setString(UiSection, "download_folder", Utils::appStringToCoreString(copy));
+		lInfo() << log().arg("Set download folder %1").arg(copy);
+		linphone::Factory::get()->setDownloadDir(Utils::appStringToCoreString(copy));
+		emit downloadFolderChanged(copy);
+	}
+}
+
 // clang-format off
 void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)
@@ -1143,11 +1158,6 @@ DEFINE_GETSET_CONFIG_STRING(SettingsModel,
 							configLocale,
 							ConfigLocale,
 							"locale",
-							"")
-DEFINE_GETSET_CONFIG_STRING(SettingsModel,
-							downloadFolder,
-							DownloadFolder,
-							"download_folder",
 							"")
 DEFINE_GETSET_CONFIG(SettingsModel,
 						int,

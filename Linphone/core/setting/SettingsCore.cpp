@@ -1279,6 +1279,7 @@ QString SettingsCore::getDownloadFolder() const {
 
 void SettingsCore::setDownloadFolder(QString folder) {
 	if (mDownloadFolder != folder) {
+		if (!folder.endsWith(QDir::separator())) folder.append(QDir::separator());
 		mDownloadFolder = folder;
 		emit downloadFolderChanged();
 		setIsSaved(false);

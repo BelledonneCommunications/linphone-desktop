@@ -75,6 +75,7 @@
 #include "core/participant/ParticipantGui.hpp"
 #include "core/participant/ParticipantInfoProxy.hpp"
 #include "core/participant/ParticipantProxy.hpp"
+#include "core/path/Paths.hpp"
 #include "core/payload-type/PayloadTypeCore.hpp"
 #include "core/payload-type/PayloadTypeGui.hpp"
 #include "core/payload-type/PayloadTypeProxy.hpp"
@@ -663,6 +664,17 @@ void App::initCore() {
 		    Utils::checkDownloadedCodecsUpdates();
 		    lDebug() << log().arg("Setting Video Codec Priority Policy");
 		    CoreModel::getInstance()->getCore()->setVideoCodecPriorityPolicy(linphone::CodecPriorityPolicy::Auto);
+		    CoreModel::getInstance()->getCore()->setChatMessageFilesDirectories(
+		        {SettingsModel::getInstance()->getDownloadFolder().toStdString()});
+		    CoreModel::getInstance()->getCore()->enableChatMessageFilesDeletion(true);
+		    connect(SettingsModel::getInstance().get(), &SettingsModel::downloadFolderChanged,
+		            CoreModel::getInstance().get(), [this] {
+			            auto folder = SettingsModel::getInstance()->getDownloadFolder();
+			            lInfo() << "Download folder has changed, add core chat message file directory" << folder;
+			            auto currentDirs = CoreModel::getInstance()->getCore()->getChatMessageFilesDirectories();
+			            currentDirs.push_back(folder.toStdString());
+			            CoreModel::getInstance()->getCore()->setChatMessageFilesDirectories(currentDirs);
+		            });
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.
