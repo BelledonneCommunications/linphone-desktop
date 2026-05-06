@@ -2499,7 +2499,7 @@ Error</extracomment>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="443"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
-        <translation> </translation>
+        <translation type="unfinished"> </translation>
     </message>
 </context>
 <context>
@@ -7567,6 +7567,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
         <source>info_popup_error_title</source>
         <translation>错误</translation>
+    </message>
+</context>
+<context>
+    <name>UnreadNotification</name>
+    <message>
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="19"/>
+        <source>unread</source>
+        <translation> </translation>
     </message>
 </context>
 </TS>

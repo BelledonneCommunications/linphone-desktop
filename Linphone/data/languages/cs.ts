@@ -822,6 +822,11 @@
         <extracomment>Veuillez saisir un mot de passe</extracomment>
         <translation>Zadejte prosím heslo</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
+        <source>mandatory_field_accessible_name</source>
+        <translation>%1 vyžadováno</translation>
+    </message>
 </context>
 <context>
     <name>CallCore</name>
@@ -2715,7 +2720,7 @@ proto nezveřejňujte žádné citlivé informace!</translation>
     <message>
         <location filename="../../model/cli/CliModel.cpp" line="443"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
 </context>
 <context>
@@ -8112,7 +8117,15 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <translation>%1 aktuální hodnota %2</translation>
+        <translation type="unfinished">%1 aktuální hodnota %2</translation>
+    </message>
+</context>
+<context>
+    <name>UnreadNotification</name>
+    <message>
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="19"/>
+        <source>unread</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
 </context>
 </TS>

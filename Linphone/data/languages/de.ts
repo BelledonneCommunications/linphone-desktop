@@ -859,7 +859,7 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>%1 mandatory</extracomment>
-        <translation type="unfinished">%1 ist verpflichtend</translation>
+        <translation>%1 ist verpflichtend</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
@@ -2876,7 +2876,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../model/cli/CliModel.cpp" line="463"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
         <extracomment>&quot;Not a valid URI: `%1` Unsupported scheme: `%2`.&quot;</extracomment>
-        <translation>Kein Token gefunden</translation>
+        <translation type="unfinished">Kein Token gefunden</translation>
     </message>
 </context>
 <context>
@@ -2885,7 +2885,7 @@ Stellen Sie sicher, dass Sie keine sensiblen Informationen teilen!</translation>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
         <extracomment>%1 current value %2</extracomment>
-        <translation>%1 aktueller Wert %2</translation>
+        <translation type="unfinished">%1 aktueller Wert %2</translation>
     </message>
 </context>
 <context>
@@ -6780,7 +6780,7 @@ Um sie in einem kommerziellen Projekt zu aktivieren, kontaktieren Sie uns bitte.
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="19"/>
         <source>unread</source>
         <extracomment>Unread</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>

@@ -766,6 +766,11 @@
         <extracomment>Veuillez saisir un mot de passe</extracomment>
         <translation>Por favor, insira uma senha</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
+        <source>mandatory_field_accessible_name</source>
+        <translation>%1 exigido</translation>
+    </message>
 </context>
 <context>
     <name>CallCore</name>
