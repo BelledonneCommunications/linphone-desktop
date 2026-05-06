@@ -79,6 +79,9 @@ void CarddavCore::setSelf(QSharedPointer<CarddavCore> me) {
 			emit saved(success, message);
 		});
 	});
+	mCarddavModelConnection->makeConnectToModel(&CarddavModel::syncStarted, [this]() {
+		mCarddavModelConnection->invokeToCore([this]() { emit syncStarted(); });
+	});
 }
 
 bool CarddavCore::isValid() {

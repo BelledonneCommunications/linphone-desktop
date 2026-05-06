@@ -91,6 +91,7 @@ Control.TabBar {
 		id: actionsRepeater
 		Control.TabButton {
 			id: tabButton
+			parent: visible ? mainItem: null
 			width: mainItem.width
             bottomInset:  Utils.getSizeWithScreenRatio(32)
             topInset:  Utils.getSizeWithScreenRatio(32)

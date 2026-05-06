@@ -345,7 +345,6 @@ App::App(int &argc, char *argv[])
 	connect(this, &App::restartCoreRequested, this, [this] {
 		initCore();
 		sendCommand(false);
-		setIsRestarting(false);
 	});
 
 #ifdef Q_OS_LINUX
@@ -426,6 +425,7 @@ void App::connectCoreModel() {
 				        false);
 			    });
 		    }
+		    setIsRestarting(false);
 	    });
 	mCoreModelConnection->makeConnectToModel(&CoreModel::fetchConfigFailed, [this](const QString &message) {
 		if (mMainWindow) {

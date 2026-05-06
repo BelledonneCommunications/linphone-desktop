@@ -48,6 +48,7 @@ public:
 signals:
 	void saved(bool success, QString message);
 	void removed();
+	void syncStarted();
 
 private:
 	bool mStoreNewFriendsInIt;

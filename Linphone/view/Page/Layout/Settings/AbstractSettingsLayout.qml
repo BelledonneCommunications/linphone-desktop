@@ -20,6 +20,7 @@ Rectangle {
     property real minimumWidthForSwitchintToRowLayout: Utils.getSizeWithScreenRatio(981)
 	property var useVerticalLayout
 	property bool saveButtonVisible: true
+	property alias saveButton: saveButton
 	signal save()
 	signal undo()
 	function setResponsivityFlags() {

@@ -84,9 +84,11 @@ SettingsModel::SettingsModel() {
 	if (!getDisableMeetingsFeature() && defaultAccount &&
 	    !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
 		setDisableMeetingsFeature(true);
-	else if (getDisableMeetingsFeature() && defaultAccount &&
-	         defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
-		setDisableMeetingsFeature(false);
+	// We cannot call this cause the disable_meetings_feature value in the config file
+	// will be overwritten
+	// else if (getDisableMeetingsFeature() && defaultAccount &&
+	//          defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress())
+	// 	setDisableMeetingsFeature(false);
 
 	// Media cards must not be used twice (capture card + call) else we will get latencies issues and bad echo
 	// calibrations in call.

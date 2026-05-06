@@ -6,6 +6,7 @@ import Linphone
 import UtilsCpp
 import EnumsToStringCpp
 import SettingsCpp
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
@@ -479,7 +480,17 @@ AbstractMainPage {
                 ]
                 secondLineContent: ActionsButtons {}
                 content: Flickable {
+                    id: contactDetailFlickable
                     contentWidth: parent.width
+                    Connections {
+                        target: FocusNavigator
+
+                        function onFocusChanged(item, keyboardFocus) {
+                            if(Utils.isDescendant(item,contactDetailFlickable) && keyboardFocus){
+                                Utils.ensureVisibleY(item, contactDetailFlickable)
+                            }
+                        }
+                    }
                     ColumnLayout {
                         spacing: Utils.getSizeWithScreenRatio(32)
                         anchors.left: parent.left
@@ -762,6 +773,9 @@ AbstractMainPage {
                                         }
 
                                         SmallButton {
+                                            onKeyboardFocusChanged: {
+                                                if (keyboardFocus) Utils.ensureVisibleY(this, deviceList)
+                                            }
                                             // Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
                                             visible: listViewModelData.securityLevel != LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
                                             icon.source: AppIcons.warningCircle

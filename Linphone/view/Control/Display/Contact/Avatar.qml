@@ -18,7 +18,7 @@ Loader{
 	property CallGui call: null
 	property bool isConference: false
 	property bool shadowEnabled: true
-	property var _address: account
+	property var _address: account?.core
 		? account.core?.identityAddress || ""
 		: call
 			? call.core.remoteAddress
@@ -27,14 +27,14 @@ Loader{
 				: ''
 	readonly property var address: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_address) : _address
 	property var displayNameObj: UtilsCpp.getDisplayName(_address)
-	property var displayNameVal: account && account.core.displayName
+	property var displayNameVal: account?.core && account.core.displayName
 		? account.core.displayName
 		: contact && contact.core.fullName
 			? contact.core.fullName
 			: displayNameObj
 				? displayNameObj.value
 			: ""
-	property bool haveAvatar: account 
+	property bool haveAvatar: account?.core
 		? account.core.pictureUri
 		: contact 
 			? contact.core.pictureUri
@@ -119,7 +119,7 @@ Loader{
 					anchors.right: parent.right
 					anchors.rightMargin: stackView.width / 15
 					z: 1
-					source: account 
+					source: account?.core
 							? (account.core?.registrationState !== LinphoneEnums.RegistrationState.Ok 
 								? account.core?.registrationIcon 
 								: account.core?.presenceIcon)
@@ -127,7 +127,7 @@ Loader{
 								? contact.core?.presenceIcon
 								: "")
 					RotationAnimator on rotation {
-						running: mainItem.account && mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress
+						running: mainItem.account?.core ? mainItem.account.core.registrationState === LinphoneEnums.RegistrationState.Progress : false
 						direction: RotationAnimator.Clockwise
 						from: 0
 						to: 360

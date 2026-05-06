@@ -51,6 +51,7 @@ public:
 
 signals:
 	void saved(bool success, QString message);
+	void syncStarted();
 
 private:
 	std::shared_ptr<CarddavModel> mCarddavModel;

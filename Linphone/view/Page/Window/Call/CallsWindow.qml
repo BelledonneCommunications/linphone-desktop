@@ -1633,7 +1633,7 @@ AbstractWindow {
                     // Chat panel button
                     CheckableButton {
                         id: chatPanelButton
-                        visible: !mainWindow.conference || mainWindow.conference.core.isChatEnabled
+                        visible: !SettingsCpp.disableChatFeature && (!mainWindow.conference || mainWindow.conference.core.isChatEnabled)
                         iconUrl: AppIcons.chatTeardropText
                         //: Open chat…
                         ToolTip.text: qsTr("call_open_chat_hint")

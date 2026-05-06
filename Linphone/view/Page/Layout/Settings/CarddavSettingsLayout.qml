@@ -24,6 +24,28 @@ AbstractSettingsLayout {
 	topbarOptionalComponent: topBar
 	property alias carddavGui: mainItem.model
 	property bool isNew: false
+	saveButton.contentItem: StackLayout {
+		id: saveButtonContent
+		currentIndex: 0
+		Text {
+			//: "Save"
+			text: qsTr("save")
+			horizontalAlignment: Text.AlignHCenter
+			verticalAlignment: Text.AlignVCenter
+			font {
+				pixelSize: Typography.b2.pixelSize
+				weight: Typography.b2.weight
+			}
+			color: DefaultStyle.grey_0
+		}
+		BusyIndicator {
+			implicitWidth: parent.height
+			implicitHeight: parent.height
+			Layout.alignment: Qt.AlignCenter
+			indicatorColor: DefaultStyle.grey_0
+			indicatorWidth: Utils.getSizeWithScreenRatio(25)
+		}
+	}
 	onSave: {
 		if (carddavGui.core.isValid()) {
 			carddavGui.core.save()
@@ -45,6 +67,12 @@ AbstractSettingsLayout {
                 UtilsCpp.showInformationPopup(qsTr("settings_contacts_carddav_popup_synchronization_error_title"),
                                               //: "Erreur de synchronisation : %1"
                                               qsTr("settings_contacts_carddav_popup_synchronization_error_message").arg(message), false, mainWindow)
+			mainItem.saveButton.enabled = true
+			saveButtonContent.currentIndex = 0
+		}
+		function onSyncStarted() {
+			mainItem.saveButton.enabled = false
+			saveButtonContent.currentIndex = 1
 		}
 	}
 	Component {
