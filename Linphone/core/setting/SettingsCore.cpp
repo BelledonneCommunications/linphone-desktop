@@ -621,8 +621,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                        ShortcutCount)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QVariantList,
 	                        shortcuts, Shortcuts)
-	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
-	                           callToneIndicationsEnabled, CallToneIndicationsEnabled)
+	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
+	                        callToneIndicationsEnabled, CallToneIndicationsEnabled)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           commandLine, CommandLine)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
@@ -727,6 +727,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAutoStart(settingsCore.mAutoStart);
 	setConfigLocale(settingsCore.mConfigLocale);
 	setDownloadFolder(settingsCore.mDownloadFolder);
+	setCallToneIndicationsEnabled(settingsCore.mCallToneIndicationsEnabled);
 	setCallForwardToAddress(settingsCore.mCallForwardToAddress);
 }
 
@@ -836,6 +837,14 @@ void SettingsCore::setAutomaticallyRecordCallsEnabled(bool enabled) {
 	if (mAutomaticallyRecordCallsEnabled != enabled) {
 		mAutomaticallyRecordCallsEnabled = enabled;
 		emit automaticallyRecordCallsEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setCallToneIndicationsEnabled(bool enabled) {
+	if (mCallToneIndicationsEnabled != enabled) {
+		mCallToneIndicationsEnabled = enabled;
+		emit callToneIndicationsEnabledChanged();
 		setIsSaved(false);
 	}
 }
@@ -1367,6 +1376,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
+	mCallToneIndicationsEnabled = model->getCallToneIndicationsEnabled();
 	mRingtonePath = model->getRingtone();
 	QFileInfo ringtone(mRingtonePath);
 	mRingtoneFolder = ringtone.exists() ? ringtone.absolutePath() : "";

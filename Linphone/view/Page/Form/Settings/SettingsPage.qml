@@ -31,25 +31,7 @@ AbstractSettingsMenu {
         {title: qsTr("settings_advanced_title"), layout: "AdvancedSettingsLayout"}
 	]
 
-	onGoBackRequested: if (!SettingsCpp.isSaved) {
-                           //: Modifications non enregistrées
-        UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("contact_editor_popup_abort_confirmation_title"),
-            //: Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?
-            qsTr("contact_editor_popup_abort_confirmation_message"),
-				"",
-			function (confirmed) {
-				if (confirmed) {
-					SettingsCpp.save()
-				} else {
-					SettingsCpp.undo()
-				}
-				mainItem.goBack()
-                //: "Ne pas enregistrer"
-            }, qsTr("contact_editor_dialog_abort_confirmation_do_not_save"),
-            //: "Enregistrer"
-            qsTr("contact_editor_dialog_abort_confirmation_save")
-		)
-	} else {mainItem.goBack()}
+	onGoBackRequested: mainItem.goBack()
 	
 	Component.onCompleted: {
 		SettingsCpp.isSaved = true

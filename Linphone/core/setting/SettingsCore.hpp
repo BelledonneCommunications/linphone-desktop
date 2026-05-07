@@ -50,6 +50,8 @@ public:
 	    int echoCancellationCalibration READ getEchoCancellationCalibration NOTIFY echoCancellationCalibrationChanged)
 	Q_PROPERTY(bool automaticallyRecordCallsEnabled READ getAutomaticallyRecordCallsEnabled WRITE
 	               setAutomaticallyRecordCallsEnabled NOTIFY automaticallyRecordCallsEnabledChanged)
+	Q_PROPERTY(bool callToneIndicationsEnabled READ getCallToneIndicationsEnabled WRITE setCallToneIndicationsEnabled
+	               NOTIFY callToneIndicationsEnabledChanged)
 
 	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged)
 
@@ -168,6 +170,11 @@ public:
 		return mAutomaticallyRecordCallsEnabled;
 	}
 	void setAutomaticallyRecordCallsEnabled(bool enabled);
+
+	bool getCallToneIndicationsEnabled() {
+		return mCallToneIndicationsEnabled;
+	}
+	void setCallToneIndicationsEnabled(bool enabled);
 
 	bool getShowPastMeetings() const;
 	void setShowPastMeetings(bool show);
@@ -306,7 +313,6 @@ public:
 	// Read-only
 	DECLARE_CORE_MEMBER(int, shortcutCount, ShortcutCount)
 	DECLARE_CORE_MEMBER(QVariantList, shortcuts, Shortcuts)
-	DECLARE_CORE_GETSET_MEMBER(bool, callToneIndicationsEnabled, CallToneIndicationsEnabled)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCommandLine, DisableCommandLine)
 	DECLARE_CORE_GETSET_MEMBER(QString, commandLine, CommandLine)
 	DECLARE_CORE_GET_CONSTANT(QFont, emojiFont, EmojiFont)
@@ -331,6 +337,7 @@ signals:
 	void showPastMeetingsChanged();
 
 	void automaticallyRecordCallsEnabledChanged();
+	void callToneIndicationsEnabledChanged();
 
 	void captureGraphRunningChanged(bool running);
 
@@ -429,6 +436,7 @@ private:
 	QString mDownloadFolder;
 	bool mDisplayNotificationContent;
 	bool mAutomaticallyRecordCallsEnabled;
+	bool mCallToneIndicationsEnabled;
 
 	bool mShowPastMeetings;
 
