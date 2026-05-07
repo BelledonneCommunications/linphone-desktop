@@ -4550,150 +4550,174 @@ Expiration : %1</translation>
 <context>
     <name>MainLayout</name>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="79"/>
+        <source>contact_editor_popup_abort_confirmation_title</source>
+        <extracomment>Modifications non enregistrées</extracomment>
+        <translation type="unfinished">Modifications non enregistrées</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="81"/>
+        <source>contact_editor_popup_abort_confirmation_message</source>
+        <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
+        <translation type="unfinished">Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="94"/>
+        <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
+        <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
+        <translation type="unfinished">Ne pas enregistrer</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="96"/>
+        <source>contact_editor_dialog_abort_confirmation_save</source>
+        <extracomment>&quot;Enregistrer&quot;</extracomment>
+        <translation type="unfinished">Enregistrer</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_calls_label</source>
         <extracomment>&quot;Appels&quot;</extracomment>
         <translation>Appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="146"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
         <source>open_calls_page_accessible_name</source>
         <extracomment>&quot;Open calls page&quot;</extracomment>
         <translation>Ouvrir la page des appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="175"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="154"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="177"/>
         <source>open_contacts_page_accessible_name</source>
         <extracomment>&quot;Open contacts page&quot;</extracomment>
         <translation>Ouvrir la page des contacts</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="183"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
         <translation>Conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="162"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="185"/>
         <source>open_conversations_page_accessible_name</source>
         <extracomment>&quot;Open conversations page&quot;</extracomment>
         <translation>Ouvrir la page des conversations</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="192"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Réunions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="171"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="194"/>
         <source>open_contact_page_accessible_name</source>
         <extracomment>&quot;Open meetings page&quot;</extracomment>
         <translation>Ouvrir la page des réunions</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="234"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="257"/>
         <source>searchbar_placeholder_text</source>
         <extracomment>&quot;Rechercher un contact, appeler %1&quot;</extracomment>
         <translation>Rechercher un contact, appeler %1</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="236"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="259"/>
         <source>searchbar_placeholder_text_chat_feature_enabled</source>
         <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
         <translation>ou envoyer un message …</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="319"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="342"/>
         <source>searchbar_suggestions_accessible_name</source>
         <extracomment>&quot;Searchbar suggestions&quot;</extracomment>
         <translation>Suggestions de la barre de recherche</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="331"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="354"/>
         <source>do_not_disturb_accessible_name</source>
         <extracomment>&quot;Do not disturb&quot;</extracomment>
         <translation>Ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="349"/>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="493"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="372"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="516"/>
         <source>contact_presence_status_disable_do_not_disturb</source>
         <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
         <translation>Désactiver ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="403"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="426"/>
         <source>information_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="405"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="428"/>
         <source>no_voicemail_uri_error_message</source>
         <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
         <translation>L&apos;URI de messagerie vocale n&apos;est pas définie.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="418"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="441"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
         <translation>liste des comptes</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="456"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="479"/>
         <source>application_options_accessible_name</source>
         <extracomment>&quot;Application options&quot;</extracomment>
         <translation>Options de l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="482"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="505"/>
         <source>drawer_menu_manage_account</source>
         <extracomment>Mon compte</extracomment>
         <translation>Mon compte</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="495"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="518"/>
         <source>contact_presence_status_enable_do_not_disturb</source>
         <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
         <translation>Activer ne pas déranger</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="510"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="533"/>
         <source>settings_title</source>
         <translation>Paramètres</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="530"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="553"/>
         <source>recordings_title</source>
         <extracomment>&quot;Enregistrements&quot;</extracomment>
         <translation>Enregistrements</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="549"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="572"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
         <translation>Aide</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="564"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="587"/>
         <source>help_quit_title</source>
         <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
         <translation>Quitter l&apos;application</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="569"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="592"/>
         <source>quit_app_question</source>
         <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
         <translation>Quitter %1 ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="592"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="615"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>Ajouter un compte</translation>
@@ -6501,28 +6525,24 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <translation>Paramètres avancés</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="36"/>
         <source>contact_editor_popup_abort_confirmation_title</source>
         <extracomment>Modifications non enregistrées</extracomment>
-        <translation>Modifications non enregistrées</translation>
+        <translation type="vanished">Modifications non enregistrées</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="38"/>
         <source>contact_editor_popup_abort_confirmation_message</source>
         <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
-        <translation>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</translation>
+        <translation type="vanished">Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="48"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
-        <translation>Ne pas enregistrer</translation>
+        <translation type="vanished">Ne pas enregistrer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="50"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <extracomment>&quot;Enregistrer&quot;</extracomment>
-        <translation>Enregistrer</translation>
+        <translation type="vanished">Enregistrer</translation>
     </message>
 </context>
 <context>
