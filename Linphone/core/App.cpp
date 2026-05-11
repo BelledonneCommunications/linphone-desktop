@@ -1242,7 +1242,8 @@ bool App::notify(QObject *receiver, QEvent *event) {
 		auto window = findParentWindow(receiver);
 		if (getMainWindow() == window && mAccountList) {
 			auto defaultAccountCore = mAccountList->getDefaultAccountCore();
-			if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0) {
+			if (defaultAccountCore && defaultAccountCore->getUnreadCallNotifications() > 0 &&
+			    mSettings->getLastActiveTabIndex() == 0) {
 				emit defaultAccountCore->lResetMissedCalls();
 			}
 		}

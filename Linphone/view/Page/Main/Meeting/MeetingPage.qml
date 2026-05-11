@@ -278,7 +278,7 @@ AbstractMainPage {
 				RowLayout {
 					spacing: Utils.getSizeWithScreenRatio(5)
 					Layout.rightMargin: Utils.getSizeWithScreenRatio(35)
-					Button {
+					RoundButton {
 						id: backButton
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.leftArrow
@@ -417,7 +417,7 @@ AbstractMainPage {
 					content: RowLayout {
 						spacing: Utils.getSizeWithScreenRatio(16)
 						// Layout.preferredWidth: rightPanelStackView.width
-						Button {
+						RoundButton {
 							id: backButton
 							icon.source: AppIcons.leftArrow
 							icon.width: Utils.getSizeWithScreenRatio(24)

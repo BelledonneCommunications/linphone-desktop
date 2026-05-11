@@ -402,7 +402,7 @@ Control.Control {
                     popup.contentItem: ColumnLayout {
                         spacing: 0
                         IconLabelButton {
-                            visible: mainItem.msgStatev === LinphoneEnums.ChatMessageState.StateNotDelivered
+                            visible: mainItem.msgState === LinphoneEnums.ChatMessageState.StateNotDelivered
                             inverseLayout: true
                             //: "Re-send"
                             text: qsTr("chat_message_send_again")
@@ -410,7 +410,7 @@ Control.Control {
                             Layout.fillWidth: true
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                             onClicked: {
-                                mainItem.chatMessage.lSend()
+                                mainItem.chatMessage.core.lSend()
                             }
                         }
                         IconLabelButton {

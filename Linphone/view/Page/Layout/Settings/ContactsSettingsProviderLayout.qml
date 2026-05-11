@@ -94,7 +94,7 @@ RowLayout {
 					}
 				}
 				Connections {
-					enabled: modelData
+					enabled: modelData !== null && mainItem.visible
 					target: modelData ? modelData.core : null
 					function onSavedChanged() {
                         if (modelData.core.saved) UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),

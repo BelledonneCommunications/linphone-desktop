@@ -92,9 +92,11 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 			connect(mChatCore.get(), &ChatCore::eventsInserted, this, [this](QList<QSharedPointer<EventLogCore>> list) {
 				auto eventsList = getSharedList<EventLogCore>();
 				for (const auto &event : list) {
+					lInfo() << log().arg("Try to insert") << event.get();
 					auto it = std::find_if(eventsList.begin(), eventsList.end(),
 					                       [event](const QSharedPointer<EventLogCore> item) { return item == event; });
 					if (it == eventsList.end()) {
+						lInfo() << log().arg("Not found in current list, insert");
 						connectItem(event);
 						prepend(event);
 						int index;
@@ -102,6 +104,8 @@ void EventLogList::setChatCore(QSharedPointer<ChatCore> core) {
 						if (event->getChatMessageCore() && !event->getChatMessageCore()->isRemoteMessage()) {
 							emit eventInsertedByUser(index);
 						}
+					} else {
+						lInfo() << log().arg("Event already in list, return");
 					}
 				}
 			});
