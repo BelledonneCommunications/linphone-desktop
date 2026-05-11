@@ -538,6 +538,7 @@ void ConferenceInfoCore::writeFromModel(const std::shared_ptr<ConferenceInfoMode
 
 void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> model) {
 	mustBeInLinphoneThread(getClassName() + "::writeIntoModel()");
+	mDateTime.setTimeZone(mTimeZoneModel->getTimeZone());
 	model->setDateTime(mIsScheduled ? mDateTime : QDateTime());
 	model->setDuration(mDuration);
 	model->setSubject(mSubject);
@@ -643,6 +644,7 @@ void ConferenceInfoCore::undo() {
 			conf->writeFromModel(mConferenceInfoModel);
 			conf->moveToThread(App::getInstance()->thread());
 			mConfInfoModelConnection->invokeToCore([this, conf]() {
+				conf->setTimeZoneModel(new TimeZoneModel(QTimeZone::systemTimeZone()));
 				this->reset(*conf);
 				conf->deleteLater();
 			});

@@ -84,6 +84,8 @@ FocusScope {
                         weight: Typography.h3.weight
 					}
 					focus: true
+					focusPolicy: Qt.StrongFocus
+					activeFocusOnTab: true
 					onActiveFocusChanged: if(activeFocus) {
 						if (text == defaultText)
 							clear()

@@ -106,25 +106,28 @@ ListView {
 					locale: Qt.locale(ConstantsCpp.DefaultLocale)
 					delegate: FocusScope {
 						id: focusDay
+						property bool isPast: UtilsCpp.daysOffset(new Date(), date) < 0
 						property bool isSelectedDay: mainItem.selectedDate ? UtilsCpp.datesAreEqual(mainItem.selectedDate, model.date) : false
 						property var d: model.date
 						objectName: 'focusDay'
-						activeFocusOnTab: true
+						activeFocusOnTab: !focusDay.isPast
+						focusPolicy: !focusDay.isPast ? Qt.TabFocus : Qt.NoFocus
 						focus: UtilsCpp.isCurrentMonth(model.date) && UtilsCpp.isCurrentDay(model.date) || index == 0
 						Keys.onPressed: (event)=> {
+							if (focusDay.isPast) return
 							if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
 								monthGrid.clicked(model.date)
 								event.accepted = true;
-							}else if(event.key == Qt.Key_Left){
+							} else if(event.key == Qt.Key_Left) {
 								var previous = nextItemInFocusChain(false)
 								if( previous.objectName != 'focusDay'){
 									previousButton.clicked(undefined)
-								}else{
+								} else {
 									if (UtilsCpp.daysOffset(new Date(), model.date) >= 0) previous.forceActiveFocus()
 								}
-							}else if(event.key == Qt.Key_Right){
+							} else if(event.key == Qt.Key_Right) {
 								var next = nextItemInFocusChain()
-								if( next.objectName != 'focusDay'){
+								if( next.objectName != 'focusDay') {
 									nextButton.clicked(undefined)
 								} else {
 									next.forceActiveFocus()
@@ -135,11 +138,13 @@ ListView {
 						MouseArea{
 							id: hoveringArea
 							anchors.fill: parent
-							hoverEnabled: true
+							hoverEnabled: !focusDay.isPast
 							cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-							acceptedButtons: Qt.LeftButton
+							acceptedButtons: focusDay.isPast ? Qt.NoButton : Qt.LeftButton
 							// onEntered: focusDay.forceActiveFocus()
-							onPressed: (event) =>{
+							onPressed: (event) => {
+								if (focusDay.isPast) return
+								console.log("focus day")
 								focusDay.forceActiveFocus()
 								event.accepted = false
 							}
@@ -161,7 +166,7 @@ ListView {
 								? DefaultStyle.grey_0
 								: UtilsCpp.isCurrentDay(model.date)
 									? DefaultStyle.main1_500_main
-									: UtilsCpp.dateisInMonth(model.date, mainItem.currentMonth, mainItem.currentYear)
+									: UtilsCpp.dateIsInMonth(model.date, mainItem.currentMonth, mainItem.currentYear)
 										? DefaultStyle.main2_700
 										: DefaultStyle.main2_400
 							font {

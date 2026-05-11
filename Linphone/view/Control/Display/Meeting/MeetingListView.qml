@@ -174,13 +174,13 @@ ListView {
 		property var itemGui: $modelData
 		// Do not use itemAtIndex because of caching items. Using getAt ensure to have a GUI
 		property var previousConfInfoGui : mainItem.model.getAt(index-1)
-		property var dateTime: itemGui.core ? itemGui.core.dateTime : UtilsCpp.getCurrentDateTime()
+		property var dateTime: itemGui.core ? itemGui.core.dateTime : UtilsCpp.getCurrentDateTimeLocal()
 		property string day : UtilsCpp.toDateDayNameString(dateTime)
 		property string dateString:  UtilsCpp.toDateString(dateTime)
-		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTime : UtilsCpp.getCurrentDateTime()) : ''
+		property string previousDateString: previousConfInfoGui ? UtilsCpp.toDateString(previousConfInfoGui.core ? previousConfInfoGui.core.dateTime : UtilsCpp.getCurrentDateTimeLocal()) : ''
 		property bool isFirst : ListView.previousSection !== ListView.section
         property real topOffset: (dateDay.visible && !isFirst) ? Utils.getSizeWithScreenRatio(8) : 0
-		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTime()
+		property var endDateTime: itemGui.core ? itemGui.core.endDateTime : UtilsCpp.getCurrentDateTimeLocal()
 		property bool haveModel: itemGui.core ? itemGui.core.haveModel : false
 		property bool isCanceled: itemGui.core ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
 		property bool isSelected: itemGui.core == mainItem.selectedConference?.core

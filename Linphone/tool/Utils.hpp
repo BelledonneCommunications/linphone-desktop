@@ -120,15 +120,17 @@ public:
 	Q_INVOKABLE static bool isCurrentMonth(QDate date);
 	Q_INVOKABLE static bool isCurrentYear(QDate date);
 	Q_INVOKABLE static bool datesAreEqual(const QDate &a, const QDate &b);
-	Q_INVOKABLE static bool dateisInMonth(const QDate &a, int month, int year);
-	Q_INVOKABLE static QDateTime createDateTime(const QDate &date, int hour, int min);
-	Q_INVOKABLE static QDateTime getCurrentDateTime();
+	Q_INVOKABLE static bool dateIsInMonth(const QDate &a, int month, int year);
+	Q_INVOKABLE static QDateTime
+	createDateTime(const QDate &date, int hour, int min, QTimeZone timeZone = QTimeZone::systemTimeZone());
+	Q_INVOKABLE static QDateTime getCurrentDateTimeLocal();
 	Q_INVOKABLE static QDateTime getCurrentDateTimeUtc();
 	Q_INVOKABLE static int getYear(const QDate &date);
 	Q_INVOKABLE static int secsTo(const QString &start, const QString &end);
 	Q_INVOKABLE static QDateTime addSecs(QDateTime date, int secs);
 	Q_INVOKABLE static QDateTime addYears(QDateTime date, int years);
 	Q_INVOKABLE static int timeOffset(QTime start, QTime end);
+	Q_INVOKABLE static int timeOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static int daysOffset(QDateTime start, QDateTime end);
 	Q_INVOKABLE static VariantObject *interpretUrl(QString uri);
 	Q_INVOKABLE static bool isValidURL(const QString &url);

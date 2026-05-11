@@ -8,6 +8,7 @@ ComboBox {
 	indicatorRightMargin: Utils.getSizeWithScreenRatio(10)
 	property var selectedDateTime
 	onSelectedDateTimeChanged: {
+		selectedTimeString = ""
 		if (minTime != undefined) {
 			if (UtilsCpp.timeOffset(minTime, selectedDateTime) < 0)
 				selectedDateTime = minTime
@@ -16,8 +17,9 @@ ComboBox {
 			if (UtilsCpp.timeOffset(maxTime, selectedDateTime) > 0)
 				selectedDateTime = maxTime
 		}
+		selectedTimeString = Qt.formatDateTime(selectedDateTime, "hh:mm")
 	}
-	readonly property string selectedTimeString: Qt.formatDateTime(selectedDateTime, "hh:mm")
+	property string selectedTimeString: Qt.formatDateTime(selectedDateTime, "hh:mm")
 	property int selectedHour: input.hour*1
 	property int selectedMin: input.min*1
 	property alias contentText: input
@@ -60,11 +62,15 @@ ComboBox {
 		Keys.onPressed: (event) => {
 			if (event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
 				focus = false
+				mainItem.forceActiveFocus()
+			} else if (event.key == Qt.Key_Space) {
+				if (mainItem.popup.opened) mainItem.popup.close()
+				else mainItem.popup.open()
+				event.accepted = true
 			}
 		}
 		onFocusChanged: if (!focus) {
 			mainItem.selectedDateTime = UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
-			console.log("set time", hour, min)
 		}
 	}
 	listView.delegate: Text {

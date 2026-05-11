@@ -150,7 +150,9 @@ bool ConferenceInfoModel::inviteEnabled() const {
 }
 
 void ConferenceInfoModel::setDateTime(const QDateTime &date) {
-	mConferenceInfo->setDateTime(date.isValid() ? date.toMSecsSinceEpoch() / 1000 : -1); // toMSecsSinceEpoch() is UTC
+	auto dateUTC = date.toUTC();
+	mConferenceInfo->setDateTime(date.isValid() ? date.toUTC().toMSecsSinceEpoch() / 1000
+	                                            : -1); // toMSecsSinceEpoch() is UTC
 	emit dateTimeChanged(date);
 }
 

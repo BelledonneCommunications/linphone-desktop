@@ -154,31 +154,31 @@ AbstractMainPage {
 				mainItem.selectedConference = conferenceList.selectedConference
 			}
 			enabled: !rightPanelStackView.currentItem || rightPanelStackView.currentItem.objectName !== "editConf"
-
 			ColumnLayout {
-				anchors.fill: parent
-				spacing: 0
-				RowLayout {
-					// direction: FlexboxLayout.Row
-					// alignItems: FlexboxLayout.AlignCenter
-					spacing: Utils.getSizeWithScreenRatio(16)
-					Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
-					Layout.alignment: Qt.AlignTop
-					Layout.fillHeight: false
+                anchors.fill: parent
+                spacing: 0
+                RowLayout {
+                    // direction: FlexboxLayout.Row
+                    // alignItems: FlexboxLayout.AlignCenter
+                    spacing: Utils.getSizeWithScreenRatio(16)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    Layout.fillHeight: false
 					Text {
 						Layout.fillWidth: true
 						//: Réunions
 						text: qsTr("meetings_list_title")
-						color: DefaultStyle.main2_700
 						maximumLineCount: 1
+						color: DefaultStyle.main2_700
 						font.pixelSize: Typography.h2.pixelSize
 						font.weight: Typography.h2.weight
 					}
-					Button {
+                    Button {
 						id: newConfButton
 						focus: true
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
+						width: Utils.getSizeWithScreenRatio(28)
+						height: Utils.getSizeWithScreenRatio(28)
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
 						Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
 						icon.width: Utils.getSizeWithScreenRatio(28)
@@ -188,25 +188,28 @@ AbstractMainPage {
 							mainItem.editConference()
 						}
 					}
-				}
-				RowLayout {
-					visible: conferenceList.count !== 0 || searchBar.text.length !== 0
+                }
+                RowLayout {
 					spacing: Utils.getSizeWithScreenRatio(11)
 					Layout.topMargin: Utils.getSizeWithScreenRatio(18)
 					Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
 					KeyNavigation.up: newConfButton
 					KeyNavigation.down: searchBar
+					visible: conferenceList.count !== 0 || searchBar.text.length !== 0
+
 					Button {
 						id: scrollToCurrentDateButton
+						visible: conferenceList.count !== 0 || searchBar.text.length !== 0
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
-						Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
+						Layout.preferredHeight: visible ? Utils.getSizeWithScreenRatio(32) : 0
 						icon.source: AppIcons.calendar
 						style: ButtonStyle.noBackground
 						onClicked: conferenceList.scrollToCurrentDate()
 					}
 					SearchBar {
 						id: searchBar
-						Layout.fillWidth: true
+						visible: conferenceList.count !== 0 || searchBar.text.length !== 0
+						Layout.fillWidth: visible
 						//: "Rechercher une réunion"
 						placeholderText: qsTr("meetings_search_hint")
 						KeyNavigation.up: scrollToCurrentDateButton
@@ -220,14 +223,16 @@ AbstractMainPage {
 					}
 				}
 				Text {
-					visible: conferenceList.count === 0 && !conferenceList.loading
-					Layout.topMargin: Utils.getSizeWithScreenRatio(137)
+					visible : conferenceList.count === 0 && !conferenceList.loading //? 0 : 1
 					Layout.fillHeight: true
+					Layout.fillWidth: true
+					Layout.topMargin: Utils.getSizeWithScreenRatio(137)
 					Layout.alignment: Qt.AlignHCenter
+					horizontalAlignment: Text.AlignHCenter
 					//: "Aucun résultat…"
 					text: searchBar.text.length !== 0 ? qsTr("list_filter_no_result_found")
 														//: "Aucune réunion"
-													  : qsTr("meetings_empty_list")
+													: qsTr("meetings_empty_list")
 					font {
 						pixelSize: Typography.h4.pixelSize
 						weight: Typography.h4.weight

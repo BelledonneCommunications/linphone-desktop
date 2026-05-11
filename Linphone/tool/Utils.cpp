@@ -1453,16 +1453,16 @@ bool Utils::datesAreEqual(const QDate &a, const QDate &b) {
 	return a.month() == b.month() && a.year() == b.year() && a.day() == b.day();
 }
 
-bool Utils::dateisInMonth(const QDate &a, int month, int year) {
+bool Utils::dateIsInMonth(const QDate &a, int month, int year) {
 	return a.month() == month && a.year() == year;
 }
 
-QDateTime Utils::createDateTime(const QDate &date, int hour, int min) {
+QDateTime Utils::createDateTime(const QDate &date, int hour, int min, QTimeZone timeZone) {
 	QTime time(hour, min);
-	return QDateTime(date, time, QTimeZone::systemTimeZone());
+	return QDateTime(date, time, timeZone);
 }
 
-QDateTime Utils::getCurrentDateTime() {
+QDateTime Utils::getCurrentDateTimeLocal() {
 	return QDateTime::currentDateTime(QTimeZone::systemTimeZone());
 }
 
@@ -1488,6 +1488,11 @@ QDateTime Utils::addYears(QDateTime date, int years) {
 }
 
 int Utils::timeOffset(QTime start, QTime end) {
+	int offset = start.secsTo(end);
+	return std::max(std::min(offset, INT_MAX), INT_MIN);
+}
+
+int Utils::timeOffset(QDateTime start, QDateTime end) {
 	int offset = start.secsTo(end);
 	return std::max(std::min(offset, INT_MAX), INT_MIN);
 }
