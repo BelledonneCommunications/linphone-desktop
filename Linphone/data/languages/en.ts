@@ -793,30 +793,30 @@
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1674"/>
+        <location filename="../../core/App.cpp" line="1675"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1674"/>
+        <location filename="../../core/App.cpp" line="1675"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1689"/>
+        <location filename="../../core/App.cpp" line="1690"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1707"/>
+        <location filename="../../core/App.cpp" line="1708"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1856"/>
+        <location filename="../../core/App.cpp" line="1857"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -2851,13 +2851,13 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="587"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="588"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="589"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="590"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Your account is disconnected</translation>
@@ -4866,43 +4866,43 @@ Expiration : %1</translation>
         <translation>Add a title</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="124"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="126"/>
         <source>day_accessible_name</source>
         <extracomment>Day</extracomment>
         <translation>Day</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="153"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="155"/>
         <source>start_time_accessible_name</source>
         <extracomment>Start time</extracomment>
         <translation>Start time</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="168"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="170"/>
         <source>end_time_accessible_name</source>
         <extracomment>End time</extracomment>
         <translation>End time</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="210"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="212"/>
         <source>timezone_accessible_name</source>
         <extracomment>Timezone</extracomment>
         <translation>Timezone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="232"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="234"/>
         <source>meeting_schedule_description_hint</source>
         <extracomment>&quot;Ajouter une description&quot;</extracomment>
         <translation>Add a description</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="283"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="285"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="345"/>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="347"/>
         <source>meeting_schedule_send_invitations_title</source>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>Send an invitation to participants</translation>
@@ -4980,127 +4980,147 @@ Expiration : %1</translation>
         <translation>Back</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="171"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="169"/>
         <source>meetings_list_title</source>
         <extracomment>Réunions</extracomment>
         <translation>Meetings</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="211"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="214"/>
         <source>meetings_search_hint</source>
         <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
         <translation>Find meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="228"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="233"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation>No result…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="230"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="235"/>
         <source>meetings_empty_list</source>
         <extracomment>&quot;Aucune réunion&quot;</extracomment>
         <translation>No meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="307"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="368"/>
+        <source>chat_list_title</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation type="obsolete">Conversations</translation>
+    </message>
+    <message>
+        <source>menu_mark_all_as_read</source>
+        <extracomment>&quot;mark all as read&quot;</extracomment>
+        <translation type="obsolete">Mark all as read</translation>
+    </message>
+    <message>
+        <source>chat_search_in_history</source>
+        <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
+        <translation type="obsolete">Search for a chat</translation>
+    </message>
+    <message>
+        <source>chat_list_empty_history</source>
+        <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
+        <translation type="obsolete">No conversation in history</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="312"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="373"/>
         <source>meeting_schedule_title</source>
         <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
         <translation>New meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="318"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="323"/>
         <source>create</source>
         <translation>Create</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="325"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="329"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="380"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="483"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="486"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="537"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="330"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="334"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="488"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="491"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="542"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="327"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="484"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="332"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="489"/>
         <source>meeting_schedule_mandatory_field_not_filled_toast</source>
         <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
         <translation>Please fill the title and select at least one participant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="331"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="487"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="336"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="492"/>
         <source>meeting_schedule_duration_error_toast</source>
         <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
         <translation>The end of the conference must be more recent than its beginning</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="335"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="375"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="340"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="380"/>
         <source>meeting_schedule_creation_in_progress</source>
         <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
         <translation>Creation in progress…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="370"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="375"/>
         <source>meeting_info_created_toast</source>
         <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
         <translation>Meeting successfully created</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="382"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="387"/>
         <source>meeting_failed_to_schedule_toast</source>
         <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
         <translation>Failed to create meeting!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="476"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="481"/>
         <source>save</source>
         <translation>Save</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="526"/>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="765"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="531"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="770"/>
         <source>saved</source>
         <extracomment>&quot;Enregistré&quot;</extracomment>
         <translation>Saved</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="528"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="533"/>
         <source>meeting_info_updated_toast</source>
         <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
         <translation>Meeting updated</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="533"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="538"/>
         <source>meeting_schedule_edit_in_progress</source>
         <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
         <translation>Meeting update in progress…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="539"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="544"/>
         <source>meeting_failed_to_edit_toast</source>
         <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
         <translation>Failed to update meeting !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="587"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="592"/>
         <source>meeting_schedule_add_participants_title</source>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Add participants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="601"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="606"/>
         <source>meeting_schedule_add_participants_apply</source>
         <translation>Apply</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="611"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="616"/>
         <source>group_call_participant_selected</source>
         <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
         <translation>
@@ -5109,31 +5129,31 @@ Expiration : %1</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="704"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="709"/>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Delete meeting</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="767"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="772"/>
         <source>meeting_address_copied_to_clipboard_toast</source>
         <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
         <translation>Meeting URI copied</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="803"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="808"/>
         <source>meeting_schedule_timezone_title</source>
         <extracomment>&quot;Fuseau horaire&quot;</extracomment>
         <translation>Timezone</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="923"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="928"/>
         <source>meeting_info_organizer_label</source>
         <extracomment>&quot;Organisateur&quot;</extracomment>
         <translation>Organizer</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="940"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="945"/>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>Join meeting</translation>
@@ -6684,7 +6704,7 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>Utils</name>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2370"/>
+        <location filename="../../tool/Utils.cpp" line="2375"/>
         <source>nSeconds</source>
         <translation>
             <numerusform>%1 second</numerusform>
@@ -6692,7 +6712,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2365"/>
+        <location filename="../../tool/Utils.cpp" line="2370"/>
         <source>nMinute</source>
         <translation>
             <numerusform>%1 minute</numerusform>
@@ -6700,61 +6720,61 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2134"/>
+        <location filename="../../tool/Utils.cpp" line="2139"/>
         <source>chat_message_forward_error</source>
         <extracomment>Cannot forward an invalid message</extracomment>
         <translation>Cannot forward an invalid message</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2140"/>
+        <location filename="../../tool/Utils.cpp" line="2145"/>
         <source>info_popup_forward_message_error</source>
         <extracomment>Could not forward message : %1</extracomment>
         <translation>Could not forward message : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2155"/>
+        <location filename="../../tool/Utils.cpp" line="2160"/>
         <source>info_popup_send_forward_message_error_message</source>
         <extracomment>Failed to create forward message</extracomment>
         <translation>Failed to create forward message</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2166"/>
+        <location filename="../../tool/Utils.cpp" line="2171"/>
         <source>chat_message_reply_error</source>
         <extracomment>Cannot reply to invalid message</extracomment>
         <translation>Cannot reply to invalid message</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2210"/>
+        <location filename="../../tool/Utils.cpp" line="2215"/>
         <source>chat_message_edit_error</source>
         <extracomment>Cannot edit to invalid message</extracomment>
         <translation>Cannot modify invalid message</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2172"/>
+        <location filename="../../tool/Utils.cpp" line="2177"/>
         <source>info_popup_reply_message_error</source>
         <extracomment>Could not send reply message : %1</extracomment>
         <translation>Could not send reply message : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2216"/>
+        <location filename="../../tool/Utils.cpp" line="2221"/>
         <source>info_popup_edited_message_error</source>
         <extracomment>Could not send edited message : %1</extracomment>
         <translation>Could not send edited message : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2199"/>
+        <location filename="../../tool/Utils.cpp" line="2204"/>
         <source>info_popup_send_reply_message_error_message</source>
         <extracomment>Failed to create reply message</extracomment>
         <translation>Failed to create reply message</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2243"/>
+        <location filename="../../tool/Utils.cpp" line="2248"/>
         <source>info_popup_send_edited_message_error_message</source>
         <extracomment>Failed to create edited message</extracomment>
         <translation>Failed to create edited message</translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2366"/>
+        <location filename="../../tool/Utils.cpp" line="2371"/>
         <source>nHour</source>
         <translation>
             <numerusform>%1 hour</numerusform>
@@ -6762,8 +6782,8 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2367"/>
-        <location filename="../../tool/Utils.cpp" line="2368"/>
+        <location filename="../../tool/Utils.cpp" line="2372"/>
+        <location filename="../../tool/Utils.cpp" line="2373"/>
         <source>nDay</source>
         <translation>
             <numerusform>%1 day</numerusform>
@@ -6771,7 +6791,7 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message numerus="yes">
-        <location filename="../../tool/Utils.cpp" line="2369"/>
+        <location filename="../../tool/Utils.cpp" line="2374"/>
         <source>nWeek</source>
         <translation>
             <numerusform>%1 week</numerusform>
@@ -6779,27 +6799,27 @@ To enable them in a commercial project, please contact us.</translation>
         </translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1971"/>
+        <location filename="../../tool/Utils.cpp" line="1976"/>
         <source>contact_presence_status_available</source>
         <translation>Available</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1977"/>
+        <location filename="../../tool/Utils.cpp" line="1982"/>
         <source>contact_presence_status_busy</source>
         <translation>Busy</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1980"/>
+        <location filename="../../tool/Utils.cpp" line="1985"/>
         <source>contact_presence_status_do_not_disturb</source>
         <translation>Do not disturb</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1983"/>
+        <location filename="../../tool/Utils.cpp" line="1988"/>
         <source>contact_presence_status_offline</source>
         <translation>Offline</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1974"/>
+        <location filename="../../tool/Utils.cpp" line="1979"/>
         <source>contact_presence_status_away</source>
         <translation>Idle/Away</translation>
     </message>
@@ -6812,7 +6832,7 @@ To enable them in a commercial project, please contact us.</translation>
     <message>
         <location filename="../../tool/Utils.cpp" line="207"/>
         <location filename="../../tool/Utils.cpp" line="218"/>
-        <location filename="../../tool/Utils.cpp" line="1711"/>
+        <location filename="../../tool/Utils.cpp" line="1716"/>
         <source>information_popup_error_title</source>
         <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Error</translation>
@@ -6892,21 +6912,21 @@ To enable them in a commercial project, please contact us.</translation>
         <translation>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="1712"/>
+        <location filename="../../tool/Utils.cpp" line="1717"/>
         <source>information_popup_chatroom_creation_error_message</source>
         <translation>Failed to create 1-1 conversation with %1 !</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2276"/>
+        <location filename="../../tool/Utils.cpp" line="2281"/>
         <source>recorder_error</source>
         <extracomment>Error with the recorder</extracomment>
         <translation>Error with the recorder</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2136"/>
-        <location filename="../../tool/Utils.cpp" line="2168"/>
-        <location filename="../../tool/Utils.cpp" line="2212"/>
-        <location filename="../../tool/Utils.cpp" line="2278"/>
+        <location filename="../../tool/Utils.cpp" line="2141"/>
+        <location filename="../../tool/Utils.cpp" line="2173"/>
+        <location filename="../../tool/Utils.cpp" line="2217"/>
+        <location filename="../../tool/Utils.cpp" line="2283"/>
         <source>chat_error</source>
         <extracomment>Error creating or opening the chat
 ----------
@@ -6914,26 +6934,26 @@ Error in the chat</extracomment>
         <translation>Error in the chat</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2138"/>
-        <location filename="../../tool/Utils.cpp" line="2153"/>
-        <location filename="../../tool/Utils.cpp" line="2170"/>
-        <location filename="../../tool/Utils.cpp" line="2197"/>
-        <location filename="../../tool/Utils.cpp" line="2214"/>
-        <location filename="../../tool/Utils.cpp" line="2241"/>
-        <location filename="../../tool/Utils.cpp" line="2280"/>
-        <location filename="../../tool/Utils.cpp" line="2294"/>
+        <location filename="../../tool/Utils.cpp" line="2143"/>
+        <location filename="../../tool/Utils.cpp" line="2158"/>
+        <location filename="../../tool/Utils.cpp" line="2175"/>
+        <location filename="../../tool/Utils.cpp" line="2202"/>
+        <location filename="../../tool/Utils.cpp" line="2219"/>
+        <location filename="../../tool/Utils.cpp" line="2246"/>
+        <location filename="../../tool/Utils.cpp" line="2285"/>
+        <location filename="../../tool/Utils.cpp" line="2299"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2282"/>
+        <location filename="../../tool/Utils.cpp" line="2287"/>
         <source>info_popup_send_voice_message_error_message</source>
         <extracomment>Could not send voice message : %1</extracomment>
         <translation>Could not send voice message : %1</translation>
     </message>
     <message>
-        <location filename="../../tool/Utils.cpp" line="2296"/>
+        <location filename="../../tool/Utils.cpp" line="2301"/>
         <source>info_popup_send_voice_message_sending_error_message</source>
         <extracomment>Failed to create message from record</extracomment>
         <translation>Failed to create message from record</translation>
