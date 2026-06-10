@@ -956,9 +956,9 @@ void App::initLocale() {
 	//	}
 	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
 	// #else
-	QLocale sysLocale(QLocale::system().name()); // Use Locale from name because Qt has a bug where it didn't use
-	                                             // the QLocale::language (aka : translator.language !=
-	                                             // locale.language) on Mac. #endif
+	QByteArray forcedLanguage = qgetenv("LINPHONE_FORCE_LANGUAGE");
+	QLocale sysLocale =
+	    forcedLanguage.isEmpty() ? QLocale(QLocale::system().name()) : QLocale(QString::fromUtf8(forcedLanguage));
 	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
 		qDebug() << "installed sys locale" << sysLocale.name();
 		setLocale(sysLocale.name());

@@ -1,0 +1,25 @@
+ubuntu2204-squish-tests:
+  stage: test
+  tags: [ "docker-squish-flat" ]
+  image: $SQUISH_LINUX_IMAGE
+  needs:
+    - ubuntu2204-makefile-gcc-package
+  rules:
+    - !reference [.rules-merge-request-manual, rules]
+    - if: $RUN_SQUISH_TESTS
+  variables:
+    GIT_SUBMODULE_STRATEGY: none
+    SQUISH_LINUX_IMAGE: gitlab.linphone.org:4567/bc/private/docker-private/bc-dev-ubuntu-25-04-squish:20250925_170856_20250925_add_squish_for_qt
+    SQUISH_BIN_PATH: /opt/squish-for-qt-9.0.1/bin
+    DISPLAY: ":99"
+    APPLICATION_NAME: "Linphone"
+    EXECUTABLE_NAME: "linphone"
+    FLEXIAPI_URL: "http://subscribe.example.org/flexiapi/api/"
+    SIP_DOMAIN: "sip.example.org"
+  script:
+    - bash tester/squish/run-ci.sh
+  artifacts:
+    paths:
+      - squish-reports/*
+    when: always
+    expire_in: 1 week
