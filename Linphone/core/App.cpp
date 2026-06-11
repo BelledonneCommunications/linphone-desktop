@@ -294,8 +294,25 @@ void App::setAutoStart(bool enabled) {
 
 // -----------------------------------------------------------------------------
 
+// Allows running several instances on the same machine for automated testing.
+static QString testInstanceId() {
+	const QString fromEnv = qEnvironmentVariable("LINPHONE_TEST_INSTANCE_ID");
+	if (!fromEnv.isEmpty()) return fromEnv;
+	if (QCoreApplication::instance()) {
+		const QStringList args = QCoreApplication::arguments();
+		const int index = args.indexOf(QStringLiteral("--test-instance"));
+		if (index >= 0 && index + 1 < args.size()) return args.at(index + 1);
+	}
+	return QString();
+}
+
+bool App::isTestInstance() const {
+	return !testInstanceId().isEmpty();
+}
+
 App::App(int &argc, char *argv[])
-    : SingleApplication(argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion) {
+    : SingleApplication(
+          argc, argv, true, Mode::User | Mode::ExcludeAppPath | Mode::ExcludeAppVersion, 1000, testInstanceId()) {
 	// Do not use APPLICATION_NAME here.
 	// The EXECUTABLE_NAME will be used in qt standard paths. It's our goal.
 	QDir::setCurrent(
@@ -303,8 +320,14 @@ App::App(int &argc, char *argv[])
 	QThread::currentThread()->setPriority(QThread::HighPriority);
 	qDebug() << "app thread is" << QThread::currentThread();
 	lDebug() << "Starting app with Qt version" << qVersion();
-	QCoreApplication::setApplicationName(EXECUTABLE_NAME);
-	QApplication::setOrganizationDomain(EXECUTABLE_NAME);
+	const QString instanceId = testInstanceId();
+	if (!instanceId.isEmpty()) {
+		QCoreApplication::setApplicationName(QStringLiteral(EXECUTABLE_NAME "-") + instanceId);
+		QApplication::setOrganizationDomain(QStringLiteral(EXECUTABLE_NAME "-") + instanceId);
+	} else {
+		QCoreApplication::setApplicationName(EXECUTABLE_NAME);
+		QApplication::setOrganizationDomain(EXECUTABLE_NAME);
+	}
 	QCoreApplication::setApplicationVersion(APPLICATION_SEMVER);
 
 	// If not OpenGL, createRender is never call.
@@ -1210,6 +1233,8 @@ void App::createCommandParser() {
 
 	    //: "Print only logs from the application"
 	    {"qt-logs-only", tr("command_line_option_print_app_logs_only")},
+
+	    {"test-instance", "Run an isolated instance on the same machine for automated testing.", "id"},
 	});
 }
 // Should be call only at first start

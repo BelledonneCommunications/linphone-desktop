@@ -105,7 +105,7 @@ int main(int argc, char *argv[]) {
 	QAccessible::installRootObjectHandler(DummyRootObjectHandler);
 #endif
 
-	if (app->isSecondary()) {
+	if (app->isSecondary() && !app->isTestInstance()) {
 		lDebug() << "[Main] Sending command from secondary application";
 		app->sendCommand();
 		qInfo() << QStringLiteral("[Main] Running secondary app success. Kill it now.");

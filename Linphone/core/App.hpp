@@ -160,6 +160,8 @@ public:
 	bool isRestarting() const;
 	void setIsRestarting(bool restarting);
 
+	bool isTestInstance() const;
+
 	QQuickWindow *getCallsWindow();
 	void handleAccountActivity(QSharedPointer<AccountCore> accountCore);
 	Q_INVOKABLE void handleAppActivity();
