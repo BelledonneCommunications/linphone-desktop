@@ -56,24 +56,12 @@ for LANG_CODE in $SQUISH_LANGS; do
     python3 tester/squish/tools/seed_config.py b B
     python3 tester/squish/tools/seed_config.py c A --conference
     python3 tester/squish/tools/seed_config.py d B --conference
-    python3 tester/squish/tools/seed_setting.py set-tp-show --ui assistant_hide_third_party_account=0
-    python3 tester/squish/tools/seed_setting.py set-tp-hide --ui assistant_hide_third_party_account=1
-    python3 tester/squish/tools/seed_setting.py set-ca-show --ui assistant_hide_create_account=0
-    python3 tester/squish/tools/seed_setting.py set-ca-hide --ui assistant_hide_create_account=1
-    python3 tester/squish/tools/seed_setting.py set-chat-show --slot A --ui disable_chat_feature=0
-    python3 tester/squish/tools/seed_setting.py set-chat-hide --slot B --ui disable_chat_feature=1
-    python3 tester/squish/tools/seed_setting.py set-meet-show --slot A --ui disable_meetings_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
-    python3 tester/squish/tools/seed_setting.py set-meet-hide --slot B --ui disable_meetings_feature=1
-    python3 tester/squish/tools/seed_setting.py set-menu-show --slot A --ui hide_settings=0 --ui hide_account_settings=0 --ui disable_call_recordings_feature=0
-    python3 tester/squish/tools/seed_setting.py set-menu-hide --slot B --ui hide_settings=1 --ui hide_account_settings=1 --ui disable_call_recordings_feature=1
-    python3 tester/squish/tools/seed_setting.py set-sip-show --slot A --ui hide_sip_addresses=0
-    python3 tester/squish/tools/seed_setting.py set-sip-hide --slot B --ui hide_sip_addresses=1
-    python3 tester/squish/tools/seed_setting.py set-cf-show --slot A --ui disable_call_forward=0
-    python3 tester/squish/tools/seed_setting.py set-cf-hide --slot B --ui disable_call_forward=1
-    python3 tester/squish/tools/seed_setting.py set-bc-show --slot A --ui disable_broadcast_feature=0 --ui disable_meetings_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
-    python3 tester/squish/tools/seed_setting.py set-bc-hide --slot B --ui disable_broadcast_feature=1 --ui disable_meetings_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
-    python3 tester/squish/tools/seed_setting.py set-cli-show --slot A --ui disable_command_line=0
-    python3 tester/squish/tools/seed_setting.py set-cli-hide --slot B --ui disable_command_line=1
+    python3 tester/squish/tools/seed_setting.py set-shown-assistant --ui assistant_hide_third_party_account=0 --ui assistant_hide_create_account=0
+    python3 tester/squish/tools/seed_setting.py set-hidden-assistant --ui assistant_hide_third_party_account=1 --ui assistant_hide_create_account=1
+    python3 tester/squish/tools/seed_setting.py set-shown --slot A --ui disable_chat_feature=0 --ui disable_meetings_feature=0 --ui hide_settings=0 --ui hide_account_settings=0 --ui disable_call_recordings_feature=0 --ui hide_sip_addresses=0 --ui disable_call_forward=0 --ui disable_command_line=0 --ui disable_broadcast_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
+    python3 tester/squish/tools/seed_setting.py set-hidden-menu --slot B --ui disable_chat_feature=1 --ui disable_meetings_feature=1 --ui hide_settings=1 --ui hide_account_settings=1 --ui disable_call_recordings_feature=1 --ui hide_sip_addresses=1
+    python3 tester/squish/tools/seed_setting.py set-hidden-settings --slot B --ui hide_settings=0 --ui disable_call_forward=1 --ui disable_command_line=1
+    python3 tester/squish/tools/seed_setting.py set-hidden-broadcast --slot B --ui disable_meetings_feature=0 --ui disable_broadcast_feature=1 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
     "$SQUISH_BIN_PATH/squishserver" --config removeAUT "$APPLICATION_NAME" >/dev/null 2>&1 || true
     "$SQUISH_BIN_PATH/squishserver" --config addAUT "$APPLICATION_NAME" "$AUT_DIR"
     "$SQUISH_BIN_PATH/squishserver" --daemon

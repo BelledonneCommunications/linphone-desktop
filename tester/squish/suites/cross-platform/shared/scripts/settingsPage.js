@@ -1,5 +1,6 @@
 import * as L from "squishlib.js";
 import { tr } from "translate.js";
+import { App } from "app.js";
 
 function cnn(o){try{return className(o);}catch(e){return "";}}
 function tx(o){try{return o.text?String(o.text):"";}catch(e){return "";}}
@@ -35,8 +36,23 @@ export var Settings = {
     },
     openSettingsPage: function(){
         if(!Settings.openOptionsMenu()) return false;
+        return Settings.openSettingsFromMenu();
+    },
+    openSettingsFromMenu: function(){
         L.click(tr("MainLayout", "settings_title"), 8000);
         snooze(2);
+        return true;
+    },
+    openMeetingForm: function(){
+        L.clickLabel(tr("MainLayout", "bottom_navigation_meetings_label"), 10000);
+        snooze(2);
+        L.clickLabel(tr("MeetingPage", "meetings_add"), 8000);
+        snooze(2);
+        return true;
+    },
+    dismiss: function(){
+        var w = App.window(3000);
+        if(w){ try{type(w, "<Escape>");}catch(e){} snooze(1); }
         return true;
     }
 };
