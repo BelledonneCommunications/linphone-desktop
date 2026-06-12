@@ -8,9 +8,9 @@ var FEATURE = "meeting_schedule_broadcast_label";
 var ANCHOR = "meeting_schedule_title";
 
 function openMeetingForm(){
-    L.clickLabel(tr("bottom_navigation_meetings_label"), 10000);
+    L.clickLabel(tr("MainLayout", "bottom_navigation_meetings_label"), 10000);
     snooze(2);
-    L.clickLabel(tr("meetings_add"), 8000);
+    L.clickLabel(tr("MeetingPage", "meetings_add"), 8000);
     snooze(2);
 }
 
@@ -21,13 +21,13 @@ function main(){
     App.withInstance(shown, function(){
         test.verify(MainPage.waitLoaded(), "main loaded (broadcast shown)");
         openMeetingForm();
-        test.verify(Settings.shows(ANCHOR), "meeting form opened (shown)");
-        test.verify(Settings.shows(FEATURE), "Webinar shown when disable_broadcast_feature=0");
+        test.verify(Settings.shows("MeetingPage", ANCHOR), "meeting form opened (shown)");
+        test.verify(Settings.shows("MeetingForm", FEATURE), "Webinar shown when disable_broadcast_feature=0");
     });
     App.withInstance(hidden, function(){
         test.verify(MainPage.waitLoaded(), "main loaded (broadcast hidden)");
         openMeetingForm();
-        test.verify(Settings.shows(ANCHOR), "meeting form opened (hidden)");
-        test.verify(Settings.hides(FEATURE), "Webinar hidden when disable_broadcast_feature=1");
+        test.verify(Settings.shows("MeetingPage", ANCHOR), "meeting form opened (hidden)");
+        test.verify(Settings.hides("MeetingForm", FEATURE), "Webinar hidden when disable_broadcast_feature=1");
     });
 }

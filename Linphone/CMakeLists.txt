@@ -143,7 +143,7 @@ add_subdirectory(core)
 
 set(LANGUAGES_DIRECTORY "data/languages")
 set(I18N_FILENAME i18n.qrc)
-set(LANGUAGES en fr de)
+set(LANGUAGES en fr de nl)
 set(CMAKE_CPP_COMPILER gcc)
 
 # Add languages support.

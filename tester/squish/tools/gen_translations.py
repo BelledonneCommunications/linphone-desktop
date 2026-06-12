@@ -12,22 +12,31 @@ def load_ts(path):
     if not os.path.exists(path):
         return result
     root = ET.parse(path).getroot()
-    for message in root.iter("message"):
-        source = message.find("source")
-        translation = message.find("translation")
-        if source is None or source.text is None:
-            continue
-        if translation is None or translation.get("type") == "unfinished":
-            continue
-        if translation.text:
-            result[source.text] = translation.text
+    for context in root.iter("context"):
+        name = context.find("name")
+        context_name = name.text if name is not None and name.text else ""
+        for message in context.iter("message"):
+            source = message.find("source")
+            translation = message.find("translation")
+            if source is None or source.text is None:
+                continue
+            if translation is None or translation.get("type") == "unfinished":
+                continue
+            if translation.text:
+                result.setdefault(context_name, {})[source.text] = translation.text
     return result
+
+
+def merge(base, overlay):
+    for context_name, entries in overlay.items():
+        base.setdefault(context_name, {}).update(entries)
+    return base
 
 
 def main():
     lang = sys.argv[1] if len(sys.argv) > 1 else "en"
     table = load_ts(os.path.join(LANG_DIR, "en.ts"))
-    table.update(load_ts(os.path.join(LANG_DIR, lang + ".ts")))
+    merge(table, load_ts(os.path.join(LANG_DIR, lang + ".ts")))
     sys.stdout.write("export var T = " + json.dumps(table, ensure_ascii=False) + ";\n")
 
 

@@ -26,16 +26,16 @@ export var Settings = {
     hidesText: function(text, t){
         return !L.waitFor(function(o){return o.visible&&tx(o)===text;}, t||6000);
     },
-    shows: function(key, t){ return Settings.showsText(tr(key), t); },
-    hides: function(key, t){ return Settings.hidesText(tr(key), t); },
+    shows: function(context, key, t){ return Settings.showsText(tr(context, key), t); },
+    hides: function(context, key, t){ return Settings.hidesText(tr(context, key), t); },
     openMenuWith: function(text){ return openMenuWith(text); },
     openOptionsMenu: function(){
-        return openMenuWith(tr("contact_presence_status_enable_do_not_disturb"))
-            || openMenuWith(tr("contact_presence_status_disable_do_not_disturb"));
+        return openMenuWith(tr("MainLayout", "contact_presence_status_enable_do_not_disturb"))
+            || openMenuWith(tr("MainLayout", "contact_presence_status_disable_do_not_disturb"));
     },
     openSettingsPage: function(){
         if(!Settings.openOptionsMenu()) return false;
-        L.clickLabel(tr("settings_title"), 8000);
+        L.click(tr("MainLayout", "settings_title"), 8000);
         snooze(2);
         return true;
     }

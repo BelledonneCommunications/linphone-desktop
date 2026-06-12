@@ -7,13 +7,14 @@ function tx(o){try{return o.text?String(o.text):"";}catch(e){return "";}}
 
 export var ChatPage = {
     open: function(){
-        L.clickLabel(tr("open_conversations_page_accessible_name"), 15000);
+        L.click(tr("MainLayout", "open_conversations_page_accessible_name"), 15000);
         snooze(1);
     },
     startChatWith: function(account){
-        L.clickLabel(tr("chat_start_title"), 10000);
+        L.click(tr("ChatPage", "chat_start_title"), 10000);
         snooze(1);
-        var field=L.waitFor(function(o){return /TextField/.test(cnn(o))&&o.visible&&ph(o)===tr("search_bar_look_for_contact_text");},10000);
+        var placeholder = tr("CreationFormLayout", "search_bar_look_for_contact_text");
+        var field=L.waitFor(function(o){return /TextField/.test(cnn(o))&&o.visible&&ph(o)===placeholder;},10000);
         if(!field) test.fatal("New-chat search field not found");
         L.fill(field, account.identity);
         snooze(2);
@@ -29,7 +30,8 @@ export var ChatPage = {
         snooze(2);
     },
     sendMessage: function(message){
-        var area=L.waitFor(function(o){return /TextArea/.test(cnn(o))&&o.visible&&ph(o)===tr("chat_view_send_area_placeholder_text");},10000);
+        var placeholder = tr("ChatDroppableTextArea", "chat_view_send_area_placeholder_text");
+        var area=L.waitFor(function(o){return /TextArea/.test(cnn(o))&&o.visible&&ph(o)===placeholder;},10000);
         if(!area) test.fatal("Message input not found");
         mouseClick(area);
         type(area, message);

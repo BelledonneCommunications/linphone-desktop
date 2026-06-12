@@ -9,7 +9,7 @@ fi
 SQUISH_BIN_PATH="${SQUISH_BIN_PATH:-/opt/squish-for-qt-9.0.1/bin}"
 APPLICATION_NAME="${APPLICATION_NAME:-Linphone}"
 EXECUTABLE_NAME="${EXECUTABLE_NAME:-linphone}"
-SQUISH_LANGS="${SQUISH_LANGS:-en fr}"
+SQUISH_LANGS="${SQUISH_LANGS:-en fr nl de}"
 SUITE="tester/squish/suites/cross-platform"
 
 if [ -n "${SQUISH_LICENSE_URL:-}" ]; then
@@ -78,7 +78,16 @@ for LANG_CODE in $SQUISH_LANGS; do
     "$SQUISH_BIN_PATH/squishserver" --config addAUT "$APPLICATION_NAME" "$AUT_DIR"
     "$SQUISH_BIN_PATH/squishserver" --daemon
     sleep 3
-    "$SQUISH_BIN_PATH/squishrunner" --testsuite "$SUITE" --reportgen "html,$REPORTS_DIR/$LANG_CODE" --exitCodeOnFail 1 || RESULT=$?
+    RUN_LOG="$REPORTS_DIR/$LANG_CODE.log"
+    "$SQUISH_BIN_PATH/squishrunner" --testsuite "$SUITE" --reportgen "html,$REPORTS_DIR/$LANG_CODE" --reportgen stdout --exitCodeOnFail 1 2>&1 | tee "$RUN_LOG"
+    RC=${PIPESTATUS[0]}
+    if [ "$RC" != "0" ]; then
+        RESULT=$RC
+        echo ""
+        echo "::::::::::: SQUISH FAILURES in language '$LANG_CODE' :::::::::::"
+        grep -iE "[[:space:]](FAIL|ERROR|FATAL)[[:space:]]" "$RUN_LOG" | grep -ivE "Number of"
+        echo ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::"
+    fi
     "$SQUISH_BIN_PATH/squishserver" --stop >/dev/null 2>&1 || true
 done
 
