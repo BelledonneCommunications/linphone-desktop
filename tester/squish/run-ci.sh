@@ -54,6 +54,8 @@ for LANG_CODE in $SQUISH_LANGS; do
     export XDG_CACHE_HOME=$(mktemp -d)
     python3 tester/squish/tools/seed_config.py a A
     python3 tester/squish/tools/seed_config.py b B
+    python3 tester/squish/tools/seed_config.py c A --conference
+    python3 tester/squish/tools/seed_config.py d B --conference
     "$SQUISH_BIN_PATH/squishserver" --config removeAUT "$APPLICATION_NAME" >/dev/null 2>&1 || true
     "$SQUISH_BIN_PATH/squishserver" --config addAUT "$APPLICATION_NAME" "$AUT_DIR"
     "$SQUISH_BIN_PATH/squishserver" --daemon
