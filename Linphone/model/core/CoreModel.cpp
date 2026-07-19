@@ -29,6 +29,8 @@
 #include <QTimer>
 
 #include "core/App.hpp"
+#include "core/call/CallGui.hpp"
+#include "core/call/CallList.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
 #include "model/tool/ToolModel.hpp"
@@ -489,6 +491,26 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 			command = command.replace("$1", userName);
 			command = command.replace("$2", displayName);
 			Utils::runCommandLine(command);
+		}
+		if (core->getConfig()->getBool(SettingsModel::UiSection, "auto_answer", false) &&
+		    !SettingsModel::dndEnabled(core->getConfig())) {
+			int delayMs = core->getConfig()->getInt(SettingsModel::UiSection, "auto_answer_delay", 0);
+			bool withVideo = core->getConfig()->getBool(SettingsModel::UiSection, "auto_answer_with_video", false);
+			lInfo() << log().arg("Auto-answer is enabled, accepting incoming call in %1 ms").arg(delayMs);
+			App::postCoreAsync([delayMs, withVideo]() {
+				QTimer::singleShot(delayMs, App::getInstance(), [withVideo]() {
+					const auto callList = App::getInstance()->getCallList();
+					if (!callList) return;
+					const auto pendingCall = callList->getFirstIncommingPendingCall();
+					if (pendingCall.isNull()) {
+						lWarning() << sLog().arg("Auto-answer timer fired but no pending incoming call was found");
+						return;
+					}
+					const auto gui = new CallGui(pendingCall);
+					Utils::openCallsWindow(gui);
+					pendingCall->lAccept(withVideo);
+				});
+			});
 		}
 	}
 	if (state == linphone::Call::State::End && SettingsModel::dndEnabled(core->getConfig()) &&
