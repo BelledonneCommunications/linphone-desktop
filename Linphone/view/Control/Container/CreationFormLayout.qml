@@ -19,6 +19,17 @@ FocusScope {
 	signal groupCreationRequested()
 	signal contactClicked(FriendGui contact)
 	clip: true
+
+	function launchCallOrRedial() {
+		var number = searchBar.text
+		if (number.length === 0) {
+			if (SettingsCpp.lastDialedNumber.length > 0) searchBar.setText(SettingsCpp.lastDialedNumber)
+			return false
+		}
+		SettingsCpp.lSetLastDialedNumber(number)
+		UtilsCpp.createCall(number)
+		return true
+	}
     property alias topContent: topLayout.data
     property bool topLayoutVisible: topLayout.children.length > 0
     property int searchBarRightMaring: Utils.getSizeWithScreenRatio(39)

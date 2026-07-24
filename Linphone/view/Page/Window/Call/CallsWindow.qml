@@ -913,8 +913,7 @@ AbstractWindow {
                             roundedBottom: true
                             visible: newCallForm.searchBar.numericPadButton.checked
                             onLaunchCall: {
-                                rightPanel.visible = false
-                                UtilsCpp.createCall(newCallForm.searchBar.text)
+                                if (newCallForm.launchCallOrRedial()) rightPanel.visible = false
                             }
                             Component.onCompleted: parent.height = height
                         }

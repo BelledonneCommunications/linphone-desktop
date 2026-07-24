@@ -396,7 +396,7 @@ AbstractMainPage {
                     Connections {
                         target: mainItem
                         function onCreateCallFromSearchBarRequested() {
-                            UtilsCpp.createCall(callContactsList.searchBar.text)
+                            callContactsList.launchCallOrRedial()
                         }
                     }
                 }

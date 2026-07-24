@@ -81,6 +81,9 @@ public:
 	Q_PROPERTY(QString callForwardToAddress READ getCallForwardToAddress WRITE setCallForwardToAddress NOTIFY
 	               callForwardToAddressChanged)
 
+	// Redial
+	Q_PROPERTY(QString lastDialedNumber READ getLastDialedNumber NOTIFY lastDialedNumberChanged)
+
 	// Network
 	Q_PROPERTY(bool ipv6Enabled READ getIpv6Enabled WRITE setIpv6Enabled NOTIFY ipv6EnabledChanged)
 	Q_PROPERTY(bool hideFps READ getHideFps WRITE setHideFps NOTIFY hideFpsChanged)
@@ -276,6 +279,13 @@ public:
 	}
 	void setCallForwardToAddress(QString address);
 
+	// Redial. --------------------------------------------------------------------
+
+	QString getLastDialedNumber() {
+		return mLastDialedNumber;
+	}
+	void setLastDialedNumberFromModel(QString number);
+
 	// Network. --------------------------------------------------------------------
 
 	bool getIpv6Enabled() {
@@ -388,6 +398,9 @@ signals:
 	void playbackGainChanged(float gain);
 	void lSetCaptureGain(float gain);
 	void captureGainChanged(float gain);
+
+	void lSetLastDialedNumber(QString number);
+	void lastDialedNumberChanged(QString number);
 
 	void captureDevicesChanged(const QVariantList &devices);
 	void playbackDevicesChanged(const QVariantList &devices);
@@ -521,6 +534,9 @@ private:
 
 	// Call Forward
 	QString mCallForwardToAddress;
+
+	// Redial
+	QString mLastDialedNumber;
 
 	// Advanced
 	bool mAutoStart;

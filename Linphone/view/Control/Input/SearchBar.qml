@@ -34,6 +34,11 @@ FocusScope {
 		textField.text = ""
 	}
 
+	function setText(newText) {
+		textField.text = newText
+		textField.searchText = newText
+	}
+
 	Connections {
 		enabled: numericPadPopup != undefined && handleNumericPadPopupButtonsPressed
 		target: numericPadPopup ? numericPadPopup : null

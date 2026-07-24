@@ -159,6 +159,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(CommandLine, settingsModel)
 	INIT_CORE_MEMBER(DisableCommandLine, settingsModel)
 	INIT_CORE_MEMBER(CallForwardToAddress, settingsModel)
+	INIT_CORE_MEMBER(LastDialedNumber, settingsModel)
 
 	INIT_CORE_MEMBER(ThemeMainColor, settingsModel)
 	INIT_CORE_MEMBER(ThemeAboutPictureUrl, settingsModel)
@@ -201,6 +202,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 
 	mCaptureGain = settingsCore.mCaptureGain;
 	mPlaybackGain = settingsCore.mPlaybackGain;
+
+	mLastDialedNumber = settingsCore.mLastDialedNumber;
 
 	mEchoCancellationCalibration = settingsCore.mEchoCancellationCalibration;
 
@@ -527,6 +530,15 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		mSettingsModelConnection->invokeToCore([this, value]() { setCaptureGainFromModel(value); });
 	});
 
+	// Redial
+	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetLastDialedNumber, [this](const QString number) {
+		mSettingsModelConnection->invokeToModel(
+		    [this, number]() { SettingsModel::getInstance()->setLastDialedNumber(number); });
+	});
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::lastDialedNumberChanged, [this](const QString number) {
+		mSettingsModelConnection->invokeToCore([this, number]() { setLastDialedNumberFromModel(number); });
+	});
+
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::micVolumeChanged, [this](const float value) {
 		mSettingsModelConnection->invokeToCore([this, value]() { emit micVolumeChanged(value); });
 	});
@@ -750,6 +762,8 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 
 	setCaptureGain(settingsCore.mCaptureGain);
 	setPlaybackGain(settingsCore.mPlaybackGain);
+
+	setLastDialedNumberFromModel(settingsCore.mLastDialedNumber);
 
 	// Video
 	setVideoDevice(settingsCore.mVideoDevice);
@@ -1127,6 +1141,13 @@ void SettingsCore::setPlaybackGainFromModel(float gain) {
 	if (mPlaybackGain != gain) {
 		mPlaybackGain = gain;
 		emit playbackGainChanged(gain);
+	}
+}
+
+void SettingsCore::setLastDialedNumberFromModel(QString number) {
+	if (mLastDialedNumber != number) {
+		mLastDialedNumber = number;
+		emit lastDialedNumberChanged(number);
 	}
 }
 

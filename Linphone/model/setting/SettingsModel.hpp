@@ -251,6 +251,7 @@ public:
 	DECLARE_GETSET(QString, commandLine, CommandLine)
 	DECLARE_GETSET(bool, disableCommandLine, DisableCommandLine)
 	DECLARE_GETSET(QString, callForwardToAddress, CallForwardToAddress)
+	DECLARE_GETSET(QString, lastDialedNumber, LastDialedNumber)
 	DECLARE_GETSET(QString, chatNotificationSoundPath, ChatNotificationSoundPath)
 	DECLARE_GETSET(QString, themeMainColor, ThemeMainColor)
 	DECLARE_GETSET(QString, themeAboutPictureUrl, ThemeAboutPictureUrl)

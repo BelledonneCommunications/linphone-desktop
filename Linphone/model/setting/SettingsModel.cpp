@@ -923,6 +923,16 @@ void SettingsModel::setCallForwardToAddress(const QString &data) {
 	emit(callForwardToAddressChanged(data));
 }
 
+QString SettingsModel::getLastDialedNumber() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString(UiSection, "last_dialed_number", ""));
+}
+
+void SettingsModel::setLastDialedNumber(const QString &data) {
+	mConfig->setString(UiSection, "last_dialed_number", Utils::appStringToCoreString(data));
+	emit(lastDialedNumberChanged(data));
+}
+
 bool SettingsModel::isSystrayNotificationBlinkEnabled() const {
 	return !!mConfig->getInt(UiSection, "systray_notification_blink", 1);
 }
