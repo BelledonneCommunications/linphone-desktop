@@ -196,6 +196,7 @@ AbstractMainPage {
                     }
                     Button {
                         id: newCallButton
+                        objectName: "createNewCallButton"
                         focus: true
                         style: ButtonStyle.noBackground
                         icon.source: AppIcons.newCall

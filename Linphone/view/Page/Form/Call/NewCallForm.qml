@@ -12,6 +12,8 @@ CreationFormLayout {
 	property bool displayCurrentCalls: false
 	signal transferCallToAnotherRequested(CallGui dest)
 
+	searchBarObjectName: "newCallSearchBar"
+
     //: Appel de groupe
     startGroupButtonText: qsTr("call_start_group_call_title")
     startGroupButtonVisible: !SettingsCpp.disableMeetingsFeature

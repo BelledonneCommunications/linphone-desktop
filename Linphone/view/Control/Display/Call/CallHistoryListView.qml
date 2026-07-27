@@ -135,6 +135,7 @@ ListView {
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
     delegate: FocusScope {
+        objectName: "callHistoryEntry"
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(56)
         Accessible.role: Accessible.ListItem
@@ -215,6 +216,7 @@ ListView {
             }
             BigButton {
                 id: callButton
+                objectName: "callHistoryCallButton"
                 visible: !modelData.core.isConference || !SettingsCpp.disableMeetingsFeature
                 style: ButtonStyle.noBackground
                 icon.source: AppIcons.phone

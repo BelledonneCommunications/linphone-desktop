@@ -9,6 +9,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 Control.Popup {
 	id: mainItem
+	objectName: "numericPadPopup"
 	closePolicy: Control.Popup.CloseOnEscape
 	padding: Utils.getSizeWithScreenRatio(10)
 	property bool closeButtonVisible: true

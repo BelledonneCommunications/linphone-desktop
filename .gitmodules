@@ -10,3 +10,7 @@ path = external/linphone-sdk
 [submodule "external/google/chromium-depot-tools"]
 	path = external/google/chromium-depot-tools
 	url = https://gitlab.linphone.org/BC/public/external/chromium-depot-tools.git
+[submodule "feature-specs"]
+	path = feature-specs
+	url = git@gitlab.linphone.org:BC/private/linphone-test-specs.git
+	branch = feature/call_forwarding_call_group_redial

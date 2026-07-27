@@ -272,6 +272,7 @@ Flickable {
 
         ContactListView {
             id: favoritesList
+            objectName: "favoritesContactList"
             visible: contentHeight > 0
             Layout.fillWidth: true
             Layout.preferredHeight: implicitHeight

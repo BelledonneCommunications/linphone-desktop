@@ -10,7 +10,11 @@ function onScreen(element){
     try { return element.visible; } catch (e) { return false; }
 }
 
-export function findAll(matches){
+function nameOf(element){
+    try { return element.objectName ? String(element.objectName) : ""; } catch (e) { return ""; }
+}
+
+function findAllIn(root, matches){
     var found = [];
     function visit(element){
         try { if (matches(element)) found.push(element); } catch (e) {}
@@ -18,8 +22,18 @@ export function findAll(matches){
         try { children = object.children(element); } catch (e) { return; }
         for (var i = 0; i < children.length; i++) visit(children[i]);
     }
-    var windows = findAllObjects({ "type": "QQuickWindow" });
-    for (var w = 0; w < windows.length; w++) visit(windows[w]);
+    visit(root);
+    return found;
+}
+
+function topLevelWindows(){
+    try { return findAllObjects({ "type": "QQuickWindow" }); } catch (e) { return []; }
+}
+
+export function findAll(matches){
+    var found = [];
+    var windows = topLevelWindows();
+    for (var w = 0; w < windows.length; w++) found = found.concat(findAllIn(windows[w], matches));
     return found;
 }
 
@@ -123,6 +137,97 @@ export function hasControlType(typePattern, timeoutMs){
     return waitFor(function(element){
         return typePattern.test(classOf(element)) && onScreen(element);
     }, timeoutMs) !== null;
+}
+
+function named(name){
+    return function(element){ return nameOf(element) === name && onScreen(element); };
+}
+
+// The AUT resolves objectName in a single call, where the tree walk costs one round-trip per
+// object and per property. Which one works is decided on first success, then kept.
+var useNativeLookup = null;
+
+function nativelyShownWithName(name){
+    var matches = [];
+    try { matches = findAllObjects({ "objectName": name }); } catch (e) { return []; }
+    var shown = [];
+    for (var i = 0; i < matches.length; i++) if (onScreen(matches[i])) shown.push(matches[i]);
+    return shown;
+}
+
+function shownWithName(name){
+    if (useNativeLookup !== false) {
+        var found = nativelyShownWithName(name);
+        if (found.length > 0) { useNativeLookup = true; return found; }
+        if (useNativeLookup === true) return [];
+    }
+    var walked = findAll(named(name));
+    if (walked.length > 0) useNativeLookup = false;
+    return walked;
+}
+
+export function waitForNamed(name, timeoutMs){
+    var deadline = Date.now() + (timeoutMs || 15000);
+    do {
+        var found = shownWithName(name);
+        if (found.length > 0) return found[0];
+        snooze(0.5);
+    } while (Date.now() < deadline);
+    return null;
+}
+
+export function namedIn(root, name){
+    var found = findAllIn(root, named(name));
+    return found.length > 0 ? found[0] : null;
+}
+
+export function allNamed(name){
+    return shownWithName(name);
+}
+
+export function clickNamed(name, timeoutMs){
+    var element = waitForNamed(name, timeoutMs);
+    if (!element) { test.fatal("No visible element with objectName: " + name); return false; }
+    mouseClick(element);
+    return true;
+}
+
+export function textIn(root, text){
+    var found = findAllIn(root, function(element){ return onScreen(element) && textOf(element) === text; });
+    return found.length > 0 ? found[0] : null;
+}
+
+export function containsText(root, fragment){
+    var found = findAllIn(root, function(element){
+        return onScreen(element) && textOf(element).indexOf(fragment) >= 0;
+    });
+    return found.length > 0 ? found[0] : null;
+}
+
+function shownWindowNamed(name){
+    var windows = topLevelWindows();
+    for (var i = 0; i < windows.length; i++)
+        if (nameOf(windows[i]) === name && onScreen(windows[i])) return windows[i];
+    return null;
+}
+
+export function waitForWindowNamed(name, timeoutMs){
+    var deadline = Date.now() + (timeoutMs || 20000);
+    do {
+        var window = shownWindowNamed(name);
+        if (window) return window;
+        snooze(0.5);
+    } while (Date.now() < deadline);
+    return null;
+}
+
+export function waitWindowNamedGone(name, timeoutMs){
+    var deadline = Date.now() + (timeoutMs || 20000);
+    do {
+        if (!shownWindowNamed(name)) return true;
+        snooze(0.5);
+    } while (Date.now() < deadline);
+    return false;
 }
 
 export function clickLabel(text, timeoutMs){ return click(text, timeoutMs); }

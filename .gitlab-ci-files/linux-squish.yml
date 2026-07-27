@@ -16,6 +16,11 @@ ubuntu2204-squish-tests:
     EXECUTABLE_NAME: "linphone"
     FLEXIAPI_URL: "http://subscribe.example.org/flexiapi/api/"
     SIP_DOMAIN: "sip.example.org"
+    SQUISH_TEST_CASES: "*"
+  before_script:
+    - git config --global --add safe.directory "$CI_PROJECT_DIR"
+    - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.linphone.org/".insteadOf "git@gitlab.linphone.org:"
+    - git submodule update --init --depth 1 feature-specs
   script:
     - bash tester/squish/run-ci.sh
   artifacts:

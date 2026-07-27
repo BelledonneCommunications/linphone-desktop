@@ -254,6 +254,7 @@ AbstractMainPage {
             }
             Button {
                 id: createContactButton
+                objectName: "createContactButton"
                 visible: !rightPanelStackView.currentItem
                          || rightPanelStackView.currentItem.objectName !== "contactEdition"
                 style: ButtonStyle.noBackground

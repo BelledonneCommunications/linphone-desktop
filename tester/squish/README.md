@@ -3,24 +3,42 @@
 Automated GUI tests for the Linphone desktop app, driven by [Squish for Qt] and run in CI
 against the Linux AppImage. Tests live in `suites/cross-platform/` and are written in JavaScript.
 
+Two kinds of test case:
+- **script cases** (`tst_*`) — a `test.js` with a `main()`.
+- **BDD cases** (`tst_BDD_*`) — a Gherkin `test.feature`, a `test.js` driver and step
+  implementations under `steps/`. The `.feature` comes from
+  [linphone-test-specs](https://gitlab.linphone.org/BC/private/linphone-test-specs), included as the
+  `feature-specs` submodule and shared with the other platforms.
+
 ## Overview
 
 ```
+feature-specs/                  SUBMODULE: the shared Gherkin specs (linphone-test-specs)
 tester/squish/
   run-ci.sh                     CI entry point (orchestrates one run)
   tools/
     account_manager.py          provisions/deletes a SIP test account on the server
     gen_translations.py         builds the key->text map for a language
+    seed_config.py              writes a linphonerc for a test instance (logged-in profile)
+    seed_setting.py             writes a linphonerc with [ui] settings for a test instance
+    sync_features.py            copies the specs from feature-specs into the BDD test cases
   suites/cross-platform/
     suite.conf                  AUT name + list of test cases
-    tst_Startup/test.js         a test case
-    tst_Login/test.js           a test case
+    tst_Startup/test.js         a script test case
+    tst_Login/test.js           a script test case
+    tst_BDD_Redial/
+      test.js                   BDD driver (runs test.feature)
+      steps/redialSteps.js      step implementations
+      test.feature              GENERATED per run from feature-specs (gitignored)
     shared/scripts/
       squishlib.js              low-level finder (tree walker)
       translate.js              tr(key) -> translated text
       serverAccount.js          provisionedAccount() -> the account credentials
-      app.js, welcomePage.js,
-      loginPage.js, sipLoginPage.js, mainPage.js   page objects (one per screen)
+      bdd_hooks.js              BDD scenario hooks (suite-wide)
+      app.js, welcomePage.js, loginPage.js, sipLoginPage.js, mainPage.js,
+      chatPage.js, callPage.js, settingsPage.js, dialerPage.js, callWindow.js,
+      contactsPage.js, historyPage.js              page objects (one per screen)
+      redialFixture.js          per-scenario app lifecycle for tst_BDD_Redial
       currentTranslations.js    GENERATED per run (gitignored)
 ```
 
@@ -49,6 +67,10 @@ SUITE=tester/squish/suites/cross-platform
 
 # 1. Generate the key->text map for the language you want to test
 python3 tester/squish/tools/gen_translations.py en > "$SUITE/shared/scripts/currentTranslations.js"
+
+# 1b. Bring in the shared Gherkin specs (once) and copy them into the BDD test cases
+git submodule update --init feature-specs
+python3 tester/squish/tools/sync_features.py
 
 # 2. Provision a throwaway SIP account (exports SQUISH_SIP_*)
 eval "$(python3 tester/squish/tools/account_manager.py create --export)"
@@ -110,6 +132,38 @@ function main(){
 }
 ```
 
+### Add a BDD (Gherkin) test case
+Scenarios live in the spec repo, step implementations here.
+
+1. Add or extend the `.feature` in the `feature-specs` submodule (a behaviour change needs the PO's
+   ack), and merge it there first.
+2. Create `suites/cross-platform/tst_BDD_MyThing/` with a `.gitignore` containing `test.feature`, a
+   `test.js` driver (copy `tst_BDD_Redial/test.js`) and the steps under `steps/`. `test.feature` is
+   generated at run time and never committed.
+3. Map the case to its spec in `BDD_TEST_CASES` in `tools/sync_features.py`.
+4. Add `tst_BDD_MyThing` to `TEST_CASES` in `suites/cross-platform/suite.conf`.
+
+`run-ci.sh` runs `sync_features.py` before the suite; locally run it by hand (step 1b above), or
+squishide reports a missing feature file.
+
+Steps call page objects. Squish placeholders are `|any|`, `|word|`, `|integer|` (not Cucumber's
+`{string}`); `Step()` matches under any keyword:
+
+```js
+Given("the user has previously dialed the number \"|any|\" manually from the dialer", function(context, number){
+    DialerPage.dialOnKeypad(number);
+    DialerPage.pressCallButton();
+});
+
+Step("the dialer input is empty", function(context){
+    test.compare(DialerPage.inputText(), "", "Dialer input is empty");
+});
+```
+
+Scenario hooks go in `shared/scripts/bdd_hooks.js`, dispatched on `squishinfo.testCase`. Those of
+`tst_BDD_Redial` call `redialFixture.js`: one pre-seeded profile per scenario (`redial1..6`, seeded
+in `run-ci.sh`), instance killed at scenario end.
+
 ### Add / extend a page object
 A page object is a module exporting one object with methods. Use the helpers from
 `squishlib.js` and resolve user-visible labels with `tr(key)`:
@@ -136,6 +190,14 @@ key** (not the English string); `tr(key)` turns it into the text for the languag
   `assistant_account_login`. Click it with `L.click(tr("assistant_account_login"))`.
 - Check something is shown/hidden with `L.isVisible(tr(key))` / `L.isHidden(tr(key))`.
 - Text fields have no usable label — match them by order with `L.textFields()` and fill by index.
+- Icon-only controls (dialer call key, per-row call-back button, "new contact" `+`…) show no text:
+  they carry an `objectName` in the QML, matched with `L.clickNamed` / `L.waitForNamed`. Add an
+  `objectName` when you need one, and don't rename existing ones. `SearchBar` derives its children's
+  names from its own: `searchBarObjectName: "newCallSearchBar"` → `newCallSearchBarInput`,
+  `newCallSearchBarDialerButton`.
+- The in-call window is a separate top-level window, objectName `callsWindow`; use
+  `L.waitForWindowNamed` / `L.waitWindowNamedGone`. Its QObject properties are readable directly
+  (`window.call.core.remoteAddress`), as done in `callWindow.js`.
 - New screens: dump the live tree with a throwaway test that walks `findAllObjects` +
   `object.children()` and logs `className`/`text` (see git history for examples).
 
@@ -148,6 +210,13 @@ Everyday actions (take the visible **text**, e.g. `tr(key)`):
 - `waitForText(text, timeout)` — return the element showing `text`, or null.
 - `fill(field, value)` — clear a text field and type into it.
 - `selectInDropdown(value, timeout)` — open a combo box and pick the item showing `value`.
+
+By `objectName` (for controls with no visible text):
+- `clickNamed(name, timeout)` / `waitForNamed(name, timeout)` — click / get the visible control.
+- `allNamed(name)` — every visible control with that name (e.g. all call-history rows).
+- `namedIn(root, name)` — the same, restricted to one subtree.
+- `textIn(root, text)` / `containsText(root, fragment)` — find text inside one subtree only.
+- `waitForWindowNamed(name, timeout)` / `waitWindowNamedGone(name, timeout)` — top-level windows.
 
 Lower level (only when the above don't fit):
 - `waitFor(matches, timeout)` / `waitGone(matches, timeout)` / `findAll(matches)` — `matches` is a
@@ -170,6 +239,27 @@ Lower level (only when the above don't fit):
 The job builds nothing itself: it consumes the Linux AppImage from
 `ubuntu2204-makefile-gcc-package` and runs `bash tester/squish/run-ci.sh`.
 
+### `feature-specs` submodule
+`.gitmodules` uses the SSH URL, which CI containers cannot fetch (no ssh client, no key). It is
+therefore excluded from the pipeline-wide recursive checkout in `.gitlab-ci.yml`:
+
+```yaml
+GIT_SUBMODULE_PATHS: ':(exclude)feature-specs'
+```
+
+and fetched only by the squish job, over HTTPS with `CI_JOB_TOKEN` (in `before_script`, since GitLab
+clones the sources before it runs):
+
+```yaml
+before_script:
+  - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.linphone.org/".insteadOf "git@gitlab.linphone.org:"
+  - git submodule update --init --depth 1 feature-specs
+```
+
+`linphone-test-specs` being private, its **Settings → CI/CD → Job token permissions** must authorize
+`linphone-desktop`. Otherwise the fetch fails with `repository not found` (GitLab returns 404 for
+unauthorized).
+
 ### Job variables (defaults in `linux-squish.yml`, overridable)
 | Variable | Purpose | Default |
 |---|---|---|
@@ -179,6 +269,7 @@ The job builds nothing itself: it consumes the Linux AppImage from
 | `APPLICATION_NAME` / `EXECUTABLE_NAME` | AUT names | `Linphone` / `linphone` |
 | `FLEXIAPI_URL` / `SIP_DOMAIN` | account provisioning target | `http://subscribe.example.org/flexiapi/api/` / `sip.example.org` |
 | `SQUISH_LANGS` | languages to run, space-separated | `en fr` |
+| `SQUISH_TEST_CASES` | `*` for the whole suite, or a CSV of test cases (e.g. `tst_BDD_Redial,tst_Login`) | `*` |
 
 ### Required CI/CD variables (set in GitLab → Settings → CI/CD → Variables — NOT committed)
 - **`SQUISH_LICENSE_URL`** — the Squish floating license server as `host:port` (port optional,
@@ -272,10 +363,12 @@ One run does, in order:
 5. Export the AUT runtime env: `QT_QPA_PLATFORM=xcb`, `QT_PLUGIN_PATH`, `QML_IMPORT_PATH`,
    `QML2_IMPORT_PATH` (Squish launches the raw binary, so these must be set explicitly).
 6. Provision one SIP account (`account_manager.py create --export` → `SQUISH_SIP_*` env vars).
-7. For each language in `SQUISH_LANGS`: regenerate `currentTranslations.js`, set
-   `LINPHONE_FORCE_LANGUAGE`, use fresh `XDG_*` dirs (clean profile), `squishserver` +
-   `squishrunner` the suite, report under `reports/<lang>`.
-8. Delete the provisioned account; exit with the aggregated result.
+7. Copy the shared Gherkin specs into the BDD test cases (`sync_features.py`).
+8. For each language in `SQUISH_LANGS`: regenerate `currentTranslations.js`, set
+   `LINPHONE_FORCE_LANGUAGE`, use fresh `XDG_*` dirs, seed the per-instance profiles
+   (`a`/`b`/`c`/`d`, the `set-*` ones and `redial1..6`), `squishserver` + `squishrunner` the suite,
+   report under `reports/<lang>`.
+9. Delete the provisioned account; exit with the aggregated result.
 
 ### `tools/account_manager.py`
 Provisions/deletes test SIP accounts via the FlexiAPI **test-admin** flow (same mechanism as the
@@ -284,6 +377,12 @@ liblinphone testers): `POST account_creation_tokens` → `POST accounts/with-acc
 `x-api-key: no_secret_at_all`. Config via env/flags: `FLEXIAPI_URL`, `SIP_DOMAIN`, `FLEXIAPI_FROM`,
 `FLEXIAPI_API_KEY`. `create --export` prints `export SQUISH_SIP_USER/PASS/DOMAIN` and
 `SQUISH_ACCOUNT_ID`, consumed by `run-ci.sh` and read in tests via `serverAccount.js`.
+
+### `tools/sync_features.py`
+Copies each Gherkin spec from the `feature-specs` submodule into the BDD test case that implements it
+(`BDD_TEST_CASES` maps `tst_BDD_Redial` → `Features/call/redial.feature`). The copies are gitignored:
+a spec change reaches the desktop tests by bumping the submodule, not by editing a `.feature` here.
+Errors out if the submodule is not checked out.
 
 ### `tools/gen_translations.py`
 Builds the key→text map: parses `Linphone/data/languages/en.ts` (base) overlaid with

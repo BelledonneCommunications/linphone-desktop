@@ -76,6 +76,7 @@ MainRightPanel {
 	content: ContactLayout {
 		id: contactLayoutItem
 		contact: mainItem.contact
+		button.objectName: "contactEditionSaveButton"
 		button.text: mainItem.saveButtonText
 		button.Keys.onPressed: (event) => {
 			if(event.key == Qt.Key_Up){
@@ -222,6 +223,7 @@ MainRightPanel {
                     label: qsTr("contact_editor_first_name")
 					contentItem: TextField {
 						id: givenNameEdit
+						objectName: "contactEditionGivenName"
                         height: Utils.getSizeWithScreenRatio(49)
                 		width: parent.width
 						initialText: contact.core.givenName
@@ -355,6 +357,7 @@ MainRightPanel {
 					}
 					contentItem: TextField {
 						id: newAddressTextField
+						objectName: "contactEditionNewAddress"
 						width: parent.width
 						backgroundColor: DefaultStyle.grey_0
 						Keys.onPressed: (event) => {

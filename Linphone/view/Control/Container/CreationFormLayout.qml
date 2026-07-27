@@ -13,6 +13,7 @@ FocusScope {
 	property color searchBarColor: DefaultStyle.grey_100
 	property color searchBarBorderColor: "transparent"
 	property alias searchBar: searchBar
+	property alias searchBarObjectName: searchBar.objectName
     property string startGroupButtonText
     property bool startGroupButtonVisible: true
 	property NumericPadPopup numPadPopup

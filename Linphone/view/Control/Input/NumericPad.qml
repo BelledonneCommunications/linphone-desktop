@@ -132,6 +132,7 @@ FocusScope {
 			model: 9
 			BigButton {
 				id: numPadButton
+				objectName: "numericPadKey" + (index + 1)
 				Layout.alignment: Qt.AlignHCenter
 				required property int index
                 implicitWidth: Utils.getSizeWithScreenRatio(60)
@@ -159,6 +160,7 @@ FocusScope {
 			]
 			BigButton {
 				id: digitButton
+				objectName: "numericPadKey" + modelData.pressText
 				Layout.alignment: Qt.AlignHCenter
                 implicitWidth: Utils.getSizeWithScreenRatio(60)
                 implicitHeight: Utils.getSizeWithScreenRatio(60)
@@ -210,6 +212,7 @@ FocusScope {
 		}
 		Button {
 			id: launchCallButton
+			objectName: "numericPadCallButton"
 			visible: mainItem.lastRowVisible
             implicitWidth: Utils.getSizeWithScreenRatio(75)
             implicitHeight: Utils.getSizeWithScreenRatio(55)
@@ -231,6 +234,7 @@ FocusScope {
 		}
 		Button {
 			id: eraseButton
+			objectName: "numericPadEraseButton"
 			visible: mainItem.lastRowVisible
 			padding: Utils.getSizeWithScreenRatio(5)
 			Layout.alignment: Qt.AlignHCenter

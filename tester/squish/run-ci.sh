@@ -10,7 +10,27 @@ SQUISH_BIN_PATH="${SQUISH_BIN_PATH:-/opt/squish-for-qt-9.0.1/bin}"
 APPLICATION_NAME="${APPLICATION_NAME:-Linphone}"
 EXECUTABLE_NAME="${EXECUTABLE_NAME:-linphone}"
 SQUISH_LANGS="${SQUISH_LANGS:-en fr nl de}"
+SQUISH_TEST_CASES="${SQUISH_TEST_CASES:-*}"
 SUITE="tester/squish/suites/cross-platform"
+
+TESTCASE_ARGS=()
+if [ "$SQUISH_TEST_CASES" != "*" ]; then
+    IFS=',' read -ra SELECTED_CASES <<< "$SQUISH_TEST_CASES"
+    for TEST_CASE in "${SELECTED_CASES[@]}"; do
+        TEST_CASE="$(echo "$TEST_CASE" | tr -d '[:space:]')"
+        [ -z "$TEST_CASE" ] && continue
+        if [ ! -d "$SUITE/$TEST_CASE" ]; then
+            echo "No such test case: $SUITE/$TEST_CASE"
+            exit 1
+        fi
+        TESTCASE_ARGS+=(--testcase "$TEST_CASE")
+    done
+    if [ ${#TESTCASE_ARGS[@]} -eq 0 ]; then
+        echo "SQUISH_TEST_CASES is set but selects no test case: '$SQUISH_TEST_CASES'"
+        exit 1
+    fi
+    echo "Running only: $SQUISH_TEST_CASES"
+fi
 
 if [ -n "${SQUISH_LICENSE_URL:-}" ]; then
     LICENSE_HOST="${SQUISH_LICENSE_URL%%:*}"
@@ -42,6 +62,8 @@ export SQUISH_SIP_PASS="$SQUISH_SIP_A_PASS"
 export SQUISH_SIP_DOMAIN="$SQUISH_SIP_A_DOMAIN"
 echo "Provisioned A=$SQUISH_SIP_A_USER@$SQUISH_SIP_A_DOMAIN (id $SQUISH_ACCOUNT_A_ID), B=$SQUISH_SIP_B_USER@$SQUISH_SIP_B_DOMAIN (id $SQUISH_ACCOUNT_B_ID)"
 
+python3 tester/squish/tools/sync_features.py
+
 REPORTS_DIR="${SQUISH_REPORTS_DIR:-squish-reports}"
 mkdir -p "$REPORTS_DIR"
 RESULT=0
@@ -56,6 +78,9 @@ for LANG_CODE in $SQUISH_LANGS; do
     python3 tester/squish/tools/seed_config.py b B
     python3 tester/squish/tools/seed_config.py c A --conference
     python3 tester/squish/tools/seed_config.py d B --conference
+    for REDIAL_PROFILE in 1 2 3 4 5 6; do
+        python3 tester/squish/tools/seed_config.py "redial$REDIAL_PROFILE" A
+    done
     python3 tester/squish/tools/seed_setting.py set-shown-assistant --ui assistant_hide_third_party_account=0 --ui assistant_hide_create_account=0
     python3 tester/squish/tools/seed_setting.py set-hidden-assistant --ui assistant_hide_third_party_account=1 --ui assistant_hide_create_account=1
     python3 tester/squish/tools/seed_setting.py set-shown --slot A --ui disable_chat_feature=0 --ui disable_meetings_feature=0 --ui hide_settings=0 --ui hide_account_settings=0 --ui disable_call_recordings_feature=0 --ui hide_sip_addresses=0 --ui disable_call_forward=0 --ui disable_command_line=0 --ui disable_broadcast_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
@@ -67,7 +92,7 @@ for LANG_CODE in $SQUISH_LANGS; do
     "$SQUISH_BIN_PATH/squishserver" --daemon
     sleep 3
     RUN_LOG="$REPORTS_DIR/$LANG_CODE.log"
-    "$SQUISH_BIN_PATH/squishrunner" --testsuite "$SUITE" --reportgen "html,$REPORTS_DIR/$LANG_CODE" --reportgen stdout --exitCodeOnFail 1 2>&1 | tee "$RUN_LOG"
+    "$SQUISH_BIN_PATH/squishrunner" --testsuite "$SUITE" ${TESTCASE_ARGS[@]+"${TESTCASE_ARGS[@]}"} --reportgen "html,$REPORTS_DIR/$LANG_CODE" --reportgen stdout --exitCodeOnFail 1 2>&1 | tee "$RUN_LOG"
     RC=${PIPESTATUS[0]}
     if [ "$RC" != "0" ]; then
         RESULT=$RC
