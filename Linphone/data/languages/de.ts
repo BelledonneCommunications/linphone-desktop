@@ -6139,7 +6139,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="84"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2 &lt;br&gt;Merci de le saisir ci-dessous</extracomment>
-        <translation>Wir haben Ihnen einen Bestätigungscode an Ihr %1 %2&lt;br&gt; geschickt. Bitte geben Sie diesen unten ein.</translation>
+        <translation type="unfinished">Wir haben Ihnen einen Bestätigungscode an Ihr %1 %2&lt;br&gt; geschickt. Bitte geben Sie diesen unten ein.</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="160"/>

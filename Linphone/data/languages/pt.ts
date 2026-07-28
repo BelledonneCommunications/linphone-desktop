@@ -4319,11 +4319,6 @@ Error</extracomment>
         <source>info_popup_error_title</source>
         <translation>Erro</translation>
     </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>Sucesso</translation>
-    </message>
 </context>
 <context>
     <name>MeetingForm</name>

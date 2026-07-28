@@ -4639,16 +4639,6 @@ Verlooptijd: %1</translation>
         <translation>Fout tijdens vastleggen van deelnemers !</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>Succes</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
-        <source>info_popup_manage_participant_updated_message</source>
-        <translation>Deelnemers bijgewerkt</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <translation>Toepassen</translation>
@@ -5522,7 +5512,7 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>We hebben een verificatiecode verstuurd naar jouw %1 %2&lt;br&gt; Gelieve ze hieronder in te geven</translation>
+        <translation type="unfinished">We hebben een verificatiecode verstuurd naar jouw %1 %2&lt;br&gt; Gelieve ze hieronder in te geven</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>

@@ -4653,19 +4653,14 @@ Expirace : %1</translation>
         <translation>Chyba při nastavování účastníků!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>Hotovo</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
-        <source>info_popup_manage_participant_updated_message</source>
-        <translation>Účastníci aktualizováni</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="68"/>
         <source>apply_button_text</source>
         <translation>Použít</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="35"/>
+        <source>manage_participant_waiting_popup</source>
+        <translation>Aktualizace účastníků...</translation>
     </message>
 </context>
 <context>
@@ -5542,7 +5537,7 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>Zaslali jsme vám ověřovací kód na %1 %2&lt;br&gt; Zadejte jej prosím níže</translation>
+        <translation>Zaslali jsme vám ověřovací kód na %1 %2 \n Zadejte jej prosím níže</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>

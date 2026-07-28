@@ -4335,11 +4335,6 @@ Error</extracomment>
         <source>info_popup_error_title</source>
         <translation>错误</translation>
     </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>成功</translation>
-    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -5168,7 +5163,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>我们已向您的%1 %2发送了验证码&lt;br&gt;请在下面输入</translation>
+        <translation type="unfinished">我们已向您的%1 %2发送了验证码&lt;br&gt;请在下面输入</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>

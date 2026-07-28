@@ -4745,17 +4745,6 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
-        <source>info_popup_manage_participant_updated_message</source>
-        <extracomment>Participants updated</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>

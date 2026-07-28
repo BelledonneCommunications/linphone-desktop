@@ -3361,7 +3361,7 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_unmute</source>
         <extracomment>&quot;Sourdine&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ativar microfone</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
@@ -3945,6 +3945,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>Solucionando problemas</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
+        <source>help_check_for_update_button_label</source>
+        <translation>Verificar atualizações</translation>
+    </message>
 </context>
 <context>
     <name>LdapSettingsLayout</name>
@@ -4513,11 +4518,6 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <translation>Participantes</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>Sucesso</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
         <source>info_popup_error_title</source>
         <translation>Erro</translation>
@@ -4531,11 +4531,6 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="31"/>
         <source>info_popup_manage_participant_error_message</source>
         <translation>Erro ao definir os participantes!</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
-        <source>info_popup_manage_participant_updated_message</source>
-        <translation>Participantes atualizados</translation>
     </message>
 </context>
 <context>
@@ -5411,7 +5406,7 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>Nós enviamos um código de verificação no seu %1 %2&lt;br&gt;Por favor, insira-o abaixo</translation>
+        <translation type="unfinished">Nós enviamos um código de verificação no seu %1 %2&lt;br&gt;Por favor, insira-o abaixo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>

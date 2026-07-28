@@ -4837,17 +4837,6 @@ Error</extracomment>
         <translation>ເກີດຂໍ້ຜິດພາດໃນລະຫວ່າງການກຳນົດຜູ້ເຂົ້າຮ່ວມ!</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="34"/>
-        <source>info_popup_success_title</source>
-        <translation>ສຳເລັດ</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="36"/>
-        <source>info_popup_manage_participant_updated_message</source>
-        <extracomment>Participants updated</extracomment>
-        <translation>ອັບເດດຜູ້ເຂົ້າຮ່ວມແລ້ວ</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="59"/>
         <source>group_infos_manage_participants</source>
         <translation>ຜູ້ເຂົ້າຮ່ວມ</translation>
@@ -6010,7 +5999,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="83"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation>ພວກເຮົາໄດ້ສົ່ງລະຫັດຢືນຢັນໄປຫາ %1 %2 ຂອງທ່ານແລ້ວ &lt;br&gt; ກະລຸນາປ້ອນລະຫັດນັ້ນໃສ່ທາງລຸ່ມນີ້</translation>
+        <translation type="unfinished">ພວກເຮົາໄດ້ສົ່ງລະຫັດຢືນຢັນໄປຫາ %1 %2 ຂອງທ່ານແລ້ວ &lt;br&gt; ກະລຸນາປ້ອນລະຫັດນັ້ນໃສ່ທາງລຸ່ມນີ້</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="159"/>
