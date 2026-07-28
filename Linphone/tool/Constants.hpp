@@ -77,8 +77,8 @@ public:
 	static constexpr int MaxMosaicParticipants =
 	    6; // From 7, the mosaic quality will be limited to avoid useless computations
 
-	static constexpr char LinphoneBZip2_exe[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
-	static constexpr char LinphoneBZip2_dll[] = "https://www.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
+	static constexpr char LinphoneBZip2_exe[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.exe";
+	static constexpr char LinphoneBZip2_dll[] = "https://download.linphone.org/releases/windows/tools/bzip2/bzip2.dll";
 	static constexpr char DefaultRlsUri[] = "sips:rls@sip.linphone.org";
 	static constexpr char DefaultLogsEmail[] = "linphone-desktop@belledonne-communications.com";
 
