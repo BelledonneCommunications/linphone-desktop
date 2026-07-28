@@ -413,10 +413,15 @@ QString CliModel::Command::getFunctionSyntax() const {
 //--------------------------------------------------------------------
 
 void CliModel::executeCommand(QString command) { //, CommandFormat *format) {
-	// Start by decoding command
-	command = decodeBase64Url(command);
 	// Detect if command is a CLI by testing commands
-	const QString &functionName = parseFunctionName(command, false);
+	QString functionName = parseFunctionName(command, false);
+
+	if (functionName.isEmpty()) {
+		// Decode command if not recognize
+		command = decodeBase64Url(command);
+		functionName = parseFunctionName(command, false);
+	}
+
 	if (!functionName.isEmpty()) { // It is a CLI
 		lInfo() << log().arg("Detecting cli command: `%1`…").arg(command);
 		QHash<QString, QString> args = parseArgs(command);
