@@ -2852,7 +2852,7 @@ Only your correspondent can decrypt them.</translation>
         <translation type="vanished">Use sips</translation>
     </message>
     <message>
-        <location filename="../../model/cli/CliModel.cpp" line="466"/>
+        <location filename="../../model/cli/CliModel.cpp" line="471"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
         <extracomment>&quot;Not a valid URI: `%1` Unsupported scheme: `%2`.&quot;</extracomment>
         <translation>Not a valid URI: `%1` Unsupported scheme: `%2`.</translation>
@@ -6528,7 +6528,7 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SettingsModel</name>
     <message>
-        <location filename="../../model/setting/SettingsModel.cpp" line="378"/>
+        <location filename="../../model/setting/SettingsModel.cpp" line="371"/>
         <source>set_capture_device_error</source>
         <extracomment>&quot;Cannot set Capture device. The ID cannot be matched with an existant device : %1&quot;</extracomment>
         <translation>Cannot set Capture device. The ID cannot be matched with an existant device : %1</translation>

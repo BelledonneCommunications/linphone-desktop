@@ -2852,7 +2852,7 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
         <translation type="vanished">Utiliser sips</translation>
     </message>
     <message>
-        <location filename="../../model/cli/CliModel.cpp" line="466"/>
+        <location filename="../../model/cli/CliModel.cpp" line="471"/>
         <source>info_popup_cli_unsupported_scheme_message</source>
         <extracomment>&quot;Not a valid URI: `%1` Unsupported scheme: `%2`.&quot;</extracomment>
         <translation>URI invalide : &quot;%1&quot; Schéma non supporté : &quot;%2&quot;</translation>
@@ -6532,7 +6532,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SettingsModel</name>
     <message>
-        <location filename="../../model/setting/SettingsModel.cpp" line="378"/>
+        <location filename="../../model/setting/SettingsModel.cpp" line="371"/>
         <source>set_capture_device_error</source>
         <extracomment>&quot;Cannot set Capture device. The ID cannot be matched with an existant device : %1&quot;</extracomment>
         <translation>Impossible de définir l&apos;appareil de capture. L&apos;identifiant ne correspond pas à un appareil existant : %1</translation>
