@@ -526,6 +526,15 @@ void SettingsModel::setDisplayNotificationContent(bool display) {
 	emit displayNotificationContentChanged(display);
 }
 
+QString SettingsModel::getOverriddenBZipPath() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString("misc", "bzip_download_path", ""));
+}
+
+void SettingsModel::setOverriddenBZipPath(QString data) {
+	mConfig->setString("misc", "bzip_download_path", Utils::appStringToCoreString(data));
+}
+
 bool SettingsModel::getEchoCancellationEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->echoCancellationEnabled();

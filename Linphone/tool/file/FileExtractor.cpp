@@ -26,6 +26,7 @@
 #include "FileDownloader.hpp"
 #include "FileExtractor.hpp"
 #include "core/path/Paths.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "tool/Constants.hpp"
 #include "tool/Utils.hpp"
 
@@ -78,15 +79,28 @@ void FileExtractor::extract() {
 		QTimer *timer = mTimer;
 		FileDownloader *fileDownloader = new FileDownloader();
 		int downloadStep = 0;
-		fileDownloader->setUrl(QUrl(Constants::LinphoneBZip2_exe));
+		QString url = Constants::LinphoneBZip2_exe;
+		QString overriddenBZip = SettingsModel::getInstance()->getOverriddenBZipPath();
+		if (!overriddenBZip.isEmpty()) {
+			url = overriddenBZip + (overriddenBZip.endsWith(QDir::separator()) ? QChar() : QDir::separator()) +
+			      "bzip2.exe";
+		}
+		fileDownloader->setUrl(QUrl(url));
 		fileDownloader->setDownloadFolder(Paths::getToolsDirPath());
 		QObject::connect(fileDownloader, &FileDownloader::totalBytesChanged, this, &FileExtractor::setTotalBytes);
 		QObject::connect(fileDownloader, &FileDownloader::readBytesChanged, this, &FileExtractor::setReadBytes);
 
 		QObject::connect(fileDownloader, &FileDownloader::downloadFinished,
-		                 [fileDownloader, timer, downloadStep, this]() mutable {
+		                 [fileDownloader, timer, downloadStep, overriddenBZip, this]() mutable {
+			                 QString dllUrl = Constants::LinphoneBZip2_dll;
 			                 if (downloadStep++ == 0) {
-				                 fileDownloader->setUrl(QUrl(Constants::LinphoneBZip2_dll));
+				                 if (!overriddenBZip.isEmpty()) {
+					                 dllUrl =
+					                     overriddenBZip +
+					                     (overriddenBZip.endsWith(QDir::separator()) ? QChar() : QDir::separator()) +
+					                     "bzip2.dll";
+				                 }
+				                 fileDownloader->setUrl(QUrl(dllUrl));
 				                 fileDownloader->download();
 			                 } else {
 				                 fileDownloader->deleteLater();
