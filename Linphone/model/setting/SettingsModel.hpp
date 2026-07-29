@@ -69,6 +69,9 @@ public:
 	void setDisplayNotificationContent(bool display);
 	bool getDisplayNotificationContent() const;
 
+	QString getOverriddenBZipPath() const;
+	void setOverriddenBZipPath(QString data);
+
 	// Audio. --------------------------------------------------------------------
 
 	bool getIsInCall() const;
