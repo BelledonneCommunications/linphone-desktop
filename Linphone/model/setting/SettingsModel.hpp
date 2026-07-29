@@ -114,6 +114,9 @@ public:
 
 	QString getDefaultDomain() const;
 
+	QString getOverriddenBZipPath() const;
+	void setOverriddenBZipPath(QString data);
+
 	//------------------------------------------------------------------------------------------------------------
 
 	void startEchoCancellerCalibration();
