@@ -68,7 +68,7 @@
     - Write-Output $NINJA_OPTIMIZATION
     # /!\ By design, we must keep $NINJA_OPTIMIZATION as the last option of the line, because it contains an output redirect
     - echo $LastExitCode
-    - Invoke-Expression "cmake --build . --target $BUILD_TARGET --config $CI_BUILD_TYPE $PARALLEL_OPTIONS  $NINJA_OPTIMIZATION"
+    - Invoke-Expression "cmake --build . --target $BUILD_TARGET --config $CI_BUILD_TYPE $PARALLEL_OPTIONS  $NINJA_OPTIMIZATION" 2>&1 | Tee-Object -FilePath "$PWD\nsis_build.log"
     - if ($EXITS_ON_ERROR_MSBUILD) { Invoke-Expression "$EXITS_ON_ERROR_MSBUILD" } else { Write-Output "EXITS_ON_ERROR_MSBUILD is null" }
     - if ($DISPLAY_NINJA_LOG) { Invoke-Expression "$DISPLAY_NINJA_LOG" } else { Write-Output "DISPLAY_NINJA_LOG is null" }
     - if ($SEARCH_NINJA_ERROR) { Invoke-Expression "$SEARCH_NINJA_ERROR" } else { Write-Output "SEARCH_NINJA_ERROR is null" }
@@ -82,10 +82,11 @@
   artifacts:
     paths:
       - build-desktop\ninja_buildlog.txt
-      - build-desktop\ninja_buildlog.txt
       - build-desktop\invertSearch.ps1
       - build-desktop\OUTPUT\*
       - build-desktop\external\linphone-sdk\openh264-prefix\src\openh264-stamp\*
+      - build-desktop\nsis_build.log
+
     when: always
     expire_in: 1 week
 
