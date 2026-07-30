@@ -89,6 +89,7 @@ public:
 	Q_INVOKABLE static void closeCallsWindow();
 	Q_INVOKABLE static VariantObject *haveAccount();
 	Q_INVOKABLE static void smartShowWindow(QQuickWindow *window);
+	Q_INVOKABLE static void showCallsWindow(QQuickWindow *window);
 	Q_INVOKABLE static QString createAvatar(const QUrl &fileUrl); // Return the avatar path
 	Q_INVOKABLE static QString formatElapsedTime(int seconds,
 	                                             bool dotsSeparator = true); // Return the elapsed time formated

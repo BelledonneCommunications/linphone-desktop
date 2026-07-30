@@ -1489,6 +1489,16 @@
         <translation>Les appels entrants seront décrochés automatiquement</translation>
     </message>
     <message>
+        <source>settings_calls_call_view_in_background_title</source>
+        <extracomment>&quot;Afficher la vue d&apos;appel en arrière-plan&quot;</extracomment>
+        <translation>Afficher la vue d&apos;appel en arrière-plan</translation>
+    </message>
+    <message>
+        <source>settings_calls_call_view_in_background_subtitle</source>
+        <extracomment>&quot;La fenêtre d&apos;appel ne passera pas au premier plan&quot;</extracomment>
+        <translation>La fenêtre d&apos;appel ne passera pas au premier plan</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="70"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>

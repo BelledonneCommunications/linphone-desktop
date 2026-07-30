@@ -54,6 +54,8 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
 	mAutoAnswerEnabled = settingsModel->getAutoAnswerEnabled();
 	mAutoAnswerActive = mAutoAnswerEnabled;
+	mKeepCallViewInBackground = settingsModel->getKeepCallViewInBackground();
+	mKeepCallViewInBackgroundActive = mKeepCallViewInBackground;
 	mRingtonePath = settingsModel->getRingtone();
 	QFileInfo ringtone(mRingtonePath);
 	if (ringtone.exists()) {
@@ -177,6 +179,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
 	mAutoAnswerEnabled = settingsCore.mAutoAnswerEnabled;
 	mAutoAnswerActive = settingsCore.mAutoAnswerActive;
+	mKeepCallViewInBackground = settingsCore.mKeepCallViewInBackground;
+	mKeepCallViewInBackgroundActive = settingsCore.mKeepCallViewInBackgroundActive;
 
 	// Audio
 	mCaptureDevices = settingsCore.mCaptureDevices;
@@ -268,6 +272,8 @@ void SettingsCore::reloadSettings() {
 	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
 	setAutoAnswerEnabled(settingsModel->getAutoAnswerEnabled());
 	setAutoAnswerActive(settingsModel->getAutoAnswerEnabled());
+	setKeepCallViewInBackground(settingsModel->getKeepCallViewInBackground());
+	mKeepCallViewInBackgroundActive = settingsModel->getKeepCallViewInBackground();
 	setRingtone(settingsModel->getRingtone());
 
 	// Network
@@ -447,6 +453,15 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 			setAutoAnswerActive(enabled);
 		});
 	});
+
+	// Call view in background
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::keepCallViewInBackgroundChanged,
+	                                             [this](const bool keep) {
+		                                             mSettingsModelConnection->invokeToCore([this, keep]() {
+			                                             setKeepCallViewInBackground(keep);
+			                                             mKeepCallViewInBackgroundActive = keep;
+		                                             });
+	                                             });
 
 	// Audio device(s)
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
@@ -702,6 +717,8 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 	setAutoAnswerEnabled(settingsCore.mAutoAnswerEnabled);
 	setAutoAnswerActive(settingsCore.mAutoAnswerActive);
+	setKeepCallViewInBackground(settingsCore.mKeepCallViewInBackground);
+	mKeepCallViewInBackgroundActive = settingsCore.mKeepCallViewInBackgroundActive;
 
 	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
 	setDisplayNotificationContent(settingsCore.mDisplayNotificationContent);
@@ -891,6 +908,14 @@ void SettingsCore::setAutoAnswerActive(bool active) {
 	if (mAutoAnswerActive != active) {
 		mAutoAnswerActive = active;
 		emit autoAnswerActiveChanged();
+	}
+}
+
+void SettingsCore::setKeepCallViewInBackground(bool keep) {
+	if (mKeepCallViewInBackground != keep) {
+		mKeepCallViewInBackground = keep;
+		emit keepCallViewInBackgroundChanged();
+		setIsSaved(false);
 	}
 }
 
@@ -1369,6 +1394,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 	model->setAutoAnswerEnabled(mAutoAnswerEnabled);
+	model->setKeepCallViewInBackground(mKeepCallViewInBackground);
 
 	// Chat
 	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
@@ -1443,6 +1469,8 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
 	mAutoAnswerEnabled = model->getAutoAnswerEnabled();
 	mAutoAnswerActive = mAutoAnswerEnabled;
+	mKeepCallViewInBackground = model->getKeepCallViewInBackground();
+	mKeepCallViewInBackgroundActive = mKeepCallViewInBackground;
 	mCallToneIndicationsEnabled = model->getCallToneIndicationsEnabled();
 	mRingtonePath = model->getRingtone();
 	QFileInfo ringtone(mRingtonePath);

@@ -57,6 +57,8 @@ public:
 	Q_PROPERTY(
 	    bool autoAnswerEnabled READ getAutoAnswerEnabled WRITE setAutoAnswerEnabled NOTIFY autoAnswerEnabledChanged)
 	Q_PROPERTY(bool autoAnswerActive READ getAutoAnswerActive NOTIFY autoAnswerActiveChanged)
+	Q_PROPERTY(bool keepCallViewInBackground READ getKeepCallViewInBackground WRITE setKeepCallViewInBackground NOTIFY
+	               keepCallViewInBackgroundChanged)
 
 	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged)
 
@@ -190,6 +192,15 @@ public:
 		return mAutoAnswerActive;
 	}
 	void setAutoAnswerActive(bool active);
+
+	bool getKeepCallViewInBackground() {
+		return mKeepCallViewInBackground;
+	}
+	void setKeepCallViewInBackground(bool keep);
+
+	bool getKeepCallViewInBackgroundActive() const {
+		return mKeepCallViewInBackgroundActive;
+	}
 
 	bool getShowPastMeetings() const;
 	void setShowPastMeetings(bool show);
@@ -357,6 +368,7 @@ signals:
 	void callToneIndicationsEnabledChanged();
 	void autoAnswerEnabledChanged();
 	void autoAnswerActiveChanged();
+	void keepCallViewInBackgroundChanged();
 
 	void captureGraphRunningChanged(bool running);
 
@@ -462,6 +474,8 @@ private:
 	bool mCallToneIndicationsEnabled;
 	bool mAutoAnswerEnabled;
 	bool mAutoAnswerActive;
+	bool mKeepCallViewInBackground;
+	bool mKeepCallViewInBackgroundActive;
 
 	bool mShowPastMeetings;
 

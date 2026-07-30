@@ -784,7 +784,7 @@ void App::initCore() {
 						    mCoreModelConnection->invokeToCore([this, callCore] {
 							    auto callGui = new CallGui(callCore);
 							    auto win = getOrCreateCallsWindow(QVariant::fromValue(callGui));
-							    Utils::smartShowWindow(win);
+							    Utils::showCallsWindow(win);
 							    auto mainwin = getMainWindow();
 							    QMetaObject::invokeMethod(mainwin, "callCreated");
 							    lDebug() << "App : call created" << callGui;

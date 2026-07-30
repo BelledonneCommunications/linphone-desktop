@@ -144,6 +144,9 @@ public:
 	bool getAutoAnswerEnabled() const;
 	void setAutoAnswerEnabled(bool enabled);
 
+	bool getKeepCallViewInBackground() const;
+	void setKeepCallViewInBackground(bool keep);
+
 	//------------------------------------------------------------------------------------------------------------
 
 	bool getLogsEnabled() const;
@@ -285,6 +288,7 @@ signals:
 	void echoCancellationEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);
 	void autoAnswerEnabledChanged(bool enabled);
+	void keepCallViewInBackgroundChanged(bool keep);
 
 	void callToneIndicationsEnabledChanged(bool enabled);
 

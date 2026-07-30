@@ -75,6 +75,15 @@ AbstractSettingsLayout {
                 propertyOwner: SettingsCpp
             }
             SwitchSetting {
+                Layout.fillWidth: true
+                //: "Afficher la vue d'appel en arrière-plan"
+                titleText: qsTr("settings_calls_call_view_in_background_title")
+                //: "La fenêtre d'appel ne passera pas au premier plan"
+                subTitleText: qsTr("settings_calls_call_view_in_background_subtitle")
+                propertyName: "keepCallViewInBackground"
+                propertyOwner: SettingsCpp
+            }
+            SwitchSetting {
                 //: Tonalités
                 titleText: qsTr("settings_call_enable_tones_title")
                 //: Activer les tonalités

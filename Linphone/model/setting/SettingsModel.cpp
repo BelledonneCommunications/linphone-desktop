@@ -580,6 +580,19 @@ void SettingsModel::setAutoAnswerEnabled(bool enabled) {
 	}
 }
 
+bool SettingsModel::getKeepCallViewInBackground() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return !!mConfig->getInt(UiSection, "keep_calls_window_in_background", 0);
+}
+
+void SettingsModel::setKeepCallViewInBackground(bool keep) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (keep != getKeepCallViewInBackground()) {
+		mConfig->setInt(UiSection, "keep_calls_window_in_background", keep);
+		emit keepCallViewInBackgroundChanged(keep);
+	}
+}
+
 bool SettingsModel::getCallToneIndicationsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->callToneIndicationsEnabled();
