@@ -234,10 +234,19 @@ void Utils::setupConference(ConferenceInfoGui *confGui) {
 
 void Utils::openCallsWindow(CallGui *call) {
 	if (call) {
-		auto window = App::getInstance()->getOrCreateCallsWindow(QVariant::fromValue(call));
-		window->show();
-		window->raise();
+		showCallsWindow(App::getInstance()->getOrCreateCallsWindow(QVariant::fromValue(call)));
 	}
+}
+
+void Utils::showCallsWindow(QQuickWindow *window) {
+	if (!window) return;
+	auto settings = App::getInstance()->getSettings();
+	if (settings && settings->getKeepCallViewInBackgroundActive()) {
+		lInfo() << "[Utils] : keep calls window in background" << window;
+		if (!window->isVisible()) window->showMinimized();
+		return;
+	}
+	smartShowWindow(window);
 }
 
 QQuickWindow *Utils::getOrCreateCallsWindow(CallGui *callGui) {
@@ -292,6 +301,7 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 		window->showMaximized();
 	else if (window->visibility() == QWindow::FullScreen) // Avoid to change visibility mode
 		window->showFullScreen();
+	else if (window->visibility() == QWindow::Minimized) window->showNormal();
 	window->show();
 	window->raise();
 	App::getInstance()->setLastActiveWindow(window);
