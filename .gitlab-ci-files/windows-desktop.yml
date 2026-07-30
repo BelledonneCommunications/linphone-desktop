@@ -68,7 +68,14 @@
     - Write-Output $NINJA_OPTIMIZATION
     # /!\ By design, we must keep $NINJA_OPTIMIZATION as the last option of the line, because it contains an output redirect
     - echo $LastExitCode
-    - Invoke-Expression "cmake --build . --target $BUILD_TARGET --config $CI_BUILD_TYPE $PARALLEL_OPTIONS  $NINJA_OPTIMIZATION" 2>&1 | Tee-Object -FilePath "$PWD\nsis_build.log"
+    - Invoke-Expression "cmake --build . --target $BUILD_TARGET --config $CI_BUILD_TYPE $PARALLEL_OPTIONS  $NINJA_OPTIMIZATION"
+    - if (Test-Path "_CPack_Packages\win64\NSIS\NSISOutput.log") {
+        Write-Output "===== NSIS OUTPUT LOG ====="
+        Get-Content "_CPack_Packages\win64\NSIS\NSISOutput.log"
+        Write-Output "===== END NSIS OUTPUT LOG ====="
+      } else {
+        Write-Output "NSISOutput.log not found"
+      }
     - if ($EXITS_ON_ERROR_MSBUILD) { Invoke-Expression "$EXITS_ON_ERROR_MSBUILD" } else { Write-Output "EXITS_ON_ERROR_MSBUILD is null" }
     - if ($DISPLAY_NINJA_LOG) { Invoke-Expression "$DISPLAY_NINJA_LOG" } else { Write-Output "DISPLAY_NINJA_LOG is null" }
     - if ($SEARCH_NINJA_ERROR) { Invoke-Expression "$SEARCH_NINJA_ERROR" } else { Write-Output "SEARCH_NINJA_ERROR is null" }
@@ -85,7 +92,7 @@
       - build-desktop\invertSearch.ps1
       - build-desktop\OUTPUT\*
       - build-desktop\external\linphone-sdk\openh264-prefix\src\openh264-stamp\*
-      - build-desktop\nsis_build.log
+      - build-desktop\_CPack_Packages\win64\NSIS\NSISOutput.log
 
     when: always
     expire_in: 1 week
@@ -110,7 +117,7 @@
     CLI_OUTPUT_INFO_NINJA: Write-Output -NoEnumerate "Building with Ninja. See ninja_buildlog.txt to get details before completing the build."
     NINJA_BUILD_PARALLEL_LEVEL: -DCMAKE_BUILD_PARALLEL_LEVEL=$WINDOWS_PARALLEL_JOBS
     PARALLEL_OPTIONS: "--parallel $WINDOWS_PARALLEL_JOBS"
-    NINJA_OPTIMIZATION: "| find /V \"inclusion du fichier\" > ninja_buildlog.txt; cmd /c \"exit /b 0\""
+    NINJA_OPTIMIZATION: "2>&1 | find /V \"inclusion du fichier\" > ninja_buildlog.txt; cmd /c \"exit /b 0\""
     NINJA_EXPLICIT_COMPILER_SET: -DCMAKE_C_COMPILER="$CMAKE_C_COMPILER" -DCMAKE_CXX_COMPILER="$CMAKE_CXX_COMPILER" -DCMAKE_RC_COMPILER="$CMAKE_RC_COMPILER"
     DISPLAY_NINJA_LOG: Get-Content ninja_buildlog.txt
     SEARCH_NINJA_ERROR: 'Write-Output "`$$isFound = (Select-String -Pattern `"build stopped: subcommand failed`" -SimpleMatch -Quiet -Path ninja_buildlog.txt)" > invertSearch.ps1'
