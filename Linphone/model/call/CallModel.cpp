@@ -49,17 +49,17 @@ CallModel::~CallModel() {
 	mustBeInLinphoneThread("~" + getClassName());
 }
 
-void CallModel::accept(bool withVideo) {
-	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+std::shared_ptr<linphone::CallParams> CallModel::createAcceptParams(const std::shared_ptr<linphone::Call> &call,
+                                                                    bool withVideo) {
 	auto core = CoreModel::getInstance()->getCore();
-	auto params = core->createCallParams(mMonitor);
+	auto params = core->createCallParams(call);
 	params->setRecordFile(
 	    Paths::getCapturesDirPath()
-	        .append(Utils::generateSavedFilename(QString::fromStdString(mMonitor->getToAddress()->getUsername()), ""))
+	        .append(Utils::generateSavedFilename(QString::fromStdString(call->getToAddress()->getUsername()), ""))
 	        .append(".mkv")
 	        .toStdString());
 	// Answer with local call address.
-	auto localAddress = mMonitor->getCallLog()->getLocalAddress();
+	auto localAddress = call->getCallLog()->getLocalAddress();
 	for (auto account : core->getAccountList()) {
 		if (account->getParams()->getIdentityAddress()->weakEqual(localAddress)) {
 			params->setAccount(account);
@@ -68,6 +68,12 @@ void CallModel::accept(bool withVideo) {
 	}
 	activateLocalVideo(params, withVideo);
 	params->enableCamera(withVideo);
+	return params;
+}
+
+void CallModel::accept(bool withVideo) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto params = createAcceptParams(mMonitor, withVideo);
 	lInfo() << log()
 	               .arg("Accept call with params : enableVideo = %1 | enableCamera = %2")
 	               .arg(params->videoEnabled())

@@ -61,6 +61,8 @@ public:
 
 	QSharedPointer<CallCore> getFirstIncommingPendingCall();
 
+	QSharedPointer<CallCore> findCallByCallId(const QString &callId);
+
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 signals:
 	void lUpdate();

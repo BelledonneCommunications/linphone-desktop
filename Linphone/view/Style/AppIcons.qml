@@ -43,6 +43,7 @@ QtObject {
 	property string callList: "image://internal/phone-list.svg"
 	property string phonePause: "image://internal/phone-pause.svg"
 	property string transferCall: "image://internal/phone-transfer.svg"
+	property string autoAnswer: "image://internal/phone-call.svg"
 	property string adressBook: "image://internal/address-book.svg"
 	property string adressBookSelected: "image://internal/address-book-fill.svg"
 	property string chatTeardropText: "image://internal/chat-teardrop-text.svg"

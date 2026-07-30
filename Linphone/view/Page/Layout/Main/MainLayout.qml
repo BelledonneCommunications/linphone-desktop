@@ -345,6 +345,25 @@ Item {
                     }
                     RowLayout {
                         spacing: Utils.getSizeWithScreenRatio(10)
+                        EffectImage {
+                            id: autoAnswerStatus
+                            visible: SettingsCpp.autoAnswerActive
+                            Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
+                            Layout.preferredHeight: Utils.getSizeWithScreenRatio(32)
+                            imageSource: AppIcons.autoAnswer
+                            colorizationColor: DefaultStyle.main1_500_main
+                            Accessible.role: Accessible.StaticText
+                            //: "Réponse automatique aux appels activée"
+                            Accessible.name: qsTr("main_auto_answer_enabled_accessible_name")
+                            HoverHandler {
+                                id: autoAnswerStatusHover
+                            }
+                            ToolTip {
+                                visible: autoAnswerStatusHover.hovered
+                                //: "Réponse automatique aux appels activée"
+                                text: qsTr("main_auto_answer_enabled_accessible_name")
+                            }
+                        }
                         PopupButton {
                             id: deactivateDndButton
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
