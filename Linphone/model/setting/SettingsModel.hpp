@@ -141,6 +141,9 @@ public:
 	bool getCallToneIndicationsEnabled() const;
 	void setCallToneIndicationsEnabled(bool enabled);
 
+	bool getAutoAnswerEnabled() const;
+	void setAutoAnswerEnabled(bool enabled);
+
 	//------------------------------------------------------------------------------------------------------------
 
 	bool getLogsEnabled() const;
@@ -281,6 +284,7 @@ signals:
 
 	void echoCancellationEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);
+	void autoAnswerEnabledChanged(bool enabled);
 
 	void callToneIndicationsEnabledChanged(bool enabled);
 

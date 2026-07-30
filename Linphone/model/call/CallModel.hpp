@@ -38,6 +38,8 @@ public:
 	CallModel(const std::shared_ptr<linphone::Call> &call, QObject *parent = nullptr);
 	~CallModel();
 
+	static std::shared_ptr<linphone::CallParams> createAcceptParams(const std::shared_ptr<linphone::Call> &call,
+	                                                                bool withVideo);
 	void accept(bool withVideo);
 	void decline();
 	void terminate();

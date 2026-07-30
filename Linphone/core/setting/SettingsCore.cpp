@@ -52,6 +52,8 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
 	mDisplayNotificationContent = settingsModel->getDisplayNotificationContent();
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
+	mAutoAnswerEnabled = settingsModel->getAutoAnswerEnabled();
+	mAutoAnswerActive = mAutoAnswerEnabled;
 	mRingtonePath = settingsModel->getRingtone();
 	QFileInfo ringtone(mRingtonePath);
 	if (ringtone.exists()) {
@@ -173,6 +175,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mDisplayNotificationContent = settingsCore.mDisplayNotificationContent;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
+	mAutoAnswerEnabled = settingsCore.mAutoAnswerEnabled;
+	mAutoAnswerActive = settingsCore.mAutoAnswerActive;
 
 	// Audio
 	mCaptureDevices = settingsCore.mCaptureDevices;
@@ -262,6 +266,8 @@ void SettingsCore::reloadSettings() {
 	setAutoDownloadReceivedFiles(settingsModel->getAutoDownloadReceivedFiles());
 	setDisplayNotificationContent(settingsModel->getDisplayNotificationContent());
 	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
+	setAutoAnswerEnabled(settingsModel->getAutoAnswerEnabled());
+	setAutoAnswerActive(settingsModel->getAutoAnswerEnabled());
 	setRingtone(settingsModel->getRingtone());
 
 	// Network
@@ -433,6 +439,14 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    &SettingsModel::automaticallyRecordCallsEnabledChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setAutomaticallyRecordCallsEnabled(enabled); });
 	    });
+
+	// Auto answer
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::autoAnswerEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore([this, enabled]() {
+			setAutoAnswerEnabled(enabled);
+			setAutoAnswerActive(enabled);
+		});
+	});
 
 	// Audio device(s)
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
@@ -686,6 +700,8 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setVideoEnabled(settingsCore.mVideoEnabled);
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
+	setAutoAnswerEnabled(settingsCore.mAutoAnswerEnabled);
+	setAutoAnswerActive(settingsCore.mAutoAnswerActive);
 
 	setAutoDownloadReceivedFiles(settingsCore.mAutoDownloadReceivedFiles);
 	setDisplayNotificationContent(settingsCore.mDisplayNotificationContent);
@@ -860,6 +876,21 @@ void SettingsCore::setAutomaticallyRecordCallsEnabled(bool enabled) {
 		mAutomaticallyRecordCallsEnabled = enabled;
 		emit automaticallyRecordCallsEnabledChanged();
 		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setAutoAnswerEnabled(bool enabled) {
+	if (mAutoAnswerEnabled != enabled) {
+		mAutoAnswerEnabled = enabled;
+		emit autoAnswerEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setAutoAnswerActive(bool active) {
+	if (mAutoAnswerActive != active) {
+		mAutoAnswerActive = active;
+		emit autoAnswerActiveChanged();
 	}
 }
 
@@ -1337,6 +1368,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setVideoEnabled(mVideoEnabled);
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
+	model->setAutoAnswerEnabled(mAutoAnswerEnabled);
 
 	// Chat
 	model->setAutoDownloadReceivedFiles(mAutoDownloadReceivedFiles);
@@ -1409,6 +1441,8 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
+	mAutoAnswerEnabled = model->getAutoAnswerEnabled();
+	mAutoAnswerActive = mAutoAnswerEnabled;
 	mCallToneIndicationsEnabled = model->getCallToneIndicationsEnabled();
 	mRingtonePath = model->getRingtone();
 	QFileInfo ringtone(mRingtonePath);

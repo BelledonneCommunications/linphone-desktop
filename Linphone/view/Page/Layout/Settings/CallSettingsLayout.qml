@@ -66,6 +66,15 @@ AbstractSettingsLayout {
                 visible: !SettingsCpp.disableCallRecordings
             }
             SwitchSetting {
+                Layout.fillWidth: true
+                //: "Répondre automatiquement aux appels entrants"
+                titleText: qsTr("settings_calls_auto_answer_title")
+                //: "Les appels entrants seront décrochés automatiquement"
+                subTitleText: qsTr("settings_calls_auto_answer_subtitle")
+                propertyName: "autoAnswerEnabled"
+                propertyOwner: SettingsCpp
+            }
+            SwitchSetting {
                 //: Tonalités
                 titleText: qsTr("settings_call_enable_tones_title")
                 //: Activer les tonalités

@@ -1479,6 +1479,16 @@
         <translation>Activer l’enregistrement automatique des appels</translation>
     </message>
     <message>
+        <source>settings_calls_auto_answer_title</source>
+        <extracomment>&quot;Répondre automatiquement aux appels entrants&quot;</extracomment>
+        <translation>Répondre automatiquement aux appels entrants</translation>
+    </message>
+    <message>
+        <source>settings_calls_auto_answer_subtitle</source>
+        <extracomment>&quot;Les appels entrants seront décrochés automatiquement&quot;</extracomment>
+        <translation>Les appels entrants seront décrochés automatiquement</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="70"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>
@@ -4568,6 +4578,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MainLayout</name>
+    <message>
+        <source>main_auto_answer_enabled_accessible_name</source>
+        <extracomment>&quot;Réponse automatique aux appels activée&quot;</extracomment>
+        <translation>Réponse automatique aux appels activée</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="79"/>
         <source>contact_editor_popup_abort_confirmation_title</source>

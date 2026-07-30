@@ -54,6 +54,9 @@ public:
 	               setAutomaticallyRecordCallsEnabled NOTIFY automaticallyRecordCallsEnabledChanged)
 	Q_PROPERTY(bool callToneIndicationsEnabled READ getCallToneIndicationsEnabled WRITE setCallToneIndicationsEnabled
 	               NOTIFY callToneIndicationsEnabledChanged)
+	Q_PROPERTY(
+	    bool autoAnswerEnabled READ getAutoAnswerEnabled WRITE setAutoAnswerEnabled NOTIFY autoAnswerEnabledChanged)
+	Q_PROPERTY(bool autoAnswerActive READ getAutoAnswerActive NOTIFY autoAnswerActiveChanged)
 
 	Q_PROPERTY(bool captureGraphRunning READ getCaptureGraphRunning NOTIFY captureGraphRunningChanged)
 
@@ -177,6 +180,16 @@ public:
 		return mCallToneIndicationsEnabled;
 	}
 	void setCallToneIndicationsEnabled(bool enabled);
+
+	bool getAutoAnswerEnabled() {
+		return mAutoAnswerEnabled;
+	}
+	void setAutoAnswerEnabled(bool enabled);
+
+	bool getAutoAnswerActive() {
+		return mAutoAnswerActive;
+	}
+	void setAutoAnswerActive(bool active);
 
 	bool getShowPastMeetings() const;
 	void setShowPastMeetings(bool show);
@@ -342,6 +355,8 @@ signals:
 
 	void automaticallyRecordCallsEnabledChanged();
 	void callToneIndicationsEnabledChanged();
+	void autoAnswerEnabledChanged();
+	void autoAnswerActiveChanged();
 
 	void captureGraphRunningChanged(bool running);
 
@@ -445,6 +460,8 @@ private:
 	bool mDisplayNotificationContent;
 	bool mAutomaticallyRecordCallsEnabled;
 	bool mCallToneIndicationsEnabled;
+	bool mAutoAnswerEnabled;
+	bool mAutoAnswerActive;
 
 	bool mShowPastMeetings;
 

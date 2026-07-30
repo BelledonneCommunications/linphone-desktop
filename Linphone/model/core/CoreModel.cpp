@@ -31,6 +31,7 @@
 #include "core/App.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
+#include "model/call/CallModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -465,17 +466,49 @@ void CoreModel::onCallLogUpdated(const std::shared_ptr<linphone::Core> &core,
 	if (callLog && callLog->getStatus() == linphone::Call::Status::Missed) emit unreadNotificationsChanged();
 	emit callLogUpdated(core, callLog);
 }
+
+static void openAutoAnsweredCallView(const QString &callId, bool retry) {
+	auto callList = App::getInstance()->getCallList();
+	if (!callList) return;
+	auto callCore = callList->findCallByCallId(callId);
+	if (callCore) {
+		Utils::openCallsWindow(new CallGui(callCore));
+		return;
+	}
+	if (retry) App::postCoreAsync([callId]() { openAutoAnsweredCallView(callId, false); });
+	else qWarning() << "[CoreModel] Auto answered call" << callId << "not found in call list, no call view displayed";
+}
+
 void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
                                    const std::shared_ptr<linphone::Call> &call,
                                    linphone::Call::State state,
                                    const std::string &message) {
 	lInfo() << log().arg("Call state changed") << call.get() << (int)state;
 	if (state == linphone::Call::State::IncomingReceived) {
-		if (App::getInstance()->getNotifier()) {
-			lInfo() << log().arg("Incoming received, display call notification");
-			App::getInstance()->getNotifier()->notifyReceivedCall(call);
-		} else {
-			lWarning() << log().arg("App notifier is null ! Cannot display call notification");
+		bool autoAnswered = false;
+		if (SettingsModel::getInstance()->getAutoAnswerEnabled()) {
+			auto toAccount = ToolModel::findAccount(call->getToAddress());
+			auto toAccountModel = toAccount ? Utils::makeQObject_ptr<AccountModel>(toAccount) : nullptr;
+			if (toAccountModel && !toAccountModel->getNotificationsAllowed()) {
+				lInfo() << log().arg("Auto answer is enabled but notifications are disabled for the called account : "
+				                     "let the account settings handle the call");
+			} else if (core->getCallsNb() > 1) {
+				lInfo() << log().arg("Auto answer is enabled but another call is running : let the user choose");
+			} else {
+				lInfo() << log().arg("Auto answer is enabled, accepting incoming call");
+				call->acceptWithParams(CallModel::createAcceptParams(call, false));
+				autoAnswered = true;
+				auto callId = Utils::coreStringToAppString(call->getCallLog()->getCallId());
+				App::postCoreAsync([callId]() { openAutoAnsweredCallView(callId, true); });
+			}
+		}
+		if (!autoAnswered) {
+			if (App::getInstance()->getNotifier()) {
+				lInfo() << log().arg("Incoming received, display call notification");
+				App::getInstance()->getNotifier()->notifyReceivedCall(call);
+			} else {
+				lWarning() << log().arg("App notifier is null ! Cannot display call notification");
+			}
 		}
 		if (!core->getConfig()->getBool(SettingsModel::UiSection, "disable_command_line", false) &&
 		    !core->getConfig()->getString(SettingsModel::UiSection, "command_line", "").empty()) {

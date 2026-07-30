@@ -567,6 +567,19 @@ void SettingsModel::setAutomaticallyRecordCallsEnabled(bool enabled) {
 	emit automaticallyRecordCallsEnabledChanged(enabled);
 }
 
+bool SettingsModel::getAutoAnswerEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return !!mConfig->getInt(UiSection, "auto_answer", 0);
+}
+
+void SettingsModel::setAutoAnswerEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	if (enabled != getAutoAnswerEnabled()) {
+		mConfig->setInt(UiSection, "auto_answer", enabled);
+		emit autoAnswerEnabledChanged(enabled);
+	}
+}
+
 bool SettingsModel::getCallToneIndicationsEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->callToneIndicationsEnabled();
