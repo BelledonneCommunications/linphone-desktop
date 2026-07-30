@@ -4,7 +4,7 @@
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
-  GIT_SUBMODULE_PATHS: ':(exclude)feature-specs'
+  GIT_SUBMODULE_PATHS: ':(exclude)external/feature-specs'
   MAKEFILE_JOBS: 5
   CCACHE_SIZE: 2G
 #this option is used to speedup submodule building times, when we don't need to trace debug (like SDK where it is already tested in its project)

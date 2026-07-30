@@ -8,12 +8,12 @@ Two kinds of test case:
 - **BDD cases** (`tst_BDD_*`) — a Gherkin `test.feature`, a `test.js` driver and step
   implementations under `steps/`. The `.feature` comes from
   [linphone-test-specs](https://gitlab.linphone.org/BC/private/linphone-test-specs), included as the
-  `feature-specs` submodule and shared with the other platforms.
+  `external/feature-specs` submodule and shared with the other platforms.
 
 ## Overview
 
 ```
-feature-specs/                  SUBMODULE: the shared Gherkin specs (linphone-test-specs)
+external/feature-specs/         SUBMODULE: the shared Gherkin specs (linphone-test-specs)
 tester/squish/
   run-ci.sh                     CI entry point (orchestrates one run)
   tools/
@@ -21,7 +21,7 @@ tester/squish/
     gen_translations.py         builds the key->text map for a language
     seed_config.py              writes a linphonerc for a test instance (logged-in profile)
     seed_setting.py             writes a linphonerc with [ui] settings for a test instance
-    sync_features.py            copies the specs from feature-specs into the BDD test cases
+    sync_features.py            copies the specs from external/feature-specs into the BDD test cases
   suites/cross-platform/
     suite.conf                  AUT name + list of test cases
     tst_Startup/test.js         a script test case
@@ -29,7 +29,7 @@ tester/squish/
     tst_BDD_Redial/
       test.js                   BDD driver (runs test.feature)
       steps/redialSteps.js      step implementations
-      test.feature              GENERATED per run from feature-specs (gitignored)
+      test.feature              GENERATED per run from external/feature-specs (gitignored)
     shared/scripts/
       squishlib.js              low-level finder (tree walker)
       translate.js              tr(key) -> translated text
@@ -69,7 +69,7 @@ SUITE=tester/squish/suites/cross-platform
 python3 tester/squish/tools/gen_translations.py en > "$SUITE/shared/scripts/currentTranslations.js"
 
 # 1b. Bring in the shared Gherkin specs (once) and copy them into the BDD test cases
-git submodule update --init feature-specs
+git submodule update --init external/feature-specs
 python3 tester/squish/tools/sync_features.py
 
 # 2. Provision a throwaway SIP account (exports SQUISH_SIP_*)
@@ -135,7 +135,7 @@ function main(){
 ### Add a BDD (Gherkin) test case
 Scenarios live in the spec repo, step implementations here.
 
-1. Add or extend the `.feature` in the `feature-specs` submodule (a behaviour change needs the PO's
+1. Add or extend the `.feature` in the `external/feature-specs` submodule (a behaviour change needs the PO's
    ack), and merge it there first.
 2. Create `suites/cross-platform/tst_BDD_MyThing/` with a `.gitignore` containing `test.feature`, a
    `test.js` driver (copy `tst_BDD_Redial/test.js`) and the steps under `steps/`. `test.feature` is
@@ -239,12 +239,12 @@ Lower level (only when the above don't fit):
 The job builds nothing itself: it consumes the Linux AppImage from
 `ubuntu2204-makefile-gcc-package` and runs `bash tester/squish/run-ci.sh`.
 
-### `feature-specs` submodule
+### `external/feature-specs` submodule
 `.gitmodules` uses the SSH URL, which CI containers cannot fetch (no ssh client, no key). It is
 therefore excluded from the pipeline-wide recursive checkout in `.gitlab-ci.yml`:
 
 ```yaml
-GIT_SUBMODULE_PATHS: ':(exclude)feature-specs'
+GIT_SUBMODULE_PATHS: ':(exclude)external/feature-specs'
 ```
 
 and fetched only by the squish job, over HTTPS with `CI_JOB_TOKEN` (in `before_script`, since GitLab
@@ -253,7 +253,7 @@ clones the sources before it runs):
 ```yaml
 before_script:
   - git config --global url."https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.linphone.org/".insteadOf "git@gitlab.linphone.org:"
-  - git submodule update --init --depth 1 feature-specs
+  - git submodule update --init --depth 1 external/feature-specs
 ```
 
 `linphone-test-specs` being private, its **Settings → CI/CD → Job token permissions** must authorize
@@ -379,7 +379,7 @@ liblinphone testers): `POST account_creation_tokens` → `POST accounts/with-acc
 `SQUISH_ACCOUNT_ID`, consumed by `run-ci.sh` and read in tests via `serverAccount.js`.
 
 ### `tools/sync_features.py`
-Copies each Gherkin spec from the `feature-specs` submodule into the BDD test case that implements it
+Copies each Gherkin spec from the `external/feature-specs` submodule into the BDD test case that implements it
 (`BDD_TEST_CASES` maps `tst_BDD_Redial` → `Features/call/redial.feature`). The copies are gitignored:
 a spec change reaches the desktop tests by bumping the submodule, not by editing a `.feature` here.
 Errors out if the submodule is not checked out.
