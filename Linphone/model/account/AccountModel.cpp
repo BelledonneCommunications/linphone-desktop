@@ -578,7 +578,7 @@ void AccountModel::setPresence(LinphoneEnums::Presence presence,
 	core->getConfig()->sync();
 
 	auto presenceModel = ToolModel::appPresenceToCorePresenceModel(presence, presenceNote);
-	core->setPresenceModel(presenceModel); // No api (yet) at the account level
+	mMonitor->setPresenceModel(presenceModel);
 
 	if (presence == LinphoneEnums::Presence::Offline) {
 		for (auto friendList : core->getFriendsLists())
