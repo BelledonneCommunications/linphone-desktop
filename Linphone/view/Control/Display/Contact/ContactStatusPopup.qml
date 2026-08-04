@@ -21,9 +21,15 @@ PopupButton {
     contentItem: Control.Control {
         id: presenceBar
         property bool isRegistered: mainItem.account?.core.registrationState === LinphoneEnums.RegistrationState.Ok
-	    property bool keyboardFocus: FocusHelper.keyboardFocus
+        property bool registrationInProgress: mainItem.account?.core.registrationState === LinphoneEnums.RegistrationState.Progress
+        || mainItem.account?.core.registrationState === LinphoneEnums.RegistrationState.Refreshing
+        property bool keyboardFocus: FocusHelper.keyboardFocus
         background: Rectangle {
-            color: UtilsCpp.getPresenceBackgroundColor(mainItem.account.core.presence)
+            color: presenceBar.isRegistered
+                ? UtilsCpp.getPresenceBackgroundColor(mainItem.account.core.presence)
+                : presenceBar.registrationInProgress
+                    ? DefaultStyle.account_status_background_green
+                    : DefaultStyle.account_status_background_red
             border.color: DefaultStyle.main2_900
             border.width: keyboardFocus ? Utils.getSizeWithScreenRatio(3) : 0
             radius: Utils.getSizeWithScreenRatio(15)
