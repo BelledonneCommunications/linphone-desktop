@@ -11,6 +11,9 @@
 #include <windows.ui.notifications.h>
 
 #include <QDebug>
+#include <iostream>
+#include <random>
+#include <string>
 
 using namespace Microsoft::WRL;
 using namespace ABI::Windows::UI::Notifications;
@@ -115,6 +118,18 @@ void NotificationBackend::sendMessageNotification(QVariantMap data) {
 	notifier->Release();
 }
 
+std::string generateRandomHexString(size_t length) {
+	static const char hexChars[] = "0123456789abcdef";
+	std::random_device rd;
+	std::uniform_int_distribution<int> dist(0, 15);
+
+	std::string result;
+	result.reserve(length);
+	for (size_t i = 0; i < length; ++i)
+		result += hexChars[dist(rd)];
+	return result;
+}
+
 void NotificationBackend::sendCallNotification(QVariantMap data) {
 
 	IToastNotifier *notifier = nullptr;
@@ -197,24 +212,24 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	ComPtr<IToastNotification2> toast2;
 	hr = toast->QueryInterface(IID_PPV_ARGS(&toast2));
 	if (FAILED(hr)) lWarning() << "QueryInterface failed";
-	auto callId = call->mCore->getCallId();
+	auto callId = generateRandomHexString(64);
 	qDebug() << "put tag to toast" << callId;
-	hr = toast2->put_Tag(HStringReference(reinterpret_cast<const wchar_t *>(callId.utf16())).Get());
+	hr = toast2->put_Tag(HStringReference(std::wstring(callId.begin(), callId.end()).c_str()).Get());
 	toast2->put_Group(HStringReference(L"linphone").Get());
 	if (FAILED(hr)) lWarning() << "puting tag on toast failed";
 
-	connect(call->mCore.get(), &CallCore::stateChanged, this, [this, call, notifier, toast] {
+	connect(call->mCore.get(), &CallCore::stateChanged, this, [this, call, notifier, toast, callId] {
 		if (call->mCore->getState() == LinphoneEnums::CallState::End ||
 		    call->mCore->getState() == LinphoneEnums::CallState::Error ||
 		    call->mCore->getState() == LinphoneEnums::CallState::StreamsRunning) {
 			qDebug() << "Call ended, answered or error, remove toast";
-			auto callId = call->mCore->getCallId();
+			// auto callId = call->mCore->getCallId();
 			call->deleteLater();
 
 			std::unique_ptr<DesktopNotificationHistoryCompat> history;
 			DesktopNotificationManagerCompat::get_History(&history);
 
-			auto hr = history->RemoveGroupedTag(reinterpret_cast<const wchar_t *>(callId.utf16()), L"linphone");
+			auto hr = history->RemoveGroupedTag(std::wstring(callId.begin(), callId.end()).c_str(), L"linphone");
 			if (FAILED(hr)) {
 				lWarning() << "removing toast failed";
 			}
