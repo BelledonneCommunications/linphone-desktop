@@ -1478,6 +1478,22 @@
         <extracomment>Choose ringtone file</extracomment>
         <translation>Vybrat soubor vyzváněcího tónu</translation>
     </message>
+    <message>
+        <source>settings_calls_auto_answer_title</source>
+        <translation>Automatické přijímání příchozích hovorů</translation>
+    </message>
+    <message>
+        <source>settings_calls_auto_answer_subtitle</source>
+        <translation>Příchozí hovory budou přijímány automaticky</translation>
+    </message>
+    <message>
+        <source>settings_calls_call_view_in_background_title</source>
+        <translation>Nechat zobrazení hovoru na pozadí</translation>
+    </message>
+    <message>
+        <source>settings_calls_call_view_in_background_subtitle</source>
+        <translation>Okno hovoru se nepřesune do popředí</translation>
+    </message>
 </context>
 <context>
     <name>CallSettingsPanel</name>
@@ -4549,6 +4565,10 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="94"/>
         <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
         <translation>Neukládat</translation>
+    </message>
+    <message>
+        <source>main_auto_answer_enabled_accessible_name</source>
+        <translation>Automatické přijímání hovorů je zapnuto</translation>
     </message>
 </context>
 <context>
