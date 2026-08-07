@@ -145,7 +145,7 @@ constexpr int Constants::RcVersionCurrent;
 
 // TODO: Remove hardcoded values. Use config directly.
 constexpr char Constants::LinphoneDomain[];
-constexpr char Constants::DefaultContactParameters[];
+constexpr char Constants::DefaultContactMessageExpireValue[];
 constexpr char Constants::DefaultContactParametersOnRemove[];
 constexpr int Constants::DefaultExpires;
 constexpr int Constants::DefaultPublishExpires;

@@ -289,11 +289,11 @@ void CoreModel::migrate() {
 		    (newParams->getIdentityAddress() ? newParams->getIdentityAddress()->asString().c_str() : "no-identity");
 		if (params->getDomain() == Constants::LinphoneDomain) {
 			if (rcVersion < 1) {
-				newParams->setContactParameters(Constants::DefaultContactParameters);
+				newParams->addContactParameter("message-expires", "2419200");
 				newParams->setExpires(Constants::DefaultExpires);
 				lInfo() << log().arg("Migrating") << accountIdentity
-				        << "for version 1. contact parameters =" << Constants::DefaultContactParameters
-				        << ", expires =" << Constants::DefaultExpires;
+				        << "for version 1. contact parameters = message-expires="
+				        << Constants::DefaultContactMessageExpireValue << ", expires =" << Constants::DefaultExpires;
 			}
 			if (rcVersion < 2) {
 				bool exists = newParams->getConferenceFactoryUri() != "";
