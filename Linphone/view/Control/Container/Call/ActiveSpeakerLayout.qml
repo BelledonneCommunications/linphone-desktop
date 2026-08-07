@@ -74,7 +74,7 @@ Item {
                 height: visible ? Utils.getSizeWithScreenRatio(180 + 15) : 0
                 width: Utils.getSizeWithScreenRatio(300)
 				Sticker {
-					previewEnabled: index == 0	// before anchors for priority initialization
+					previewEnabled: index == 0 && !mainItem.conference?.core.isScreenSharingEnabled	// before anchors for priority initialization
 					anchors.fill: parent
                     anchors.bottomMargin: Utils.getSizeWithScreenRatio(15)// Spacing
 					qmlName: 'S_'+index

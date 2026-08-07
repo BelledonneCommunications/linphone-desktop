@@ -61,7 +61,7 @@ public:
 	static constexpr char DefaultUploadLogsServer[] =
 	    "https://files.linphone.org:443/http-file-transfer-server/hft.php";
 	static constexpr char RetiredUploadLogsServer[] = "https://www.linphone.org:444/lft.php";
-	static constexpr char DefaultContactParameters[] = "message-expires=2419200";
+	static constexpr char DefaultContactMessageExpireValue[] = "2419200";
 	static constexpr char DefaultContactParametersOnRemove[] = "message-expires=0";
 	static constexpr int DefaultExpires = 600;
 	static constexpr int DefaultPublishExpires = 120;
