@@ -20,6 +20,9 @@
 .build_all_linux_script: &build_all_linux_script |
   cmake .. -G "$CMAKE_GENERATOR" -DCMAKE_VERBOSE_MAKEFILE=ON -DLINPHONESDK_PLATFORM=Desktop -DCMAKE_BUILD_TYPE=$CI_BUILD_TYPE -DLINPHONEAPP_APPLICATION_NAME="$APPLICATION_NAME" -DLINPHONEAPP_EXECUABLE_NAME="$EXECUTABLE_NAME" $DEFAULT_LINUX_CMAKE_OPTIONS $CMAKE_OPTIONS $SCHEDULE_CMAKE_OPTIONS $CMAKE_SANITIZER_OPTIONS 
   cmake --build . --target install --config $CI_BUILD_TYPE $LBC_NODEBUG_OPTIONS
+  if strings dist/ton_app | grep -q "QML_DEBUG_SERVER\|qmljsdebugger"; then
+    echo "WARNING: QML debugging as been detected in package. App must be used in a safe environment."
+  fi
 
 .common_signed_linux: &common_signed_linux |
   echo "$GPG_SIGNING_PUB" > file.key && sed -i 's/\r /\n/g' file.key && chmod 600 file.key
