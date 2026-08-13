@@ -210,6 +210,7 @@ endif()
 #						TARGETS LINKS
 ################################################################
 if(APPLE)
+	set(PACKAGE_VERSION "${LINPHONEAPP_VERSION}")
 	configure_file("${CMAKE_SOURCE_DIR}/cmake/install/macos/Info.plist.in" "${CMAKE_BINARY_DIR}/cmake/install/macos/Info.plist" @ONLY)
 endif()
 set_target_properties(${TARGET_NAME} PROPERTIES
