@@ -33,6 +33,7 @@
 #include "tool/Utils.hpp"
 
 #include "core/logger/QtLogger.hpp"
+#include "core/path/Paths.hpp"
 // -----------------------------------------------------------------------------
 
 LoggerModel::LoggerModel(QObject *parent) : QObject(parent) {
@@ -145,6 +146,7 @@ void LoggerModel::init() {
 		loggingService->enableStackTraceDumps(true);
 #endif
 	}
+	linphone::Core::setLogCollectionPath(Utils::appStringToCoreString(Paths::getLogsDirPath()));
 	linphone::Core::setLogCollectionPrefix(EXECUTABLE_NAME);
 	linphone::Core::setLogCollectionMaxFileSize(Constants::MaxLogsCollectionSize);
 
