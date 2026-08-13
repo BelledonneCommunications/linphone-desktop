@@ -142,8 +142,7 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	auto displayName = data["displayName"].toString().toStdWString();
 	auto remoteAddress = data["remoteAddress"].toString().toStdWString();
 	CallGui *call = data["call"].value<CallGui *>();
-	int timeout = 2;
-	// AbstractNotificationBackend::Notifications[(int)NotificationType::ReceivedCall].getTimeout();
+	// int timeout = AbstractNotificationBackend::Notification[(int)NotificationType::ReceivedCall].getTimeout();
 
 	// Incoming call
 	auto callDescription = tr("incoming_call").toStdWString();
@@ -218,23 +217,26 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	toast2->put_Group(HStringReference(L"linphone").Get());
 	if (FAILED(hr)) lWarning() << "puting tag on toast failed";
 
-	connect(call->mCore.get(), &CallCore::stateChanged, this, [this, call, notifier, toast, callId] {
-		if (call->mCore->getState() == LinphoneEnums::CallState::End ||
-		    call->mCore->getState() == LinphoneEnums::CallState::Error ||
-		    call->mCore->getState() == LinphoneEnums::CallState::StreamsRunning) {
-			qDebug() << "Call ended, answered or error, remove toast";
-			// auto callId = call->mCore->getCallId();
-			call->deleteLater();
+	connect(call->mCore.get(), &CallCore::stateChanged, this,
+	        [this, wcall = QWeakPointer(call->mCore), callId, notifier, toast] {
+		        auto call = wcall.lock();
+		        if (!call || !call ||
+		            (call->getState() == LinphoneEnums::CallState::End ||
+		             call->getState() == LinphoneEnums::CallState::Error ||
+		             call->getState() == LinphoneEnums::CallState::StreamsRunning)) {
+			        qDebug() << "Call ended, answered or error, remove toast";
+			        // auto callId = call->mCore->getCallId();
 
-			std::unique_ptr<DesktopNotificationHistoryCompat> history;
-			DesktopNotificationManagerCompat::get_History(&history);
+			        std::unique_ptr<DesktopNotificationHistoryCompat> history;
+			        DesktopNotificationManagerCompat::get_History(&history);
 
-			auto hr = history->RemoveGroupedTag(std::wstring(callId.begin(), callId.end()).c_str(), L"linphone");
-			if (FAILED(hr)) {
-				lWarning() << "removing toast failed";
-			}
-		}
-	});
+			        auto hr =
+			            history->RemoveGroupedTag(std::wstring(callId.begin(), callId.end()).c_str(), L"linphone");
+			        if (FAILED(hr)) {
+				        lWarning() << "removing toast failed";
+			        }
+		        }
+	        });
 
 	EventRegistrationToken token;
 	toast->add_Activated(Microsoft::WRL::Callback<ITypedEventHandler<ToastNotification *, IInspectable *>>(
