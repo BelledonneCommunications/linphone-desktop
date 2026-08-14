@@ -99,6 +99,12 @@ list(APPEND _LINPHONEAPP_SOURCES
 	core/recorder/RecorderCore.cpp
 	core/recorder/RecorderGui.cpp
 
+	core/recording/RecordingCore.cpp
+	core/recording/RecordingGui.cpp
+	core/recording/RecordingList.cpp
+	core/recording/RecordingProxy.cpp
+
+
 	core/videoSource/VideoSourceDescriptorCore.cpp
 	core/videoSource/VideoSourceDescriptorGui.cpp
 	

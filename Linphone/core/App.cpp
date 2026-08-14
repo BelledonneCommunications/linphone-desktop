@@ -82,6 +82,8 @@
 #include "core/phone-number/PhoneNumber.hpp"
 #include "core/phone-number/PhoneNumberProxy.hpp"
 #include "core/recorder/RecorderGui.hpp"
+#include "core/recording/RecordingGui.hpp"
+#include "core/recording/RecordingProxy.hpp"
 #include "core/register/RegisterPage.hpp"
 #include "core/screen/ScreenList.hpp"
 #include "core/screen/ScreenProxy.hpp"
@@ -1045,6 +1047,10 @@ void App::initCppInterfaces() {
 	qmlRegisterType<ImdnStatusProxy>(Constants::MainQmlUri, 1, 0, "ImdnStatusProxy");
 	qmlRegisterType<SoundPlayerGui>(Constants::MainQmlUri, 1, 0, "SoundPlayerGui");
 	qmlRegisterType<RecorderGui>(Constants::MainQmlUri, 1, 0, "RecorderGui");
+	qmlRegisterType<RecordingGui>(Constants::MainQmlUri, 1, 0, "RecordingGui");
+	qmlRegisterType<RecordingProxy>(Constants::MainQmlUri, 1, 0, "RecordingProxy");
+	qmlRegisterUncreatableType<RecordingCore>(Constants::MainQmlUri, 1, 0, "RecordingCore",
+	                                          QLatin1String("Uncreatable"));
 
 	qmlRegisterType<TimeZoneProxy>(Constants::MainQmlUri, 1, 0, "TimeZoneProxy");
 

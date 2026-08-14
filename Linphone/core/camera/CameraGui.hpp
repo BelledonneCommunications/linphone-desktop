@@ -29,6 +29,7 @@
 #include <QTimer>
 
 #include "core/participant/ParticipantDeviceGui.hpp"
+#include "core/sound-player/SoundPlayerGui.hpp"
 // =============================================================================
 
 class CallGui;
@@ -40,6 +41,7 @@ class CameraGui : public QQuickFramebufferObject, public AbstractObject {
 	               participantDeviceGuiChanged)
 	Q_PROPERTY(bool isPreview READ getIsPreview WRITE setIsPreview NOTIFY isPreviewChanged)
 	Q_PROPERTY(bool isReady READ getIsReady WRITE setIsReady NOTIFY isReadyChanged)
+	Q_PROPERTY(SoundPlayerGui *player READ getPlayerGui WRITE setPlayerGui NOTIFY playerGuiChanged)
 	// Q_PROPERTY(SoundPlayer * linphonePlayer READ getLinphonePlayer WRITE setLinphonePlayer NOTIFY
 	// linphonePlayerChanged)
 
@@ -64,6 +66,8 @@ public:
 	void setCallGui(CallGui *callGui);
 	ParticipantDeviceGui *getParticipantDeviceGui() const;
 	void setParticipantDeviceGui(ParticipantDeviceGui *participantDeviceGui);
+	SoundPlayerGui *getPlayerGui() const;
+	void setPlayerGui(SoundPlayerGui *playerGui);
 	WindowIdLocation getSourceLocation() const;
 	void setWindowIdLocation(const WindowIdLocation &location);
 
@@ -71,6 +75,8 @@ public:
 	void removeParticipantDeviceModel();
 	void removeCallModel();
 	void removeLinphonePlayer();
+	void removePlayerGui();
+	void onPlayerRebuilt();
 
 	void callStateChanged(LinphoneEnums::CallState state);
 
@@ -87,6 +93,7 @@ signals:
 	void isPreviewChanged(bool isPreview);
 	void isReadyChanged();
 	void participantDeviceGuiChanged(ParticipantDeviceGui *participantDeviceGui);
+	void playerGuiChanged(SoundPlayerGui *playerGui);
 	void videoDefinitionChanged();
 	// void linphonePlayerChanged(SoundPlayer * linphonePlayer);
 
@@ -99,6 +106,7 @@ private:
 	QTimer mLastVideoDefinitionChecker;
 	CallGui *mCallGui = nullptr;
 	ParticipantDeviceGui *mParticipantDeviceGui = nullptr;
+	SoundPlayerGui *mPlayerGui = nullptr;
 
 	QQuickFramebufferObject::Renderer *mLastRenderer = nullptr;
 

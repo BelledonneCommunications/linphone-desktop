@@ -77,9 +77,6 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 	                                           : settingsModel->getPlaybackDevice()["display_name"].toString()),
 	    "", nullptr);
 
-	mHasVideo = player->getIsVideoAvailable();
-	mDuration = player->getDuration();
-
 	mSoundPlayerModel = Utils::makeQObject_ptr<SoundPlayerModel>(player);
 	mSoundPlayerModel->setSelf(mSoundPlayerModel);
 	mSoundPlayerModelConnection = SafeConnection<SoundPlayerCore, SoundPlayerModel>::create(me, mSoundPlayerModel);
@@ -114,6 +111,20 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::positionChanged, [this](int pos) {
 		mSoundPlayerModelConnection->invokeToCore([this, pos] { setPosition(pos); });
 	});
+	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::durationChanged, [this](int duration) {
+		mSoundPlayerModelConnection->invokeToCore([this, duration] {
+			if (mDuration == duration) return;
+			mDuration = duration;
+			emit durationChanged();
+		});
+	});
+	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::videoAvailabilityChanged, [this](bool hasVideo) {
+		mSoundPlayerModelConnection->invokeToCore([this, hasVideo] {
+			if (mHasVideo == hasVideo) return;
+			mHasVideo = hasVideo;
+			emit hasVideoChanged();
+		});
+	});
 	mSoundPlayerModelConnection->makeConnectToCore(&SoundPlayerCore::lRefreshPosition, [this]() {
 		mSoundPlayerModelConnection->invokeToModel([this] {
 			auto pos = mSoundPlayerModel->getPosition();
@@ -130,6 +141,7 @@ void SoundPlayerCore::buildInternalPlayer(QSharedPointer<SoundPlayerCore> me) {
 	mSoundPlayerModelConnection->makeConnectToModel(&SoundPlayerModel::errorChanged, [this](QString error) {
 		mSoundPlayerModelConnection->invokeToCore([this, error] { setError(error); });
 	});
+	mSoundPlayerModelConnection->invokeToCore([this] { emit modelRebuilt(); });
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +185,21 @@ void SoundPlayerCore::setSource(const QString &source) {
 	lStop(true);
 	mSource = source;
 
+	if (mDuration != 0) {
+		mDuration = 0;
+		emit durationChanged();
+	}
+	if (mHasVideo) {
+		mHasVideo = false;
+		emit hasVideoChanged();
+	}
+	setPosition(0);
+
 	emit sourceChanged(source);
+}
+
+std::shared_ptr<SoundPlayerModel> SoundPlayerCore::getModel() const {
+	return mSoundPlayerModel;
 }
 
 LinphoneEnums::PlaybackState SoundPlayerCore::getPlaybackState() const {
