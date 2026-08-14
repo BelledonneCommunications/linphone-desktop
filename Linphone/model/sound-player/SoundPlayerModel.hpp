@@ -53,6 +53,9 @@ public:
 
 	int getDuration() const;
 
+	void *createWindowId();
+	void setWindowId(void *windowId);
+
 	void handleEof();
 
 	void setError(const QString &message);
@@ -65,6 +68,8 @@ signals:
 	void playing();
 	void stopped(bool force);
 	void positionChanged(int position);
+	void durationChanged(int duration);
+	void videoAvailabilityChanged(bool hasVideo);
 	void errorChanged(QString error);
 
 	void playbackStateChanged(LinphoneEnums::PlaybackState playbackState);
@@ -73,6 +78,8 @@ signals:
 
 private:
 	DECLARE_ABSTRACT_OBJECT
+
+	QString mOpenedSource;
 
 	void onEofReached(const std::shared_ptr<linphone::Player> &player) override;
 };

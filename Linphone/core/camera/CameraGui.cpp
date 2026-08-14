@@ -113,6 +113,15 @@ QQuickFramebufferObject::Renderer *CameraGui::createRenderer() const {
 				}
 			});
 		} break;
+		case Player: {
+			App::postModelBlock([qmlName = mQmlName, playerGui = mPlayerGui, &renderer]() {
+				auto playerModel = playerGui->getCore() ? playerGui->getCore()->getModel() : nullptr;
+				if (playerModel) {
+					lInfo() << "[Camera] (" << qmlName << ") Camera create from SoundPlayerModel";
+					renderer = (QQuickFramebufferObject::Renderer *)playerModel->createWindowId();
+				}
+			});
+		} break;
 		default: {
 		}
 	}
@@ -163,6 +172,16 @@ void CameraGui::updateSDKRenderer(QQuickFramebufferObject::Renderer *renderer) {
 					if (device) {
 						lInfo() << "[Camera] (" << qmlName << ") Camera to ParticipantDevice";
 						device->setNativeVideoWindowId(renderer);
+					}
+				});
+		} break;
+		case Player: {
+			if (mPlayerGui)
+				App::postModelAsync([qmlName = mQmlName, playerGui = mPlayerGui, renderer]() {
+					auto playerModel = playerGui->getCore() ? playerGui->getCore()->getModel() : nullptr;
+					if (playerModel) {
+						lInfo() << "[Camera] (" << qmlName << ") Camera to SoundPlayer";
+						playerModel->setWindowId(renderer);
 					}
 				});
 		} break;
@@ -249,6 +268,38 @@ void CameraGui::setParticipantDeviceGui(ParticipantDeviceGui *deviceGui) {
 	}
 }
 
+SoundPlayerGui *CameraGui::getPlayerGui() const {
+	return mPlayerGui;
+}
+
+void CameraGui::setPlayerGui(SoundPlayerGui *playerGui) {
+	if (mPlayerGui != playerGui) {
+		if (mPlayerGui) {
+			disconnect(mPlayerGui, &SoundPlayerGui::destroyed, this, &CameraGui::removePlayerGui);
+			if (mPlayerGui->getCore())
+				disconnect(mPlayerGui->getCore(), &SoundPlayerCore::modelRebuilt, this, &CameraGui::onPlayerRebuilt);
+		}
+		mPlayerGui = playerGui;
+		if (mPlayerGui) {
+			connect(mPlayerGui, &SoundPlayerGui::destroyed, this, &CameraGui::removePlayerGui);
+			if (mPlayerGui->getCore())
+				connect(mPlayerGui->getCore(), &SoundPlayerCore::modelRebuilt, this, &CameraGui::onPlayerRebuilt);
+		}
+		lDebug() << log().arg("Set Player") << mPlayerGui;
+		emit playerGuiChanged(mPlayerGui);
+		updateWindowIdLocation();
+	}
+}
+
+void CameraGui::removePlayerGui() {
+	mPlayerGui = nullptr;
+	setWindowIdLocation(WindowIdLocation::None);
+}
+
+void CameraGui::onPlayerRebuilt() {
+	if (getSourceLocation() == WindowIdLocation::Player) updateSDKRenderer();
+}
+
 CameraGui::WindowIdLocation CameraGui::getSourceLocation() const {
 	return mWindowIdLocation;
 }
@@ -263,7 +314,8 @@ void CameraGui::setWindowIdLocation(const WindowIdLocation &location) {
 }
 void CameraGui::updateWindowIdLocation() {
 	bool useDefaultWindow = true;
-	if (mIsPreview) setWindowIdLocation(WindowIdLocation::CorePreview);
+	if (mPlayerGui) setWindowIdLocation(WindowIdLocation::Player);
+	else if (mIsPreview) setWindowIdLocation(WindowIdLocation::CorePreview);
 	else if (mCallGui) setWindowIdLocation(WindowIdLocation::Call);
 	else if (mParticipantDeviceGui && !mParticipantDeviceGui->getCore()->isLocal())
 		setWindowIdLocation(WindowIdLocation::Device);

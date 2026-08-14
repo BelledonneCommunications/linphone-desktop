@@ -42,7 +42,8 @@ class SoundPlayerCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString baseName READ getBaseName NOTIFY sourceChanged)
 	Q_PROPERTY(LinphoneEnums::PlaybackState playbackState READ getPlaybackState WRITE setPlaybackState NOTIFY
 	               playbackStateChanged)
-	Q_PROPERTY(int duration READ getDuration NOTIFY sourceChanged)
+	Q_PROPERTY(int duration READ getDuration NOTIFY durationChanged)
+	Q_PROPERTY(bool hasVideo READ hasVideo NOTIFY hasVideoChanged)
 	Q_PROPERTY(int position READ getPosition WRITE setPosition NOTIFY positionChanged)
 	Q_PROPERTY(bool isRinger MEMBER mIsRinger)
 	Q_PROPERTY(QDateTime creationDateTime READ getCreationDateTime NOTIFY sourceChanged)
@@ -60,6 +61,8 @@ public:
 	int getDuration() const;
 	QDateTime getCreationDateTime() const;
 	QString getBaseName() const;
+
+	std::shared_ptr<SoundPlayerModel> getModel() const;
 
 	QString getSource() const;
 	void setSource(const QString &source);
@@ -85,6 +88,10 @@ signals:
 	void sourceChanged(const QString &source);
 	void playbackStateChanged(LinphoneEnums::PlaybackState playbackState);
 	void positionChanged();
+	void durationChanged();
+	void hasVideoChanged();
+	void modelRebuilt();
+
 
 private:
 	DECLARE_ABSTRACT_OBJECT

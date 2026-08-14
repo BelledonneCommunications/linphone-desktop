@@ -71,11 +71,29 @@ void SoundPlayerModel::pause() {
 }
 
 bool SoundPlayerModel::open(QString source) {
-	mMonitor->open(Utils::appStringToCoreString(source));
+	if (mMonitor->getState() != linphone::Player::State::Closed) {
+		if (source == mOpenedSource) return true;
+		mMonitor->close();
+		mOpenedSource.clear();
+	}
+	auto status = mMonitor->open(Utils::appStringToCoreString(source));
+	if (status != 0) {
+		lWarning() << QStringLiteral("[SoundPlayerModel] Unable to open `%1` (status %2)").arg(source).arg(status);
+		return false;
+	}
+	mOpenedSource = source;
+	emit durationChanged(mMonitor->getDuration());
+	emit videoAvailabilityChanged(mMonitor->getIsVideoAvailable());
 	emit open();
 	return true;
-	// }
-	// return false;
+}
+
+void *SoundPlayerModel::createWindowId() {
+	return mMonitor ? mMonitor->createWindowId() : nullptr;
+}
+
+void SoundPlayerModel::setWindowId(void *windowId) {
+	if (mMonitor) mMonitor->setWindowId(windowId);
 }
 
 bool SoundPlayerModel::play(QString source, bool fromStart) {
@@ -123,6 +141,7 @@ bool SoundPlayerModel::hasVideo() const {
 
 void SoundPlayerModel::stop(bool force) {
 	if (mMonitor) mMonitor->close();
+	mOpenedSource.clear();
 	emit stopped(force);
 	emit playbackStateChanged(LinphoneEnums::PlaybackState::StoppedState);
 }
