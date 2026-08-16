@@ -962,59 +962,61 @@ AbstractWindow {
                                 Connections {
                                     target: mainWindow
                                     function onKeyPressedOnDialer(event) {
-                                        if (event.modifiers & Qt.KeypadModifier) {
-                                            if (event.key === Qt.Key_0) {
-                                                numPad.keypadKeyPressedAtIndex(10)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_1) {
-                                                numPad.keypadKeyPressedAtIndex(0)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_2) {
-                                                numPad.keypadKeyPressedAtIndex(1)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_3) {
-                                                numPad.keypadKeyPressedAtIndex(2)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_4) {
-                                                numPad.keypadKeyPressedAtIndex(3)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_5) {
-                                                numPad.keypadKeyPressedAtIndex(4)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_6) {
-                                                numPad.keypadKeyPressedAtIndex(5)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_7) {
-                                                numPad.keypadKeyPressedAtIndex(6)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_8) {
-                                                numPad.keypadKeyPressedAtIndex(7)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_9) {
-                                                numPad.keypadKeyPressedAtIndex(8)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Asterisk) {
-                                                numPad.keypadKeyPressedAtIndex(9)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Plus) {
-                                                numPad.buttonPressed("+")
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Enter) {
-                                                numPad.launchCall()
-                                                event.accepted = true
-                                            }
+                                        if (event.key === Qt.Key_0) {
+                                            numPad.keypadKeyPressedAtIndex(10)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_1) {
+                                            numPad.keypadKeyPressedAtIndex(0)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_2) {
+                                            numPad.keypadKeyPressedAtIndex(1)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_3) {
+                                            numPad.keypadKeyPressedAtIndex(2)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_4) {
+                                            numPad.keypadKeyPressedAtIndex(3)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_5) {
+                                            numPad.keypadKeyPressedAtIndex(4)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_6) {
+                                            numPad.keypadKeyPressedAtIndex(5)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_7) {
+                                            numPad.keypadKeyPressedAtIndex(6)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_8) {
+                                            numPad.keypadKeyPressedAtIndex(7)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_9) {
+                                            numPad.keypadKeyPressedAtIndex(8)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_Asterisk) {
+                                            numPad.keypadKeyPressedAtIndex(9)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_NumberSign) {
+                                            numPad.keypadKeyPressedAtIndex(11)
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_Plus) {
+                                            numPad.buttonPressed("+")
+                                            event.accepted = true
+                                        }
+                                        if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                                            numPad.launchCall()
+                                            event.accepted = true
                                         }
                                         if (event.key === Qt.Key_Backspace) {
                                             numPad.wipe()
