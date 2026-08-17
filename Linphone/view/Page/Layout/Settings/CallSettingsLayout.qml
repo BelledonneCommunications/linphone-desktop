@@ -57,6 +57,14 @@ AbstractSettingsLayout {
                 propertyName: "echoCancellationEnabled"
                 propertyOwner: SettingsCpp
             }
+			SwitchSetting {
+                //: "Noise suppression"
+                titleText: qsTr("settings_calls_noise_suppressor_title")
+                //: "Cleans up unwanted background noise"
+                subTitleText: qsTr("settings_calls_noise_suppressor_subtitle")
+                propertyName: "noiseSuppressionEnabled"
+                propertyOwner: SettingsCpp
+            }
             SwitchSetting {
                 Layout.fillWidth: true
                 //: "Activer l’enregistrement automatique des appels"
