@@ -49,6 +49,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Call
 	mVideoEnabled = settingsModel->getVideoEnabled();
 	mEchoCancellationEnabled = settingsModel->getEchoCancellationEnabled();
+	mNoiseSuppressionEnabled = settingsModel->getNoiseSuppressionEnabled();
 	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
 	mDisplayNotificationContent = settingsModel->getDisplayNotificationContent();
 	mAutomaticallyRecordCallsEnabled = settingsModel->getAutomaticallyRecordCallsEnabled();
@@ -174,6 +175,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	// Call
 	mVideoEnabled = settingsCore.mVideoEnabled;
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
+	mNoiseSuppressionEnabled = settingsCore.mNoiseSuppressionEnabled;
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mDisplayNotificationContent = settingsCore.mDisplayNotificationContent;
 	mAutomaticallyRecordCallsEnabled = settingsCore.mAutomaticallyRecordCallsEnabled;
@@ -267,6 +269,7 @@ void SettingsCore::reloadSettings() {
 	// Call
 	setVideoEnabled(settingsModel->getVideoEnabled());
 	setEchoCancellationEnabled(settingsModel->getEchoCancellationEnabled());
+	setNoiseSuppressionEnabled(settingsModel->getNoiseSuppressionEnabled());
 	setAutoDownloadReceivedFiles(settingsModel->getAutoDownloadReceivedFiles());
 	setDisplayNotificationContent(settingsModel->getDisplayNotificationContent());
 	setAutomaticallyRecordCallsEnabled(settingsModel->getAutomaticallyRecordCallsEnabled());
@@ -396,6 +399,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	mSettingsModelConnection->makeConnectToModel(
 	    &SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
+	    });
+
+	// Noise suppression
+	mSettingsModelConnection->makeConnectToModel(
+	    &SettingsModel::noiseSuppressionEnabledChanged, [this](const bool enabled) {
+		    mSettingsModelConnection->invokeToCore([this, enabled]() { setNoiseSuppressionEnabled(enabled); });
 	    });
 
 	// IPV6
@@ -714,6 +723,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	// Call
 	setVideoEnabled(settingsCore.mVideoEnabled);
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
+	setNoiseSuppressionEnabled(settingsCore.mNoiseSuppressionEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 	setAutoAnswerEnabled(settingsCore.mAutoAnswerEnabled);
 	setAutoAnswerActive(settingsCore.mAutoAnswerActive);
@@ -838,6 +848,14 @@ void SettingsCore::setEchoCancellationEnabled(bool enabled) {
 	if (mEchoCancellationEnabled != enabled) {
 		mEchoCancellationEnabled = enabled;
 		emit echoCancellationEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setNoiseSuppressionEnabled(bool enabled) {
+	if (mNoiseSuppressionEnabled != enabled) {
+		mNoiseSuppressionEnabled = enabled;
+		emit noiseSuppressionEnabledChanged();
 		setIsSaved(false);
 	}
 }
@@ -1392,6 +1410,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	// Call
 	model->setVideoEnabled(mVideoEnabled);
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
+	model->setNoiseSuppressionEnabled(mNoiseSuppressionEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 	model->setAutoAnswerEnabled(mAutoAnswerEnabled);
 	model->setKeepCallViewInBackground(mKeepCallViewInBackground);
@@ -1466,6 +1485,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	// Call
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
+	mNoiseSuppressionEnabled = model->getNoiseSuppressionEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
 	mAutoAnswerEnabled = model->getAutoAnswerEnabled();
 	mAutoAnswerActive = mAutoAnswerEnabled;

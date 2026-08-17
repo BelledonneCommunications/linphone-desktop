@@ -546,6 +546,17 @@ void SettingsModel::setEchoCancellationEnabled(bool status) {
 	emit echoCancellationEnabledChanged(status);
 }
 
+bool SettingsModel::getNoiseSuppressionEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->noiseSuppressionEnabled();
+}
+
+void SettingsModel::setNoiseSuppressionEnabled(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->enableNoiseSuppression(status);
+	emit noiseSuppressionEnabledChanged(status);
+}
+
 void SettingsModel::startEchoCancellerCalibration() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	CoreModel::getInstance()->getCore()->startEchoCancellerCalibration();
