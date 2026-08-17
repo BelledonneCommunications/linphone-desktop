@@ -1473,78 +1473,90 @@
         <translation>Évite que de l&apos;écho soit entendu par votre correspondant</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="63"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="62"/>
+        <source>settings_calls_noise_suppressor_title</source>
+        <extracomment>&quot;Noise suppression&quot;</extracomment>
+        <translation>Suppression de bruit</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
+        <source>settings_calls_noise_suppressor_subtitle</source>
+        <extracomment>&quot;Cleans up unwanted background noise&quot;</extracomment>
+        <translation>Enlève le bruit de fond non désiré</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="71"/>
         <source>settings_calls_auto_record_title</source>
         <extracomment>&quot;Activer l’enregistrement automatique des appels&quot;</extracomment>
         <translation>Activer l’enregistrement automatique des appels</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="71"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="79"/>
         <source>settings_calls_auto_answer_title</source>
         <extracomment>&quot;Répondre automatiquement aux appels entrants&quot;</extracomment>
         <translation>Répondre automatiquement aux appels entrants</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="73"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="81"/>
         <source>settings_calls_auto_answer_subtitle</source>
         <extracomment>&quot;Les appels entrants seront décrochés automatiquement&quot;</extracomment>
         <translation>Les appels entrants seront décrochés automatiquement</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="80"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
         <source>settings_calls_call_view_in_background_title</source>
         <extracomment>&quot;Afficher la vue d&apos;appel en arrière-plan&quot;</extracomment>
         <translation>Afficher la vue d&apos;appel en arrière-plan</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="82"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="90"/>
         <source>settings_calls_call_view_in_background_subtitle</source>
         <extracomment>&quot;La fenêtre d&apos;appel ne passera pas au premier plan&quot;</extracomment>
         <translation>La fenêtre d&apos;appel ne passera pas au premier plan</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="96"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>
         <translation>Tonalités</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="90"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
         <source>settings_call_enable_tones_subtitle</source>
         <extracomment>Activer les tonalités</extracomment>
         <translation>Activer les tonalités</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
         <source>settings_calls_enable_video_title</source>
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
         <translation>Autoriser la vidéo</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="107"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="115"/>
         <source>settings_calls_command_line_title</source>
         <extracomment>Command line</extracomment>
         <translation>Redirection vers outil externe lors d&apos;un appel entrant.</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="108"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="116"/>
         <source>settings_calls_command_line_title_place_holder</source>
         <translation>commande &quot;https://exemple.com/?numero=$1&amp;nom=$2&quot;</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="116"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="124"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
         <translation>Changer la sonnerie</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="124"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="132"/>
         <source>settings_calls_current_ringtone_filename</source>
         <extracomment>Current ringtone :</extracomment>
         <translation>Sonnerie actuelle :</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="149"/>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="157"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
         <translation>Choisir le ficher de sonnerie</translation>
@@ -5875,31 +5887,31 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
         <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un enregistrement</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
         <source>back_previous_menu_accessible_name</source>
         <extracomment>Back to previous menu</extracomment>
-        <translation type="unfinished">Retour au menu précédent</translation>
+        <translation>Retour au menu précédent</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>record_export_accessible_name</source>
         <extracomment>Export the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les enregistrements</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
         <source>record_delete_confirmation_message</source>
         <extracomment>&quot;Supprimer cet enregistrement ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer cet enregistrement ?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
         <extracomment>Delete the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer cet enregistrement</translation>
     </message>
     <message>
         <source>meetings_search_hint</source>
@@ -6544,7 +6556,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>SettingsCore</name>
     <message>
-        <location filename="../../core/setting/SettingsCore.cpp" line="482"/>
+        <location filename="../../core/setting/SettingsCore.cpp" line="491"/>
         <source>info_popup_error_title</source>
         <translation>Erreur</translation>
     </message>
