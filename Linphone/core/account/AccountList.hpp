@@ -33,6 +33,7 @@ class CoreModel;
 
 class AccountList : public ListProxy, public AbstractObject {
 	Q_OBJECT
+	Q_PROPERTY(AccountGui *defaultAccount READ getDefaultAccount NOTIFY defaultAccountChanged)
 public:
 	static QSharedPointer<AccountList> create();
 	AccountList(QObject *parent = Q_NULLPTR);
