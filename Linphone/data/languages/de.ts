@@ -5422,8 +5422,8 @@ Ablauf: %1</translation>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="62"/>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="161"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="250"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="160"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="249"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
         <translation>Wähle %1</translation>
@@ -5438,22 +5438,22 @@ Ablauf: %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="116"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="174"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="173"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
         <translation>%1 Lautstärke</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="133"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="161"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="174"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="160"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="173"/>
         <source>multimedia_settings_microphone_title</source>
         <extracomment>&quot;Microphone&quot;</extracomment>
         <translation>Mikrofon</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="230"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="250"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="229"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="249"/>
         <source>multimedia_settings_camera_title</source>
         <extracomment>&quot;Caméra&quot;</extracomment>
         <translation>Kamera</translation>
