@@ -28,7 +28,7 @@ Mosaic {
 		model: grid.call && grid.call.core.isConference ? participantDevices: [0,1]
 		delegate: Item{
 			id: avatarCell
-			property ParticipantDeviceGui currentDevice: index >= 0 &&  grid.call && grid.call.core.isConference ? $modelData : null
+			property ParticipantDeviceGui currentDevice: $modelData
 			onCurrentDeviceChanged: {
 				if(index < 0) cameraView.enabled = false	// this is a delegate destruction. We need to stop camera before Qt change its currentDevice (and then, let CameraView to delete wrong renderer)
 			}
@@ -37,16 +37,17 @@ Mosaic {
             width: grid.cellWidth - Utils.getSizeWithScreenRatio(10)
 			Sticker {
 				id: cameraView
-				previewEnabled: false //index == 0
+				previewEnabled: false
 				visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 				anchors.fill: parent
 				qmlName: 'G_'+index
 				call: grid.call && !grid.call.core.isConference ? grid.call : null
 				property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
-				account: (index == 0 && accountObj) ? accountObj.value : null
+				account: null
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
+				onParticipantDeviceChanged: console.log("grid device :", (participantDevice ? participantDevice.core.displayName : "NULL"))
 				secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 				Component.onCompleted: console.log(qmlName + " is " +(call ? call.core.remoteAddress : currentDevice ? currentDevice.core.address : 'addr_NotDefined'))
 			}
