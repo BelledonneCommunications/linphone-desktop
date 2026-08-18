@@ -84,14 +84,14 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboSetting {
+				ComboBox {
 					id: outputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
-					entries: SettingsCpp.playbackDevices
-					propertyName: "playbackDevice"
-					propertyOwner: SettingsCpp
+					model: SettingsCpp.playbackDevices
+					oneLine: true
+					currentValue: SettingsCpp.playbackDevice
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
@@ -135,14 +135,13 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboSetting {
+				ComboBox {
 					id: inputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
-					entries: SettingsCpp.captureDevices
-					propertyName: "captureDevice"
-					propertyOwner: SettingsCpp
+					model: SettingsCpp.captureDevices
+					currentValue: SettingsCpp.captureDevice
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving

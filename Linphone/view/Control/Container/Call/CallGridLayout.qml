@@ -37,7 +37,7 @@ Mosaic {
             width: grid.cellWidth - Utils.getSizeWithScreenRatio(10)
 			Sticker {
 				id: cameraView
-				previewEnabled: index == 0
+				previewEnabled: false //index == 0
 				visible: mainItem.callState != LinphoneEnums.CallState.End  && mainItem.callState != LinphoneEnums.CallState.Released
 				anchors.fill: parent
 				qmlName: 'G_'+index

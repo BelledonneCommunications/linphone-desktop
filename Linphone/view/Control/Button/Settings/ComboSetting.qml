@@ -22,7 +22,7 @@ ComboBox {
 	onCurrentValueChanged: {
 		if(propertyOwnerGui) {
 			binding.when = !Utils.equalObject(currentValue,propertyOwnerGui.core[propertyName])
-		}else{
+		} else {
 			binding.when = !Utils.equalObject(currentValue,propertyOwner[propertyName])
 		}
 	}
