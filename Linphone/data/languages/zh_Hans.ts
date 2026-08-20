@@ -7394,16 +7394,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>RecordListView</name>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
-        <source>meeting_info_cancelled</source>
-        <translation>会议取消</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
-        <source>meetings_list_no_meeting_for_today</source>
-        <translation>今天没有会议</translation>
-    </message>
 </context>
 <context>
     <name>RecordPage</name>
@@ -7418,30 +7408,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>录音</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
-        <source>meetings_search_hint</source>
-        <translation>查找会议</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <translation>没有结果…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
-        <source>meetings_empty_list</source>
-        <translation>没有会议</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
-        <source>meeting_schedule_title</source>
-        <translation>新会议</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
-        <source>create</source>
-        <translation>创建</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
@@ -7454,88 +7423,24 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
-        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
-        <translation>请填写标题并选择至少一名参与者</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
+        <source>record_delete_accessible_name</source>
+        <translation> </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
-        <source>meeting_schedule_duration_error_toast</source>
-        <translation>会议的结束必须比开始晚</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
-        <source>meeting_schedule_creation_in_progress</source>
-        <translation>正在创建…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
-        <source>meeting_info_created_toast</source>
-        <translation>会议已成功创建</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
+        <source>record_list_search_hint</source>
+        <translation> </translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
-        <source>meeting_failed_to_schedule_toast</source>
-        <translation>创建会议失败！</translation>
+        <source>record_export_accessible_name</source>
+        <translation> </translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
-        <source>save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
-        <source>saved</source>
-        <translation>已保存</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
-        <source>meeting_info_updated_toast</source>
-        <translation>会议已更新</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
-        <source>meeting_schedule_edit_in_progress</source>
-        <translation>会议更新正在进行中…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
-        <source>meeting_failed_to_edit_toast</source>
-        <translation>更新会议失败！</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
-        <source>meeting_schedule_add_participants_title</source>
-        <translation>添加参与者</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
-        <source>meeting_info_delete</source>
-        <translation>删除会议</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
-        <source>meeting_address_copied_to_clipboard_toast</source>
-        <translation>已复制会议URI</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
-        <source>meeting_schedule_timezone_title</source>
-        <translation>时区</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
-        <source>meeting_info_organizer_label</source>
-        <translation>主办单位</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
-        <source>meeting_info_join_title</source>
-        <translation>加入会议</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
+        <source>record_delete_confirmation_message</source>
+        <translation> </translation>
     </message>
 </context>
 <context>

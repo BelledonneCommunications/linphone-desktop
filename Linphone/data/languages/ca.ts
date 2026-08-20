@@ -7353,11 +7353,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 <context>
     <name>RecordPage</name>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
-        <source>save</source>
-        <translation>Desar</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>

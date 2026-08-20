@@ -6005,7 +6005,7 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
         <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
@@ -6017,19 +6017,19 @@ Ablauf: %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>record_export_accessible_name</source>
         <extracomment>Export the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
         <source>record_delete_confirmation_message</source>
         <extracomment>&quot;Supprimer cet enregistrement ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
         <extracomment>Delete the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Kein Token gefunden</translation>
     </message>
     <message>
         <source>meetings_search_hint</source>

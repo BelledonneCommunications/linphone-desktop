@@ -7827,16 +7827,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>RecordListView</name>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
-        <source>meeting_info_cancelled</source>
-        <translation>Meeting geannuleerd</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
-        <source>meetings_list_no_meeting_for_today</source>
-        <translation>Geen meeting vandaag</translation>
-    </message>
 </context>
 <context>
     <name>RecordPage</name>
@@ -7851,127 +7841,9 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Fout</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
-        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
-        <translation>Vul aub de titel in en selecteer tenminste één deelnemer</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
-        <source>meeting_schedule_duration_error_toast</source>
-        <translation>Het einde van de conferentie moet recenter zijn dan het begin ervan</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
-        <source>meeting_schedule_creation_in_progress</source>
-        <translation>Bezig met aanmaken…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
-        <source>meeting_info_created_toast</source>
-        <translation>Meeting succesvol aangemaakt</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
-        <source>save</source>
-        <translation>Opslaan</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
-        <source>meeting_schedule_title</source>
-        <translation>Nieuwe meeting</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
-        <source>group_call_participant_selected</source>
-        <translation>
-            <numerusform>%1 geselecteerde deelnemer</numerusform>
-            <numerusform>%1 geselecteerde deelnemers</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
-        <source>meetings_search_hint</source>
-        <translation>Zoek meeting</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <translation>Geen resultaat…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
-        <source>meetings_empty_list</source>
-        <translation>Geen meeting</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
-        <source>create</source>
-        <translation>Aanmaken</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
-        <source>meeting_failed_to_schedule_toast</source>
-        <translation>Kon meeting niet aanmaken!</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
-        <source>saved</source>
-        <translation>Opgeslagen</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
-        <source>meeting_info_updated_toast</source>
-        <translation>Meeting bijgewerkt</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
-        <source>meeting_schedule_edit_in_progress</source>
-        <translation>Bezig met bijwerken van meeting…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
-        <source>meeting_failed_to_edit_toast</source>
-        <translation>Bijwerken van meeting mislukt !</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
-        <source>meeting_schedule_add_participants_title</source>
-        <translation>Deelnemers toevoegen</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
-        <source>meeting_schedule_add_participants_apply</source>
-        <translation>Toepassen</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
-        <source>meeting_info_delete</source>
-        <translation>Meeting verwijderen</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
-        <source>meeting_address_copied_to_clipboard_toast</source>
-        <translation>Meeting URI gekopieerd</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
-        <source>meeting_schedule_timezone_title</source>
-        <translation>Tijdszone</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
-        <source>meeting_info_organizer_label</source>
-        <translation>Organisator</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
-        <source>meeting_info_join_title</source>
-        <translation>Deelnemen aan meeting</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="18"/>

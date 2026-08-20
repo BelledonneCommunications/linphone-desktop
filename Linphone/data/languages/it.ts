@@ -5667,18 +5667,6 @@ Error</extracomment>
 </context>
 <context>
     <name>RecordListView</name>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
-        <source>meeting_info_cancelled</source>
-        <extracomment>&quot;Réunion annulée&quot;</extracomment>
-        <translation type="unfinished">Meeting canceled</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
-        <source>meetings_list_no_meeting_for_today</source>
-        <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
-        <translation type="unfinished">No meeting for today</translation>
-    </message>
 </context>
 <context>
     <name>RecordPage</name>
@@ -5695,34 +5683,10 @@ Error</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
-        <source>meetings_search_hint</source>
-        <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
-        <translation type="unfinished">Find meeting</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <extracomment>&quot;Aucun résultat…&quot;</extracomment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
-        <source>meetings_empty_list</source>
-        <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
-        <translation type="unfinished">No meeting</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
-        <source>meeting_schedule_title</source>
-        <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
-        <translation type="unfinished">New meeting</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
-        <source>create</source>
-        <translation type="unfinished">Create</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
@@ -5733,119 +5697,6 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="394"/>
         <source>information_popup_error_title</source>
         <translation>Errore</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
-        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
-        <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
-        <translation type="unfinished">Please fill the title and select at least one participant</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
-        <source>meeting_schedule_duration_error_toast</source>
-        <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
-        <translation type="unfinished">The end of the conference must be more recent than its beginning</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
-        <source>meeting_schedule_creation_in_progress</source>
-        <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
-        <translation type="unfinished">Creation in progress…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
-        <source>meeting_info_created_toast</source>
-        <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
-        <translation type="unfinished">Meeting successfully created</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
-        <source>meeting_failed_to_schedule_toast</source>
-        <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
-        <translation type="unfinished">Failed to create meeting!</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
-        <source>save</source>
-        <translation>Salvare</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
-        <source>saved</source>
-        <extracomment>&quot;Enregistré&quot;</extracomment>
-        <translation type="unfinished">Saved</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
-        <source>meeting_info_updated_toast</source>
-        <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
-        <translation type="unfinished">Meeting updated</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
-        <source>meeting_schedule_edit_in_progress</source>
-        <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
-        <translation type="unfinished">Meeting update in progress…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
-        <source>meeting_failed_to_edit_toast</source>
-        <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
-        <translation type="unfinished">Failed to update meeting !</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
-        <source>meeting_schedule_add_participants_title</source>
-        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
-        <translation type="unfinished">Add participants</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
-        <source>meeting_schedule_add_participants_apply</source>
-        <translation type="unfinished">Apply</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
-        <source>group_call_participant_selected</source>
-        <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
-        <translation type="unfinished">
-            <numerusform>%1 selected participant</numerusform>
-            <numerusform>%1 selected participants</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
-        <source>meeting_info_delete</source>
-        <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
-        <translation type="unfinished">Delete meeting</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
-        <source>meeting_address_copied_to_clipboard_toast</source>
-        <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
-        <translation type="unfinished">Meeting URI copied</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
-        <source>meeting_schedule_timezone_title</source>
-        <extracomment>&quot;Fuseau horaire&quot;</extracomment>
-        <translation type="unfinished">Timezone</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
-        <source>meeting_info_organizer_label</source>
-        <extracomment>&quot;Organisateur&quot;</extracomment>
-        <translation type="unfinished">Organizer</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
-        <source>meeting_info_join_title</source>
-        <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
-        <translation type="unfinished">Join meeting</translation>
     </message>
 </context>
 <context>

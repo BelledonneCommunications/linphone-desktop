@@ -7885,22 +7885,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 <context>
     <name>RecordPage</name>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="98"/>
-        <source>meetings_empty_list</source>
-        <translation>Žádná schůzka</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="168"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="229"/>
-        <source>meeting_schedule_title</source>
-        <translation>Nová schůzka</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="179"/>
-        <source>create</source>
-        <translation>Vytvořit</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="186"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="190"/>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="241"/>
@@ -7921,112 +7905,29 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <translation>Záznamy</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="76"/>
-        <source>meetings_search_hint</source>
-        <translation>Najít schůzku</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="96"/>
         <source>list_filter_no_result_found</source>
         <translation>Žádný výsledek…</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="188"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="343"/>
-        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
-        <translation>Vyplňte prosím název a vyberte alespoň jednoho účastníka</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
+        <source>record_delete_confirmation_message</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="192"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="346"/>
-        <source>meeting_schedule_duration_error_toast</source>
-        <translation>Konec musí být později než začátek</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="196"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="236"/>
-        <source>meeting_schedule_creation_in_progress</source>
-        <translation>Probíhá vytváření…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="231"/>
-        <source>meeting_info_created_toast</source>
-        <translation>Schůzka úspěšně vytvořena</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
+        <source>record_list_search_hint</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
-        <source>meeting_failed_to_schedule_toast</source>
-        <translation>Vytvoření schůzky selhalo!</translation>
+        <source>record_export_accessible_name</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="335"/>
-        <source>save</source>
-        <translation>Uložit</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="385"/>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="621"/>
-        <source>saved</source>
-        <translation>Uloženo</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="387"/>
-        <source>meeting_info_updated_toast</source>
-        <translation>Schůzka upravena</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="392"/>
-        <source>meeting_schedule_edit_in_progress</source>
-        <translation>Probíhá úprava schůzky…</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="396"/>
-        <source>meeting_failed_to_edit_toast</source>
-        <translation>Úprava schůzky selhala!</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="440"/>
-        <source>meeting_schedule_add_participants_title</source>
-        <translation>Přidat účastníky</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="454"/>
-        <source>meeting_schedule_add_participants_apply</source>
-        <translation>Použít</translation>
-    </message>
-    <message numerus="yes">
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="464"/>
-        <source>group_call_participant_selected</source>
-        <translation>
-            <numerusform>%1 vybraný účastník</numerusform>
-            <numerusform>%1 vybraní účastníci</numerusform>
-            <numerusform>%1 vybraných účastníků</numerusform>
-        </translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="552"/>
-        <source>meeting_info_delete</source>
-        <translation>Smazat schůzku</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="623"/>
-        <source>meeting_address_copied_to_clipboard_toast</source>
-        <translation>URI schůzky zkopírováno</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="659"/>
-        <source>meeting_schedule_timezone_title</source>
-        <translation>Časová zóna</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="761"/>
-        <source>meeting_info_organizer_label</source>
-        <translation>Organizátor</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="780"/>
-        <source>meeting_info_join_title</source>
-        <translation>Připojit ke schůzce</translation>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
+        <source>record_delete_accessible_name</source>
+        <translation>Žádný token nenalezen</translation>
     </message>
 </context>
 <context>
@@ -8067,16 +7968,6 @@ Failed to create 1-1 conversation with %1 !</extracomment>
 </context>
 <context>
     <name>RecordListView</name>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="265"/>
-        <source>meeting_info_cancelled</source>
-        <translation>Schůzka zrušena</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Display/Record/RecordListView.qml" line="289"/>
-        <source>meetings_list_no_meeting_for_today</source>
-        <translation>Dnes žádná schůzka</translation>
-    </message>
 </context>
 <context>
     <name>Voicemail</name>
