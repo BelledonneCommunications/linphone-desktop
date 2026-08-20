@@ -10,6 +10,24 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.2.1] - 2026-08-20
+
+### Added
+- New settings : 
+    - noise suppressor
+    - call view rendering in background
+- Recording list from calls acessible in the app with audio/video player
+
+### Fixed
+- Duplication of participants stickers
+- Playback/capture auto switch glitch in multimedia parameters
+- Crash when Windows notification deleted
+- Account status colors for accessibility
+- Account presence
+
+### Changed
+- SDK version is now 5.5.16
+
 ## [6.2.0] - 2026-07-15
 
 ### Added
