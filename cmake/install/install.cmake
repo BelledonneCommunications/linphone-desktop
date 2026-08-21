@@ -40,7 +40,8 @@ if(NOT LINPHONEAPP_VERSION)
 endif()
 
 if (NOT(LINPHONEAPP_VERSION))
-  set(LINPHONEAPP_VERSION "6.2.0")
+  message(WARNING "Failed to compute Linphone app version from Git!")
+  set(LINPHONEAPP_VERSION "6.2.1")
 endif ()
 
 include(${CMAKE_SOURCE_DIR}/Linphone/application_info.cmake)
@@ -304,7 +305,7 @@ if(${ENABLE_APP_PACKAGING})
 #	LINUX
 ##############################################
 		set(DO_APPIMAGE YES)
-		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}")
+		set(CPACK_PACKAGE_FILE_NAME "${CPACK_PACKAGE_NAME}-${PACKAGE_VERSION}-${BIN_ARCH}")
 		set(PACKAGE_EXT "AppImage")
 		configure_file("${CMAKE_SOURCE_DIR}/cmake/install/linux/linphone.desktop.cmake" "${CMAKE_BINARY_DIR}/cmake/install/linux/${EXECUTABLE_NAME}.desktop" @ONLY)
 		install(FILES "${CMAKE_BINARY_DIR}/cmake/install/linux/${EXECUTABLE_NAME}.desktop" DESTINATION "${CMAKE_INSTALL_DATADIR}/applications" PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ GROUP_EXECUTE WORLD_READ WORLD_EXECUTE)
