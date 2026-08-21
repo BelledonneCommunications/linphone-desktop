@@ -84,6 +84,10 @@ When("the user presses the call button", function(scenarioContext){
     DialerPage.pressCallButton();
 });
 
+When("the user presses the call button again", function(scenarioContext){
+    DialerPage.pressCallButton();
+});
+
 When("the user changes the dialer input to \"|any|\"", function(scenarioContext, number){
     DialerPage.setInput(number);
 });
