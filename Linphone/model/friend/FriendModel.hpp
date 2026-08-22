@@ -108,15 +108,20 @@ public:
 		return mDialogEvent != nullptr;
 	}
 
-	// Persists the intent and starts/stops the live subscription; also re-applied on reconnect (see
-	// mDialogMonitoringWanted).
+	// Persists the intent and starts/stops the live subscription; also re-applied on reconnect.
 	void setDialogMonitoringEnabled(bool enabled);
+
+	// Real registration status (MikoPBX REST API polling); defaults to true when unconfigured.
+	bool getIsOnline() const {
+		return mIsOnline;
+	}
 
 	QString mFullName;
 
 signals:
 	void dialogStateChanged(DialogInfoModel::State state);
 	void dialogMonitoringEnabledChanged(bool enabled);
+	void isOnlineChanged(bool online);
 	void pictureUriChanged(const QString &uri);
 	void starredChanged(bool starred);
 	void addressesChanged();
@@ -151,6 +156,7 @@ private:
 	DialogInfoModel::State mDialogState = DialogInfoModel::State::Unknown;
 	// Persisted intent, independent of mDialogEvent's live/dead state.
 	bool mDialogMonitoringWanted = false;
+	bool mIsOnline = true;
 };
 
 #endif

@@ -641,9 +641,7 @@ VariantObject *Utils::importVCardFile(const QUrl &fileUrl) {
 			before.insert(f.get());
 		int imported = friendList->importFriendsFromVcard4File(path.toStdString());
 		if (imported > 0) {
-			// importFriendsFromVcard4File() only adds to the SDK-side list; the
-			// app UI (MagicSearchList) only refreshes off friendCreated, same as
-			// every other "friend appeared" path in this app.
+			// The app UI only refreshes off friendCreated, so emit it for each newly imported friend.
 			for (auto &f : friendList->getFriends())
 				if (!before.contains(f.get())) emit CoreModel::getInstance() -> friendCreated(f);
 		}
@@ -651,6 +649,27 @@ VariantObject *Utils::importVCardFile(const QUrl &fileUrl) {
 	});
 	result->requestValue();
 	return result;
+}
+
+void Utils::importExtensionsFromPbx() {
+	if (!App::getInstance()->getCoreStarted()) return;
+	QMetaObject::invokeMethod(App::getInstance()->getLinphoneThread()->getThreadId(), [] {
+		connect(
+		    CoreModel::getInstance().get(), &CoreModel::extensionsImportFromPbxFinished, CoreModel::getInstance().get(),
+		    [](int imported, QString error) {
+			    auto window = App::getInstance()->getMainWindow();
+			    if (!error.isEmpty())
+				    QMetaObject::invokeMethod(window, "showInformationPopup", Q_ARG(QVariant, QString("Import failed")),
+				                              Q_ARG(QVariant, error), Q_ARG(QVariant, false));
+			    else
+				    QMetaObject::invokeMethod(
+				        window, "showInformationPopup", Q_ARG(QVariant, QString("Import complete")),
+				        Q_ARG(QVariant, QString("%1 contact(s) imported from MikoPBX").arg(imported)),
+				        Q_ARG(QVariant, true));
+		    },
+		    Qt::SingleShotConnection);
+		CoreModel::getInstance()->importExtensionsFromPbx();
+	});
 }
 
 void Utils::shareByEmail(const QString &subject,

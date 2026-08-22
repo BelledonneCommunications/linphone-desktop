@@ -24,14 +24,22 @@
 #include <QCoreApplication>
 #include <QDir>
 #include <QFile>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QNetworkReply>
 #include <QQuickWindow>
+#include <QRegularExpression>
+#include <QSet>
 #include <QSysInfo>
+#include <QTemporaryFile>
 #include <QTimer>
 
 #include "core/App.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
 #include "model/call/CallModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -118,9 +126,131 @@ void CoreModel::start() {
 	mMagicSearch->setSelf(mMagicSearch);
 	connect(mMagicSearch.get(), &MagicSearchModel::searchResultsReceived, this,
 	        [this] { emit magicSearchResultReceived(mMagicSearch->mLastSearch); });
+
+	mPresenceNetworkManager = new QNetworkAccessManager(this);
+	mPresenceTimer = new QTimer(this);
+	mPresenceTimer->setInterval(30000);
+	connect(mPresenceTimer, &QTimer::timeout, this, &CoreModel::pollExtensionPresence);
+	mPresenceTimer->start();
+	// Deferred: SettingsModel isn't created yet at this point on cold startup, so pollExtensionPresence() would no-op.
+	QTimer::singleShot(0, this, &CoreModel::pollExtensionPresence);
+
 	mStarted = true;
 }
 // -----------------------------------------------------------------------------
+
+void CoreModel::pollExtensionPresence() {
+	auto settings = SettingsModel::getInstance();
+	if (!settings) return;
+	auto baseUrl = settings->getPbxApiBaseUrl();
+	auto apiKey = settings->getPbxApiKey();
+	if (baseUrl.isEmpty() || apiKey.isEmpty()) return;
+
+	static const QRegularExpression sipUserRegex(R"(^sips?:(\d+)@)");
+	QSet<QString> extensions;
+	for (auto &address : settings->getBlfMonitoredAddresses()) {
+		auto match = sipUserRegex.match(address);
+		if (match.hasMatch()) extensions.insert(match.captured(1));
+	}
+
+	for (auto &extension : extensions) {
+		QUrl url(baseUrl + "/pbxcore/api/v3/sip/" + extension + ":getStatus");
+		QNetworkRequest request(url);
+		request.setRawHeader("Authorization", ("Bearer " + apiKey).toUtf8());
+		auto reply = mPresenceNetworkManager->get(request);
+		connect(reply, &QNetworkReply::finished, this, [this, reply, extension]() {
+			reply->deleteLater();
+			if (reply->error() != QNetworkReply::NoError) {
+				lWarning()
+				    << log().arg("Presence poll for extension %1 failed: %2").arg(extension).arg(reply->errorString());
+				return;
+			}
+			auto doc = QJsonDocument::fromJson(reply->readAll());
+			bool online = doc["data"]["devices"].toArray().size() > 0; // "status" field is unreliable; devices[] isn't.
+			lInfo()
+			    << log().arg("Presence poll for extension %1: %2").arg(extension).arg(online ? "online" : "offline");
+			emit extensionPresenceChanged(extension, online);
+		});
+	}
+}
+
+void CoreModel::importExtensionsFromPbx() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto settings = SettingsModel::getInstance();
+	if (!settings) {
+		emit extensionsImportFromPbxFinished(0, "not ready");
+		return;
+	}
+	auto baseUrl = settings->getPbxApiBaseUrl();
+	auto apiKey = settings->getPbxApiKey();
+	if (baseUrl.isEmpty() || apiKey.isEmpty()) {
+		emit extensionsImportFromPbxFinished(0, "MikoPBX API not configured");
+		return;
+	}
+
+	QUrl url(baseUrl + "/pbxcore/api/v3/extensions");
+	QNetworkRequest request(url);
+	request.setRawHeader("Authorization", ("Bearer " + apiKey).toUtf8());
+	auto reply = mPresenceNetworkManager->get(request);
+	QString host = QUrl(baseUrl).host();
+	connect(reply, &QNetworkReply::finished, this, [this, reply, host]() {
+		reply->deleteLater();
+		if (reply->error() != QNetworkReply::NoError) {
+			lWarning() << log().arg("Extensions import failed: %1").arg(reply->errorString());
+			emit extensionsImportFromPbxFinished(0, reply->errorString());
+			return;
+		}
+		auto doc = QJsonDocument::fromJson(reply->readAll());
+		auto entries = doc["data"].toArray();
+
+		// Queues, IVRs, parking slots etc. share the same list but aren't people to call.
+		QString vcard;
+		int candidateCount = 0;
+		for (const auto &entryRef : qAsConst(entries)) {
+			auto entry = entryRef.toObject();
+			if (entry["type"].toString() != "SIP") continue;
+			auto number = entry["number"].toString();
+			if (number.isEmpty()) continue;
+			auto name = entry["callerid"].toString();
+			if (name.isEmpty()) name = number;
+			candidateCount++;
+			vcard += "BEGIN:VCARD\r\nVERSION:4.0\r\nFN:" + name + "\r\nIMPP:sip:" + number + "@" + host +
+			         "\r\nEND:VCARD\r\n";
+		}
+		if (candidateCount == 0) {
+			emit extensionsImportFromPbxFinished(0, "no SIP extensions found");
+			return;
+		}
+
+		auto friendList = ToolModel::getAppFriendList();
+		if (!friendList) {
+			emit extensionsImportFromPbxFinished(0, "contact list not ready");
+			return;
+		}
+		QSet<const void *> before;
+		for (auto &f : friendList->getFriends())
+			before.insert(f.get());
+
+		QTemporaryFile file(QDir::temp().filePath("pbx_extensions_XXXXXX.vcf"));
+		if (!file.open()) {
+			emit extensionsImportFromPbxFinished(0, "could not write temporary file");
+			return;
+		}
+		file.write(vcard.toUtf8());
+		file.close();
+
+		int imported = friendList->importFriendsFromVcard4File(file.fileName().toStdString());
+		if (imported > 0) {
+			for (auto &f : friendList->getFriends())
+				if (!before.contains(f.get())) emit friendCreated(f);
+		}
+		lInfo() << log()
+		               .arg("Extensions import: %1 SIP extensions found, %2 new contacts created")
+		               .arg(candidateCount)
+		               .arg(imported);
+		emit extensionsImportFromPbxFinished(imported, "");
+	});
+}
 
 bool CoreModel::isInitialized() const {
 	return mStarted;

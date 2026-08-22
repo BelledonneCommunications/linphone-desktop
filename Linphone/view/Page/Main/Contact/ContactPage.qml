@@ -268,6 +268,20 @@ AbstractMainPage {
                 Accessible.name: qsTr("import_contacts_accessible_name")
             }
             Button {
+                id: importFromPbxButton
+                visible: !rightPanelStackView.currentItem
+                         || rightPanelStackView.currentItem.objectName !== "contactEdition"
+                style: ButtonStyle.noBackground
+                icon.source: AppIcons.download
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
+                icon.width: Utils.getSizeWithScreenRatio(28)
+                icon.height: Utils.getSizeWithScreenRatio(28)
+                onClicked: UtilsCpp.importExtensionsFromPbx()
+                //: Import contacts from the PBX extension list
+                Accessible.name: qsTr("import_contacts_from_pbx_accessible_name")
+            }
+            Button {
                 id: createContactButton
                 visible: !rightPanelStackView.currentItem
                          || rightPanelStackView.currentItem.objectName !== "contactEdition"

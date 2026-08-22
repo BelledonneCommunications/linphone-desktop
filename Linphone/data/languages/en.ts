@@ -994,6 +994,27 @@
     </message>
 </context>
 <context>
+    <name>PbxSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="30"/>
+        <source>settings_pbx_description</source>
+        <extracomment>&quot;Utilisé pour le statut BLF en ligne/hors ligne et l&apos;import des interlocuteurs&quot;</extracomment>
+        <translation>Used for BLF online/offline status and importing contacts.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="43"/>
+        <source>settings_pbx_base_url_title</source>
+        <extracomment>&quot;URL du PBX&quot;</extracomment>
+        <translation>PBX URL</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="52"/>
+        <source>settings_pbx_api_key_title</source>
+        <extracomment>&quot;Clé API&quot;</extracomment>
+        <translation>API key</translation>
+    </message>
+</context>
+<context>
     <name>CallHistoryLayout</name>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="116"/>
@@ -3169,6 +3190,12 @@ Only your correspondent can decrypt them.</translation>
         <source>import_contacts_accessible_name</source>
         <extracomment>Import contacts from a vCard file</extracomment>
         <translation>Import contacts</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="285"/>
+        <source>import_contacts_from_pbx_accessible_name</source>
+        <extracomment>Import contacts from the PBX extension list</extracomment>
+        <translation>Import contacts from PBX</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="305"/>
@@ -6637,6 +6664,12 @@ To enable them in a commercial project, please contact us.</translation>
         <source>settings_advanced_title</source>
         <extracomment>&quot;Paramètres avancés&quot;</extracomment>
         <translation>Advanced parameters</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="33"/>
+        <source>settings_pbx_title</source>
+        <extracomment>&quot;Intégration PBX&quot;</extracomment>
+        <translation>PBX integration</translation>
     </message>
     <message>
         <source>contact_editor_popup_abort_confirmation_title</source>

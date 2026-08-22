@@ -242,6 +242,14 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 					                                           emit dialogMonitoringEnabledChanged();
 				                                           });
 			                                           });
+			mFriendModelConnection->makeConnectToModel(&FriendModel::isOnlineChanged, [this](bool online) {
+				mFriendModelConnection->invokeToCore([this, online]() {
+					mIsOnline = online;
+					emit isOnlineChanged();
+					emit dialogStateChanged(); // getDialogStateColor() also depends on mIsOnline.
+				});
+			});
+
 			// From GUI
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
 				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
@@ -821,7 +829,13 @@ void FriendCore::toggleDialogMonitoring() {
 }
 
 QColor FriendCore::getDialogStateColor() const {
+	// Offline always wins: dialog-info alone can't distinguish idle from unregistered.
+	if (!mIsOnline) return QColor(Qt::gray);
 	return mDialogStateColor;
+}
+
+bool FriendCore::getIsOnline() const {
+	return mIsOnline;
 }
 
 bool FriendCore::getDialogMonitoringEnabled() const {

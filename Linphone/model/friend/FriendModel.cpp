@@ -78,6 +78,17 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 			        subscribeDialogInfo();
 		        }
 	        });
+
+	// Real registration status: dialog-info alone can't distinguish idle from unregistered.
+	connect(CoreModel::getInstance().get(), &CoreModel::extensionPresenceChanged, this,
+	        [this](QString extension, bool online) {
+		        if (!mMonitor || !mMonitor->getAddress()) return;
+		        auto ownExtension = Utils::coreStringToAppString(mMonitor->getAddress()->getUsername());
+		        if (ownExtension != extension || mIsOnline == online) return;
+		        mIsOnline = online;
+		        lInfo() << log().arg("isOnline for %1 changed to %2").arg(ownExtension).arg(online ? "true" : "false");
+		        emit isOnlineChanged(mIsOnline);
+	        });
 };
 
 FriendModel::~FriendModel() {

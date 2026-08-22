@@ -28,7 +28,9 @@ AbstractSettingsMenu {
         //: "Réseau"
         {title: qsTr("settings_network_title"), layout: "NetworkSettingsLayout"},
         //: "Paramètres avancés"
-        {title: qsTr("settings_advanced_title"), layout: "AdvancedSettingsLayout"}
+        {title: qsTr("settings_advanced_title"), layout: "AdvancedSettingsLayout"},
+        //: "Intégration PBX"
+        {title: qsTr("settings_pbx_title"), layout: "PbxSettingsLayout"}
 	]
 
 	onGoBackRequested: mainItem.goBack()

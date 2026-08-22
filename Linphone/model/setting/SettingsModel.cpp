@@ -435,6 +435,28 @@ void SettingsModel::setBlfMonitoredAddresses(const QStringList &addresses) {
 	mConfig->setStringList(SettingsModel::AppSection, "blf_monitored_addresses", list);
 }
 
+QString SettingsModel::getPbxApiBaseUrl() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "pbx_api_base_url", ""));
+}
+
+void SettingsModel::setPbxApiBaseUrl(const QString &url) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setString(SettingsModel::AppSection, "pbx_api_base_url", Utils::appStringToCoreString(url));
+	emit pbxApiBaseUrlChanged(url);
+}
+
+QString SettingsModel::getPbxApiKey() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "pbx_api_key", ""));
+}
+
+void SettingsModel::setPbxApiKey(const QString &key) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setString(SettingsModel::AppSection, "pbx_api_key", Utils::appStringToCoreString(key));
+	emit pbxApiKeyChanged(key);
+}
+
 // -----------------------------------------------------------------------------
 
 QVariantMap SettingsModel::getPlaybackDevice() const {

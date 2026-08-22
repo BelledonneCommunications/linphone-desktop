@@ -79,6 +79,7 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QColor dialogStateColor READ getDialogStateColor NOTIFY dialogStateChanged)
 	Q_PROPERTY(bool dialogMonitoringEnabled READ getDialogMonitoringEnabled NOTIFY dialogMonitoringEnabledChanged)
 	Q_PROPERTY(bool looksLikeSipExtension READ getLooksLikeSipExtension CONSTANT)
+	Q_PROPERTY(bool isOnline READ getIsOnline NOTIFY isOnlineChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -160,17 +161,14 @@ public:
 	QString getPresenceStatus();
 	QUrl getPresenceIcon();
 
-	// BLF ("dialog" event package): watches the friend's default address for
-	// live busy/ringing/idle state, driven by Asterisk/MikoPBX hint NOTIFYs
-	// rather than the (unpopulated, for internal extensions) presence package.
+	// BLF ("dialog" event package): live busy/ringing/idle state via Asterisk/MikoPBX hint NOTIFYs.
 	Q_INVOKABLE void toggleDialogMonitoring();
 	QColor getDialogStateColor() const;
 	bool getDialogMonitoringEnabled() const;
-	// Heuristic used to only offer BLF monitoring where it makes sense: an
-	// internal PBX extension (all-digits SIP username), not an arbitrary
-	// external contact - subscribing to "dialog" on those either gets
-	// rejected or silently does nothing useful.
+	// Only offer BLF monitoring for internal PBX extensions (all-digits SIP username).
 	bool getLooksLikeSipExtension() const;
+	// Real registration status (MikoPBX REST API polling); defaults to true when unconfigured.
+	bool getIsOnline() const;
 
 protected:
 	void resetPhoneNumbers(QList<QVariant> newList);
@@ -201,6 +199,7 @@ signals:
 	void dialogStateChanged();
 	void dialogMonitoringEnabledChanged();
 	void lToggleDialogMonitoring();
+	void isOnlineChanged();
 
 protected:
 	void writeIntoModel(std::shared_ptr<FriendModel> model) const;
@@ -229,6 +228,7 @@ protected:
 	bool mIsLdap, mIsCardDAV, mIsAppFriend;
 	QColor mDialogStateColor;
 	bool mDialogMonitoringEnabled = false;
+	bool mIsOnline = true;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;
