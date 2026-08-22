@@ -40,6 +40,7 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 				propertyName: "pbxApiBaseUrl"
 				propertyOwner: SettingsCpp
+				toValidate: true
 				//: "URL du PBX"
 				title: qsTr("settings_pbx_base_url_title")
 				placeHolder: "https://pbx.example.com"
@@ -50,6 +51,7 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
 				propertyName: "pbxApiKey"
 				propertyOwner: SettingsCpp
+				toValidate: true
 				//: "Clé API"
 				title: qsTr("settings_pbx_api_key_title")
 				useTitleAsPlaceHolder: true
