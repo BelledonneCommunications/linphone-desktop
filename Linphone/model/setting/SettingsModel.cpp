@@ -418,6 +418,23 @@ void SettingsModel::setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoen
 	emit createEndToEndEncryptedMeetingsAndGroupCallsChanged(endtoend);
 }
 
+QStringList SettingsModel::getBlfMonitoredAddresses() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto list = mConfig->getStringList(SettingsModel::AppSection, "blf_monitored_addresses", {});
+	QStringList result;
+	for (auto &address : list)
+		result << Utils::coreStringToAppString(address);
+	return result;
+}
+
+void SettingsModel::setBlfMonitoredAddresses(const QStringList &addresses) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	std::list<std::string> list;
+	for (auto &address : addresses)
+		list.push_back(Utils::appStringToCoreString(address));
+	mConfig->setStringList(SettingsModel::AppSection, "blf_monitored_addresses", list);
+}
+
 // -----------------------------------------------------------------------------
 
 QVariantMap SettingsModel::getPlaybackDevice() const {
