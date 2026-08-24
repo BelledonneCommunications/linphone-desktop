@@ -91,7 +91,9 @@ ColumnLayout {
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					model: SettingsCpp.playbackDevices
 					oneLine: true
-					currentValue: SettingsCpp.playbackDevice
+					currentIndex: Utils.findIndex(model, function (entry) {
+						return Utils.equalObject(entry,SettingsCpp.playbackDevice)
+					})
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
@@ -141,7 +143,10 @@ ColumnLayout {
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					model: SettingsCpp.captureDevices
-					currentValue: SettingsCpp.captureDevice
+					oneLine: true
+					currentIndex: Utils.findIndex(model, function (entry) {
+						return Utils.equalObject(entry,SettingsCpp.captureDevice)
+					})
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
@@ -154,7 +159,9 @@ ColumnLayout {
 						target: SettingsCpp
 						function onCaptureDeviceChanged() {
 							console.log("capture device changed in settings, force changing it in combobox")
-							inputAudioDeviceCBox.currentValue = SettingsCpp.captureDevice
+							inputAudioDeviceCBox.currentIndex = Utils.findIndex(inputAudioDeviceCBox.model, function (entry) {
+								return Utils.equalObject(entry,SettingsCpp.captureDevice)
+							})
 						}
 					}
 					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
