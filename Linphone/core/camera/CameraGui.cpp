@@ -54,7 +54,7 @@ CameraGui::~CameraGui() {
 		lDebug() << "[CameraGui] Deactivation";
 		App::postModelBlock([] { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
 	}
-	setWindowIdLocation(None);
+	// setWindowIdLocation(None);
 }
 
 // Hack for Qt constness on create Renderer.
