@@ -91,7 +91,9 @@ ColumnLayout {
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					model: SettingsCpp.playbackDevices
 					oneLine: true
-					currentValue: SettingsCpp.playbackDevice
+					currentIndex: Utils.findIndex(model, function (entry) {
+						return Utils.equalObject(entry,SettingsCpp.playbackDevice)
+					})
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
@@ -141,7 +143,9 @@ ColumnLayout {
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 					model: SettingsCpp.captureDevices
-					currentValue: SettingsCpp.captureDevice
+					currentIndex: Utils.findIndex(model, function (entry) {
+						return Utils.equalObject(entry,SettingsCpp.captureDevice)
+					})
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
