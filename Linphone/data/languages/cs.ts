@@ -1494,6 +1494,16 @@
         <source>settings_calls_call_view_in_background_subtitle</source>
         <translation>Okno hovoru se nepřesune do popředí</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="62"/>
+        <source>settings_calls_noise_suppressor_title</source>
+        <translation>Potlačení šumu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
+        <source>settings_calls_noise_suppressor_subtitle</source>
+        <translation>Odstraňuje nežádoucí šum v pozadí</translation>
+    </message>
 </context>
 <context>
     <name>CallSettingsPanel</name>
@@ -7928,6 +7938,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
         <translation>Žádný token nenalezen</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
+        <source>back_previous_menu_accessible_name</source>
+        <translation>Zpět na předchozí nabídku</translation>
     </message>
 </context>
 <context>
