@@ -5312,39 +5312,39 @@ Expiration : %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="62"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="160"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="249"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="105"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="164"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="253"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
         <translation>Choose %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="82"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="116"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="105"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="118"/>
         <source>multimedia_settings_speaker_title</source>
         <extracomment>&quot;Haut-parleurs&quot;</extracomment>
         <translation>Speakers</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="116"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="173"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="118"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="177"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
         <translation>%1 volume</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="133"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="160"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="173"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="135"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="164"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="177"/>
         <source>multimedia_settings_microphone_title</source>
         <extracomment>&quot;Microphone&quot;</extracomment>
         <translation>Microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="229"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="249"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="233"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="253"/>
         <source>multimedia_settings_camera_title</source>
         <extracomment>&quot;Caméra&quot;</extracomment>
         <translation>Camera</translation>
