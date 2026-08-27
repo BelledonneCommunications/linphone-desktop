@@ -25,6 +25,7 @@
 #include "tool/LinphoneEnums.hpp"
 #include <QFont>
 #include <QObject>
+#include <QStringList>
 #include <QVariantMap>
 #include <linphone++/linphone.hh>
 
@@ -56,6 +57,10 @@ public:
 
 	bool getVideoEnabled() const;
 	void setVideoEnabled(const bool enabled);
+
+	// SIP URIs of friends opted into BLF ("dialog" event package) monitoring.
+	QStringList getBlfMonitoredAddresses() const;
+	void setBlfMonitoredAddresses(const QStringList &addresses);
 
 	bool getAutomaticallyRecordCallsEnabled() const;
 	void setAutomaticallyRecordCallsEnabled(bool enabled);

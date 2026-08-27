@@ -21,6 +21,7 @@
 #ifndef FRIEND_MODEL_H_
 #define FRIEND_MODEL_H_
 
+#include "model/friend/DialogInfoModel.hpp"
 #include "model/listener/Listener.hpp"
 #include "tool/AbstractObject.hpp"
 #include "tool/LinphoneEnums.hpp"
@@ -30,9 +31,13 @@
 #include <QTimer>
 #include <linphone++/linphone.hh>
 
+// BLF: independent "dialog" event package (RFC 4235) subscription alongside the regular presence one, since
+// Asterisk/MikoPBX don't populate presence for internal extensions but do publish dialplan hints via dialog-info.
 class FriendModel : public ::Listener<linphone::Friend, linphone::FriendListener>,
                     public linphone::FriendListener,
-                    public AbstractObject {
+                    public linphone::EventListener,
+                    public AbstractObject,
+                    public std::enable_shared_from_this<FriendModel> {
 	Q_OBJECT
 	friend class FriendCore;
 
@@ -93,9 +98,25 @@ public:
 
 	LinphoneEnums::Presence getPresence(const std::shared_ptr<linphone::Friend> &contact);
 
+	// Safe to call multiple times; terminates a pre-existing subscription first.
+	void subscribeDialogInfo();
+	void unsubscribeDialogInfo();
+	DialogInfoModel::State getDialogState() const {
+		return mDialogState;
+	}
+	bool getDialogMonitoringEnabled() const {
+		return mDialogEvent != nullptr;
+	}
+
+	// Persists the intent and starts/stops the live subscription; also re-applied on reconnect (see
+	// mDialogMonitoringWanted).
+	void setDialogMonitoringEnabled(bool enabled);
+
 	QString mFullName;
 
 signals:
+	void dialogStateChanged(DialogInfoModel::State state);
+	void dialogMonitoringEnabledChanged(bool enabled);
 	void pictureUriChanged(const QString &uri);
 	void starredChanged(bool starred);
 	void addressesChanged();
@@ -119,6 +140,17 @@ private:
 	// LINPHONE
 	//--------------------------------------------------------------------------------
 	virtual void onPresenceReceived(const std::shared_ptr<linphone::Friend> &contact) override;
+
+	// linphone::EventListener - BLF "dialog" event package.
+	virtual void onNotifyReceived(const std::shared_ptr<linphone::Event> &linphoneEvent,
+	                              const std::shared_ptr<const linphone::Content> &body) override;
+	virtual void onSubscribeStateChanged(const std::shared_ptr<linphone::Event> &linphoneEvent,
+	                                     linphone::SubscriptionState state) override;
+
+	std::shared_ptr<linphone::Event> mDialogEvent;
+	DialogInfoModel::State mDialogState = DialogInfoModel::State::Unknown;
+	// Persisted intent, independent of mDialogEvent's live/dead state.
+	bool mDialogMonitoringWanted = false;
 };
 
 #endif

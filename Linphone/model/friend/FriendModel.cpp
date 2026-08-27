@@ -61,10 +61,28 @@ FriendModel::FriendModel(const std::shared_ptr<linphone::Friend> &contact, const
 
 	connect(CoreModel::getInstance().get(), &CoreModel::friendUpdated, this, &FriendModel::onUpdated);
 	connect(CoreModel::getInstance().get(), &CoreModel::friendRemoved, this, &FriendModel::onRemoved);
+
+	// subscribeDialogInfo() itself is called later from FriendCore's ctor, once shared_from_this() is valid.
+	if (contact->getAddress()) {
+		auto address = Utils::coreStringToAppString(contact->getAddress()->asStringUriOnly());
+		mDialogMonitoringWanted = SettingsModel::getInstance()->getBlfMonitoredAddresses().contains(address);
+	}
+	// liblinphone doesn't recreate a dropped dialog-info SUBSCRIBE on reconnect the way it does for registration.
+	connect(CoreModel::getInstance().get(), &CoreModel::accountRegistrationStateChanged, this,
+	        [this](const std::shared_ptr<linphone::Core> &, const std::shared_ptr<linphone::Account> &,
+	               linphone::RegistrationState state, const std::string &) {
+		        if (state == linphone::RegistrationState::Ok && mDialogMonitoringWanted && !mDialogEvent) {
+			        lInfo() << log().arg("re-subscribing dialog-info for")
+			                << (mMonitor && mMonitor->getAddress() ? mMonitor->getAddress()->asStringUriOnly() : "?")
+			                << "after account came back online";
+			        subscribeDialogInfo();
+		        }
+	        });
 };
 
 FriendModel::~FriendModel() {
 	mustBeInLinphoneThread("~" + getClassName());
+	unsubscribeDialogInfo();
 	mMonitor = nullptr;
 }
 
@@ -321,6 +339,101 @@ LinphoneEnums::Presence FriendModel::getPresence(const std::shared_ptr<linphone:
 	return ToolModel::corePresenceModelToAppPresence(presenceModel);
 }
 
+//--------------------------------------------------------------------------------
+// BLF ("dialog" event package - RFC 4235)
+//--------------------------------------------------------------------------------
+
+void FriendModel::subscribeDialogInfo() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	unsubscribeDialogInfo();
+	if (!mMonitor || !mMonitor->getAddress()) return;
+
+	auto core = CoreModel::getInstance()->getCore();
+	if (!core) return;
+
+	constexpr int dialogSubscribeExpiresSeconds = 120;
+	mDialogEvent = core->createSubscribe(mMonitor->getAddress()->clone(), "dialog", dialogSubscribeExpiresSeconds);
+	if (!mDialogEvent) {
+		lWarning() << log().arg("could not create dialog-info subscribe for")
+		           << mMonitor->getAddress()->asStringUriOnly();
+		return;
+	}
+	mDialogEvent->addListener(shared_from_this());
+	auto status = mDialogEvent->sendSubscribe(nullptr); // Empty body: pure watcher.
+	if (status != 0) {
+		lWarning() << log().arg("dialog-info SUBSCRIBE failed synchronously for")
+		           << mMonitor->getAddress()->asStringUriOnly();
+		mDialogEvent.reset();
+	}
+	emit dialogMonitoringEnabledChanged(mDialogEvent != nullptr);
+}
+
+void FriendModel::setDialogMonitoringEnabled(bool enabled) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mDialogMonitoringWanted = enabled;
+	if (mMonitor && mMonitor->getAddress()) {
+		auto address = Utils::coreStringToAppString(mMonitor->getAddress()->asStringUriOnly());
+		auto settings = SettingsModel::getInstance();
+		auto monitored = settings->getBlfMonitoredAddresses();
+		bool changed = false;
+		if (enabled && !monitored.contains(address)) {
+			monitored << address;
+			changed = true;
+		} else if (!enabled && monitored.removeAll(address) > 0) {
+			changed = true;
+		}
+		if (changed) settings->setBlfMonitoredAddresses(monitored);
+	}
+	if (enabled) subscribeDialogInfo();
+	else unsubscribeDialogInfo();
+}
+
+void FriendModel::unsubscribeDialogInfo() {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	bool wasEnabled = mDialogEvent != nullptr;
+	if (mDialogEvent) {
+		mDialogEvent->terminate();
+		mDialogEvent.reset();
+	}
+	if (wasEnabled) emit dialogMonitoringEnabledChanged(false);
+	if (mDialogState != DialogInfoModel::State::Unknown) {
+		mDialogState = DialogInfoModel::State::Unknown;
+		emit dialogStateChanged(mDialogState);
+	}
+}
+
+void FriendModel::onNotifyReceived(const std::shared_ptr<linphone::Event> &linphoneEvent,
+                                   const std::shared_ptr<const linphone::Content> &body) {
+	if (linphoneEvent != mDialogEvent) return; // Not for us (Friend also gets generic notifies)
+	if (!body) return;
+
+	// TODO: verify content type is application/dialog-info+xml before parsing.
+	auto xml = Utils::coreStringToAppString(body->getUtf8Text());
+	auto newState = DialogInfoModel::parse(xml);
+	if (newState == mDialogState) return;
+
+	lInfo() << log().arg("dialog-info state changed for")
+	        << (mMonitor && mMonitor->getAddress() ? mMonitor->getAddress()->asStringUriOnly() : "?") << "->"
+	        << static_cast<int>(newState);
+	mDialogState = newState;
+	emit dialogStateChanged(mDialogState);
+}
+
+void FriendModel::onSubscribeStateChanged(const std::shared_ptr<linphone::Event> &linphoneEvent,
+                                          linphone::SubscriptionState state) {
+	if (linphoneEvent != mDialogEvent) return;
+	if (state == linphone::SubscriptionState::Error || state == linphone::SubscriptionState::Terminated) {
+		// Fall back to Unknown rather than silently pretending the colleague is idle forever.
+		lWarning() << log().arg("dialog-info subscription ended, state=") << static_cast<int>(state);
+		mDialogEvent.reset();
+		emit dialogMonitoringEnabledChanged(false);
+		if (mDialogState != DialogInfoModel::State::Unknown) {
+			mDialogState = DialogInfoModel::State::Unknown;
+			emit dialogStateChanged(mDialogState);
+		}
+	}
+}
+
 QString FriendModel::getPresenceNote(const std::shared_ptr<linphone::Friend> &contact) {
 	auto presenceModel = contact->getPresenceModel();
 	auto note = presenceModel && presenceModel->getNote(Utils::appStringToCoreString(QLocale().name().left(2)))
@@ -404,7 +517,7 @@ void FriendModel::remove() {
 	}
 	auto temp = mMonitor;
 	temp->remove(); // mMonitor become null
-	emit CoreModel::getInstance()->friendRemoved(temp);
+	emit CoreModel::getInstance() -> friendRemoved(temp);
 }
 
 void FriendModel::onUpdated(const std::shared_ptr<linphone::Friend> &data) {

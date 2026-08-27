@@ -57,6 +57,7 @@
 #include <QQuickWindow>
 #include <QRandomGenerator>
 #include <QRegularExpression>
+#include <QSet>
 #include <QStandardPaths>
 #include <QSvgRenderer>
 
@@ -623,6 +624,33 @@ QString Utils::createVCardFile(const QString &username, const QString &vcardAsSt
 		return filepath;
 	}
 	return QString();
+}
+
+VariantObject *Utils::importVCardFile(const QUrl &fileUrl) {
+	if (!App::getInstance()->getCoreStarted()) return nullptr;
+	QString path = fileUrl.toLocalFile();
+	VariantObject *result = new VariantObject("importVCardFile");
+	if (!result) return nullptr;
+	result->makeRequest([path]() {
+		// Model thread.
+		if (path.isEmpty()) return QVariant(-1);
+		auto friendList = ToolModel::getAppFriendList();
+		if (!friendList) return QVariant(-1);
+		QSet<const void *> before;
+		for (auto &f : friendList->getFriends())
+			before.insert(f.get());
+		int imported = friendList->importFriendsFromVcard4File(path.toStdString());
+		if (imported > 0) {
+			// importFriendsFromVcard4File() only adds to the SDK-side list; the
+			// app UI (MagicSearchList) only refreshes off friendCreated, same as
+			// every other "friend appeared" path in this app.
+			for (auto &f : friendList->getFriends())
+				if (!before.contains(f.get())) emit CoreModel::getInstance() -> friendCreated(f);
+		}
+		return QVariant(imported);
+	});
+	result->requestValue();
+	return result;
 }
 
 void Utils::shareByEmail(const QString &subject,
