@@ -994,6 +994,27 @@
     </message>
 </context>
 <context>
+    <name>PbxSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="30"/>
+        <source>settings_pbx_description</source>
+        <extracomment>&quot;Utilisé pour le statut BLF en ligne/hors ligne et l&apos;import des interlocuteurs&quot;</extracomment>
+        <translation>Used for BLF online/offline status and importing contacts.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="43"/>
+        <source>settings_pbx_base_url_title</source>
+        <extracomment>&quot;URL du PBX&quot;</extracomment>
+        <translation>PBX URL</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/PbxSettingsLayout.qml" line="52"/>
+        <source>settings_pbx_api_key_title</source>
+        <extracomment>&quot;Clé API&quot;</extracomment>
+        <translation>API key</translation>
+    </message>
+</context>
+<context>
     <name>CallHistoryLayout</name>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="116"/>
@@ -3165,6 +3186,30 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>ContactPage</name>
     <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="268"/>
+        <source>import_contacts_accessible_name</source>
+        <extracomment>Import contacts from a vCard file</extracomment>
+        <translation>Import contacts</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="285"/>
+        <source>import_contacts_from_pbx_accessible_name</source>
+        <extracomment>Import contacts from the PBX extension list</extracomment>
+        <translation>Import contacts from PBX</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="305"/>
+        <source>information_popup_vcard_import_success_message</source>
+        <extracomment>&quot;Contacts importés&quot;</extracomment>
+        <translation>%1 contact(s) imported</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="310"/>
+        <source>information_popup_vcard_import_error_message</source>
+        <extracomment>&quot;Aucun contact n&apos;a pu être importé depuis ce fichier.&quot;</extracomment>
+        <translation>No contacts could be imported from this file.</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="16"/>
         <source>contacts_add</source>
         <extracomment>&quot;Ajouter un contact&quot;</extracomment>
@@ -3458,6 +3503,11 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="872"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="304"/>
+        <source>information_popup_success_title</source>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="874"/>
@@ -6614,6 +6664,12 @@ To enable them in a commercial project, please contact us.</translation>
         <source>settings_advanced_title</source>
         <extracomment>&quot;Paramètres avancés&quot;</extracomment>
         <translation>Advanced parameters</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="33"/>
+        <source>settings_pbx_title</source>
+        <extracomment>&quot;Intégration PBX&quot;</extracomment>
+        <translation>PBX integration</translation>
     </message>
     <message>
         <source>contact_editor_popup_abort_confirmation_title</source>

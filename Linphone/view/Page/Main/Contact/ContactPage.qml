@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Dialogs
 import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.Basic as Control
@@ -253,6 +254,34 @@ AbstractMainPage {
                 font.weight: Typography.h2.weight
             }
             Button {
+                id: importContactsButton
+                visible: !rightPanelStackView.currentItem
+                         || rightPanelStackView.currentItem.objectName !== "contactEdition"
+                style: ButtonStyle.noBackground
+                icon.source: AppIcons.filePlus
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
+                icon.width: Utils.getSizeWithScreenRatio(28)
+                icon.height: Utils.getSizeWithScreenRatio(28)
+                onClicked: importVCardDialog.open()
+                //: Import contacts from a vCard file
+                Accessible.name: qsTr("import_contacts_accessible_name")
+            }
+            Button {
+                id: importFromPbxButton
+                visible: !rightPanelStackView.currentItem
+                         || rightPanelStackView.currentItem.objectName !== "contactEdition"
+                style: ButtonStyle.noBackground
+                icon.source: AppIcons.download
+                Layout.preferredWidth: Utils.getSizeWithScreenRatio(28)
+                Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
+                icon.width: Utils.getSizeWithScreenRatio(28)
+                icon.height: Utils.getSizeWithScreenRatio(28)
+                onClicked: UtilsCpp.importExtensionsFromPbx()
+                //: Import contacts from the PBX extension list
+                Accessible.name: qsTr("import_contacts_from_pbx_accessible_name")
+            }
+            Button {
                 id: createContactButton
                 objectName: "createContactButton"
                 visible: !rightPanelStackView.currentItem
@@ -270,6 +299,33 @@ AbstractMainPage {
                 KeyNavigation.down: searchBar
                 //: Create new contact
                 Accessible.name: qsTr("create_contact_accessible_name")
+            }
+        }
+
+        FileDialog {
+            id: importVCardDialog
+            nameFilters: ["vCard files (*.vcf)"]
+            onAccepted: {
+                var request = UtilsCpp.importVCardFile(selectedFile)
+                if (request) importVCardResult.target = request
+            }
+        }
+        Connections {
+            id: importVCardResult
+            function onValueChanged() {
+                var count = target.value
+                if (count > 0) {
+                    //: "Contacts importés"
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_success_title"),
+                                                  qsTr("information_popup_vcard_import_success_message").arg(count),
+                                                  true)
+                } else {
+                    //: "Aucun contact n'a pu être importé depuis ce fichier."
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                                  qsTr("information_popup_vcard_import_error_message"),
+                                                  false)
+                }
+                target = null
             }
         }
 

@@ -19,7 +19,10 @@
  */
 
 #include "FriendCore.hpp"
+#include <QRegularExpression>
+
 #include "core/App.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 #include "tool/thread/SafeConnection.hpp"
@@ -47,7 +50,7 @@ FriendCore::FriendCore(const std::shared_ptr<linphone::Friend> &contact, bool is
 	if (contact) {
 		mustBeInLinphoneThread(getClassName());
 		mFriendModel = Utils::makeQObject_ptr<FriendModel>(contact);
-		mFriendModel->setSelf(mFriendModel);
+		mFriendModel->setSelf(mFriendModel); // BLF auto-resubscribe happens here, once the SafeConnection is wired.
 		auto presence = mFriendModel->getPresence(contact);
 		auto note = mFriendModel->getPresenceNote(contact);
 		App::postCoreAsync([this, presence, note]() { setPresence(presence, note); });
@@ -210,10 +213,51 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			mFriendModelConnection->makeConnectToModel(
 			    &FriendModel::objectNameChanged,
 			    [this](const QString &objectName) { lDebug() << "object name changed" << objectName; });
+			mFriendModelConnection->makeConnectToModel(&FriendModel::dialogStateChanged,
+			                                           [this](DialogInfoModel::State state) {
+				                                           QColor color;
+				                                           switch (state) {
+					                                           case DialogInfoModel::State::InCall:
+						                                           color = QColor(Qt::red);
+						                                           break;
+					                                           case DialogInfoModel::State::Ringing:
+						                                           color = QColor(255, 165, 0); // orange
+						                                           break;
+					                                           case DialogInfoModel::State::Idle:
+						                                           color = QColor(Qt::green);
+						                                           break;
+					                                           default:
+						                                           color = QColor(Qt::gray);
+						                                           break;
+				                                           }
+				                                           mFriendModelConnection->invokeToCore([this, color]() {
+					                                           mDialogStateColor = color;
+					                                           emit dialogStateChanged();
+				                                           });
+			                                           });
+			mFriendModelConnection->makeConnectToModel(&FriendModel::dialogMonitoringEnabledChanged,
+			                                           [this](bool enabled) {
+				                                           mFriendModelConnection->invokeToCore([this, enabled]() {
+					                                           mDialogMonitoringEnabled = enabled;
+					                                           emit dialogMonitoringEnabledChanged();
+				                                           });
+			                                           });
+			mFriendModelConnection->makeConnectToModel(&FriendModel::isOnlineChanged, [this](bool online) {
+				mFriendModelConnection->invokeToCore([this, online]() {
+					mIsOnline = online;
+					emit isOnlineChanged();
+					emit dialogStateChanged(); // getDialogStateColor() also depends on mIsOnline.
+				});
+			});
 
 			// From GUI
 			mFriendModelConnection->makeConnectToCore(&FriendCore::lSetStarred, [this](bool starred) {
 				mFriendModelConnection->invokeToModel([this, starred]() { mFriendModel->setStarred(starred); });
+			});
+			mFriendModelConnection->makeConnectToCore(&FriendCore::lToggleDialogMonitoring, [this]() {
+				mFriendModelConnection->invokeToModel([this]() {
+					mFriendModel->setDialogMonitoringEnabled(!mFriendModel->getDialogMonitoringEnabled());
+				});
 			});
 			if (!mCoreModelConnection) {
 				mCoreModelConnection = SafeConnection<FriendCore, CoreModel>::create(me, CoreModel::getInstance());
@@ -239,7 +283,18 @@ void FriendCore::setSelf(QSharedPointer<FriendCore> me) {
 			    });
 			mCoreModelConnection->makeConnectToCore(&FriendCore::saved, [this]() {
 				mCoreModelConnection->invokeToModel(
-				    [this, f = mFriendModel->getFriend()]() { emit CoreModel::getInstance()->friendUpdated(f); });
+				    [this, f = mFriendModel->getFriend()]() { emit CoreModel::getInstance() -> friendUpdated(f); });
+			});
+
+			// BLF: re-establish monitoring for contacts previously opted in, now that the SafeConnection is wired.
+			mFriendModelConnection->invokeToModel([this]() {
+				if (mFriendModel->getDialogMonitoringEnabled()) return;
+				auto address =
+				    mFriendModel->getFriend() && mFriendModel->getFriend()->getAddress()
+				        ? Utils::coreStringToAppString(mFriendModel->getFriend()->getAddress()->asStringUriOnly())
+				        : QString();
+				if (!address.isEmpty() && SettingsModel::getInstance()->getBlfMonitoredAddresses().contains(address))
+					mFriendModel->subscribeDialogInfo();
 			});
 
 		} else { // Create
@@ -667,7 +722,7 @@ void FriendCore::save() { // Save Values to model
 						thisCopy->writeIntoModel(mFriendModel);
 						thisCopy->deleteLater();
 						mVCardString = mFriendModel->getVCardAsString();
-						emit CoreModel::getInstance()->friendUpdated(contact);
+						emit CoreModel::getInstance() -> friendUpdated(contact);
 						mCoreModelConnection->invokeToCore([this] {
 							setIsSaved(true);
 							emit saved();
@@ -694,7 +749,7 @@ void FriendCore::save() { // Save Values to model
 							if (listWhereToAddFriend->getType() == linphone::FriendList::Type::CardDAV) {
 								listWhereToAddFriend->synchronizeFriendsFromServer();
 							}
-							emit CoreModel::getInstance()->friendCreated(contact);
+							emit CoreModel::getInstance() -> friendCreated(contact);
 						}
 						mCoreModelConnection->invokeToCore([this, created]() {
 							if (created) setSelf(mCoreModelConnection->mCore);
@@ -767,4 +822,28 @@ QColor FriendCore::getPresenceColor() {
 
 QString FriendCore::getPresenceStatus() {
 	return Utils::getPresenceStatus(mPresence);
+}
+
+void FriendCore::toggleDialogMonitoring() {
+	emit lToggleDialogMonitoring();
+}
+
+QColor FriendCore::getDialogStateColor() const {
+	// Offline always wins: dialog-info alone can't distinguish idle from unregistered.
+	if (!mIsOnline) return QColor(Qt::gray);
+	return mDialogStateColor;
+}
+
+bool FriendCore::getIsOnline() const {
+	return mIsOnline;
+}
+
+bool FriendCore::getDialogMonitoringEnabled() const {
+	return mDialogMonitoringEnabled;
+}
+
+bool FriendCore::getLooksLikeSipExtension() const {
+	static const QRegularExpression sipUserRegex(R"(^sips?:(\d+)@)");
+	auto match = sipUserRegex.match(mDefaultAddress);
+	return match.hasMatch();
 }

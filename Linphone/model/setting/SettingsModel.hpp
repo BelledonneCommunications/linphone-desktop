@@ -25,6 +25,7 @@
 #include "tool/LinphoneEnums.hpp"
 #include <QFont>
 #include <QObject>
+#include <QStringList>
 #include <QVariantMap>
 #include <linphone++/linphone.hh>
 
@@ -56,6 +57,16 @@ public:
 
 	bool getVideoEnabled() const;
 	void setVideoEnabled(const bool enabled);
+
+	// SIP URIs of friends opted into BLF ("dialog" event package) monitoring.
+	QStringList getBlfMonitoredAddresses() const;
+	void setBlfMonitoredAddresses(const QStringList &addresses);
+
+	// MikoPBX REST API (read-only "sip" scope key), used to poll real registration status - see FriendModel::mIsOnline.
+	QString getPbxApiBaseUrl() const;
+	void setPbxApiBaseUrl(const QString &url);
+	QString getPbxApiKey() const;
+	void setPbxApiKey(const QString &key);
 
 	bool getAutomaticallyRecordCallsEnabled() const;
 	void setAutomaticallyRecordCallsEnabled(bool enabled);
@@ -258,6 +269,8 @@ public:
 
 signals:
 	void logsUploadUrlChanged();
+	void pbxApiBaseUrlChanged(const QString &url);
+	void pbxApiKeyChanged(const QString &key);
 
 	// VFS. --------------------------------------------------------------------
 	void vfsEnabledChanged(bool enabled);

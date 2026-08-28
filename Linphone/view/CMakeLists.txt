@@ -163,6 +163,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Page/Layout/Settings/SecuritySettingsLayout.qml
 	view/Page/Layout/Settings/NetworkSettingsLayout.qml
 	view/Page/Layout/Settings/AdvancedSettingsLayout.qml
+	view/Page/Layout/Settings/PbxSettingsLayout.qml
 	view/Page/Layout/Chat/MessageImdnStatusInfos.qml
 	view/Page/Layout/Chat/MessageInfosLayout.qml
 	view/Page/Layout/Chat/MessageReactionsInfos.qml

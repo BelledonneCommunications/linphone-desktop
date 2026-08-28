@@ -147,6 +147,8 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(AssistantGoDirectlyToThirdPartySipAccountLogin, settingsModel)
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountDomain, settingsModel)
 	INIT_CORE_MEMBER(AssistantThirdPartySipAccountTransport, settingsModel)
+	INIT_CORE_MEMBER(PbxApiBaseUrl, settingsModel)
+	INIT_CORE_MEMBER(PbxApiKey, settingsModel)
 	INIT_CORE_MEMBER(AutoStart, settingsModel)
 	INIT_CORE_MEMBER(ExitOnClose, settingsModel)
 	INIT_CORE_MEMBER(SyncLdapContacts, settingsModel)
@@ -238,6 +240,8 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	mAssistantGoDirectlyToThirdPartySipAccountLogin = settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin;
 	mAssistantThirdPartySipAccountDomain = settingsCore.mAssistantThirdPartySipAccountDomain;
 	mAssistantThirdPartySipAccountTransport = settingsCore.mAssistantThirdPartySipAccountTransport;
+	mPbxApiBaseUrl = settingsCore.mPbxApiBaseUrl;
+	mPbxApiKey = settingsCore.mPbxApiKey;
 	mExitOnClose = settingsCore.mExitOnClose;
 	mSyncLdapContacts = settingsCore.mSyncLdapContacts;
 	mIpv6Enabled = settingsCore.mIpv6Enabled;
@@ -363,6 +367,8 @@ void SettingsCore::reloadSettings() {
 	    settingsModel->getAssistantGoDirectlyToThirdPartySipAccountLogin());
 	setAssistantThirdPartySipAccountDomain(settingsModel->getAssistantThirdPartySipAccountDomain());
 	setAssistantThirdPartySipAccountTransport(settingsModel->getAssistantThirdPartySipAccountTransport());
+	setPbxApiBaseUrl(settingsModel->getPbxApiBaseUrl());
+	setPbxApiKey(settingsModel->getPbxApiKey());
 	setAutoStart(settingsModel->getAutoStart());
 	setExitOnClose(settingsModel->getExitOnClose());
 	setSyncLdapContacts(settingsModel->getSyncLdapContacts());
@@ -679,6 +685,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	                           assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
 	                           assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString,
+	                           pbxApiBaseUrl, PbxApiBaseUrl)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, QString, pbxApiKey,
+	                           PbxApiKey)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, autoStart,
 	                        AutoStart)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool, exitOnClose,
@@ -799,6 +809,8 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	setAssistantGoDirectlyToThirdPartySipAccountLogin(settingsCore.mAssistantGoDirectlyToThirdPartySipAccountLogin);
 	setAssistantThirdPartySipAccountDomain(settingsCore.mAssistantThirdPartySipAccountDomain);
 	setAssistantThirdPartySipAccountTransport(settingsCore.mAssistantThirdPartySipAccountTransport);
+	setPbxApiBaseUrl(settingsCore.mPbxApiBaseUrl);
+	setPbxApiKey(settingsCore.mPbxApiKey);
 	setExitOnClose(settingsCore.mExitOnClose);
 	setSyncLdapContacts(settingsCore.mSyncLdapContacts);
 	setCardDAVMinCharForResearch(settingsCore.mCardDAVMinCharForResearch);
@@ -1488,6 +1500,8 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	model->setAssistantGoDirectlyToThirdPartySipAccountLogin(mAssistantGoDirectlyToThirdPartySipAccountLogin);
 	model->setAssistantThirdPartySipAccountDomain(mAssistantThirdPartySipAccountDomain);
 	model->setAssistantThirdPartySipAccountTransport(mAssistantThirdPartySipAccountTransport);
+	model->setPbxApiBaseUrl(mPbxApiBaseUrl);
+	model->setPbxApiKey(mPbxApiKey);
 	model->setExitOnClose(mExitOnClose);
 	model->setSyncLdapContacts(mSyncLdapContacts);
 	model->setIpv6Enabled(mIpv6Enabled);
@@ -1580,6 +1594,8 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAssistantGoDirectlyToThirdPartySipAccountLogin = model->getAssistantGoDirectlyToThirdPartySipAccountLogin();
 	mAssistantThirdPartySipAccountDomain = model->getAssistantThirdPartySipAccountDomain();
 	mAssistantThirdPartySipAccountTransport = model->getAssistantThirdPartySipAccountTransport();
+	mPbxApiBaseUrl = model->getPbxApiBaseUrl();
+	mPbxApiKey = model->getPbxApiKey();
 	mAutoStart = model->getAutoStart();
 	mExitOnClose = model->getExitOnClose();
 	mSyncLdapContacts = model->getSyncLdapContacts();

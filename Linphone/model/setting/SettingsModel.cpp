@@ -418,6 +418,45 @@ void SettingsModel::setCreateEndToEndEncryptedMeetingsAndGroupCalls(bool endtoen
 	emit createEndToEndEncryptedMeetingsAndGroupCallsChanged(endtoend);
 }
 
+QStringList SettingsModel::getBlfMonitoredAddresses() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	auto list = mConfig->getStringList(SettingsModel::AppSection, "blf_monitored_addresses", {});
+	QStringList result;
+	for (auto &address : list)
+		result << Utils::coreStringToAppString(address);
+	return result;
+}
+
+void SettingsModel::setBlfMonitoredAddresses(const QStringList &addresses) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	std::list<std::string> list;
+	for (auto &address : addresses)
+		list.push_back(Utils::appStringToCoreString(address));
+	mConfig->setStringList(SettingsModel::AppSection, "blf_monitored_addresses", list);
+}
+
+QString SettingsModel::getPbxApiBaseUrl() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "pbx_api_base_url", ""));
+}
+
+void SettingsModel::setPbxApiBaseUrl(const QString &url) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setString(SettingsModel::AppSection, "pbx_api_base_url", Utils::appStringToCoreString(url));
+	emit pbxApiBaseUrlChanged(url);
+}
+
+QString SettingsModel::getPbxApiKey() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return Utils::coreStringToAppString(mConfig->getString(SettingsModel::AppSection, "pbx_api_key", ""));
+}
+
+void SettingsModel::setPbxApiKey(const QString &key) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mConfig->setString(SettingsModel::AppSection, "pbx_api_key", Utils::appStringToCoreString(key));
+	emit pbxApiKeyChanged(key);
+}
+
 // -----------------------------------------------------------------------------
 
 QVariantMap SettingsModel::getPlaybackDevice() const {

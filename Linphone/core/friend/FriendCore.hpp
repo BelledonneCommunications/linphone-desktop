@@ -76,6 +76,10 @@ class FriendCore : public QObject, public AbstractObject {
 	Q_PROPERTY(bool isLdap READ isLdap CONSTANT)
 	Q_PROPERTY(bool isAppFriend READ isAppFriend CONSTANT)
 	Q_PROPERTY(bool isCardDAV READ isCardDAV CONSTANT)
+	Q_PROPERTY(QColor dialogStateColor READ getDialogStateColor NOTIFY dialogStateChanged)
+	Q_PROPERTY(bool dialogMonitoringEnabled READ getDialogMonitoringEnabled NOTIFY dialogMonitoringEnabledChanged)
+	Q_PROPERTY(bool looksLikeSipExtension READ getLooksLikeSipExtension CONSTANT)
+	Q_PROPERTY(bool isOnline READ getIsOnline NOTIFY isOnlineChanged)
 
 public:
 	// Should be call from model Thread. Will be automatically in App thread after initialization
@@ -157,6 +161,15 @@ public:
 	QString getPresenceStatus();
 	QUrl getPresenceIcon();
 
+	// BLF ("dialog" event package): live busy/ringing/idle state via Asterisk/MikoPBX hint NOTIFYs.
+	Q_INVOKABLE void toggleDialogMonitoring();
+	QColor getDialogStateColor() const;
+	bool getDialogMonitoringEnabled() const;
+	// Only offer BLF monitoring for internal PBX extensions (all-digits SIP username).
+	bool getLooksLikeSipExtension() const;
+	// Real registration status (MikoPBX REST API polling); defaults to true when unconfigured.
+	bool getIsOnline() const;
+
 protected:
 	void resetPhoneNumbers(QList<QVariant> newList);
 	void resetAddresses(QList<QVariant> newList);
@@ -183,6 +196,10 @@ signals:
 	void verifiedDevicesChanged();
 	void lSetStarred(bool starred);
 	void presenceChanged();
+	void dialogStateChanged();
+	void dialogMonitoringEnabledChanged();
+	void lToggleDialogMonitoring();
+	void isOnlineChanged();
 
 protected:
 	void writeIntoModel(std::shared_ptr<FriendModel> model) const;
@@ -209,6 +226,9 @@ protected:
 	bool mIsStored;
 	QString mVCardString;
 	bool mIsLdap, mIsCardDAV, mIsAppFriend;
+	QColor mDialogStateColor;
+	bool mDialogMonitoringEnabled = false;
+	bool mIsOnline = true;
 	std::shared_ptr<FriendModel> mFriendModel;
 	QSharedPointer<SafeConnection<FriendCore, FriendModel>> mFriendModelConnection;
 	QSharedPointer<SafeConnection<FriendCore, CoreModel>> mCoreModelConnection;

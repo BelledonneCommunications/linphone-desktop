@@ -356,6 +356,9 @@ public:
 	                           AssistantGoDirectlyToThirdPartySipAccountLogin)
 	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountDomain, AssistantThirdPartySipAccountDomain)
 	DECLARE_CORE_GETSET_MEMBER(QString, assistantThirdPartySipAccountTransport, AssistantThirdPartySipAccountTransport)
+	// Used by both the BLF presence poll and the "import extensions" contact bulk-add.
+	DECLARE_CORE_GETSET_MEMBER(QString, pbxApiBaseUrl, PbxApiBaseUrl)
+	DECLARE_CORE_GETSET_MEMBER(QString, pbxApiKey, PbxApiKey)
 	DECLARE_CORE_GETSET(bool, exitOnClose, ExitOnClose)
 	DECLARE_CORE_GETSET(bool, syncLdapContacts, SyncLdapContacts)
 	DECLARE_CORE_GETSET(QString, configLocale, ConfigLocale)

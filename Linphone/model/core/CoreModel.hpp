@@ -22,6 +22,7 @@
 #define CORE_MODEL_H_
 
 #include <QMap>
+#include <QNetworkAccessManager>
 #include <QObject>
 #include <QSharedPointer>
 #include <QString>
@@ -60,6 +61,9 @@ public:
 	void start();
 	void setConfigPath(QString path);
 	void setPathsAfterCreation();
+
+	// Imports every SIP-type extension from MikoPBX's REST API as a contact. No-ops (with an error) if unconfigured.
+	void importExtensionsFromPbx();
 
 	void refreshOidcRemainingTime();
 
@@ -112,9 +116,13 @@ private:
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	bool mStarted = false;
 	bool mCheckVersionRequestedByUser = false;
+	QTimer *mPresenceTimer = nullptr;
+	QNetworkAccessManager *mPresenceNetworkManager = nullptr;
 
 	void setPathBeforeCreation();
 	void setPathAfterStart();
+	// Polls MikoPBX for registration status of every BLF-monitored extension; no-ops if unconfigured.
+	void pollExtensionPresence();
 
 	static std::shared_ptr<CoreModel> gCoreModel;
 
@@ -229,6 +237,8 @@ signals:
 	                                     const std::shared_ptr<linphone::Account> &account,
 	                                     linphone::RegistrationState state,
 	                                     const std::string &message);
+	void extensionPresenceChanged(QString extension, bool online);     // extension is a SIP username, not the full URI.
+	void extensionsImportFromPbxFinished(int imported, QString error); // error is non-empty only on failure.
 	void authenticationRequested(const std::shared_ptr<linphone::Core> &core,
 	                             const std::shared_ptr<linphone::AuthInfo> &authInfo,
 	                             linphone::AuthMethod method);
