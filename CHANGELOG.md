@@ -10,6 +10,15 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.2.2] - 2026-08-28
+
+### Fixed
+- Crash in calls window caused by access to readonly property
+- Generated RELEASE file for Linux platform
+
+### Changed
+- SDK update
+
 ## [6.2.1] - 2026-08-20
 
 ### Added
