@@ -121,7 +121,7 @@ FocusScope {
                         }
                     }
                 }
-                AllContactListView{
+                AllContactListView {
                     id: contactList
                     Layout.fillWidth: true
                     Layout.fillHeight: true
