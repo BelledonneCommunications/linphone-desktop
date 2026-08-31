@@ -151,15 +151,23 @@ Flickable {
         suggestionsList.highlightedContact = highlightedContact
     }
 
-    onSearchBarTextChanged: {
+    Timer {
+        id: delayContactResearchTimer
+        interval: 300
+        onTriggered: updateSearchText()
+    }
+
+    function updateSearchText() {
         if (!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
             searchText = searchBarText.length === 0 ? "*" : searchBarText
         }
     }
+
+    onSearchBarTextChanged: {
+        delayContactResearchTimer.restart()
+    }
     onPauseSearchChanged: {
-        if (!pauseSearch && (mainItem.searchOnEmpty || searchBarText != '')) {
-            searchText = searchBarText.length === 0 ? "*" : searchBarText
-        }
+        delayContactResearchTimer.restart()
     }
     onSearchTextChanged: {
         loading = true
