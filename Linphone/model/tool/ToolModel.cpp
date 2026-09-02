@@ -686,7 +686,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	// remoteAddress->clean();
 	auto account = findAccount(localAddress);
 	if (!account) account = core->getDefaultAccount();
-	if (!account) qWarning() << "failed to get account, return";
+	if (!account) lWarning() << "failed to get account, return";
 	if (!account) return nullptr;
 
 	auto params = core->createConferenceParams(call ? call->getConference() : nullptr);
@@ -700,7 +700,7 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 
 	auto chatParams = params->getChatParams();
 	if (!chatParams) {
-		qWarning() << "failed to get chat params from conference params, return";
+		lWarning() << "failed to get chat params from conference params, return";
 		return nullptr;
 	}
 	chatParams->deactivateEphemeral();
@@ -708,21 +708,21 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 	auto sameDomain = remoteAddress && remoteAddress->getDomain() == SettingsModel::getInstance()->getDefaultDomain() &&
 	                  remoteAddress->getDomain() == accountParams->getDomain();
 	if (accountParams->getInstantMessagingEncryptionMandatory() && sameDomain) {
-		qDebug() << "Account is in secure mode & domain matches, requesting E2E encryption";
+		lInfo() << "Account is in secure mode & domain matches, requesting E2E encryption";
 		chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 		params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 	} else if (!accountParams->getInstantMessagingEncryptionMandatory()) {
 		if (isEndToEndEncryptedChatAvailable()) {
-			qDebug() << "Account is in interop mode but LIME is available, requesting E2E encryption";
+			lInfo() << "Account is in interop mode but LIME is available, requesting E2E encryption";
 			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 		} else {
-			qDebug() << "Account is in interop mode and LIME is not available, disabling E2E encryption";
+			lInfo() << "Account is in interop mode and LIME is not available, disabling E2E encryption";
 			chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
 		}
 	} else {
-		qDebug() << "Account is in secure mode, can't chat with SIP address of different domain";
+		lDebug() << "Account is in secure mode, can't chat with SIP address of different domain";
 		return nullptr;
 	}
 	return params;
@@ -793,12 +793,13 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupChatForAddress(std::shared_
 }
 
 std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_ptr<linphone::Address> remoteAddress) {
+	lInfo() << "ToolModel: create chat for address" << remoteAddress->asStringUriOnly();
 	std::list<std::shared_ptr<linphone::Address>> participants;
 	participants.push_back(remoteAddress->clone());
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = getChatRoomParams(nullptr, remoteAddress);
 	if (!params) {
-		qWarning() << "failed to create chatroom params for address" << remoteAddress->asStringUriOnly();
+		lWarning() << "failed to create chatroom params for address" << remoteAddress->asStringUriOnly();
 		return nullptr;
 	}
 	auto chatRoom = core->createChatRoom(params, participants);
@@ -808,6 +809,7 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createChatForAddress(std::shared_
 
 std::shared_ptr<linphone::ChatRoom>
 ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linphone::Address>> participantsAddresses) {
+	lInfo() << "ToolModel: create group chat with subject" << subject;
 	auto core = CoreModel::getInstance()->getCore();
 	auto account = core->getDefaultAccount();
 
