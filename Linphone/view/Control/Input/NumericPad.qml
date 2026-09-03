@@ -17,7 +17,6 @@ FocusScope {
 
 	onButtonPressed: (text) => {
 		if (currentCall) currentCall.core.lSendDtmf(text)
-		else UtilsCpp.playDtmf(text)
 	}
 	signal buttonPressed(string text)
 	signal launchCall()
