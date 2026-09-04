@@ -671,19 +671,19 @@
 <context>
     <name>AllContactListView</name>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="290"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="298"/>
         <source>car_favorites_contacts_title</source>
         <extracomment>&quot;Favoris&quot;</extracomment>
         <translation>Favoriten</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="338"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="346"/>
         <source>generic_address_picker_contacts_list_title</source>
         <extracomment>&apos;Contacts&apos;</extracomment>
         <translation>Kontakte</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="388"/>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="396"/>
         <source>generic_address_picker_suggestions_list_title</source>
         <extracomment>&quot;Suggestions&quot;</extracomment>
         <translation>Vorschläge</translation>
@@ -5592,19 +5592,19 @@ Ablauf: %1</translation>
 <context>
     <name>NumericPad</name>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="177"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="176"/>
         <source>numpad_longpress_accessible_name</source>
         <extracomment>%1 longpress %2</extracomment>
         <translation>%1 lang drücken %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="222"/>
         <source>call_accessible_name</source>
         <extracomment>Call</extracomment>
         <translation>Anrufen</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/NumericPad.qml" line="245"/>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="244"/>
         <source>erase_accessible_name</source>
         <extracomment>Erase</extracomment>
         <translation>Löschen</translation>
