@@ -1650,7 +1650,7 @@ Utils::createFriendDeviceVariant(const QString &name, const QString &address, Li
 
 VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 	if (!App::getInstance()->getCoreStarted()) return nullptr;
-	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	VariantObject *data = new VariantObject("getCurrentCallChat");
 	if (!data) return nullptr;
 	if (!call || !call->mCore) return nullptr;
 	data->makeRequest([callModel = call->mCore->getModel(), data]() {
@@ -1693,7 +1693,7 @@ VariantObject *Utils::getCurrentCallChat(CallGui *call) {
 
 VariantObject *Utils::getChatForAddress(QString address) {
 	if (!App::getInstance()->getCoreStarted()) return nullptr;
-	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	VariantObject *data = new VariantObject("getChatForAddress");
 	if (!data) return nullptr;
 	data->makeRequest([address, data]() {
 		auto linAddr = ToolModel::interpretUrl(address);
@@ -1738,7 +1738,7 @@ VariantObject *Utils::getChatForAddress(QString address) {
 
 VariantObject *Utils::createGroupChat(QString subject, QStringList participantAddresses) {
 	if (!App::getInstance()->getCoreStarted()) return nullptr;
-	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	VariantObject *data = new VariantObject("createGroupChat");
 	if (!data) return nullptr;
 	data->makeRequest([subject, participantAddresses, data]() {
 		std::list<std::shared_ptr<linphone::Address>> addresses;
@@ -1793,7 +1793,7 @@ void Utils::openChat(ChatGui *chat) {
 VariantObject *Utils::getChatForCallLog(CallHistoryGui *callLog) {
 	if (!App::getInstance()->getCoreStarted()) return nullptr;
 	if (!callLog || !callLog->mCore) return nullptr;
-	VariantObject *data = new VariantObject("lookupCurrentCallChat");
+	VariantObject *data = new VariantObject("getChatForCallLog");
 	if (!data) return nullptr;
 	data->makeRequest([core = callLog->mCore, data]() {
 		auto model = core->getModel();

@@ -743,8 +743,14 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupCurrentCallChat(std::shared
 		lInfo() << "[ToolModel] Looking for chat with local address" << localAddress->asStringUriOnly()
 		        << "and participant" << remoteaddress->asStringUriOnly();
 		auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
-		if (existingChat) lInfo() << "[ToolModel] Found existing chat";
-		else lInfo() << "[ToolModel] Did not find existing chat";
+		if (existingChat) {
+			lInfo() << "[ToolModel] Found existing chat";
+			if (existingChat->getState() == linphone::ChatRoom::State::CreationFailed) {
+				lWarning() << "Existing chat has state CreationFailed, delete and ignore it for research";
+				CoreModel::getInstance()->getCore()->deleteChatRoom(existingChat);
+				return nullptr;
+			}
+		} else lInfo() << "[ToolModel] Did not find existing chat";
 		return existingChat;
 	}
 }
