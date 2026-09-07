@@ -352,6 +352,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetInputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
+			lInfo() << log().arg("Set input audio device") << id;
 			auto device = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityRecord);
 			if (device) mCallModel->setInputAudioDevice(device);
 		});
@@ -361,6 +362,7 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToCore(&CallCore::lSetOutputAudioDevice, [this](QString id) {
 		mCallModelConnection->invokeToModel([this, id]() {
+			lInfo() << log().arg("Set output audio device") << id;
 			auto device = ToolModel::findAudioDevice(id, linphone::AudioDevice::Capabilities::CapabilityPlay);
 			if (device) mCallModel->setOutputAudioDevice(device);
 		});

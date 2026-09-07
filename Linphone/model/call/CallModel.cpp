@@ -221,6 +221,7 @@ void CallModel::setInputAudioDevice(const std::shared_ptr<linphone::AudioDevice>
 	mMonitor->setInputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
+	lInfo() << log().arg("Set input audio device") << deviceName;
 	emit inputAudioDeviceChanged(deviceName);
 }
 
@@ -234,6 +235,7 @@ void CallModel::setOutputAudioDevice(const std::shared_ptr<linphone::AudioDevice
 	mMonitor->setOutputAudioDevice(device);
 	std::string deviceName;
 	if (device) deviceName = device->getDeviceName();
+	lInfo() << log().arg("Set output audio device") << deviceName;
 	emit outputAudioDeviceChanged(deviceName);
 }
 
