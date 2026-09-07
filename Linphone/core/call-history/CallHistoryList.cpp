@@ -89,7 +89,9 @@ void CallHistoryList::setSelf(QSharedPointer<CallHistoryList> me) {
 	mModelConnection->makeConnectToModel(
 	    &CoreModel::callLogUpdated,
 	    [this](const std::shared_ptr<linphone::Core> &core, const std::shared_ptr<linphone::CallLog> &callLog) {
-		    if (!callLog->getLocalAddress()->weakEqual(
+		    if (!CoreModel::getInstance()->getCore()->getDefaultAccount() ||
+		        !CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams() ||
+		        !callLog->getLocalAddress()->weakEqual(
 		            CoreModel::getInstance()->getCore()->getDefaultAccount()->getParams()->getIdentityAddress())) {
 			    lInfo() << "call log does not refer to current account, return";
 			    return;

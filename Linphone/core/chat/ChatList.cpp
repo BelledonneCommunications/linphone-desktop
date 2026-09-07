@@ -272,7 +272,7 @@ bool ChatList::addChatInList(QSharedPointer<ChatCore> chatCore, bool emitAddSign
 	lInfo() << "Add ChatRoom" << chatCore->getTitle();
 	add(chatCore);
 	if (emitAddSignal) {
-		CoreModel::getInstance()->mChatRoomBeingCreated = nullptr;
+		mModelConnection->invokeToModel([this] { CoreModel::getInstance()->mChatRoomBeingCreated = nullptr; });
 		emit chatAdded(chatCore);
 	}
 	return true;

@@ -53,6 +53,7 @@ std::shared_ptr<linphone::Account> AccountManager::createAccount(const QString &
 	QFile resource(assistantPath);
 	auto file = QTemporaryFile::createNativeFile(resource);
 	core->getConfig()->loadFromXmlFile(Utils::appStringToCoreString(file->fileName()));
+	delete file;
 	return core->createAccount(core->createAccountParams());
 }
 
