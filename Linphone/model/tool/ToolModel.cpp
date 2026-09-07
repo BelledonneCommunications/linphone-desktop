@@ -840,20 +840,18 @@ ToolModel::createGroupChatRoom(QString subject, std::list<std::shared_ptr<linpho
 
 	if (accountParams->getInstantMessagingEncryptionMandatory()) {
 		lInfo() << "Account is in secure mode & domain matches, requesting E2E encryption";
-		chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 		params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 	} else {
 		if (isEndToEndEncryptedChatAvailable()) {
 			lInfo() << "Account is in interop mode but LIME is available, requesting E2E encryption";
-			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
 		} else {
 			lInfo() << "Account is in interop mode and LIME is not available, disabling E2E encryption";
-			chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
 		}
 	}
 
+	chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 	chatParams->deactivateEphemeral();
 
 	auto chatRoom = core->createChatRoom(params, participantsAddresses);
