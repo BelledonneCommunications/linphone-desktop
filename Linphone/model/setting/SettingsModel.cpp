@@ -358,22 +358,19 @@ QVariantMap SettingsModel::getCaptureDevice() const {
 void SettingsModel::setCaptureDevice(const QVariantMap &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	lInfo() << log().arg("Trying to set capture device with id :") << device["id"];
+	auto currentDevice = getCaptureDevice();
+	if (currentDevice["id"] == device["id"]) {
+		lWarning() << log().arg("Trying to set capture device that is the current one :") << device["id"] << "; return";
+		return;
+	}
 	auto audioDevice =
 	    ToolModel::findAudioDevice(device["id"].toString(), linphone::AudioDevice::Capabilities::CapabilityRecord);
 	if (audioDevice) {
-		auto defaultInput = CoreModel::getInstance()->getCore()->getDefaultInputAudioDevice();
-		if (defaultInput != audioDevice) {
-			lInfo() << log().arg("Set default capture device") << device["id"];
-			CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(audioDevice);
-		}
-		if (CoreModel::getInstance()->getCore()->getInputAudioDevice() != audioDevice) {
-			lInfo() << log().arg("Set capture device") << device["id"];
-			CoreModel::getInstance()->getCore()->setInputAudioDevice(audioDevice);
-			emit captureDeviceChanged(device);
-			resetCaptureGraph();
-		} else {
-			lInfo() << log().arg("Trying to set input device that is the current one :") << device["id"] << "; return";
-		}
+		lInfo() << log().arg("Set capture device") << device["id"];
+		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(audioDevice);
+		CoreModel::getInstance()->getCore()->setInputAudioDevice(audioDevice);
+		emit captureDeviceChanged(device);
+		resetCaptureGraph();
 	} else {
 		//: "Cannot set Capture device. The ID cannot be matched with an existant device : %1"
 		QString error = tr("set_capture_device_error").arg(device["id"].toString());
@@ -438,22 +435,20 @@ QVariantMap SettingsModel::getPlaybackDevice() const {
 void SettingsModel::setPlaybackDevice(const QVariantMap &device) {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	lInfo() << log().arg("Trying to set playback device with id :") << device["id"];
+	auto currentDevice = getPlaybackDevice();
+	if (currentDevice["id"] == device["id"]) {
+		lWarning() << log().arg("Trying to set playback device that is the current one :") << device["id"]
+		           << "; return";
+		return;
+	}
 	auto audioDevice =
 	    ToolModel::findAudioDevice(device["id"].toString(), linphone::AudioDevice::Capabilities::CapabilityPlay);
 	if (audioDevice) {
-		auto defaultOutput = CoreModel::getInstance()->getCore()->getDefaultOutputAudioDevice();
-		if (defaultOutput != audioDevice) {
-			lInfo() << log().arg("Set default playback device") << device["id"];
-			CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(audioDevice);
-		}
-		if (CoreModel::getInstance()->getCore()->getOutputAudioDevice() != audioDevice) {
-			lInfo() << log().arg("Set playback device") << device["id"];
-			CoreModel::getInstance()->getCore()->setOutputAudioDevice(audioDevice);
-			emit playbackDeviceChanged(device);
-			resetCaptureGraph();
-		} else {
-			lInfo() << log().arg("Trying to set ouput device that is the current one :") << device["id"] << "; return";
-		}
+		lInfo() << log().arg("Set playback device") << device["id"];
+		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(audioDevice);
+		CoreModel::getInstance()->getCore()->setOutputAudioDevice(audioDevice);
+		emit playbackDeviceChanged(device);
+		resetCaptureGraph();
 	} else lWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
 

@@ -84,22 +84,21 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboBox {
+				ComboSetting {
 					id: outputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
-					model: SettingsCpp.playbackDevices
-					oneLine: true
-					currentIndex: Utils.findIndex(model, function (entry) {
-						return Utils.equalObject(entry,SettingsCpp.playbackDevice)
-					})
+					entries: SettingsCpp.playbackDevices
+					propertyName: "playbackDevice"
+					propertyOwner: SettingsCpp
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
 						target: outputAudioDeviceCBox
 						function onCurrentValueChanged() {
-							SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
+							if (!Utils.equalObject(outputAudioDeviceCBox.currentValue, SettingsCpp.playbackDevice))
+								SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
 						}
 					}
 					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
@@ -137,28 +136,21 @@ ColumnLayout {
 						Layout.fillWidth: true
 					}
 				}
-				ComboBox {
+				ComboSetting {
 					id: inputAudioDeviceCBox
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
-					model: SettingsCpp.captureDevices
-					currentIndex: Utils.findIndex(model, function (entry) {
-						return Utils.equalObject(entry,SettingsCpp.captureDevice)
-					})
+					entries: SettingsCpp.captureDevices
+					propertyName: "captureDevice"
+					propertyOwner: SettingsCpp
 					textRole: 'display_name'
 					Connections {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
 						target: inputAudioDeviceCBox
 						function onCurrentValueChanged() {
-							SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
-						}
-					}
-					Connections {
-						target: SettingsCpp
-						function onCaptureDeviceChanged() {
-							console.log("capture device changed in settings, force changing it in combobox")
-							inputAudioDeviceCBox.currentValue = SettingsCpp.captureDevice
+							if (!Utils.equalObject(inputAudioDeviceCBox.currentValue, SettingsCpp.captureDevice))
+								SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
 						}
 					}
 					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
