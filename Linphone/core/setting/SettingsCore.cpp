@@ -475,8 +475,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	// Audio device(s)
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetCaptureDevice, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToModel([this, device]() {
-			mAutoSaved = true;
-			SettingsModel::getInstance()->setCaptureDevice(device);
+			if (device["id"] != mCaptureDevice["id"]) {
+				mAutoSaved = true;
+				SettingsModel::getInstance()->setCaptureDevice(device);
+			} else {
+				lWarning() << log().arg("Trying to set same current capture device, return");
+			}
 		});
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::captureDeviceChanged, [this](QVariantMap device) {
@@ -495,8 +499,12 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 
 	mSettingsModelConnection->makeConnectToCore(&SettingsCore::lSetPlaybackDevice, [this](QVariantMap device) {
 		mSettingsModelConnection->invokeToModel([this, device]() {
-			mAutoSaved = true;
-			SettingsModel::getInstance()->setPlaybackDevice(device);
+			if (device["id"] != mPlaybackDevice["id"]) {
+				mAutoSaved = true;
+				SettingsModel::getInstance()->setPlaybackDevice(device);
+			} else {
+				lWarning() << log().arg("Trying to set same current playback device, return");
+			}
 		});
 	});
 	mSettingsModelConnection->makeConnectToModel(&SettingsModel::playbackDeviceChanged, [this](QVariantMap device) {
