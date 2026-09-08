@@ -102,6 +102,9 @@ void CoreModel::start() {
 		auto ldapFriendList = mCore->getFriendListByName("ldap_friends");
 		if (ldapFriendList) mCore->removeFriendList(ldapFriendList);
 	}
+	if (mCore->getVideoDisplayFilter().empty()) {
+		mCore->setVideoDisplayFilter("MSQOGL");
+	}
 	mCore->enableFriendListSubscription(true);
 	if (mCore->getLogCollectionUploadServerUrl().empty())
 		mCore->setLogCollectionUploadServerUrl(Constants::DefaultUploadLogsServer);
