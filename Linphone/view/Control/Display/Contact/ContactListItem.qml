@@ -73,12 +73,27 @@ FocusScope {
             anchors.bottom: parent.bottom
             spacing: Utils.getSizeWithScreenRatio(16)
             z: contactArea.z + 1
-            Avatar {
+            Item {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
                 Layout.leftMargin: Utils.getSizeWithScreenRatio(5)
-                contact: searchResultItem
-                shadowEnabled: false
+                Avatar {
+                    anchors.fill: parent
+                    contact: searchResultItem
+                    shadowEnabled: false
+                }
+                // BLF (Busy Lamp Field) indicator: idle/ringing/busy, driven by dialog-info NOTIFYs.
+                Rectangle {
+                    visible: searchResultItem.core.dialogMonitoringEnabled
+                    width: Utils.getSizeWithScreenRatio(13)
+                    height: width
+                    radius: width / 2
+                    color: searchResultItem.core.dialogStateColor
+                    border.color: DefaultStyle.main2_0
+                    border.width: Utils.getSizeWithScreenRatio(2)
+                    anchors.right: parent.right
+                    anchors.bottom: parent.bottom
+                }
             }
             ColumnLayout {
                 spacing: 0
@@ -222,6 +237,20 @@ FocusScope {
                             onClicked: {
                                 searchResultItem.core.lSetStarred(
                                             !searchResultItem.core.starred)
+                                friendPopup.close()
+                            }
+                            style: ButtonStyle.noBackground
+                        }
+                        IconLabelButton {
+                            Layout.fillWidth: true
+                            visible: searchResultItem && searchResultItem.core.looksLikeSipExtension
+                            text: searchResultItem.core.dialogMonitoringEnabled ? qsTr("Arrêter le suivi BLF")
+                                                                                : qsTr("Suivre l'état (BLF)")
+                            icon.source: AppIcons.phone
+                            spacing: Utils.getSizeWithScreenRatio(10)
+                            textColor: DefaultStyle.main2_500_main
+                            onClicked: {
+                                searchResultItem.core.toggleDialogMonitoring()
                                 friendPopup.close()
                             }
                             style: ButtonStyle.noBackground

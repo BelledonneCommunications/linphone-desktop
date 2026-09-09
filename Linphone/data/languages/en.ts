@@ -3165,6 +3165,24 @@ Only your correspondent can decrypt them.</translation>
 <context>
     <name>ContactPage</name>
     <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="268"/>
+        <source>import_contacts_accessible_name</source>
+        <extracomment>Import contacts from a vCard file</extracomment>
+        <translation>Import contacts</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="305"/>
+        <source>information_popup_vcard_import_success_message</source>
+        <extracomment>&quot;Contacts importés&quot;</extracomment>
+        <translation>%1 contact(s) imported</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="310"/>
+        <source>information_popup_vcard_import_error_message</source>
+        <extracomment>&quot;Aucun contact n&apos;a pu être importé depuis ce fichier.&quot;</extracomment>
+        <translation>No contacts could be imported from this file.</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="16"/>
         <source>contacts_add</source>
         <extracomment>&quot;Ajouter un contact&quot;</extracomment>
@@ -3458,6 +3476,11 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="872"/>
         <source>information_popup_error_title</source>
         <translation>Error</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="304"/>
+        <source>information_popup_success_title</source>
+        <translation>Success</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="874"/>

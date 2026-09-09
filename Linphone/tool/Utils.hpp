@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QSize>
 #include <QString>
+#include <QUrl>
 
 #include "Constants.hpp"
 #include "tool/AbstractObject.hpp"
@@ -104,6 +105,11 @@ public:
 	Q_INVOKABLE static int getRandomIndex(int size);
 	Q_INVOKABLE static bool copyToClipboard(const QString &text);
 	Q_INVOKABLE static QString createVCardFile(const QString &username, const QString &vcardAsString);
+	// Bulk contact import: parses every vCard in the given file and adds each
+	// as a Friend to the app's contact list. Runs on the linphone thread;
+	// the returned VariantObject's `value` becomes the imported count once
+	// ready (0 or -1 on failure/bad path).
+	Q_INVOKABLE static VariantObject *importVCardFile(const QUrl &fileUrl);
 	Q_INVOKABLE static void shareByEmail(const QString &subject,
 	                                     const QString &body = QString(),
 	                                     const QString &attachment = QString(),
