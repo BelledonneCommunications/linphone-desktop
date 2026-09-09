@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define NOMINMAX
+
 #include "Utils.hpp"
 
 #include "UriTools.hpp"
@@ -39,6 +41,10 @@
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
+
+#ifdef Q_OS_WIN
+#include "tool/native/DesktopTools.hpp"
+#endif
 
 #include <limits.h>
 #include <signal.h>
@@ -309,6 +315,9 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 	window->raise(); // Raise ensure to get focus on Mac
 	lInfo() << "[Utils] : request activate";
 	window->requestActivate();
+#ifdef Q_OS_WIN
+	DesktopTools::bringToFront(window);
+#endif
 }
 
 QString Utils::createAvatar(const QUrl &fileUrl) {
