@@ -27,6 +27,7 @@
 #include <windows.h>
 
 class VideoSourceDescriptorModel;
+class QWindow;
 // =============================================================================
 
 class DesktopTools : public QObject {
@@ -55,6 +56,7 @@ public:
 	}
 	static uintptr_t getDisplayIndex(void *screenSharing);
 	static QRect getWindowGeometry(void *screenSharing);
+	static void bringToFront(QWindow *window);
 	HWND mWindowId = 0; // Window
 	VideoSourceDescriptorModel *mVideoSourceDescriptorModel = nullptr;
 
