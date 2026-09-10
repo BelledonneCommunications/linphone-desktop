@@ -42,7 +42,7 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 #include "tool/native/DesktopTools.hpp"
 #endif
 
@@ -315,7 +315,7 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 	window->raise(); // Raise ensure to get focus on Mac
 	lInfo() << "[Utils] : request activate";
 	window->requestActivate();
-#ifdef Q_OS_WIN
+#if defined(Q_OS_WIN) || defined(Q_OS_MACOS)
 	DesktopTools::bringToFront(window);
 #endif
 }
