@@ -22,9 +22,11 @@
 #include "config.h"
 
 #include <QDebug>
+#include <QGuiApplication>
 #include <QPixmap>
 #include <QRect>
 #include <QThread>
+#include <QWindow>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 #include <fcntl.h>
@@ -36,6 +38,32 @@
 
 DesktopTools::~DesktopTools() {
 	setScreenSaverStatus(true);
+}
+
+void DesktopTools::bringToFront(QWindow *window) {
+	if (!window) return;
+	window->raise();
+	window->requestActivate();
+	if (QGuiApplication::platformName() != QStringLiteral("xcb")) return;
+	auto handle = static_cast<::Window>(window->winId());
+	if (!handle) return;
+	Display *display = XOpenDisplay(NULL);
+	if (!display) return;
+	Atom activeWindow = XInternAtom(display, "_NET_ACTIVE_WINDOW", True);
+	if (activeWindow != None) {
+		XEvent event = {};
+		event.xclient.type = ClientMessage;
+		event.xclient.window = handle;
+		event.xclient.message_type = activeWindow;
+		event.xclient.format = 32;
+		event.xclient.data.l[0] = 2;
+		event.xclient.data.l[1] = CurrentTime;
+		XSendEvent(display, DefaultRootWindow(display), False, SubstructureNotifyMask | SubstructureRedirectMask,
+		           &event);
+		XRaiseWindow(display, handle);
+		XFlush(display);
+	}
+	XCloseDisplay(display);
 }
 
 bool DesktopTools::getScreenSaverStatus() const {
