@@ -309,9 +309,13 @@ static void retryBringToFront(QQuickWindow *window) {
 			int attempts = timer->property("attempts").toInt() + 1;
 			timer->setProperty("attempts", attempts);
 			if (window->isActive() || attempts > 6) {
+				lInfo() << "[Utils] : bring to front stopped after" << attempts
+				        << "attempts, active =" << window->isActive();
 				timer->stop();
 				return;
 			}
+			lInfo() << "[Utils] : bring to front retry" << attempts << "exposed =" << window->isExposed()
+			        << "active =" << window->isActive();
 			DesktopTools::bringToFront(window);
 		});
 	}
