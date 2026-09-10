@@ -26,6 +26,7 @@
 
 // =============================================================================
 class VideoSourceDescriptorModel;
+class QWindow;
 
 class DesktopTools : public QObject {
 	Q_OBJECT
@@ -53,6 +54,7 @@ public:
 	}
 	static uintptr_t getDisplayIndex(void *screenSharing);
 	static QRect getWindowGeometry(void *screenSharing);
+	static void bringToFront(QWindow *window);
 
 signals:
 	void screenSaverStatusChanged(bool status);
