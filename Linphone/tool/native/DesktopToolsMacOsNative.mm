@@ -2,13 +2,25 @@
 #include "config.h"
 
 #import <AVFoundation/AVFoundation.h>
+#import <AppKit/AppKit.h>
 #import <ScreenCaptureKit/ScreenCaptureKit.h>
 #include <QDebug>
 #include <QRect>
 #include <QThread>
+#include <QWindow>
 #include <Availability.h>
 
 void DesktopTools::init(){
+}
+
+void DesktopTools::bringToFront(QWindow *window) {
+	if (!window) return;
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Wdeprecated-declarations"
+	[NSApp activateIgnoringOtherApps:YES];
+#pragma clang diagnostic pop
+	window->raise();
+	window->requestActivate();
 }
 
 void DesktopTools::requestPermissions(){
