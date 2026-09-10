@@ -44,13 +44,18 @@ void DesktopTools::bringToFront(QWindow *window) {
 	DWORD foregroundThread = foreground ? GetWindowThreadProcessId(foreground, nullptr) : 0;
 	bool attached = foregroundThread && foregroundThread != currentThread &&
 	                AttachThreadInput(currentThread, foregroundThread, TRUE);
+	qInfo() << "[DesktopTools] bringToFront target=" << static_cast<void *>(handle)
+	        << "foreground=" << static_cast<void *>(foreground) << "attached=" << attached
+	        << "exposed=" << window->isExposed();
 	SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 	SetWindowPos(handle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
 	BringWindowToTop(handle);
 	SetForegroundWindow(handle);
 	SetActiveWindow(handle);
 	if (attached) AttachThreadInput(currentThread, foregroundThread, FALSE);
-	if (GetForegroundWindow() != handle) {
+	bool acquired = GetForegroundWindow() == handle;
+	qInfo() << "[DesktopTools] bringToFront foreground acquired =" << acquired;
+	if (!acquired) {
 		FLASHWINFO flashInfo;
 		ZeroMemory(&flashInfo, sizeof(flashInfo));
 		flashInfo.cbSize = sizeof(flashInfo);
