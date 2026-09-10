@@ -62,6 +62,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QSvgRenderer>
+#include <QTimer>
 
 #ifdef Q_OS_WIN
 #ifndef NOMINMAX
@@ -298,6 +299,26 @@ VariantObject *Utils::haveAccount() {
 	return result;
 }
 
+static void retryBringToFront(QQuickWindow *window) {
+	auto timer = window->findChild<QTimer *>(QStringLiteral("bringToFrontRetry"), Qt::FindDirectChildrenOnly);
+	if (!timer) {
+		timer = new QTimer(window);
+		timer->setObjectName(QStringLiteral("bringToFrontRetry"));
+		timer->setInterval(150);
+		QObject::connect(timer, &QTimer::timeout, window, [window, timer]() {
+			int attempts = timer->property("attempts").toInt() + 1;
+			timer->setProperty("attempts", attempts);
+			if (window->isActive() || attempts > 6) {
+				timer->stop();
+				return;
+			}
+			DesktopTools::bringToFront(window);
+		});
+	}
+	timer->setProperty("attempts", 0);
+	timer->start();
+}
+
 void Utils::smartShowWindow(QQuickWindow *window) {
 	if (!window) return;
 	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
@@ -313,6 +334,7 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 	lInfo() << "[Utils] : request activate";
 	window->requestActivate();
 	DesktopTools::bringToFront(window);
+	retryBringToFront(window);
 }
 
 QString Utils::createAvatar(const QUrl &fileUrl) {
