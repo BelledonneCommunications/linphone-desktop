@@ -344,6 +344,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	}
 	bool isConference = !!core->findConferenceInformationFromUri(address);
 	if (isConference) mediaEncryption = linphone::MediaEncryption::ZRTP;
+	else if (mediaEncryption == linphone::MediaEncryption::None) mediaEncryption = core->getMediaEncryption();
 
 	if (SettingsModel::dndEnabled(core->getConfig())) { // Force tones for outgoing calls when in DND mode (ringback,
 		                                                // dtmf, etc … ) disabled again when no more calls are running.
