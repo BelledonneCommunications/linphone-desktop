@@ -132,12 +132,20 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 			auto linphoneChatRooms = currentAccount->filterChatRooms(Utils::appStringToCoreString(mFilter));
 			for (auto it : linphoneChatRooms) {
 				auto state = it->getState();
+				auto subject = it->getSubject();
+				QString type = "group";
+				if (subject.empty()) {
+					type = "1-1";
+					subject = it->getPeerAddress() ? it->getPeerAddress()->asStringUriOnly() : "EMPTY";
+				}
 				if (state == linphone::ChatRoom::State::CreationFailed ||
 				    state == linphone::ChatRoom::State::CreationPending ||
 				    state == linphone::ChatRoom::State::TerminationPending ||
 				    state == linphone::ChatRoom::State::Instantiated) {
+					lWarning() << log().arg("Chatroom %1 is in state %2, ignore it.").arg(subject).arg((int)state);
 					continue;
 				}
+				lInfo() << log().arg("Add %1 chatroom to list : %2").arg(type).arg(subject);
 				auto model = createChatCore(it);
 				chats->push_back(model);
 			}
