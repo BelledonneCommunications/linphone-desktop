@@ -376,7 +376,6 @@ void SettingsModel::setCaptureDevice(const QVariantMap &device) {
 		lInfo() << log().arg("Set capture device") << device["id"];
 		CoreModel::getInstance()->getCore()->setDefaultInputAudioDevice(audioDevice);
 		CoreModel::getInstance()->getCore()->setInputAudioDevice(audioDevice);
-		emit captureDeviceChanged(device);
 		resetCaptureGraph();
 	} else {
 		//: "Cannot set Capture device. The ID cannot be matched with an existant device : %1"
@@ -454,7 +453,6 @@ void SettingsModel::setPlaybackDevice(const QVariantMap &device) {
 		lInfo() << log().arg("Set playback device") << device["id"];
 		CoreModel::getInstance()->getCore()->setDefaultOutputAudioDevice(audioDevice);
 		CoreModel::getInstance()->getCore()->setOutputAudioDevice(audioDevice);
-		emit playbackDeviceChanged(device);
 		resetCaptureGraph();
 	} else lWarning() << "Cannot set Playback device. The ID cannot be matched with an existant device : " << device;
 }
