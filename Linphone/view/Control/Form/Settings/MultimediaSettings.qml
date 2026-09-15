@@ -97,8 +97,7 @@ ColumnLayout {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
 						target: outputAudioDeviceCBox
 						function onCurrentValueChanged() {
-							if (!Utils.equalObject(outputAudioDeviceCBox.currentValue, SettingsCpp.playbackDevice))
-								SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
+							SettingsCpp.lSetPlaybackDevice(outputAudioDeviceCBox.currentValue)
 						}
 					}
 					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
@@ -149,8 +148,7 @@ ColumnLayout {
 						enabled: mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving
 						target: inputAudioDeviceCBox
 						function onCurrentValueChanged() {
-							if (!Utils.equalObject(inputAudioDeviceCBox.currentValue, SettingsCpp.captureDevice))
-								SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
+							SettingsCpp.lSetCaptureDevice(inputAudioDeviceCBox.currentValue)
 						}
 					}
 					accessibleLabel: qsTr("choose_something_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
