@@ -197,12 +197,12 @@ void SettingsModel::accessCallSettings() {
 
 	// Audio
 	CoreModel::getInstance()->getCore()->reloadSoundDevices();
-	emit captureDevicesChanged(getCaptureDevices());
-	emit playbackDevicesChanged(getPlaybackDevices());
 	emit playbackDeviceChanged(getPlaybackDevice());
-	emit ringerDevicesChanged(getRingerDevices());
+	emit playbackDevicesChanged(getPlaybackDevices());
 	emit ringerDeviceChanged(getRingerDevice());
+	emit ringerDevicesChanged(getRingerDevices());
 	emit captureDeviceChanged(getCaptureDevice());
+	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 }
@@ -211,12 +211,12 @@ void SettingsModel::updateCallSettings() {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 
 	// Audio
-	emit captureDevicesChanged(getCaptureDevices());
-	emit playbackDevicesChanged(getPlaybackDevices());
 	emit playbackDeviceChanged(getPlaybackDevice());
-	emit ringerDevicesChanged(getRingerDevices());
+	emit playbackDevicesChanged(getPlaybackDevices());
 	emit ringerDeviceChanged(getRingerDevice());
+	emit ringerDevicesChanged(getRingerDevices());
 	emit captureDeviceChanged(getCaptureDevice());
+	emit captureDevicesChanged(getCaptureDevices());
 	emit playbackGainChanged(getPlaybackGain());
 	emit captureGainChanged(getCaptureGain());
 }
