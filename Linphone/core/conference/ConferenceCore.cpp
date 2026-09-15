@@ -100,7 +100,7 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 				    }
 			    }
 		    }
-		    emit conferenceStateChanged(newState);
+		    mConferenceModelConnection->invokeToCore([this, newState] { emit conferenceStateChanged(newState); });
 	    });
 
 	mConferenceModelConnection->makeConnectToModel(
@@ -108,7 +108,6 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 	    [this](const std::shared_ptr<linphone::Conference> &conference, int count) {
 		    if (auto participantDevice = conference->getActiveSpeakerParticipantDevice()) {
 			    auto device = ParticipantDeviceCore::create(participantDevice);
-			    setActiveSpeakerDevice(device);
 			    mConferenceModelConnection->invokeToCore([this, device]() { setActiveSpeakerDevice(device); });
 		    } else if (conference->getParticipantDeviceList().size() > 1) {
 			    for (auto &device : conference->getParticipantDeviceList()) {
@@ -250,7 +249,7 @@ QSharedPointer<ParticipantCore> ConferenceCore::getMe() const {
 }
 
 void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDeviceCore> &device) {
-	if (mActiveSpeakerDevice != device) {
+	if ((mActiveSpeakerDevice && device) && mActiveSpeakerDevice->getUniqueAddress() != device->getUniqueAddress()) {
 		mActiveSpeakerDevice = device;
 		qDebug() << log().arg("Changing active speaker device to %1").arg(device ? device->getAddress() : "None");
 		emit activeSpeakerDeviceChanged();
