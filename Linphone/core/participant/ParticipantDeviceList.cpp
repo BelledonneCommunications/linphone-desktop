@@ -146,13 +146,17 @@ void ParticipantDeviceList::setConferenceCore(const QSharedPointer<ConferenceCor
 				});
 			connect(mConferenceCore.get(), &ConferenceCore::participantDeviceAdded, this,
 			        [this](const std::shared_ptr<linphone::ParticipantDevice> &device) {
-				        mCoreModelConnection->invokeToModel([this, device] {
-					        auto deviceCore = ParticipantDeviceCore::create(device);
-					        mCoreModelConnection->invokeToCore([this, deviceCore]() {
-						        lDebug() << "[ParticipantDeviceList] : add a device";
-						        add(deviceCore);
+				        QString uniqueAddress = Utils::coreStringToAppString(device->getAddress()->asString().c_str());
+				        auto deviceCore = findDeviceByUniqueAddress(uniqueAddress);
+				        if (!deviceCore) {
+					        mCoreModelConnection->invokeToModel([this, device] {
+						        auto deviceCore = ParticipantDeviceCore::create(device);
+						        mCoreModelConnection->invokeToCore([this, deviceCore]() {
+							        lDebug() << "[ParticipantDeviceList] : add a device";
+							        add(deviceCore);
+						        });
 					        });
-				        });
+				        }
 			        });
 			connect(mConferenceCore.get(), &ConferenceCore::participantDeviceRemoved, this,
 			        [this](const std::shared_ptr<const linphone::ParticipantDevice> &participantDevice) {
