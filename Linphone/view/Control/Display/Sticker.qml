@@ -206,7 +206,7 @@ Item {
 			Timer{
 				id: resetTimer
 				interval: 1
-				triggeredOnStart: true
+				// triggeredOnStart: true
 				onTriggered: {cameraLoader.reset = !cameraLoader.reset}
 			}
             active: mainItem.visible && !mainItem.remoteIsPaused

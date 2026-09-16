@@ -75,7 +75,9 @@ public:
 	void removeParticipantDeviceModel();
 	void removeCallModel();
 	void removeLinphonePlayer();
+	void removeParticipantDeviceGui();
 	void removePlayerGui();
+	void removeCallGui();
 	void onPlayerRebuilt();
 
 	void callStateChanged(LinphoneEnums::CallState state);

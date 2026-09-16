@@ -54,7 +54,7 @@ CameraGui::~CameraGui() {
 		lDebug() << "[CameraGui] Deactivation";
 		App::postModelBlock([] { CoreModel::getInstance()->getCore()->enableVideoPreview(false); });
 	}
-	// setWindowIdLocation(None);
+	setWindowIdLocation(None);
 }
 
 // Hack for Qt constness on create Renderer.
@@ -245,9 +245,15 @@ CallGui *CameraGui::getCallGui() const {
 
 void CameraGui::setCallGui(CallGui *callGui) {
 	if (mCallGui != callGui) {
-		if (mCallGui) disconnect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
+		if (mCallGui) {
+			disconnect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
+			disconnect(mCallGui, &CallGui::destroyed, this, &CameraGui::removeCallGui);
+		}
 		mCallGui = callGui;
-		if (mCallGui) connect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
+		if (mCallGui) {
+			connect(mCallGui->getCore(), &CallCore::stateChanged, this, &CameraGui::callStateChanged);
+			disconnect(mCallGui, &CallGui::destroyed, this, &CameraGui::removeCallGui);
+		}
 		lDebug() << log().arg("Set Call") << mCallGui;
 		emit callGuiChanged(mCallGui);
 		updateWindowIdLocation();
@@ -260,9 +266,16 @@ ParticipantDeviceGui *CameraGui::getParticipantDeviceGui() const {
 
 void CameraGui::setParticipantDeviceGui(ParticipantDeviceGui *deviceGui) {
 	if (mParticipantDeviceGui != deviceGui) {
+		if (mParticipantDeviceGui) {
+			disconnect(mParticipantDeviceGui, &ParticipantDeviceGui::destroyed, this,
+			           &CameraGui::removeParticipantDeviceGui);
+		}
 		mParticipantDeviceGui = deviceGui;
+		if (mParticipantDeviceGui) {
+			connect(mParticipantDeviceGui, &ParticipantDeviceGui::destroyed, this,
+			        &CameraGui::removeParticipantDeviceGui);
+		}
 		lDebug() << log().arg("Set Device") << mParticipantDeviceGui;
-		// setIsPreview(mParticipantDeviceGui->getCore()->isLocal());
 		emit participantDeviceGuiChanged(mParticipantDeviceGui);
 		updateWindowIdLocation();
 	}
@@ -291,9 +304,19 @@ void CameraGui::setPlayerGui(SoundPlayerGui *playerGui) {
 	}
 }
 
+void CameraGui::removeCallGui() {
+	mCallGui = nullptr;
+	setWindowIdLocation(WindowIdLocation::None);
+}
+
 void CameraGui::removePlayerGui() {
 	mPlayerGui = nullptr;
 	setWindowIdLocation(WindowIdLocation::None);
+}
+
+void CameraGui::removeParticipantDeviceGui() {
+	mParticipantDeviceGui = nullptr;
+	updateWindowIdLocation();
 }
 
 void CameraGui::onPlayerRebuilt() {
