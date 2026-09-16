@@ -109,8 +109,7 @@ ColumnLayout {
 					to: 1.0
 					value: SettingsCpp.playbackGain
 					onMoved: {
-						if (mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving) SettingsCpp.lSetPlaybackGain(value)
-						else SettingsCpp.playbackGain = value
+						SettingsCpp.lSetPlaybackGain(value)
 					}
 					//: %1 volume
 					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
@@ -160,8 +159,7 @@ ColumnLayout {
 					to: 1.0
 					value: SettingsCpp.captureGain
 					onMoved: {
-						if (mainItem.call || mainItem.forceUpdatingDeviceWithoutSaving) SettingsCpp.lSetCaptureGain(value)
-						else SettingsCpp.captureGain = value
+						SettingsCpp.lSetCaptureGain(value)
 					}
 					//: %1 volume
 					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
