@@ -119,55 +119,55 @@
 <context>
     <name>AccountManager</name>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="94"/>
+        <location filename="../../model/account/AccountManager.cpp" line="95"/>
         <source>assistant_account_login_already_connected_error</source>
         <extracomment>&quot;The account is already connected&quot;</extracomment>
         <translation>The account is already connected</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="146"/>
+        <location filename="../../model/account/AccountManager.cpp" line="147"/>
         <source>assistant_account_login_outbound_proxy_uri_error</source>
         <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
         <translation>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="109"/>
+        <location filename="../../model/account/AccountManager.cpp" line="110"/>
         <source>assistant_account_login_proxy_address_error</source>
         <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
         <translation>Unable to create proxy address. Please check the domain name.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="122"/>
+        <location filename="../../model/account/AccountManager.cpp" line="123"/>
         <source>assistant_account_login_address_configuration_error</source>
         <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
         <translation>Unable to configure address: `%1`.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="133"/>
+        <location filename="../../model/account/AccountManager.cpp" line="134"/>
         <source>assistant_account_login_registrar_uri_error</source>
         <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
         <translation>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="153"/>
+        <location filename="../../model/account/AccountManager.cpp" line="154"/>
         <source>assistant_account_login_params_configuration_error</source>
         <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
         <translation>Unable to configure account settings.</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="177"/>
+        <location filename="../../model/account/AccountManager.cpp" line="178"/>
         <source>assistant_account_login_forbidden_error</source>
         <extracomment>&quot;Username and password do not match&quot;</extracomment>
         <translation>Username and password do not match</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="179"/>
+        <location filename="../../model/account/AccountManager.cpp" line="180"/>
         <source>assistant_account_login_error</source>
         <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
         <translation>Error during connection</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountManager.cpp" line="194"/>
+        <location filename="../../model/account/AccountManager.cpp" line="195"/>
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Unable to add account.</translation>
@@ -881,65 +881,65 @@
         <translation>Recording has been saved in file : %1</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="433"/>
-        <location filename="../../core/call/CallCore.cpp" line="458"/>
+        <location filename="../../core/call/CallCore.cpp" line="435"/>
+        <location filename="../../core/call/CallCore.cpp" line="460"/>
         <source>call_stats_codec_label</source>
         <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
         <translation>Codec: %1 / %2 kHz</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="437"/>
-        <location filename="../../core/call/CallCore.cpp" line="461"/>
+        <location filename="../../core/call/CallCore.cpp" line="439"/>
+        <location filename="../../core/call/CallCore.cpp" line="463"/>
         <source>call_stats_bandwidth_label</source>
         <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
         <translation>Bandwidth : %1 %2 kbits/s %3 %4 kbits/s</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="443"/>
-        <location filename="../../core/call/CallCore.cpp" line="466"/>
+        <location filename="../../core/call/CallCore.cpp" line="445"/>
+        <location filename="../../core/call/CallCore.cpp" line="468"/>
         <source>call_stats_loss_rate_label</source>
         <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
         <translation>Loss rate: %1% %2%</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="448"/>
+        <location filename="../../core/call/CallCore.cpp" line="450"/>
         <source>call_stats_jitter_buffer_label</source>
         <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
         <translation>Jitter buffer : %1 ms</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="475"/>
+        <location filename="../../core/call/CallCore.cpp" line="477"/>
         <source>call_stats_resolution_label</source>
         <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
         <translation>Video resolution: %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="481"/>
+        <location filename="../../core/call/CallCore.cpp" line="483"/>
         <source>call_stats_fps_label</source>
         <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
         <translation>FPS : %1 %2 %3 %4</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="761"/>
+        <location filename="../../core/call/CallCore.cpp" line="763"/>
         <source>media_encryption_dtls</source>
         <extracomment>DTLS</extracomment>
         <translation>DTLS</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="764"/>
+        <location filename="../../core/call/CallCore.cpp" line="766"/>
         <source>media_encryption_none</source>
         <extracomment>None</extracomment>
         <translation>None</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="757"/>
-        <location filename="../../core/call/CallCore.cpp" line="767"/>
+        <location filename="../../core/call/CallCore.cpp" line="759"/>
+        <location filename="../../core/call/CallCore.cpp" line="769"/>
         <source>media_encryption_srtp</source>
         <extracomment>SRTP</extracomment>
         <translation>SRTP</translation>
     </message>
     <message>
-        <location filename="../../core/call/CallCore.cpp" line="770"/>
+        <location filename="../../core/call/CallCore.cpp" line="772"/>
         <source>media_encryption_post_quantum</source>
         <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
         <translation>Post quantum ZRTP</translation>
@@ -1186,67 +1186,67 @@
 <context>
     <name>CallModel</name>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="395"/>
+        <location filename="../../model/call/CallModel.cpp" line="397"/>
         <source>call_error_no_response_toast</source>
         <extracomment>&quot;No response&quot;</extracomment>
         <translation>No response</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="399"/>
+        <location filename="../../model/call/CallModel.cpp" line="401"/>
         <source>call_error_forbidden_resource_toast</source>
         <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
         <translation>403 : Forbidden resource</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="403"/>
+        <location filename="../../model/call/CallModel.cpp" line="405"/>
         <source>call_error_not_answered_toast</source>
         <extracomment>&quot;Request timeout&quot;</extracomment>
         <translation>Request timeout</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="407"/>
+        <location filename="../../model/call/CallModel.cpp" line="409"/>
         <source>call_error_user_declined_toast</source>
         <extracomment>&quot;User declined the call&quot;</extracomment>
         <translation>User declined the call</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="411"/>
+        <location filename="../../model/call/CallModel.cpp" line="413"/>
         <source>call_error_user_not_found_toast</source>
         <extracomment>&quot;User was not found&quot;</extracomment>
         <translation>User was not found</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="415"/>
+        <location filename="../../model/call/CallModel.cpp" line="417"/>
         <source>call_error_user_busy_toast</source>
         <extracomment>&quot;User is busy&quot;</extracomment>
         <translation>User is busy</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="419"/>
+        <location filename="../../model/call/CallModel.cpp" line="421"/>
         <source>call_error_incompatible_media_params_toast</source>
         <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
         <translation>User can&apos;t accept your call</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="423"/>
+        <location filename="../../model/call/CallModel.cpp" line="425"/>
         <source>call_error_io_error_toast</source>
         <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
         <translation>Unavailable service or network error</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="427"/>
+        <location filename="../../model/call/CallModel.cpp" line="429"/>
         <source>call_error_do_not_disturb_toast</source>
         <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
         <translation>User cannot be disturbed</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="431"/>
+        <location filename="../../model/call/CallModel.cpp" line="433"/>
         <source>call_error_temporarily_unavailable_toast</source>
         <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
         <translation>Temporarily unavailable</translation>
     </message>
     <message>
-        <location filename="../../model/call/CallModel.cpp" line="435"/>
+        <location filename="../../model/call/CallModel.cpp" line="437"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
         <translation>Server timeout</translation>
@@ -3768,7 +3768,7 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
         <translation type="vanished">Remote provisioning cannot be retrieved</translation>
     </message>
     <message>
-        <location filename="../../model/core/CoreModel.cpp" line="251"/>
+        <location filename="../../model/core/CoreModel.cpp" line="254"/>
         <source>fetching_config_empty_path_failure_error_message</source>
         <extracomment>&quot;Could not get file path for fetching config, return&quot;</extracomment>
         <translation>Could not get file path for fetching config, return</translation>
@@ -5312,39 +5312,39 @@ Expiration : %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="62"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="105"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="164"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="253"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="153"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>choose_something_accessible_name</source>
         <extracomment>Choose %1</extracomment>
         <translation>Choose %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="82"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="105"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="118"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="115"/>
         <source>multimedia_settings_speaker_title</source>
         <extracomment>&quot;Haut-parleurs&quot;</extracomment>
         <translation>Speakers</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="118"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="177"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="115"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
         <translation>%1 volume</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="135"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="164"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="177"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="132"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="153"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>multimedia_settings_microphone_title</source>
         <extracomment>&quot;Microphone&quot;</extracomment>
         <translation>Microphone</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="233"/>
-        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="253"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="221"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
         <source>multimedia_settings_camera_title</source>
         <extracomment>&quot;Caméra&quot;</extracomment>
         <translation>Camera</translation>
@@ -6569,7 +6569,7 @@ To enable them in a commercial project, please contact us.</translation>
 <context>
     <name>SettingsModel</name>
     <message>
-        <location filename="../../model/setting/SettingsModel.cpp" line="378"/>
+        <location filename="../../model/setting/SettingsModel.cpp" line="382"/>
         <source>set_capture_device_error</source>
         <extracomment>&quot;Cannot set Capture device. The ID cannot be matched with an existant device : %1&quot;</extracomment>
         <translation>Cannot set Capture device. The ID cannot be matched with an existant device : %1</translation>
