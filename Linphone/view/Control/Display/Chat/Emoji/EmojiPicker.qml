@@ -199,28 +199,27 @@ ColumnLayout {
             Repeater {
                 model: mainItem.searchMode ? mainItem.searchModel : mainItem.model.count(grid.category)
                 delegate: Rectangle  {
-                    property alias es: emojiSvg
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(40)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
                     radius: Utils.getSizeWithScreenRatio(40)
                     color: mouseArea.containsMouse ? '#e6e6e6' : '#ffffff'
-                    Image {
-                        id: emojiSvg
-                        source: mainItem.searchMode ? path : mainItem.model.path(grid.category, index, grid.sc)
-                        sourceSize: Qt.size(Utils.getSizeWithScreenRatio(30),Utils.getSizeWithScreenRatio(30))
+                    Text {
+                        id: emojiText
+                        property url source: mainItem.searchMode ? path : mainItem.model.path(grid.category, index, grid.sc)
+                        textFormat: Text.RichText
                         anchors.centerIn: parent
-                        asynchronous: true
+                        text: Utils.codepointFromFilename(UtilsCpp.getFilename(source))
+                        font.pixelSize: Utils.getSizeWithScreenRatio(29)
+                        font.family: DefaultStyle.emojiFont
                     }
                     MouseArea {
                         id: mouseArea
                         anchors.fill: parent
                         hoverEnabled: true
                         cursorShape: Qt.PointingHandCursor
-                        property string imageUrl: emojiSvg.source
                         onClicked: {
-                            var emojiInFont = Utils.codepointFromFilename(UtilsCpp.getFilename(emojiSvg.source))
-                            if (mainItem.editor) mainItem.editor.insert(mainItem.editor.cursorPosition, emojiInFont)
-                            mainItem.emojiClicked(emojiInFont)
+                            if (mainItem.editor) mainItem.editor.insert(mainItem.editor.cursorPosition, emojiText.text)
+                            mainItem.emojiClicked(emojiText.text)
                         }
                     }
                 }
