@@ -22,10 +22,11 @@
 #define EVENT_COUNT_NOTIFIER_MAC_OS_H_
 
 #include "AbstractEventCountNotifier.hpp"
+#include "model/setting/SettingsModel.hpp"
 
 // =============================================================================
 
-extern "C" void notifyEventCountMacOs(int n);
+extern "C" void notifyEventCountMacOs(int n, bool hideNotifications);
 
 class EventCountNotifier : public AbstractEventCountNotifier {
 public:
@@ -33,7 +34,7 @@ public:
 	}
 
 	void notifyEventCount(int n) override {
-		notifyEventCountMacOs(n);
+		notifyEventCountMacOs(n, SettingsModel::getInstance()->getHideNotificationCounter());
 	}
 };
 

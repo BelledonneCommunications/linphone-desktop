@@ -24,7 +24,8 @@
 
 // =============================================================================
 
-void notifyEventCountMacOs (int n) {
-    NSString *badgeStr = (n > 0) ? [NSString stringWithFormat:@"%d", n] : @"";
+void notifyEventCountMacOs(int n, bool hideNotifications)
+{
+    NSString *badgeStr = (n > 0 && hideNotifications) ? [NSString stringWithFormat:@"%d", n] : @"";
     [[NSApp dockTile] setBadgeLabel:badgeStr];
 }
