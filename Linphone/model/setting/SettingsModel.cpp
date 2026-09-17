@@ -1089,6 +1089,7 @@ void SettingsModel::setDownloadFolder(const QString &downloadFolder) {
 // clang-format off
 void SettingsModel::notifyConfigReady(){
 	DEFINE_NOTIFY_CONFIG_READY(disableChatFeature, DisableChatFeature)
+	DEFINE_NOTIFY_CONFIG_READY(hideNotificationCounter, HideNotificationCounter)
 	emit disableMeetingsFeatureChanged();
 	DEFINE_NOTIFY_CONFIG_READY(hideSettings,HideSettings)
 	DEFINE_NOTIFY_CONFIG_READY(hideAccountSettings, HideAccountSettings)
@@ -1120,6 +1121,7 @@ void SettingsModel::notifyConfigReady(){
 }
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideNotificationCounter, HideNotificationCounter, "hide_systray_notification_counter", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
 						Bool,
