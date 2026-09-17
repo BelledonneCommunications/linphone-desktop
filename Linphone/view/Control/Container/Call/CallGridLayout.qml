@@ -42,8 +42,7 @@ Mosaic {
 				anchors.fill: parent
 				qmlName: 'G_'+index
 				call: grid.call && !grid.call.core.isConference ? grid.call : null
-				property var accountObj: UtilsCpp.findLocalAccountByAddress(mainItem.localAddress)
-				account: (index == 0 && accountObj) ? accountObj.value : null
+				account: null
 				displayAll: false
 				displayPresence: false
 				participantDevice: avatarCell.currentDevice
