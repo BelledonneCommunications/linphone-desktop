@@ -350,6 +350,7 @@ Control.Control {
                                                     ? AppIcons.checks
                                                     : mainItem.msgState === LinphoneEnums.ChatMessageState.StatePendingDelivery
                                                     || mainItem.msgState === LinphoneEnums.ChatMessageState.StateIdle
+                                                    || mainItem.msgState === LinphoneEnums.ChatMessageState.StateQueued
                                                         ? AppIcons.hourglass
                                                         : ""
                                     BusyIndicator {

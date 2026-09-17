@@ -89,6 +89,7 @@ linphone::EventLog::Type toLinphone(const LinphoneEnums::EventLogType &capabilit
 LinphoneEnums::EventLogType fromLinphone(const linphone::EventLog::Type &data);
 
 enum class ChatMessageState {
+	StateQueued = int(linphone::ChatMessage::State::Queued),
 	StateIdle = int(linphone::ChatMessage::State::Idle),
 	StateInProgress = int(linphone::ChatMessage::State::InProgress),
 	StateDelivered = int(linphone::ChatMessage::State::Delivered),
