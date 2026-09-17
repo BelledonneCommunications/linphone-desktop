@@ -43,6 +43,12 @@ ConferenceCore::ConferenceCore(const std::shared_ptr<linphone::Conference> &conf
 	auto activeSpeaker = conference->getActiveSpeakerParticipantDevice();
 	if (activeSpeaker) {
 		mActiveSpeakerDevice = ParticipantDeviceCore::create(activeSpeaker);
+	} else if (conference->getParticipantDeviceList().size() > 1) {
+		for (auto &device : conference->getParticipantDeviceList()) {
+			if (!ToolModel::isMe(device->getAddress())) {
+				mActiveSpeakerDevice = ParticipantDeviceCore::create(device);
+			}
+		}
 	}
 	mIsLocalScreenSharing = mConferenceModel->isLocalScreenSharing();
 	mIsScreenSharingEnabled = mConferenceModel->isScreenSharingEnabled();
@@ -92,7 +98,6 @@ void ConferenceCore::setSelf(QSharedPointer<ConferenceCore> me) {
 				    for (auto &device : conference->getParticipantDeviceList()) {
 					    if (!ToolModel::isMe(device->getAddress())) {
 						    auto activeSpeakerDevice = ParticipantDeviceCore::create(device);
-						    auto participant = conference->findParticipant(device->getAddress());
 						    mConferenceModelConnection->invokeToCore(
 						        [this, activeSpeakerDevice]() { setActiveSpeakerDevice(activeSpeakerDevice); });
 						    break;
@@ -249,7 +254,8 @@ QSharedPointer<ParticipantCore> ConferenceCore::getMe() const {
 }
 
 void ConferenceCore::setActiveSpeakerDevice(const QSharedPointer<ParticipantDeviceCore> &device) {
-	if ((mActiveSpeakerDevice && device) && mActiveSpeakerDevice->getUniqueAddress() != device->getUniqueAddress()) {
+	if ((!mActiveSpeakerDevice || !device) && mActiveSpeakerDevice != device ||
+	    mActiveSpeakerDevice->getUniqueAddress() != device->getUniqueAddress()) {
 		mActiveSpeakerDevice = device;
 		qDebug() << log().arg("Changing active speaker device to %1").arg(device ? device->getAddress() : "None");
 		emit activeSpeakerDeviceChanged();
