@@ -62,7 +62,6 @@ Item {
 			Layout.fillHeight: true
             Layout.preferredWidth: Utils.getSizeWithScreenRatio(300)
             Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
-            Layout.bottomMargin: Utils.getSizeWithScreenRatio(10)
 			visible: allDevices.count > 2 || !!mainItem.conference?.core.isScreenSharingEnabled
             //spacing: Utils.getSizeWithScreenRatio(15)	// bugged? First item has twice margins
 			model: allDevices

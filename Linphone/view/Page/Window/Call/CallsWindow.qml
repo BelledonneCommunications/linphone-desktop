@@ -585,14 +585,13 @@ AbstractWindow {
                     }
 
                     // Button open statistics panel
-                    Button{
+                    Button {
                         id: openStatisticPanelButton
                         property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(40)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
-                        Layout.rightMargin: Utils.getSizeWithScreenRatio(30)
                         icon.source: quality >= 4 ? AppIcons.cellSignalFull : quality >= 3 ? AppIcons.cellSignalMedium : quality >= 2 ? AppIcons.cellSignalLow : AppIcons.cellSignalNone
                         colorizationColor: quality >= 2 ? DefaultStyle.grey_0 : DefaultStyle.danger_500_main
                         style: ButtonStyle.noBackgroundLightBorder
