@@ -41,7 +41,9 @@ CallGui *CallProxy::getCurrentCall() {
 void CallProxy::setShowCurrentCall(bool show) {
 	if (mShowCurrentCall != show) {
 		mShowCurrentCall = show;
+		invalidateFilter();
 		emit showCurrentCallChanged();
+		emit countChanged();
 	}
 }
 

@@ -1173,7 +1173,7 @@
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>local_group_call</source>
         <extracomment>&quot;Local group call&quot;</extracomment>
-        <translation>Appel de groupe local</translation>
+        <translation>Appel de groupe</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="117"/>
@@ -1678,6 +1678,10 @@
 </context>
 <context>
     <name>CallsWindow</name>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Fusionner les appels</translation>
+    </message>
     <message>
         <source>call_chat_panel_accessible_title</source>
         <extracomment>Conversation with %1</extracomment>
