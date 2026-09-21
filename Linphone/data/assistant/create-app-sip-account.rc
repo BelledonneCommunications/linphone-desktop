@@ -2,6 +2,7 @@
 <config xmlns="http://www.linphone.org/xsds/lpconfig.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.linphone.org/xsds/lpconfig.xsd lpconfig.xsd">
   <section name="app">
     <entry name="auto_download_incoming_files_max_size" overwrite="true">10000000</entry>
+	<entry name="prefer_basic_chat_room" overwrite="true">1</entry>
   </section>
   <section name="proxy_default_values">
     <entry name="avpf" overwrite="true">1</entry>
