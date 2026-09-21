@@ -15,11 +15,16 @@ Button {
 	shadowEnabled: mainItem.activeFocus || hovered
 	style: ButtonStyle.hoveredBackground
 	property bool inverseLayout: false
+	property bool centerContent: false
 	spacing: Utils.getSizeWithScreenRatio(5)
 
 	contentItem: RowLayout {
         spacing: mainItem.spacing
 		layoutDirection: mainItem.inverseLayout ? Qt.RightToLeft: Qt.LeftToRight
+		Item {
+			visible: mainItem.centerContent
+			Layout.fillWidth: true
+		}
 		EffectImage {
 			imageSource: mainItem.icon.source
 			imageWidth: mainItem.icon.width
@@ -34,9 +39,9 @@ Button {
 		}
 		Text {
 			id: textItem
-			horizontalAlignment: Text.AlignLeft
+			horizontalAlignment: mainItem.centerContent ? Text.AlignHCenter : Text.AlignLeft
 			verticalAlignment: Text.AlignVCenter
-			Layout.fillWidth: true
+			Layout.fillWidth: !mainItem.centerContent
 			wrapMode: Text.WrapAnywhere
 			text: mainItem.text
 			maximumLineCount: 1
