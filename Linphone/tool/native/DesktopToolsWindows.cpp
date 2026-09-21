@@ -35,6 +35,12 @@ DesktopTools::~DesktopTools() {
 	setScreenSaverStatus(true);
 }
 
+bool DesktopTools::isInForeground(QWindow *window) {
+	if (!window || !window->isExposed()) return false;
+	HWND handle = reinterpret_cast<HWND>(window->winId());
+	return handle && GetForegroundWindow() == handle;
+}
+
 void DesktopTools::bringToFront(QWindow *window) {
 	if (!window) return;
 	HWND handle = reinterpret_cast<HWND>(window->winId());
