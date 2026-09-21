@@ -24,6 +24,9 @@ Item {
 	}
 	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
+	readonly property bool joinedByRemote: !!conference && !!call
+		&& call.core.dir === LinphoneEnums.CallDir.Incoming
+	readonly property string conferenceInitiator: call ? call.core.remoteName : ""
 	property int lastConfLayoutBeforeSharing: -1
 	property string localAddress: call 
 		? call.conference
@@ -169,7 +172,9 @@ Item {
 				Text {
 					id: waitText
                     //: "En attente d'autres participants…"
-                    text: qsTr("conference_call_empty")
+                    text: mainItem.joinedByRemote
+                        ? mainItem.conferenceInitiator
+                        : qsTr("conference_call_empty")
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(67)
 					Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
@@ -181,6 +186,7 @@ Item {
 				}
 				Item {
 					Layout.fillWidth: true
+					visible: !mainItem.joinedByRemote
 					BigButton {
 						color: pressed ? DefaultStyle.main2_200 : "transparent"
 						borderColor: DefaultStyle.main2_400
