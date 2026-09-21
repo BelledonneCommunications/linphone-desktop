@@ -1118,7 +1118,7 @@
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>local_group_call</source>
         <extracomment>&quot;Local group call&quot;</extracomment>
-        <translation>Local group call</translation>
+        <translation>Group call</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="117"/>
@@ -1156,7 +1156,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="71"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>Ongoing %1</translation>
+        <translation>%1 in progress</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="99"/>
@@ -1588,6 +1588,10 @@
 </context>
 <context>
     <name>CallsWindow</name>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Merge calls</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="75"/>
         <source>call_transfer_in_progress_toast</source>

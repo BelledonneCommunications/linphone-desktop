@@ -1118,7 +1118,7 @@
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>local_group_call</source>
         <extracomment>&quot;Local group call&quot;</extracomment>
-        <translation>Appel de groupe local</translation>
+        <translation>Appel de groupe</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="117"/>
@@ -1588,6 +1588,10 @@
 </context>
 <context>
     <name>CallsWindow</name>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Fusionner les appels</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="75"/>
         <source>call_transfer_in_progress_toast</source>
