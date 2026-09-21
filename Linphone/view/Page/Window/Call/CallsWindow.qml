@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
+import QtQml
 import QtQuick.Controls.Basic as Control
 import Linphone
 import EnumsToStringCpp
@@ -43,6 +44,74 @@ AbstractWindow {
         || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
     property Item firstButtonInBottomTab : mainWindow.startingCall ? endCallButton : (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton)
     property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocusableItemInItem(controlCallButtons) : endCallButton
+
+    property bool isLocalConference: !!mainWindow.conference
+        && !(AppCpp.currentAccount && AppCpp.currentAccount.core
+             && AppCpp.currentAccount.core.audioVideoConferenceFactoryAddress
+             && AppCpp.currentAccount.core.audioVideoConferenceFactoryAddress.length > 0)
+
+    property int callCount: 0
+    property int connectedCallCount: 0
+    property bool callsConnected: callCount > 0 && connectedCallCount === callCount
+
+    property bool severalCalls: callCount >= 2
+    onSeveralCallsChanged: if (severalCalls && !mainWindow.conference) showCallList()
+
+    function refreshCallCount() {
+        callCount = allCallsModel.count
+    }
+
+    Component.onCompleted: refreshCallCount()
+
+    Connections {
+        target: allCallsModel
+        function onRowsInserted() { mainWindow.refreshCallCount() }
+        function onRowsRemoved() { mainWindow.refreshCallCount() }
+        function onModelReset() { mainWindow.refreshCallCount() }
+    }
+
+    function recountConnectedCalls() {
+        var n = 0
+        for (var i = 0; i < callWatchers.count; ++i) {
+            var watcher = callWatchers.objectAt(i)
+            if (watcher && watcher.connected) ++n
+        }
+        connectedCallCount = n
+    }
+
+    Instantiator {
+        id: callWatchers
+        model: allCallsModel
+        onObjectAdded: mainWindow.recountConnectedCalls()
+        onObjectRemoved: mainWindow.recountConnectedCalls()
+        delegate: QtObject {
+            readonly property int callState: modelData && modelData.core ? modelData.core.state : -1
+            readonly property bool connected: callState === LinphoneEnums.CallState.StreamsRunning
+                || callState === LinphoneEnums.CallState.Connected
+                || callState === LinphoneEnums.CallState.Paused
+                || callState === LinphoneEnums.CallState.PausedByRemote
+            onConnectedChanged: mainWindow.recountConnectedCalls()
+        }
+    }
+
+    onConferenceChanged: if (mainWindow.conference) hideCallList()
+
+    function hideCallList() {
+        if (!rightPanel.visible || !rightPanel.contentLoader.item
+                || rightPanel.contentLoader.item.objectName !== "callListPanel")
+            return
+        rightPanel.visible = false
+        callListButton.checked = false
+    }
+
+    function showCallList() {
+        if (rightPanel.visible && rightPanel.contentLoader.item
+                && rightPanel.contentLoader.item.objectName === "callListPanel")
+            return
+        rightPanel.visible = true
+        rightPanel.replace(callListPanel)
+        callListButton.checked = true
+    }
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -130,8 +199,10 @@ AbstractWindow {
     }
 
     function endCall(callToFinish) {
-        if (callToFinish)
-            callToFinish.core.lTerminate()
+        if (callToFinish) {
+            if (mainWindow.isLocalConference) callToFinish.core.lTerminateAllCalls()
+            else callToFinish.core.lTerminate()
+        }
         else {
             if (!callsModel.haveCall) UtilsCpp.closeCallsWindow()
         }
@@ -226,6 +297,12 @@ AbstractWindow {
         title: qsTr("call_close_window_dialog_title")
         //: "La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours."
         text: qsTr("call_close_window_dialog_message")
+    }
+
+    CallProxy {
+        id: allCallsModel
+        sourceModel: AppCpp.calls
+        showCurrentCall: true
     }
 
     CallProxy {
@@ -1059,25 +1136,6 @@ AbstractWindow {
                         event.accepted = true
                     }
                     spacing: 0
-                    Component {
-                        id: mergeCallPopupButton
-                        PopupButton {
-                            visible: callsModel.count >= 2 && !callsModel.haveNonAdminMeeting
-                            id: popupbutton
-                            popup.contentItem: IconLabelButton {
-                                icon.source: AppIcons.arrowsMerge
-                                icon.width: Utils.getSizeWithScreenRatio(32)
-                                icon.height: Utils.getSizeWithScreenRatio(32)
-                                //: call_action_merge_calls
-                                text: qsTr("Merger tous les appels")
-                                textSize: Utils.getSizeWithScreenRatio(14)
-                                onClicked: {
-                                    callsModel.lMergeAll()
-                                    popupbutton.close()
-                                }
-                            }
-                        }
-                    }
                     RoundedPane {
                         Layout.fillWidth: true
                         Layout.maximumHeight: rightPanel.height
@@ -1096,16 +1154,29 @@ AbstractWindow {
                             id: callList
                         }
                     }
+                    IconLabelButton {
+                        visible: mainWindow.callCount >= 2 && mainWindow.callsConnected
+                                 && !callsModel.haveNonAdminMeeting && !mainWindow.conference
+                        Layout.alignment: Qt.AlignHCenter
+                        Layout.topMargin: Utils.getSizeWithScreenRatio(8)
+                        icon.source: AppIcons.arrowsMerge
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
+                        //: "Fusionner les appels"
+                        text: qsTr("call_action_merge_calls")
+                        textSize: Utils.getSizeWithScreenRatio(14)
+                        style: ButtonStyle.noBackground
+                        textColor: DefaultStyle.main1_500_main
+                        borderColor: DefaultStyle.main1_500_main
+                        borderWidth: Utils.getSizeWithScreenRatio(1)
+                        leftPadding: Utils.getSizeWithScreenRatio(16)
+                        rightPadding: Utils.getSizeWithScreenRatio(16)
+                        topPadding: Utils.getSizeWithScreenRatio(8)
+                        bottomPadding: Utils.getSizeWithScreenRatio(8)
+                        onClicked: callsModel.lMergeAll()
+                    }
                     Item {
                         Layout.fillHeight: true
-                    }
-                    Connections {
-                        target: rightPanel.contentLoader
-                        function onItemChanged() {
-                            if (rightPanel.contentLoader.item.objectName === "callListPanel") {
-                                rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
-                            }
-                        }
                     }
                 }
             }
@@ -1491,6 +1562,7 @@ AbstractWindow {
                     // Pause call button
                     CheckableButton {
                         id: pauseButton
+                        visible: !mainWindow.isLocalConference
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
@@ -1602,7 +1674,7 @@ AbstractWindow {
                     // Video camera button
                     CheckableButton {
                         id: videoCameraButton
-                        visible: SettingsCpp.videoEnabled
+                        visible: SettingsCpp.videoEnabled && !mainWindow.isLocalConference
                         enabled: mainWindow.conferenceInfo
                                  || (mainWindow.callState === LinphoneEnums.CallState.Connected
                                      || mainWindow.callState
@@ -1646,7 +1718,7 @@ AbstractWindow {
                     CheckableButton {
                         id: screencastPanelButton
                         iconUrl: AppIcons.screencast
-                        visible: !!mainWindow.conference
+                        visible: !!mainWindow.conference && !mainWindow.isLocalConference
                         //: Partager l'écran…
                         ToolTip.text: qsTr("call_share_screen_hint")
                         Accessible.name: qsTr("call_share_screen_hint")
@@ -1730,7 +1802,7 @@ AbstractWindow {
                         //: "Gérer les participants"
                         ToolTip.text: qsTr("call_manage_participants_hint")
                         Accessible.name: qsTr("call_manage_participants_hint")
-                        visible: mainWindow.conference
+                        visible: mainWindow.conference && !mainWindow.isLocalConference
                         iconUrl: AppIcons.usersTwo
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
@@ -1777,7 +1849,7 @@ AbstractWindow {
 
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                visible: mainWindow.conference
+                                visible: mainWindow.conference && !mainWindow.isLocalConference
                                 icon.source: AppIcons.layout
                                 icon.width: Utils.getSizeWithScreenRatio(32)
                                 icon.height: Utils.getSizeWithScreenRatio(32)
