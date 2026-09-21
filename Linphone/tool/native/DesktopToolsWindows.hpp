@@ -57,6 +57,7 @@ public:
 	static uintptr_t getDisplayIndex(void *screenSharing);
 	static QRect getWindowGeometry(void *screenSharing);
 	static void bringToFront(QWindow *window);
+	static bool isInForeground(QWindow *window);
 	HWND mWindowId = 0; // Window
 	VideoSourceDescriptorModel *mVideoSourceDescriptorModel = nullptr;
 
