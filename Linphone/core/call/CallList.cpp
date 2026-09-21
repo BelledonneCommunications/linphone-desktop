@@ -22,6 +22,7 @@
 #include "CallCore.hpp"
 #include "CallGui.hpp"
 #include "core/App.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include <QSharedPointer>
 #include <linphone++/linphone.hh>
@@ -102,14 +103,15 @@ void CallList::setSelf(QSharedPointer<CallList> me) {
 			bool enablingVideo = false;
 			if (currentCall) enablingVideo = currentCall->getCurrentParams()->videoEnabled();
 			if (!conference) {
+				bool forceLocal = SettingsModel::getInstance()->getForceLocalConference();
 				auto audioVideoConfFactoryUri =
 				    core->getDefaultAccount()->getParams()->getAudioVideoConferenceFactoryAddress();
-				QString subject = audioVideoConfFactoryUri
+				QString subject = (audioVideoConfFactoryUri && !forceLocal)
 				                      //: Remote group call
 				                      ? tr("remote_group_call")
 				                      //: "Local group call"
 				                      : tr("local_group_call");
-				conference = ToolModel::createConference(subject, nullptr);
+				conference = ToolModel::createConference(subject, nullptr, forceLocal);
 			}
 			if (!conference) {
 				lWarning() << log().arg("Failed to merge calls");
