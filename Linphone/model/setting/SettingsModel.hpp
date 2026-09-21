@@ -224,6 +224,7 @@ public:
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, hideNotificationCounter, HideNotificationCounter)
+	DECLARE_GETSET(bool, forceLocalConference, ForceLocalConference)
 	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
 	DECLARE_GETSET(bool, hideSettings, HideSettings)

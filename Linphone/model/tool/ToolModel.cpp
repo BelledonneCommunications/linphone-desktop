@@ -407,7 +407,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	*/
 }
 
-std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subject, QString *message) {
+std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subject, QString *message, bool forceLocal) {
 	auto core = CoreModel::getInstance()->getCore();
 	auto conferenceParams = core->createConferenceParams(nullptr);
 	conferenceParams->enableVideo(true);
@@ -425,6 +425,11 @@ std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subjec
 	                                                  : linphone::Conference::SecurityLevel::PointToPoint);
 
 	conferenceParams->enableChat(true);
+
+	if (forceLocal) {
+		conferenceParams->setConferenceFactoryAddress(nullptr);
+		lInfo() << "[ToolModel] hosting the conference locally, conference factory bypassed";
+	}
 
 	return core->createConferenceWithParams(conferenceParams);
 }

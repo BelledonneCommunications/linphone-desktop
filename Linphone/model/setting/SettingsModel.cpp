@@ -1125,6 +1125,7 @@ void SettingsModel::notifyConfigReady(){
 
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, disableChatFeature, DisableChatFeature, "disable_chat_feature", false)
 DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, hideNotificationCounter, HideNotificationCounter, "hide_systray_notification_counter", false)
+DEFINE_GETSET_CONFIG(SettingsModel, bool, Bool, forceLocalConference, ForceLocalConference, "force_local_conference", false)
 DEFINE_GETSET_CONFIG(SettingsModel,
 						bool,
 						Bool,
