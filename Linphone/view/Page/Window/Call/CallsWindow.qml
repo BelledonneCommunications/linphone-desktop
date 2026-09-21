@@ -1137,6 +1137,7 @@ AbstractWindow {
                     }
                     spacing: 0
                     RoundedPane {
+                        id: callListPane
                         Layout.fillWidth: true
                         Layout.maximumHeight: rightPanel.height
                         visible: callList.contentHeight > 0
@@ -1154,29 +1155,38 @@ AbstractWindow {
                             id: callList
                         }
                     }
-                    IconLabelButton {
-                        visible: mainWindow.callCount >= 2 && mainWindow.callsConnected
-                                 && !callsModel.haveNonAdminMeeting && !mainWindow.conference
-                        Layout.alignment: Qt.AlignHCenter
-                        Layout.topMargin: Utils.getSizeWithScreenRatio(8)
-                        icon.source: AppIcons.arrowsMerge
-                        icon.width: Utils.getSizeWithScreenRatio(32)
-                        icon.height: Utils.getSizeWithScreenRatio(32)
-                        //: "Fusionner les appels"
-                        text: qsTr("call_action_merge_calls")
-                        textSize: Utils.getSizeWithScreenRatio(14)
-                        style: ButtonStyle.noBackground
-                        textColor: DefaultStyle.main1_500_main
-                        borderColor: DefaultStyle.main1_500_main
-                        borderWidth: Utils.getSizeWithScreenRatio(1)
-                        leftPadding: Utils.getSizeWithScreenRatio(16)
-                        rightPadding: Utils.getSizeWithScreenRatio(16)
-                        topPadding: Utils.getSizeWithScreenRatio(8)
-                        bottomPadding: Utils.getSizeWithScreenRatio(8)
-                        onClicked: callsModel.lMergeAll()
-                    }
                     Item {
                         Layout.fillHeight: true
+                        Layout.preferredHeight: Math.max(0, rightPanel.contentItemHeight
+                            - callListPane.height - callListPane.Layout.topMargin
+                            - callListPane.Layout.bottomMargin
+                            - (mergeCallsButton.visible
+                                ? mergeCallsButton.height + mergeCallsButton.Layout.bottomMargin
+                                : 0))
+                    }
+                    IconLabelButton {
+                        id: mergeCallsButton
+                        visible: mainWindow.callCount >= 2 && mainWindow.callsConnected
+                                 && !callsModel.haveNonAdminMeeting && !mainWindow.conference
+                        Layout.fillWidth: true
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(50)
+                        icon.source: AppIcons.usersThree
+                        icon.width: Utils.getSizeWithScreenRatio(16)
+                        icon.height: Utils.getSizeWithScreenRatio(16)
+                        //: "Fusionner les appels"
+                        text: qsTr("call_action_merge_calls")
+                        textSize: Typography.b2.pixelSize
+                        textWeight: Typography.b2.weight
+                        style: ButtonStyle.main
+                        centerContent: true
+                        radius: Math.ceil(height / 2)
+                        spacing: Utils.getSizeWithScreenRatio(10)
+                        topPadding: 0
+                        bottomPadding: 0
+                        onClicked: callsModel.lMergeAll()
                     }
                 }
             }
