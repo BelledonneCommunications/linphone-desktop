@@ -854,31 +854,6 @@ AbstractMainPage {
 						}
 					}
 					Section {
-						Layout.fillWidth: true
-						content: RowLayout {
-							spacing: Utils.getSizeWithScreenRatio(8)
-							EffectImage {
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
-								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
-								imageSource: AppIcons.userRectangle
-								colorizationColor: DefaultStyle.main2_600
-							}
-							Avatar {
-								Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
-								Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)
-								_address: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerAddress : ""
-								secured: friendSecurityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-							}
-							Text {
-								text: mainItem.selectedConference && mainItem.selectedConference.core ? mainItem.selectedConference.core.organizerName : ""
-								font {
-									pixelSize: Utils.getSizeWithScreenRatio(14)
-									capitalization: Font.Capitalize
-								}
-							}
-						}
-					}
-					Section {
 						visible: participantList.count > 0
 						Layout.fillWidth: true
 						Layout.fillHeight: true
