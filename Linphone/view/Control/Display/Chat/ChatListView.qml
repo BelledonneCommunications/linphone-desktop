@@ -123,7 +123,7 @@ ListView {
 //----------------------------------------------------------------
     function moveToCurrentItem() {
         if (mainItem.currentIndex >= 0)
-            Utils.updatePosition(mainItem, mainItem)
+            mainItem.positionViewAtIndex(mainItem.currentIndex, ListView.Center)
     }
     onCurrentItemChanged: {
         moveToCurrentItem()

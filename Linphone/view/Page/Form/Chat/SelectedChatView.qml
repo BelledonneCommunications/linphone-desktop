@@ -501,6 +501,7 @@ FocusScope {
                                 Text {
                                     Layout.fillWidth: true
                                     text: mainItem.chatMessage ? mainItem.chatMessage.core.text : ""
+                                    maximumLineCount: 2
                                     color: DefaultStyle.main2_400
                                     font {
                                         pixelSize: Typography.p3.pixelSize
