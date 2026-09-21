@@ -13,6 +13,11 @@
 void DesktopTools::init(){
 }
 
+bool DesktopTools::isInForeground(QWindow *window) {
+	if (!window || !window->isExposed()) return false;
+	return [NSApp isActive] && window->isActive();
+}
+
 void DesktopTools::bringToFront(QWindow *window) {
 	if (!window) return;
 #pragma clang diagnostic push

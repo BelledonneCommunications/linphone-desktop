@@ -308,9 +308,10 @@ static void retryBringToFront(QQuickWindow *window) {
 		QObject::connect(timer, &QTimer::timeout, window, [window, timer]() {
 			int attempts = timer->property("attempts").toInt() + 1;
 			timer->setProperty("attempts", attempts);
-			if (window->isActive() || attempts > 6) {
+			if (DesktopTools::isInForeground(window) || attempts > 12) {
 				lInfo() << "[Utils] : bring to front stopped after" << attempts
-				        << "attempts, active =" << window->isActive();
+				        << "attempts, foreground =" << DesktopTools::isInForeground(window)
+				        << ", exposed =" << window->isExposed() << ", active =" << window->isActive();
 				timer->stop();
 				return;
 			}

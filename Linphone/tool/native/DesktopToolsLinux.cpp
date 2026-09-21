@@ -40,6 +40,10 @@ DesktopTools::~DesktopTools() {
 	setScreenSaverStatus(true);
 }
 
+bool DesktopTools::isInForeground(QWindow *window) {
+	return window && window->isExposed() && window->isActive();
+}
+
 void DesktopTools::bringToFront(QWindow *window) {
 	if (!window) return;
 	window->raise();
