@@ -39,6 +39,7 @@ ConferenceInfoProxy::ConferenceInfoProxy(QObject *parent) : LimitProxy(parent) {
 		    auto sortModel = dynamic_cast<SortFilterList *>(sourceModel());
 		    if (sortModel) sortModel->invalidate(); // New date => sort and filter change.
 		    loadUntil(nullptr);
+		    emit haveCurrentDateChanged();
 	    },
 	    Qt::QueuedConnection);
 	connect(

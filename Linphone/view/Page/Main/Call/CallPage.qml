@@ -619,6 +619,7 @@ AbstractMainPage {
                                 busyIndicatorSize: Utils.getSizeWithScreenRatio(40)
 
                                 delegate: Item {
+                                    visible: !detailListView.loading
                                     width: detailListView.width
                                     height: Utils.getSizeWithScreenRatio(56)
                                     RowLayout {

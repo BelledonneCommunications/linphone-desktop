@@ -250,13 +250,8 @@ AbstractMainPage {
 					focus: true
 
 					searchBarText: searchBar.text
-
-					onHaveCurrentDateChanged: {
-						mainItem.listHasNoItem = count === 0 || (count === 1 && !haveCurrentDate)
-					}
-					onCountChanged: {
-						mainItem.listHasNoItem = count === 0 || (count === 1 && !haveCurrentDate)
-					}
+					property bool listIsEmpty: count === 0 || (count === 1 && !haveCurrentDate)
+					onListIsEmptyChanged: mainItem.listHasNoItem = listIsEmpty
 					Binding {
 						target: mainItem
 						property: "showDefaultItem"
