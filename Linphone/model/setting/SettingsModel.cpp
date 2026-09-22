@@ -1000,7 +1000,7 @@ void SettingsModel::setShowPastMeetings(bool show) {
 }
 
 bool SettingsModel::autoCheckForUpdateOnStart() const {
-	return !!mConfig->getInt(UiSection, "auto_check_for_update_on_start", isCheckForUpdateAvailable());
+	return !!mConfig->getInt(UiSection, "auto_check_for_update_on_start", isCheckForUpdateEnabled());
 }
 
 void SettingsModel::setAutoCheckForUpdateOnStart(bool check) {
@@ -1008,30 +1008,12 @@ void SettingsModel::setAutoCheckForUpdateOnStart(bool check) {
 	emit autoCheckForUpdateOnStartChanged();
 }
 
-bool SettingsModel::isCheckForUpdateAvailable() const {
-#ifdef ENABLE_UPDATE_CHECK
-	return true;
-#else
-	return false;
-#endif
-}
-
 bool SettingsModel::isCheckForUpdateEnabled() const {
-	return !!mConfig->getInt(UiSection, "check_for_update_enabled", isCheckForUpdateAvailable());
-}
-
-void SettingsModel::setCheckForUpdateEnabled(bool enable) {
-	mConfig->setInt(UiSection, "check_for_update_enabled", enable);
-	emit checkForUpdateEnabledChanged();
+	return !mConfig->getString("misc", "version_check_url_root", "").empty();
 }
 
 QString SettingsModel::getVersionCheckUrl() {
-	auto url = mConfig->getString("misc", "version_check_url_root", "");
-	if (url == "") {
-		url = Constants::VersionCheckReleaseUrl;
-		if (url != "") mConfig->setString("misc", "version_check_url_root", url);
-	}
-	return Utils::coreStringToAppString(url);
+	return Utils::coreStringToAppString(mConfig->getString("misc", "version_check_url_root", ""));
 }
 
 void SettingsModel::setVersionCheckUrl(const QString &url) {

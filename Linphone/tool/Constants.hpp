@@ -53,9 +53,7 @@ public:
 
 	static constexpr size_t MaxLogsCollectionSize = 10485760 * 5; // 50MB.
 
-#ifdef ENABLE_UPDATE_CHECK
 	static constexpr int VersionUpdateCheckInterval = 86400000; // 24 hours in milliseconds.
-#endif                                                          // ifdef ENABLE_UPDATE_CHECK
 
 	static constexpr char DefaultXmlrpcUri[] = "https://subscribe.linphone.org:444/wizard.php";
 	static constexpr char DefaultUploadLogsServer[] =

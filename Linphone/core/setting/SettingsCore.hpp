@@ -35,6 +35,7 @@ class SettingsCore : public QObject, public AbstractObject {
 public:
 	// Security
 	Q_PROPERTY(bool vfsEnabled READ getVfsEnabled WRITE setVfsEnabled NOTIFY vfsEnabledChanged)
+	Q_PROPERTY(bool checkForUpdateEnabled READ isCheckForUpdateEnabled CONSTANT)
 
 	// Call
 	Q_PROPERTY(bool disableMeetingsFeature READ getDisableMeetingsFeature WRITE setDisableMeetingsFeature NOTIFY
@@ -334,7 +335,7 @@ public:
 	bool getCardDAVMinCharForResearch() const;
 	void setCardDAVMinCharForResearch(int min);
 
-	bool isCheckForUpdateAvailable() const;
+	bool isCheckForUpdateEnabled() const;
 	bool autoCheckForUpdateOnStart() const;
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
@@ -565,7 +566,7 @@ private:
 	int mCardDAVMinCharForResearch = 0;
 
 	// Check update
-	bool mIsCheckForUpdateAvailable = false;
+	bool mIsCheckForUpdateEnabled = false;
 	bool mAutoCheckForUpdateOnStart = false;
 
 	DECLARE_ABSTRACT_OBJECT
