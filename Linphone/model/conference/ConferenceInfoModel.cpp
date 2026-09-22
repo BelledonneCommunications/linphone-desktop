@@ -25,6 +25,7 @@
 #include "core/participant/ParticipantList.hpp"
 #include "core/path/Paths.hpp"
 #include "model/core/CoreModel.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
@@ -75,7 +76,9 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 					        if (!chatParams) return;
 					        chatParams->deactivateEphemeral();
 					        chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
-					        params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+					        if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls())
+						        params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+					        else params->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
 					        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
 				        }
 				        emit schedulerStateChanged(state);
