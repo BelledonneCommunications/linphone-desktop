@@ -32,6 +32,7 @@
     <entry name="protocols" overwrite="true">stun,ice</entry>
   </section>
   <section name="misc">
+    <entry name="version_check_url_root" overwrite="true">https://download.linphone.org/releases</entry>
     <entry name="file_transfer_server_url" overwrite="true">https://files.linphone.org:443/http-file-transfer-server/hft.php</entry>
   </section>
   <section name="sip">

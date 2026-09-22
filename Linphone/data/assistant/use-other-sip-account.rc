@@ -28,6 +28,9 @@
     <entry name="stun_server" overwrite="true"></entry>
     <entry name="protocols" overwrite="true"></entry>
   </section>
+  <section name="misc">
+    <entry name="version_check_url_root" overwrite="true">https://download.linphone.org/releases</entry>
+  </section>
   <section name="sip">
     <entry name="use_rls_presence" overwrite="true"></entry>
     <entry name="rls_uri" overwrite="true"></entry>
