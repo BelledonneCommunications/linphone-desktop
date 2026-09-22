@@ -10,6 +10,21 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.2.3] 2026-09-22
+
+### Fixed
+- UI fixes (margins, layout, items visibility/overlap)
+- Fix blinking audio devices in multimedia settings during a call
+- Fix blinking video stickers when someone enters/leave an ongoing meeting
+- Use MSQOGL by default to avoid using native openGL library which misses some extensions
+
+### Changed
+- Translations update
+- SDK version is now 5.5.23
+- Use native emojis in the emoji selector (emojis display depends on the OS)
+- Bugsplat symbols version updated to 11.0.0
+
+
 ## [6.2.2] - 2026-08-28
 
 ### Fixed
@@ -18,6 +33,7 @@ Group changes to describe their impact on the project, as follows:
 
 ### Changed
 - SDK update
+
 
 ## [6.2.1] - 2026-08-20
 
