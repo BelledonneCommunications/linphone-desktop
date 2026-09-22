@@ -10,6 +10,49 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.2.3] 2026-09-22
+
+### Fixed
+- UI fixes (margins, layout, items visibility/overlap)
+- Fix blinking audio devices in multimedia settings during a call
+- Fix blinking video stickers when someone enters/leave an ongoing meeting
+- Use MSQOGL by default to avoid using native openGL library which misses some extensions
+
+### Changed
+- Translations update
+- SDK version is now 5.5.23
+- Use native emojis in the emoji selector (emojis display depends on the OS)
+- Bugsplat symbols version updated to 11.0.0
+
+
+## [6.2.2] - 2026-08-28
+
+### Fixed
+- Crash in calls window caused by access to readonly property
+- Generated RELEASE file for Linux platform
+
+### Changed
+- SDK update
+
+
+## [6.2.1] - 2026-08-20
+
+### Added
+- New settings : 
+    - noise suppressor
+    - call view rendering in background
+- Recording list from calls acessible in the app with audio/video player
+
+### Fixed
+- Duplication of participants stickers
+- Playback/capture auto switch glitch in multimedia parameters
+- Crash when Windows notification deleted
+- Account status colors for accessibility
+- Account presence
+
+### Changed
+- SDK version is now 5.5.16
+
 ## [6.2.0] - 2026-07-15
 
 ### Added
