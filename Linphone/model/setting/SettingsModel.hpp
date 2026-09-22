@@ -212,9 +212,7 @@ public:
 
 	bool autoCheckForUpdateOnStart() const;
 	void setAutoCheckForUpdateOnStart(bool check);
-	bool isCheckForUpdateAvailable() const;
 	bool isCheckForUpdateEnabled() const;
-	void setCheckForUpdateEnabled(bool enable);
 	QString getVersionCheckUrl();
 	void setVersionCheckUrl(const QString &url);
 	void setVersionCheckType(const LinphoneEnums::VersionCheckType &type);
@@ -313,7 +311,6 @@ signals:
 	void showPastMeetingsChanged(bool value);
 
 	void autoCheckForUpdateOnStartChanged();
-	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
 
 	void setCaptureDeviceFailed(const QString &error);

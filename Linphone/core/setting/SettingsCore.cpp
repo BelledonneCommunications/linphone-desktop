@@ -126,7 +126,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	mTextMessageFont = settingsModel->getTextMessageFont();
 
 	// Check for update
-	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+	mIsCheckForUpdateEnabled = settingsModel->isCheckForUpdateEnabled();
 	mAutoCheckForUpdateOnStart = settingsModel->autoCheckForUpdateOnStart();
 
 	// Ui
@@ -336,7 +336,7 @@ void SettingsCore::reloadSettings() {
 	mTextMessageFont = settingsModel->getTextMessageFont();
 
 	// Check for update
-	mIsCheckForUpdateAvailable = settingsModel->isCheckForUpdateAvailable();
+	mIsCheckForUpdateEnabled = settingsModel->isCheckForUpdateEnabled();
 	mAutoCheckForUpdateOnStart = settingsModel->autoCheckForUpdateOnStart();
 
 	setDisableChatFeature(settingsModel->getDisableChatFeature());
@@ -1535,7 +1535,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mLogsEmail = model->getLogsEmail();
 
 	// Check update
-	mIsCheckForUpdateAvailable = model->isCheckForUpdateAvailable();
+	mIsCheckForUpdateEnabled = model->isCheckForUpdateEnabled();
 	mAutoCheckForUpdateOnStart = model->autoCheckForUpdateOnStart();
 
 	// UI
@@ -1570,8 +1570,8 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mCallForwardToAddress = model->getCallForwardToAddress();
 }
 
-bool SettingsCore::isCheckForUpdateAvailable() const {
-	return mIsCheckForUpdateAvailable;
+bool SettingsCore::isCheckForUpdateEnabled() const {
+	return mIsCheckForUpdateEnabled;
 }
 
 bool SettingsCore::autoCheckForUpdateOnStart() const {

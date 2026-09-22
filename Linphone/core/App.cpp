@@ -1718,7 +1718,7 @@ void App::setSysTrayIcon() {
 	}
 	menu->addAction(markAllReadAction);
 	//: Check for update
-	if (mSettings->isCheckForUpdateAvailable()) {
+	if (mSettings->isCheckForUpdateEnabled()) {
 		QAction *checkForUpdateAction = new QAction(tr("check_for_update"), root);
 		root->connect(checkForUpdateAction, &QAction::triggered, this, [this] { checkForUpdate(true); });
 		menu->addAction(checkForUpdateAction);
