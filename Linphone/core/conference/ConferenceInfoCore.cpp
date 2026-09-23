@@ -564,6 +564,7 @@ void ConferenceInfoCore::writeIntoModel(std::shared_ptr<ConferenceInfoModel> mod
 		auto address = map["address"].toString();
 		auto linAddr = ToolModel::interpretUrl(address);
 		if (linAddr) {
+			linAddr->clean();
 			auto infos = linphone::Factory::get()->createParticipantInfo(linAddr);
 			participantInfos.push_back(infos);
 		}
