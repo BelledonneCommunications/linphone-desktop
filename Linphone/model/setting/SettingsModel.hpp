@@ -137,6 +137,7 @@ public:
 	QString getVideoDevice() const;
 	void setVideoDevice(QString device);
 
+	QString getAccountCreatorUrl() const;
 	QString getDefaultDomain() const;
 
 	//------------------------------------------------------------------------------------------------------------
