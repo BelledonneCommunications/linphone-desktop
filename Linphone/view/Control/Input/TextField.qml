@@ -72,7 +72,9 @@ Control.TextField {
     property int idleTimeOut: 200
     property bool empty: propertyOwnerGui
         ? mainItem.propertyOwnerGui.core != undefined && mainItem.propertyOwnerGui.core[mainItem.propertyName]?.length == 0
-        : mainItem.propertyOwner != undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+            : mainItem.propertyOwner
+            ? mainItem.propertyOwner != undefined && mainItem.propertyOwner[mainItem.propertyName]?.length == 0
+        : text.length === 0
     property bool canBeEmpty: true
 
     signal validationChecked(bool valid)

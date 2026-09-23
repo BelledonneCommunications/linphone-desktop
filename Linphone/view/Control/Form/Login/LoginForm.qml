@@ -51,7 +51,7 @@ ColumnLayout {
 				Connections {
 					target: LoginPageCpp
 					function onErrorMessageChanged() {
-						if (passwordEdit.text.length > 0 || usernameEdit.text.length > 0)
+						if (!passwordEdit.empty || !usernameEdit.empty)
 							errorText.setText(LoginPageCpp.errorMessage)
 					}
 				}
@@ -65,6 +65,8 @@ ColumnLayout {
         spacing: Utils.getSizeWithScreenRatio(29)
 		BigButton {
 			id: connectionButton
+			objectName: "connectionButton"
+			enabled: !usernameEdit.empty && !passwordEdit.empty
 			style: ButtonStyle.main
 			Accessible.name: qsTr("assistant_account_login") 
 			contentItem: StackLayout {
@@ -108,11 +110,11 @@ ColumnLayout {
 				password.errorMessage = ""
 				errorText.text = ""
 
-				if (usernameEdit.text.length == 0 || passwordEdit.text.length == 0) {
-					if (usernameEdit.text.length == 0)
+				if (usernameEdit.empty || passwordEdit.empty) {
+					if (usernameEdit.empty)
                         //: "Veuillez saisir un nom d'utilisateur"
                         username.errorMessage = qsTr("assistant_account_login_missing_username")
-					if (passwordEdit.text.length == 0)
+					if (passwordEdit.empty)
                         //: "Veuillez saisir un mot de passe"
                         password.errorMessage = qsTr("assistant_account_login_missing_password")
 					return
