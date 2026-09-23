@@ -444,6 +444,11 @@ bool ToolModel::createGroupCall(QString subject, const std::list<QString> &parti
 		std::list<std::shared_ptr<linphone::Address>> participants;
 		for (auto &address : participantAddresses) {
 			auto linAddr = ToolModel::interpretUrl(address);
+			if (!linAddr) {
+				lWarning() << "[ToolModel] Unable to interpret participant address" << address;
+				continue;
+			}
+			linAddr->clean();
 			participants.push_back(linAddr);
 		}
 		auto status = conference->inviteParticipants(participants, callParams);
