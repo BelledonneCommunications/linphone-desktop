@@ -116,7 +116,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 	if (currentAccount) {
 		auto accountDomain = Utils::coreStringToAppString(currentAccount->getParams()->getDomain());
-		mShowAccountDevices = (accountDomain == mDefaultDomain);
+		mShowAccountDevices = (accountDomain == mDefaultDomain) && !settingsModel->getAccountCreatorUrl().isEmpty();
 		mDisableMeetingsFeature = settingsModel->getDisableMeetingsFeature() ||
 		                          !currentAccount->getParams()->getAudioVideoConferenceFactoryAddress();
 	}
@@ -329,7 +329,7 @@ void SettingsCore::reloadSettings() {
 	auto currentAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 	if (currentAccount) {
 		auto accountDomain = Utils::coreStringToAppString(currentAccount->getParams()->getDomain());
-		setShowAccountDevices(accountDomain == mDefaultDomain);
+		setShowAccountDevices((accountDomain == mDefaultDomain) && !settingsModel->getAccountCreatorUrl().isEmpty());
 		setDisableMeetingsFeature(settingsModel->getDisableMeetingsFeature() ||
 		                          !currentAccount->getParams()->getAudioVideoConferenceFactoryAddress());
 	}
@@ -723,8 +723,10 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		    if (account) {
 			    accountDomain = Utils::coreStringToAppString(account->getParams()->getDomain());
 		    }
-		    mSettingsModelConnection->invokeToCore(
-		        [this, accountDomain]() { setShowAccountDevices(accountDomain == mDefaultDomain); });
+		    bool haveAccountCreatorUrl = !SettingsModel::getInstance()->getAccountCreatorUrl().isEmpty();
+		    mSettingsModelConnection->invokeToCore([this, accountDomain, haveAccountCreatorUrl]() {
+			    setShowAccountDevices((accountDomain == mDefaultDomain) && haveAccountCreatorUrl);
+		    });
 	    });
 }
 
