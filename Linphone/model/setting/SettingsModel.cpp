@@ -924,6 +924,10 @@ void SettingsModel::setShortcuts(const QVariantList &data) {
 	}
 }
 
+QString SettingsModel::getAccountCreatorUrl() const {
+	return Utils::coreStringToAppString(mConfig->getString("account_creator", "url", ""));
+}
+
 QString SettingsModel::getDefaultDomain() const {
 	return Utils::coreStringToAppString(
 	    mConfig->getString(SettingsModel::AppSection, "default_domain", "sip.linphone.org"));

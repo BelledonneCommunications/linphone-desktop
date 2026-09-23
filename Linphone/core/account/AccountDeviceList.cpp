@@ -21,6 +21,7 @@
 #include "AccountDeviceList.hpp"
 #include "core/App.hpp"
 #include "core/account/AccountDeviceGui.hpp"
+#include "model/setting/SettingsModel.hpp"
 #include "tool/Utils.hpp"
 
 #include <QQmlApplicationEngine>
@@ -81,6 +82,10 @@ void AccountDeviceList::refreshDevices() {
 		auto requestDeviceList = [this] {
 			if (!mAccountManagerServicesModelConnection) return;
 			mAccountManagerServicesModelConnection->invokeToModel([this]() {
+				if (SettingsModel::getInstance()->getAccountCreatorUrl().isEmpty()) {
+					lInfo() << log().arg("No account manager url, skip devices request");
+					return;
+				}
 				auto identityAddress = mAccountCore->getModel()->getMonitor()->getParams()->getIdentityAddress();
 				auto authinfo = mAccountCore->getModel()->getMonitor()->findAuthInfo();
 				qDebug() << "[AccountDeviceList] request devices for address" << identityAddress->asStringUriOnly();
