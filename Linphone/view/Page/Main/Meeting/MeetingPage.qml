@@ -96,6 +96,9 @@ AbstractMainPage {
 			confInfoToDelete.core.lCancelConferenceInfo()
 		}
 		onAccepted: {
+			if (mainItem.selectedConference && confInfoToDelete
+					&& mainItem.selectedConference.core === confInfoToDelete.core)
+				mainItem.selectedConference = null
 			confInfoToDelete.core.lDeleteConferenceInfo()
 		}
 		buttons: [
@@ -252,6 +255,7 @@ AbstractMainPage {
 					searchBarText: searchBar.text
 					property bool listIsEmpty: count === 0 || (count === 1 && !haveCurrentDate)
 					onListIsEmptyChanged: mainItem.listHasNoItem = listIsEmpty
+					Component.onCompleted: mainItem.listHasNoItem = listIsEmpty
 					Binding {
 						target: mainItem
 						property: "showDefaultItem"

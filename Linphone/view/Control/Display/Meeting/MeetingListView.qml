@@ -119,7 +119,10 @@ ListView {
 			else selectData(getCurrentDateConfInfo())
 		}
 		function selectData(confInfoGui){
-			mainItem.currentIndex = loadUntil(confInfoGui)
+			var index = loadUntil(confInfoGui)
+			mainItem.currentIndex = index
+			if (index >= 0 && confInfoGui && confInfoGui.core && confInfoGui.core.haveModel)
+				mainItem.selectedConference = confInfoGui
 		}
 		onConferenceInfoCreated: (confInfoGui) => {
 			selectData(confInfoGui)
