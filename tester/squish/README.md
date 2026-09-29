@@ -39,6 +39,7 @@ tester/squish/
       chatPage.js, callPage.js, settingsPage.js, dialerPage.js, callWindow.js,
       contactsPage.js, historyPage.js              page objects (one per screen)
       redialFixture.js          per-scenario app lifecycle for tst_BDD_Redial
+      a11yFixture.js            per-scenario app lifecycle for tst_BDD_KeyboardActivation
       currentTranslations.js    GENERATED per run (gitignored)
 ```
 
@@ -366,7 +367,7 @@ One run does, in order:
 7. Copy the shared Gherkin specs into the BDD test cases (`sync_features.py`).
 8. For each language in `SQUISH_LANGS`: regenerate `currentTranslations.js`, set
    `LINPHONE_FORCE_LANGUAGE`, use fresh `XDG_*` dirs, seed the per-instance profiles
-   (`a`/`b`/`c`/`d`, the `set-*` ones and `redial1..6`), `squishserver` + `squishrunner` the suite,
+   (`a`/`b`/`c`/`d`, the `set-*` ones, `redial1..6` and `a11y`/`a11ypeer`), `squishserver` + `squishrunner` the suite,
    report under `reports/<lang>`.
 9. Delete the provisioned account; exit with the aggregated result.
 

@@ -8,6 +8,7 @@ SPECS_ROOT = os.path.join(REPO_ROOT, "external", "feature-specs")
 SUITE_ROOT = os.path.join(REPO_ROOT, "tester", "squish", "suites", "cross-platform")
 
 BDD_TEST_CASES = {
+    "tst_BDD_KeyboardActivation": "Features/accessibility/keyboard_activation.feature",
     "tst_BDD_Redial": "Features/call/redial.feature",
 }
 

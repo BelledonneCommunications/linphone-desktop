@@ -81,6 +81,8 @@ for LANG_CODE in $SQUISH_LANGS; do
     for REDIAL_PROFILE in 1 2 3 4 5 6; do
         python3 tester/squish/tools/seed_config.py "redial$REDIAL_PROFILE" A
     done
+    python3 tester/squish/tools/seed_config.py a11y A --conference
+    python3 tester/squish/tools/seed_config.py a11ypeer B --conference
     python3 tester/squish/tools/seed_setting.py set-shown-assistant --ui assistant_hide_third_party_account=0 --ui assistant_hide_create_account=0
     python3 tester/squish/tools/seed_setting.py set-hidden-assistant --ui assistant_hide_third_party_account=1 --ui assistant_hide_create_account=1
     python3 tester/squish/tools/seed_setting.py set-shown --slot A --ui disable_chat_feature=0 --ui disable_meetings_feature=0 --ui hide_settings=0 --ui hide_account_settings=0 --ui disable_call_recordings_feature=0 --ui hide_sip_addresses=0 --ui disable_call_forward=0 --ui disable_command_line=0 --ui disable_broadcast_feature=0 --proxy audio_video_conference_factory_uri=sip:conference-factory@conf.example.org
