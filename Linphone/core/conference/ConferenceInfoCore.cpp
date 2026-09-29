@@ -94,10 +94,14 @@ ConferenceInfoCore::ConferenceInfoCore(std::shared_ptr<linphone::ConferenceInfo>
 			mParticipants.append(participant);
 		}
 		auto organizer = conferenceInfo->getOrganizerInfo();
-		QVariantMap participant;
-		participant["address"] = Utils::coreStringToAppString(organizer->getAddress()->asStringUriOnly());
-		participant["role"] = (int)LinphoneEnums::fromLinphone(organizer->getRole());
-		mParticipants.append(participant);
+		auto organizerAddress = Utils::coreStringToAppString(organizer->getAddress()->asStringUriOnly());
+		auto orgaIndex = getParticipantIndex(organizerAddress);
+		if (orgaIndex == -1) {
+			QVariantMap participant;
+			participant["role"] = (int)LinphoneEnums::fromLinphone(organizer->getRole());
+			participant["address"] = organizerAddress;
+			mParticipants.append(participant);
+		}
 		mConferenceInfoState = LinphoneEnums::fromLinphone(conferenceInfo->getState());
 	} else {
 		mDateTime = QDateTime::currentDateTime();

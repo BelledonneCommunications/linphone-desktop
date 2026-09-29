@@ -77,7 +77,7 @@ ComboBox {
 		id: hourDelegate
 		property int hour: modelData /2
 		property int min: modelData%2 === 0 ? 0 : 30
-		property var currentDateTime: UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min)
+		property var currentDateTime: mainItem.selectedDateTime ? UtilsCpp.createDateTime(mainItem.selectedDateTime, hour, min) : new Date()
 		text: Qt.formatDateTime(currentDateTime, "hh:mm")
 		width: mainItem.width
 		visible: mainItem.minTime == undefined || UtilsCpp.timeOffset(mainItem.minTime, currentDateTime) > 0
