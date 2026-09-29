@@ -214,6 +214,7 @@ FocusScope {
                         }
                         RoundButton {
                             id: detailsPanelButton
+                            objectName: "chatDetailsPanelButton"
                             visible: !mainItem.call
                             style: ButtonStyle.noBackground
                             checkable: true

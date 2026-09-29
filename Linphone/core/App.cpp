@@ -100,6 +100,7 @@
 #include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
 #include "tool/accessibility/AccessibilityHelper.hpp"
+#include "tool/accessibility/EnterKeyActivator.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
 #include "tool/accessibility/KeyboardShortcuts.hpp"
 #ifdef HAVE_CRASH_HANDLER
@@ -731,6 +732,7 @@ void App::initCore() {
 			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
 			    mEngine->rootContext()->setContextProperty("FocusNavigator", new FocusNavigator(mEngine));
+			    new EnterKeyActivator(mEngine);
 
 			    // if (!isRestarting()) {
 			    initCppInterfaces();
