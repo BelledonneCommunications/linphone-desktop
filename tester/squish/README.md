@@ -39,7 +39,7 @@ tester/squish/
       chatPage.js, callPage.js, settingsPage.js, dialerPage.js, callWindow.js,
       contactsPage.js, historyPage.js              page objects (one per screen)
       redialFixture.js          per-scenario app lifecycle for tst_BDD_Redial
-      a11yFixture.js            per-scenario app lifecycle for tst_BDD_KeyboardActivation
+      a11yFixture.js            per-scenario app lifecycle for tst_BDD_KeyboardActivation and tst_BDD_MenuFocus
       currentTranslations.js    GENERATED per run (gitignored)
 ```
 

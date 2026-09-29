@@ -11,5 +11,5 @@ OnScenarioStart(function(context){
 
 OnScenarioEnd(function(context){
     if (currentTestCaseIs("tst_BDD_Redial")) RedialFixture.endScenario();
-    if (currentTestCaseIs("tst_BDD_KeyboardActivation")) A11yFixture.endScenario();
+    if (currentTestCaseIs("tst_BDD_KeyboardActivation") || currentTestCaseIs("tst_BDD_MenuFocus")) A11yFixture.endScenario();
 });

@@ -11,7 +11,8 @@ export var CallPage = {
         snooze(1);
     },
     callBySip: function(account){
-        L.click(tr("CallPage", "call_action_start_new_call"), 10000);
+        if (!L.clickIfVisible(tr("CallPage", "call_action_start_new_call"), 5000))
+            L.clickNamed("createNewCallButton", 10000);
         snooze(1);
         var placeholder = tr("CreationFormLayout", "search_bar_look_for_contact_text");
         var field=L.waitFor(function(o){return /TextField/.test(cnn(o))&&o.visible&&ph(o)===placeholder;},10000);

@@ -5,6 +5,8 @@ import { WelcomePage } from "welcomePage.js";
 var SIGNED_IN_PROFILE = "a11y";
 var PEER_PROFILE = "a11ypeer";
 var GUEST_PROFILE = "a11yguest";
+var CALLER_PROFILE = "a";
+var CALLEE_PROFILE = "b";
 
 var contexts = [];
 
@@ -35,6 +37,14 @@ export var A11yFixture = {
         var peer = launch(PEER_PROFILE);
         if (!MainPage.waitLoaded()) test.fatal("App did not reach the main page on profile " + PEER_PROFILE);
         var context = A11yFixture.launchSignedIn();
+        return { context: context, peer: peer };
+    },
+    launchCallPair: function(){
+        var peer = launch(CALLEE_PROFILE);
+        if (!MainPage.waitLoaded()) test.fatal("App did not reach the main page on profile " + CALLEE_PROFILE);
+        var context = launch(CALLER_PROFILE);
+        if (!MainPage.waitLoaded()) test.fatal("App did not reach the main page on profile " + CALLER_PROFILE);
+        maximize();
         return { context: context, peer: peer };
     },
     launchGuest: function(){
