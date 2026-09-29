@@ -376,6 +376,7 @@ AbstractMainPage {
                     }
                     RoundButton {
                         id: expandButton
+                        objectName: "contactDetailExpandButton"
                         style: ButtonStyle.noBackground
                         checkable: true
                         checked: true

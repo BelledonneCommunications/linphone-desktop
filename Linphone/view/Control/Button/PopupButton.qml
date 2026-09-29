@@ -83,7 +83,7 @@ Button {
 
     Keys.onPressed: event => {
         if (mainItem.checked) {
-            if (event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space) {
+            if (event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
                 mainItem.close();
                 mainItem.forceActiveFocus(Qt.TabFocusReason);
                 event.accepted = true;
@@ -94,7 +94,7 @@ Button {
                 getNextItem(-1).forceActiveFocus(Qt.BacktabFocusReason);
                 event.accepted = true;
             }
-        } else if (event.key == Qt.Key_Space) {
+        } else if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
             mainItem.open();
             event.accepted = true;
         }

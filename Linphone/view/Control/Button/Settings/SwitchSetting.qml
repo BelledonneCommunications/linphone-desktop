@@ -38,6 +38,7 @@ RowLayout {
 	}
 	Switch {
 		id: switchButton
+		objectName: "settingSwitch"
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName]
 						: propertyOwner ? propertyOwner[mainItem.propertyName] : false
