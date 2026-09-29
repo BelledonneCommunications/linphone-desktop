@@ -117,8 +117,39 @@ ListView {
             mainItem.cacheBuffer = Math?.max(contentHeight, 0) || 0
     })
 
-    onActiveFocusChanged: if (activeFocus && currentIndex < 0 && count > 0)
-                              currentIndex = 0
+    property int focusedIndex: -1
+    property ChatGui focusedChat: null
+    property bool focusedByKeyboard: false
+    keyNavigationEnabled: false
+
+    function focusRow(index, reason) {
+        if (index < 0 || index >= count)
+            return false
+        positionViewAtIndex(index, ListView.Contain)
+        var row = itemAtIndex(index)
+        if (!row)
+            return false
+        row.focusRow(reason)
+        return true
+    }
+
+    function restoreRowFocus() {
+        if (mainItem.Window.activeFocusItem !== mainItem || count === 0)
+            return
+        var index = mainItem.focusedChat ? chatProxy.findChatIndex(mainItem.focusedChat) : -1
+        if (index < 0)
+            index = mainItem.currentIndex >= 0 ? mainItem.currentIndex : Math.min(Math.max(mainItem.focusedIndex, 0), count - 1)
+        var keyboard = mainItem.focusedByKeyboard || FocusNavigator.doesLastFocusWasKeyboard()
+        focusRow(index, keyboard ? Qt.TabFocusReason : Qt.OtherFocusReason)
+    }
+
+    Connections {
+        target: mainItem.Window.window
+        function onActiveFocusItemChanged() {
+            if (mainItem.Window.activeFocusItem === mainItem)
+                Qt.callLater(mainItem.restoreRowFocus)
+        }
+    }
 
 //----------------------------------------------------------------
     function moveToCurrentItem() {
@@ -162,6 +193,10 @@ ListView {
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(63)
+
+        function focusRow(reason) {
+            mouseArea.forceActiveFocus(reason)
+        }
 
         Connections {
             target: mainItem
@@ -463,8 +498,15 @@ ListView {
             // focus: true
             focusPolicy: Qt.StrongFocus
 	        property bool keyboardFocus: FocusHelper.keyboardFocus
-            onKeyboardFocusChanged: {
-                mainItem.currentIndex = index
+            objectName: "chatListRow"
+            onKeyboardFocusChanged: if (keyboardFocus) mainItem.focusedByKeyboard = true
+            onPressed: mainItem.focusedByKeyboard = false
+            onActiveFocusChanged: {
+                if (activeFocus) {
+                    mainItem.focusedIndex = index
+                    mainItem.focusedChat = modelData
+                    mainItem.positionViewAtIndex(index, ListView.Contain)
+                }
             }
             //: %1 chat %2
             Accessible.name: qsTr("focused_chat_accessible_label").arg(modelData.core.title).arg(unreadCount.unread > 0 
@@ -504,6 +546,11 @@ ListView {
             Keys.onPressed: (event) => {
                 if (event.key == Qt.Key_Enter || event.key == Qt.Key_Space || event.key == Qt.Key_Return) {
                     mainItem.chatClicked(modelData)
+                    event.accepted = true
+                } else if (event.key == Qt.Key_Up || event.key == Qt.Key_Down) {
+                    var up = event.key == Qt.Key_Up
+                    if (mainItem.focusRow(index + (up ? -1 : 1), up ? Qt.BacktabFocusReason : Qt.TabFocusReason))
+                        event.accepted = true
                 }
             }
         }
