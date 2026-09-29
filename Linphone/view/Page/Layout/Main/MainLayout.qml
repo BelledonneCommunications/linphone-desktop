@@ -489,6 +489,7 @@ Item {
                         }
                         PopupButton {
                             id: settingsMenuButton
+                            objectName: "mainOptionsButton"
                             icon.width: Utils.getSizeWithScreenRatio(24)
                             icon.height: Utils.getSizeWithScreenRatio(24)
                             popup.width: Utils.getSizeWithScreenRatio(271)

@@ -37,6 +37,32 @@ Button {
         popup.open();
     }
 
+    property bool openedWithKeyboard: false
+    property bool restoreFocusOnClose: false
+
+    function firstFocusableItem(item) {
+        if (!item || !item.visible || !item.enabled)
+            return null;
+        if (item.activeFocusOnTab)
+            return item;
+        for (var i = 0; i < item.children.length; ++i) {
+            var found = firstFocusableItem(item.children[i]);
+            if (found)
+                return found;
+        }
+        return null;
+    }
+
+    function focusFirstItem() {
+        var reason = openedWithKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason;
+        openedWithKeyboard = false;
+        if (!popup.visible || popup.activeFocus)
+            return;
+        var item = firstFocusableItem(popup.contentItem);
+        if (item)
+            item.forceActiveFocus(reason);
+    }
+
     function isFocusable(item) {
         return item.activeFocusOnTab;
     }
@@ -95,6 +121,7 @@ Button {
                 event.accepted = true;
             }
         } else if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+            mainItem.openedWithKeyboard = true;
             mainItem.open();
             event.accepted = true;
         }
@@ -129,6 +156,7 @@ Button {
         colorizationColor: mainItem.contentImageColor
     }
     onPressed: {
+        openedWithKeyboard = false;
         if (popup.visible)
             popup.close();
         else
@@ -162,6 +190,16 @@ Button {
             if (globalPos.x + popupWidth >= mainItem.Window.width) {
                 x = -popupWidth;
             }
+        }
+
+        onOpened: Qt.callLater(mainItem.focusFirstItem)
+        onAboutToHide: mainItem.restoreFocusOnClose = popup.activeFocus
+        onClosed: {
+            if (!mainItem.restoreFocusOnClose)
+                return;
+            mainItem.restoreFocusOnClose = false;
+            if (mainItem.visible && mainItem.enabled)
+                mainItem.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.MouseFocusReason);
         }
 
         onHeightChanged: Qt.callLater(updatePosition)

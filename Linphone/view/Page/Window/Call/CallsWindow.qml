@@ -1748,6 +1748,7 @@ AbstractWindow {
                     // More option button
                     PopupButton {
                         id: moreOptionsButton
+                        objectName: "callMoreOptionsButton"
                         //: "Plus d'options…"
                         ToolTip.text: qsTr("call_more_options_hint")
                         popUpTitle: qsTr("call_more_options_hint")
