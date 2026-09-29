@@ -2906,13 +2906,13 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
 <context>
     <name>ConferenceInfoCore</name>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="593"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="597"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
         <translation>Erreur</translation>
     </message>
     <message>
-        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="595"/>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="599"/>
         <source>information_popup_disconnected_account_message</source>
         <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
         <translation>Votre compte est déconnecté</translation>
@@ -4449,26 +4449,26 @@ Expiration : %1</translation>
         <translation>%1 requit</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
-        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="75"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="71"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="77"/>
         <source>assistant_account_login</source>
         <extracomment>&quot;Connexion&quot;</extracomment>
         <translation>Connexion</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="114"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="116"/>
         <source>assistant_account_login_missing_username</source>
         <extracomment>&quot;Veuillez saisir un nom d&apos;utilisateur&quot;</extracomment>
         <translation>Veuillez saisir un nom d&apos;utilisateur</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="117"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="119"/>
         <source>assistant_account_login_missing_password</source>
         <extracomment>&quot;Veuillez saisir un mot de passe&quot;</extracomment>
         <translation>Veuillez saisir un mot de passe</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="131"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="133"/>
         <source>assistant_forgotten_password</source>
         <extracomment>&quot;Mot de passe oublié ?&quot;</extracomment>
         <translation>Mot de passe oublié ?</translation>
@@ -6690,19 +6690,19 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="213"/>
         <source>show_accessible_name</source>
         <extracomment>Show %1</extracomment>
         <translation>Afficher %1</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="230"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
         <source>textfield_custom_button_accessible_name</source>
         <extracomment>%1 button of %2</extracomment>
         <translation>Bouton %1 de %2</translation>
     </message>
     <message>
-        <location filename="../../view/Control/Input/TextField.qml" line="209"/>
+        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
         <source>hide_accessible_name</source>
         <extracomment>Hide %1</extracomment>
         <translation>Cacher %1</translation>
