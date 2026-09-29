@@ -33,6 +33,15 @@ export var A11yFixture = {
         maximize();
         return context;
     },
+    relaunchSignedIn: function(context){
+        try { context.kill(); } catch (e) {
+            try { context.detach(); } catch (ignored) {}
+        }
+        var index = contexts.indexOf(context);
+        if (index >= 0) contexts.splice(index, 1);
+        snooze(2);
+        return A11yFixture.launchSignedIn();
+    },
     launchSignedInWithPeer: function(){
         var peer = launch(PEER_PROFILE);
         if (!MainPage.waitLoaded()) test.fatal("App did not reach the main page on profile " + PEER_PROFILE);
