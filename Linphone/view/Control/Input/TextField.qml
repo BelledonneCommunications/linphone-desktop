@@ -191,6 +191,7 @@ Control.TextField {
 
     Button {
         id: eyeButton
+        objectName: "passwordVisibilityButton"
         KeyNavigation.left: mainItem
         property real rightMargin: Utils.getSizeWithScreenRatio(15)
         z: 1

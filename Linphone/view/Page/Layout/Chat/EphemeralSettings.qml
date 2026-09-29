@@ -101,6 +101,7 @@ ColumnLayout {
 					Layout.fillWidth: true
 					Layout.leftMargin: Utils.getSizeWithScreenRatio(8)
 					RadioButton {
+						objectName: "ephemeralLifetimeRadioButton"
 						color: DefaultStyle.main1_500_main
 						enabled: modelData.disabled !== true
 						opacity: modelData.disabled !== true ? 1.0 : 0.5
