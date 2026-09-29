@@ -619,9 +619,13 @@ void ConferenceInfoCore::save() {
 			} else lCritical() << "No default account";
 			// Add text capability for chat in conf
 			linphoneConf->setCapability(linphone::StreamType::Text, true);
-			if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls())
+			if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls()) {
+				lInfo() << log().arg("create end2end encrypted meeting enabled, set end to end security level");
 				linphoneConf->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
-			else linphoneConf->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
+			} else {
+				lInfo() << log().arg("create end2end encrypted meeting disabled, set point to point security level");
+				linphoneConf->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
+			}
 			auto confInfoModel = Utils::makeQObject_ptr<ConferenceInfoModel>(linphoneConf);
 			auto confSchedulerModel = confInfoModel->getConferenceScheduler();
 			if (!confSchedulerModel) {

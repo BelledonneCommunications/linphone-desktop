@@ -75,10 +75,13 @@ void ConferenceInfoModel::setConferenceScheduler(const std::shared_ptr<Conferenc
 					        auto chatParams = params->getChatParams();
 					        if (!chatParams) return;
 					        chatParams->deactivateEphemeral();
-					        chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
-					        if (SettingsModel::getInstance()->getCreateEndToEndEncryptedMeetingsAndGroupCalls())
+					        if (ToolModel::isEndToEndEncryptedChatAvailable()) {
+						        chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 						        params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
-					        else params->setSecurityLevel(linphone::Conference::SecurityLevel::PointToPoint);
+					        } else {
+						        chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
+						        params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
+					        }
 					        mConferenceSchedulerModel->getMonitor()->sendInvitations(params);
 				        }
 				        emit schedulerStateChanged(state);
