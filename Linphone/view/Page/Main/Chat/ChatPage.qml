@@ -234,6 +234,7 @@ AbstractMainPage {
                         }
                         ChatListView {
                             id: chatListView
+                            objectName: "chatListView"
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             chatProxy.model: AppCpp.chats
