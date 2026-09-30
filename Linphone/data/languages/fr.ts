@@ -1339,7 +1339,12 @@
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="465"/>
         <source>call_history_options_accessible_name</source>
-        <translation>Options de l&apos;</translation>
+        <translation>Options de l&apos;historique d&apos;appels</translation>
+    </message>
+    <message>
+        <source>call_history_contact_options_accessible_name</source>
+        <extracomment>&quot;Options pour %1&quot;</extracomment>
+        <translation>Options pour %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="180"/>

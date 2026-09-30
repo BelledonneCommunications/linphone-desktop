@@ -494,7 +494,9 @@ AbstractMainPage {
                     id: detailOptions
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    popUpTitle: qsTr("call_history_options_accessible_name")
+                    Accessible.name: contactDetail.contactName
+                                     ? qsTr("call_history_contact_options_accessible_name").arg(contactDetail.contactName)
+                                     : qsTr("call_history_options_accessible_name")
                     popup.x: width
                     popup.contentItem: FocusScope {
                         implicitHeight: detailsButtons.implicitHeight

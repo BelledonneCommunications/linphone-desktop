@@ -1352,6 +1352,11 @@
         <translation>Call history options</translation>
     </message>
     <message>
+        <source>call_history_contact_options_accessible_name</source>
+        <extracomment>&quot;Options for %1&quot;</extracomment>
+        <translation>Options for %1</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="180"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="557"/>
         <source>menu_delete_history</source>
