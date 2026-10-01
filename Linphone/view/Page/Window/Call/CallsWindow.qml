@@ -952,7 +952,9 @@ AbstractWindow {
                                 id: numPad
                                 Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
                                 Layout.bottomMargin: Utils.getSizeWithScreenRatio(18)
-                                currentCall: callsModel.currentCall
+                                onButtonPressed: (text) => {
+                                    if (callsModel.currentCall) callsModel.currentCall.core.lSendDtmf(text)
+                                }
                                 lastRowVisible: false
                                 onLaunchCall: {
                                     UtilsCpp.createCall(dialerTextInput.text)
