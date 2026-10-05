@@ -357,19 +357,33 @@ void OIDCModel::setBearers() {
 	auto accessBearer = linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(idToken()), timeT);
 	mAuthInfo->setAccessToken(accessBearer);
 	auto decoded = Utils::decodeJwtPayload(Utils::coreStringToAppString(accessBearer->getToken()));
-	auto username = decoded["preferred_username"].toString();
-	if (username.isEmpty()) {
-		auto username = decoded["username"].toString();
+
+	// Extract primary identifier from token
+	QString usernameFull;
+	if (decoded.contains("preferred_username")) {
+		usernameFull = decoded["preferred_username"].toString();
 	}
-	if (!username.isEmpty()) {
-		qDebug() << "Username found in bearer access token, set in authInfo" << username;
-		mAuthInfo->setUsername(Utils::appStringToCoreString(username));
+	if (usernameFull.isEmpty() && decoded.contains("username")) {
+		usernameFull = decoded["username"].toString();
+	}
+
+	if (!usernameFull.isEmpty()) {
+		// Extract user part (before @) and domain (after @) if present
+		int atPos = usernameFull.indexOf('@');
+		if (atPos > 0) {
+			QString userPart = usernameFull.left(atPos);
+			qDebug() << "OIDC: Extracted user [" << userPart << "] from [" << usernameFull << "]";
+			mAuthInfo->setUsername(Utils::appStringToCoreString(userPart));
+		} else {
+			qDebug() << "OIDC: Username (no domain) [" << usernameFull << "]";
+			mAuthInfo->setUsername(Utils::appStringToCoreString(usernameFull));
+		}
 	} else {
-		lWarning() << "Username not found in bearer access token, account removal could failed";
+		lWarning() << "OIDC: No username claim found in JWT payload. Available claims: "
+		           << QStringList(decoded.keys().begin(), decoded.keys().end()).join(", ");
 	}
 
 	if (mOidc.refreshToken() != nullptr) {
-
 		auto refreshBearer =
 		    linphone::Factory::get()->createBearerToken(Utils::appStringToCoreString(mOidc.refreshToken()), timeT);
 		mAuthInfo->setRefreshToken(refreshBearer);
@@ -378,7 +392,7 @@ void OIDCModel::setBearers() {
 		lWarning() << log().arg("No refresh token found");
 	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
-	emit CoreModel::getInstance()->bearerAccountAdded();
+	emit CoreModel::getInstance() -> bearerAccountAdded();
 	emit finished();
 }
 QString OIDCModel::idToken() const {
