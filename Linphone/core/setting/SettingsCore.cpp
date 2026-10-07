@@ -139,6 +139,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	INIT_CORE_MEMBER(DisableCallRecordings, settingsModel)
 	INIT_CORE_MEMBER(AssistantHideCreateAccount, settingsModel)
 	INIT_CORE_MEMBER(AssistantDisableQrCode, settingsModel)
+	INIT_CORE_MEMBER(HideNotificationCounter, settingsModel)
 
 	INIT_CORE_MEMBER(AssistantHideThirdPartyAccount, settingsModel)
 	INIT_CORE_MEMBER(HideSipAddresses, settingsModel)
@@ -216,6 +217,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 
 	// UI
 	mDisableChatFeature = settingsCore.mDisableChatFeature;
+	mHideNotificationCounter = settingsCore.mHideNotificationCounter;
 	mDisableMeetingsFeature = settingsCore.mDisableMeetingsFeature;
 	mShowPastMeetings = settingsCore.mShowPastMeetings;
 	mDisableBroadcastFeature = settingsCore.mDisableBroadcastFeature;
@@ -340,6 +342,7 @@ void SettingsCore::reloadSettings() {
 	mAutoCheckForUpdateOnStart = settingsModel->autoCheckForUpdateOnStart();
 
 	setDisableChatFeature(settingsModel->getDisableChatFeature());
+	setHideNotificationCounter(settingsModel->getHideNotificationCounter());
 	setShowPastMeetings(settingsModel->getShowPastMeetings());
 	setDisableBroadcastFeature(settingsModel->getDisableBroadcastFeature());
 	setDisableCallForward(settingsModel->getDisableCallForward());
@@ -632,6 +635,8 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                           disableChatFeature, DisableChatFeature)
+	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
+	                           hideNotificationCounter, HideNotificationCounter)
 	DEFINE_CORE_GET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
 	                        showPastMeetings, ShowPastMeetings)
 	DEFINE_CORE_GETSET_CONNECT(mSettingsModelConnection, SettingsCore, SettingsModel, settingsModel, bool,
@@ -766,6 +771,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 
 	// UI
 	setDisableChatFeature(settingsCore.mDisableChatFeature);
+	setHideNotificationCounter(settingsCore.mHideNotificationCounter);
 	setDisableMeetingsFeature(settingsCore.mDisableMeetingsFeature);
 	setShowPastMeetings(settingsCore.mShowPastMeetings);
 	setDisableBroadcastFeature(settingsCore.mDisableBroadcastFeature);
@@ -1362,6 +1368,10 @@ void SettingsCore::setShowPastMeetings(bool show) {
 	}
 }
 
+bool SettingsCore::getHideNotificationCounter() const {
+	return mHideNotificationCounter;
+}
+
 bool SettingsCore::getExitOnClose() const {
 	return mExitOnClose;
 }
@@ -1448,6 +1458,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 
 	// UI
 	model->setDisableChatFeature(mDisableChatFeature);
+	model->setHideNotificationCounter(mHideNotificationCounter);
 	// model->setDisableMeetingsFeature(mDisableMeetingsFeature);
 	model->setShowPastMeetings(mShowPastMeetings);
 	model->setDisableBroadcastFeature(mDisableBroadcastFeature);
@@ -1539,7 +1550,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	mAutoCheckForUpdateOnStart = model->autoCheckForUpdateOnStart();
 
 	// UI
-	mDisableChatFeature = model->getDisableChatFeature();
+	mHideNotificationCounter = model->getHideNotificationCounter();
 	// mDisableMeetingsFeature = model->getDisableMeetingsFeature();
 	mShowPastMeetings = model->getShowPastMeetings();
 	mDisableBroadcastFeature = model->getDisableBroadcastFeature();

@@ -91,39 +91,35 @@ public:
 	Q_PROPERTY(
 	    QVariantMap conferenceLayout READ getConferenceLayout WRITE setConferenceLayout NOTIFY conferenceLayoutChanged)
 	Q_PROPERTY(
-	    QVariantMap mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY
-	        mediaEncryptionChanged) Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE
-	                                               setMediaEncryptionMandatory NOTIFY mediaEncryptionMandatoryChanged)
-	    Q_PROPERTY(
-	        bool createEndToEndEncryptedMeetingsAndGroupCalls READ getCreateEndToEndEncryptedMeetingsAndGroupCalls WRITE
-	            setCreateEndToEndEncryptedMeetingsAndGroupCalls NOTIFY
-	                createEndToEndEncryptedMeetingsAndGroupCallsChanged)
+	    QVariantMap mediaEncryption READ getMediaEncryption WRITE setMediaEncryption NOTIFY mediaEncryptionChanged)
+	Q_PROPERTY(bool mediaEncryptionMandatory READ isMediaEncryptionMandatory WRITE setMediaEncryptionMandatory NOTIFY
+	               mediaEncryptionMandatoryChanged)
+	Q_PROPERTY(
+	    bool createEndToEndEncryptedMeetingsAndGroupCalls READ getCreateEndToEndEncryptedMeetingsAndGroupCalls WRITE
+	        setCreateEndToEndEncryptedMeetingsAndGroupCalls NOTIFY createEndToEndEncryptedMeetingsAndGroupCallsChanged)
 
-	        Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged) Q_PROPERTY(
-	            QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
-	            Q_PROPERTY(int videoDeviceIndex READ getVideoDeviceIndex NOTIFY videoDeviceChanged)
+	Q_PROPERTY(QStringList videoDevices READ getVideoDevices NOTIFY videoDevicesChanged)
+	Q_PROPERTY(QString videoDevice READ getVideoDevice WRITE setVideoDevice NOTIFY videoDeviceChanged)
+	Q_PROPERTY(int videoDeviceIndex READ getVideoDeviceIndex NOTIFY videoDeviceChanged)
 
-	                Q_PROPERTY(float micVolume MEMBER _dummy_int NOTIFY micVolumeChanged)
+	Q_PROPERTY(float micVolume MEMBER _dummy_int NOTIFY micVolumeChanged)
 
-	                    Q_PROPERTY(
-	                        bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY
-	                            logsEnabledChanged) Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE
-	                                                               setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
-	                        Q_PROPERTY(
-	                            bool crashReporterEnabled READ getCrashReporterEnabled WRITE setCrashReporterEnabled
-	                                NOTIFY crashReporterEnabledChanged) Q_PROPERTY(QString logsEmail READ getLogsEmail)
-	                            Q_PROPERTY(QString logsFolder READ getLogsFolder) Q_PROPERTY(
-	                                QString ringtoneName READ getRingtoneFileName NOTIFY
-	                                    ringtoneChanged) Q_PROPERTY(QString ringtonePath READ getRingtonePath WRITE
-	                                                                    setRingtone NOTIFY ringtoneChanged)
-	                                Q_PROPERTY(QString ringtoneFolder MEMBER mRingtoneFolder NOTIFY ringtoneChanged)
-	                                    Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
-	                                        Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
+	Q_PROPERTY(bool logsEnabled READ getLogsEnabled WRITE setLogsEnabled NOTIFY logsEnabledChanged)
+	Q_PROPERTY(bool fullLogsEnabled READ getFullLogsEnabled WRITE setFullLogsEnabled NOTIFY fullLogsEnabledChanged)
+	Q_PROPERTY(bool crashReporterEnabled READ getCrashReporterEnabled WRITE setCrashReporterEnabled NOTIFY
+	               crashReporterEnabledChanged)
+	Q_PROPERTY(QString logsEmail READ getLogsEmail)
+	Q_PROPERTY(QString logsFolder READ getLogsFolder)
+	Q_PROPERTY(QString ringtoneName READ getRingtoneFileName NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtonePath READ getRingtonePath WRITE setRingtone NOTIFY ringtoneChanged)
+	Q_PROPERTY(QString ringtoneFolder MEMBER mRingtoneFolder NOTIFY ringtoneChanged)
+	Q_PROPERTY(bool dnd READ dndEnabled WRITE lEnableDnd NOTIFY dndChanged)
+	Q_PROPERTY(bool isSaved READ isSaved WRITE setIsSaved NOTIFY isSavedChanged)
 
-	                                            Q_PROPERTY(bool showAccountDevices READ showAccountDevices WRITE
-	                                                           setShowAccountDevices NOTIFY showAccountDevicesChanged)
+	Q_PROPERTY(
+	    bool showAccountDevices READ showAccountDevices WRITE setShowAccountDevices NOTIFY showAccountDevicesChanged)
 
-	                                                static QSharedPointer<SettingsCore> create();
+	static QSharedPointer<SettingsCore> create();
 	SettingsCore(QObject *parent = Q_NULLPTR);
 	SettingsCore(const SettingsCore &settingsCore);
 	virtual ~SettingsCore();
@@ -330,6 +326,7 @@ public:
 	Q_INVOKABLE void undo();
 
 	DECLARE_CORE_GETSET_MEMBER(bool, disableChatFeature, DisableChatFeature)
+	DECLARE_CORE_GETSET(bool, hideNotificationCounter, HideNotificationCounter)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_CORE_GETSET_MEMBER(bool, disableCallForward, DisableCallForward)
 	DECLARE_CORE_GETSET_MEMBER(bool, hideSettings, HideSettings)
