@@ -1695,6 +1695,16 @@ AbstractWindow {
                         onClicked: mainWindow.call.core.lSetMicrophoneMuted(
                                        !mainWindow.call.core.microphoneMuted)
                         KeyNavigation.backtab: videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : nextItemInFocusChain(false)
+                        Connections {
+                            target: mainWindow.call ? mainWindow.call.core : null
+                            function onMicrophoneMutedChanged() {
+                                if (audioMicrophoneButton.keyboardFocus)
+                                    return
+                                audioMicrophoneButton.Accessible.announce(mainWindow.call.core.microphoneMuted
+                                                                          ? qsTr("call_microphone_muted_announcement")
+                                                                          : qsTr("call_microphone_unmuted_announcement"))
+                            }
+                        }
                     }
 
                     // Screen cast button
