@@ -17,6 +17,7 @@ Notification {
 	
 	readonly property var call: notificationData && notificationData.call
 	readonly property var displayName: notificationData && notificationData.displayName
+	title: (displayName ? displayName + ", " : "") + qsTr("call_audio_incoming")
 	property var state: call.core.state
 	property var status: call.core.status
 	property var conference: call.core.conference
