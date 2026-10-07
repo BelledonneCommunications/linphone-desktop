@@ -1,6 +1,10 @@
+import * as L from "squishlib.js";
 import { App } from "app.js";
 import { MainPage } from "mainPage.js";
 import { WelcomePage } from "welcomePage.js";
+import { CallPage } from "callPage.js";
+import { CallWindow } from "callWindow.js";
+import { provisionedAccount } from "serverAccount.js";
 
 var SIGNED_IN_PROFILE = "a11y";
 var PEER_PROFILE = "a11ypeer";
@@ -55,6 +59,42 @@ export var A11yFixture = {
         if (!MainPage.waitLoaded()) test.fatal("App did not reach the main page on profile " + CALLER_PROFILE);
         maximize();
         return { context: context, peer: peer };
+    },
+    callStateOf: function(window){
+        try { return String(window.callState); } catch (e) { return "unreadable"; }
+    },
+    startConnectedCall: function(){
+        var launched = A11yFixture.launchCallPair();
+        CallPage.open();
+        CallPage.callBySip(provisionedAccount("B"));
+        App.withInstance(launched.peer, function(){ CallPage.accept(); });
+        setApplicationContext(launched.context);
+        var window = CallWindow.waitStarted(20000);
+        if (!window) test.fatal("Call window not found");
+        var lastState = null;
+        var deadline = Date.now() + 30000;
+        do {
+            if (!L.waitForWindowNamed("callsWindow", 500))
+                test.fatal("The call ended before it was connected, last call state: " + lastState);
+            var state = A11yFixture.callStateOf(window);
+            if (state !== lastState) {
+                test.log("Call state: " + state);
+                lastState = state;
+            }
+            if (L.namedIn(window, "callMoreOptionsButton")) return window;
+            snooze(0.5);
+        } while (Date.now() < deadline);
+        test.fatal("The call never reached a connected state, last call state: " + lastState);
+        return null;
+    },
+    activate: function(window){
+        var deadline = Date.now() + 10000;
+        do {
+            try { if (window.active) return true; } catch (e) { return false; }
+            try { window.raise(); window.requestActivate(); } catch (e) {}
+            snooze(0.5);
+        } while (Date.now() < deadline);
+        return false;
     },
     launchGuest: function(){
         var context = launch(GUEST_PROFILE);

@@ -2,41 +2,8 @@ import * as L from "squishlib.js";
 import { tr } from "translate.js";
 import { App } from "app.js";
 import { A11yFixture } from "a11yFixture.js";
-import { CallPage } from "callPage.js";
-import { CallWindow } from "callWindow.js";
-import { provisionedAccount } from "serverAccount.js";
 
 function tx(o){ try { return o.text ? String(o.text) : ""; } catch (e) { return ""; } }
-
-function startCall(){
-    var launched = A11yFixture.launchCallPair();
-    CallPage.open();
-    CallPage.callBySip(provisionedAccount("B"));
-    App.withInstance(launched.peer, function(){ CallPage.accept(); });
-    setApplicationContext(launched.context);
-}
-
-function callStateOf(window){
-    try { return String(window.callState); } catch (e) { return "unreadable"; }
-}
-
-function waitConnectedOptionsButton(window){
-    var lastState = null;
-    var deadline = Date.now() + 30000;
-    do {
-        if (!L.waitForWindowNamed("callsWindow", 500))
-            test.fatal("The call ended before it was connected, last call state: " + lastState);
-        var state = callStateOf(window);
-        if (state !== lastState) {
-            test.log("Call state: " + state);
-            lastState = state;
-        }
-        var button = L.namedIn(window, "callMoreOptionsButton");
-        if (button) return;
-        snooze(0.5);
-    } while (Date.now() < deadline);
-    test.fatal("The call never reached a connected state, last call state: " + lastState);
-}
 
 var MENUS = {
     "main options menu": {
@@ -50,15 +17,12 @@ var MENUS = {
     },
     "in-call options menu": {
         reach: function(){
-            startCall();
-            var window = CallWindow.waitStarted(20000);
-            if (!window) test.fatal("Call window not found");
-            waitConnectedOptionsButton(window);
+            var window = A11yFixture.startConnectedCall();
             return {
                 window: window,
                 find: function(){
                     if (!L.waitForWindowNamed("callsWindow", 1000))
-                        test.fatal("The call ended before the options menu could be reached, last call state: " + callStateOf(window));
+                        test.fatal("The call ended before the options menu could be reached, last call state: " + A11yFixture.callStateOf(window));
                     return L.namedIn(window, "callMoreOptionsButton");
                 }
             };
@@ -77,20 +41,10 @@ function focusedItem(window){
     try { return window.activeFocusItem; } catch (e) { return null; }
 }
 
-function activate(window){
-    var deadline = Date.now() + 10000;
-    do {
-        try { if (window.active) return true; } catch (e) { return false; }
-        try { window.raise(); window.requestActivate(); } catch (e) {}
-        snooze(0.5);
-    } while (Date.now() < deadline);
-    return false;
-}
-
 function focusButton(context, name){
     var menu = menuNamed(name);
     var reached = menu.reach();
-    if (!activate(reached.window)) test.fatal("The window holding the " + name + " could not be activated");
+    if (!A11yFixture.activate(reached.window)) test.fatal("The window holding the " + name + " could not be activated");
     var button = null;
     var deadline = Date.now() + 20000;
     do {
