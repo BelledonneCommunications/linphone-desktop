@@ -7,6 +7,7 @@ import EnumsToStringCpp
 import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
@@ -703,13 +704,65 @@ AbstractWindow {
                 }
                 CallSettingsPanel {
                     id: rightPanel
+                    objectName: "callSidePanel"
                     Layout.fillHeight: true
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(393)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(10)
                     property int currentIndex: 0
+                    property Item focusReturnItem: null
+                    property bool keyboardInside: false
                     visible: false
-                    onVisibleChanged: if(!visible) contentLoader.sourceComponent = null
+                    onVisibleChanged: {
+                        if (visible) {
+                            var opener = mainWindow.activeFocusItem
+                            if (opener && opener.activeFocusOnTab && !Utils.isDescendant(opener, rightPanel))
+                                focusReturnItem = opener
+                            keyboardInside = opener ? opener.keyboardFocus === true : false
+                            return
+                        }
+                        contentLoader.sourceComponent = null
+                        var returnItem = focusReturnItem
+                        var keyboard = keyboardInside
+                        focusReturnItem = null
+                        keyboardInside = false
+                        var current = mainWindow.activeFocusItem
+                        if (!returnItem || !returnItem.visible || !returnItem.enabled)
+                            return
+                        if (current && current.activeFocusOnTab && current !== returnItem)
+                            return
+                        if (returnItem.activeFocus)
+                            returnItem.focus = false
+                        returnItem.forceActiveFocus(keyboard ? Qt.TabFocusReason : Qt.OtherFocusReason)
+                    }
+                    function focusInside() {
+                        if (!rightPanel.visible)
+                            return
+                        var current = mainWindow.activeFocusItem
+                        var inside = current && Utils.isDescendant(current, rightPanel)
+                        if (inside && current.activeFocusOnTab)
+                            return
+                        if (!inside && current && current.activeFocusOnTab)
+                            rightPanel.focusReturnItem = current
+                        var target = rightPanel.firstContentFocusableItem ?? rightPanel.closeButton
+                        target.forceActiveFocus(rightPanel.keyboardInside ? Qt.TabFocusReason : Qt.OtherFocusReason)
+                    }
+                    FocusTrap.enabled: visible
+                    function updateKeyboardInside() {
+                        var item = mainWindow.activeFocusItem
+                        if (rightPanel.visible && item && item.keyboardFocus === true && Utils.isDescendant(item, rightPanel))
+                            rightPanel.keyboardInside = true
+                    }
+                    Connections {
+                        target: mainWindow
+                        function onActiveFocusItemChanged() {
+                            Qt.callLater(rightPanel.updateKeyboardInside)
+                        }
+                    }
+                    Keys.onEscapePressed: event => {
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     function replace(id, properties) {
                         rightPanel.customHeaderButtons = null
                         contentLoader.sourceComponent = null
@@ -720,7 +773,6 @@ AbstractWindow {
                     }
                     headerStack.currentIndex: 0
                     headerValidateButtonText: qsTr("add")
-                    KeyNavigation.tab : Utils.isDescendant(nextItemInFocusChain(), rightPanel) ? nextItemInFocusChain() : videoCameraButton
 
                     // Do not consider padding for chat
                     // Binding on topPadding {
@@ -791,12 +843,9 @@ AbstractWindow {
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
 
                             // Update tab focus properties
-                            var firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
-                            rightPanel.firstContentFocusableItem = firstContentFocusableItem ?? mainWindow.firstButtonInBottomTab
-                            var lastContentFocusableItem = Utils.getLastFocusableItemInItem(rightPanel.contentLoader.item)
-                            if(lastContentFocusableItem != undefined){
-                                lastContentFocusableItem.KeyNavigation.tab = mainWindow.firstButtonInBottomTab
-                            }
+                            rightPanel.firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
+                            if (rightPanel.contentLoader.item)
+                                Qt.callLater(rightPanel.focusInside)
                         }
                     }
 
@@ -1569,6 +1618,7 @@ AbstractWindow {
                     // Call list button
                     CheckableButton {
                         id: callListButton
+                        objectName: "callListButton"
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         checkable: true

@@ -10,6 +10,7 @@ Control.Page {
 	property alias headerStack: headerStack
 	property alias contentLoader: contentLoader
 	property alias customHeaderButtons: customButtonLayout.children
+	property alias closeButton: closeButton
 	property int contentItemHeight: scrollview.height
 	property bool closeButtonVisible: true
 	property var firstContentFocusableItem: undefined
@@ -62,7 +63,7 @@ Control.Page {
 				anchors.rightMargin: Utils.getSizeWithScreenRatio(5)
 				//: Close %1 panel
 				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
-				KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
+				KeyNavigation.tab: mainItem.firstContentFocusableItem ?? null
 			}
 		}
 		contentItem: StackLayout {

@@ -39,6 +39,7 @@ Button {
 
     property bool openedWithKeyboard: false
     property bool restoreFocusOnClose: false
+    property bool restoreWithKeyboard: false
 
     function firstFocusableItem(item) {
         if (!item || !item.visible || !item.enabled)
@@ -193,13 +194,20 @@ Button {
         }
 
         onOpened: Qt.callLater(mainItem.focusFirstItem)
-        onAboutToHide: mainItem.restoreFocusOnClose = popup.activeFocus
+        onAboutToHide: {
+            mainItem.restoreFocusOnClose = popup.activeFocus;
+            var focused = mainItem.Window.activeFocusItem;
+            mainItem.restoreWithKeyboard = focused && focused.keyboardFocus !== undefined ? focused.keyboardFocus : FocusNavigator.doesLastFocusWasKeyboard();
+        }
         onClosed: {
             if (!mainItem.restoreFocusOnClose)
                 return;
             mainItem.restoreFocusOnClose = false;
-            if (mainItem.visible && mainItem.enabled)
-                mainItem.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.MouseFocusReason);
+            if (!mainItem.visible || !mainItem.enabled)
+                return;
+            if (mainItem.activeFocus)
+                mainItem.focus = false;
+            mainItem.forceActiveFocus(mainItem.restoreWithKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason);
         }
 
         onHeightChanged: Qt.callLater(updatePosition)
