@@ -2024,6 +2024,16 @@
         <translation>Désactiver le micro</translation>
     </message>
     <message>
+        <source>call_microphone_muted_announcement</source>
+        <extracomment>&quot;Micro coupé&quot;</extracomment>
+        <translation>Micro coupé</translation>
+    </message>
+    <message>
+        <source>call_microphone_unmuted_announcement</source>
+        <extracomment>&quot;Micro activé&quot;</extracomment>
+        <translation>Micro activé</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1650"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1651"/>
         <source>call_share_screen_hint</source>

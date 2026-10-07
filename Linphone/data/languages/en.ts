@@ -2024,6 +2024,16 @@
         <translation>Mute microphone</translation>
     </message>
     <message>
+        <source>call_microphone_muted_announcement</source>
+        <extracomment>&quot;Microphone muted&quot;</extracomment>
+        <translation>Microphone muted</translation>
+    </message>
+    <message>
+        <source>call_microphone_unmuted_announcement</source>
+        <extracomment>&quot;Microphone unmuted&quot;</extracomment>
+        <translation>Microphone unmuted</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1650"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1651"/>
         <source>call_share_screen_hint</source>
