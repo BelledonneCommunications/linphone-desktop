@@ -821,7 +821,9 @@ AbstractWindow {
                             return
                         if (!inside && current && current.activeFocusOnTab)
                             rightPanel.focusReturnItem = current
-                        var target = rightPanel.firstContentFocusableItem ?? rightPanel.closeButton
+                        var content = rightPanel.contentLoader.item
+                        var preferred = content && content.initialFocusItem ? content.initialFocusItem() : null
+                        var target = preferred ?? rightPanel.firstContentFocusableItem ?? rightPanel.closeButton
                         target.forceActiveFocus(rightPanel.keyboardInside ? Qt.TabFocusReason : Qt.OtherFocusReason)
                     }
                     FocusTrap.enabled: visible
@@ -1052,6 +1054,9 @@ AbstractWindow {
                     id: dialerPanelContent
                     objectName: "dialerPanel"
                     width: parent.width
+                    function initialFocusItem() {
+                        return numPad.firstKey()
+                    }
                     Keys.onEscapePressed: event => {
                         rightPanel.visible = false
                         event.accepted = true
