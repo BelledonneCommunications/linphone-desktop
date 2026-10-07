@@ -102,6 +102,7 @@
 #include "tool/accessibility/AccessibilityHelper.hpp"
 #include "tool/accessibility/EnterKeyActivator.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
+#include "tool/accessibility/FocusTrap.hpp"
 #include "tool/accessibility/KeyboardShortcuts.hpp"
 #ifdef HAVE_CRASH_HANDLER
 #include "tool/crash_reporter/CrashReporter.hpp"
@@ -998,6 +999,7 @@ void App::initCppInterfaces() {
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new AccessibilityHelper(engine); });
 
 	qmlRegisterType<FocusHelper>("CustomControls", 1, 0, "FocusHelper");
+	qmlRegisterType<FocusTrap>("CustomControls", 1, 0, "FocusTrap");
 
 	qmlRegisterType<DashRectangle>(Constants::MainQmlUri, 1, 0, "DashRectangle");
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
