@@ -5413,7 +5413,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
         <source>device_volume_accessible_name</source>
         <extracomment>%1 volume</extracomment>
-        <translation>%1 volume</translation>
+        <translation>Volume %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="132"/>
