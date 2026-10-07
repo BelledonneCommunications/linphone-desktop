@@ -1847,6 +1847,7 @@ AbstractWindow {
                             anchors.top: parent.top
                             anchors.right: parent.right
                             unread: mainWindow.chat ? mainWindow.chat.core.unreadMessagesCount : 0
+                            kind: "unreadMessages"
                         }
                         onToggled: {
                             if (checked) {

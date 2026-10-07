@@ -108,6 +108,7 @@ Control.TabBar {
 			activeFocusOnTab: true
 			UnreadNotification {
 				badgeType: modelData.label
+				kind: index === 0 ? "missedCalls" : index === 2 ? "unreadMessages" : ""
 				unread: !defaultAccount
 				? -1
 				: index === 0 

@@ -74,6 +74,7 @@ ListView {
             anchors.topMargin: Utils.getSizeWithScreenRatio(-5)
             anchors.rightMargin: Utils.getSizeWithScreenRatio(-5)
             unread: mainItem.chat?.core.unreadMessagesCount || 0
+            kind: "unreadMessages"
         }
     }
 
