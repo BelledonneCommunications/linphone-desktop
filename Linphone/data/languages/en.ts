@@ -7284,6 +7284,16 @@ Error in the chat</extracomment>
         <translation>Corresponding code :</translation>
     </message>
     <message>
+        <source>call_dialog_zrtp_remote_code_accessible_name</source>
+        <extracomment>&quot;Matching code %1 of %2: %3&quot;</extracomment>
+        <translation>Matching code %1 of %2: %3</translation>
+    </message>
+    <message>
+        <source>call_dialog_zrtp_remote_code_accessible_hint</source>
+        <extracomment>&quot;Select if this is your correspondent&apos;s code&quot;</extracomment>
+        <translation>Select if this is your correspondent&apos;s code</translation>
+    </message>
+    <message>
         <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="223"/>
         <source>call_dialog_zrtp_validate_trust_letters_do_not_match_text</source>
         <extracomment>&quot;Le code fourni ne correspond pas.&quot;</extracomment>

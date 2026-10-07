@@ -349,6 +349,13 @@ AbstractWindow {
         call: mainWindow.call
         modal: true
         closePolicy: Popup.NoAutoClose
+        onClosed: {
+            if (!mainWindow.call)
+                return
+            var target = mainWindow.firstButtonInBottomTab
+            if (target && target.visible && target.enabled)
+                target.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason)
+        }
     }
     Timer {
         id: autoCloseZrtpToast
@@ -377,6 +384,12 @@ AbstractWindow {
         Behavior on y {
             NumberAnimation {
                 duration: 1000
+                onRunningChanged: {
+                    if (running || zrtpValidationToast.y < 0)
+                        return
+                    var source = mainWindow.activeFocusItem || zrtpValidationToastText
+                    source.Accessible.announce(zrtpValidationToastText.text, Accessible.Assertive)
+                }
             }
         }
         background: Rectangle {
@@ -396,6 +409,9 @@ AbstractWindow {
                 Layout.fillWidth: true
             }
             Text {
+                id: zrtpValidationToastText
+                Accessible.role: Accessible.StaticText
+                Accessible.name: text
                 color: DefaultStyle.info_500_main
                 //: "Appareil authentifié"
                 text: qsTr("call_can_be_trusted_toast")
