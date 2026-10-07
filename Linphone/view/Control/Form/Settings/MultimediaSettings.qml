@@ -105,11 +105,13 @@ ColumnLayout {
 				Slider {
 					id: speakerVolume
 					Layout.fillWidth: true
-					from: 0.0
-					to: 1.0
-					value: SettingsCpp.playbackGain
+					from: 0
+					to: 100
+					stepSize: 5
+					snapMode: Control.Slider.SnapAlways
+					value: Math.round(SettingsCpp.playbackGain * 100)
 					onMoved: {
-						SettingsCpp.lSetPlaybackGain(value)
+						SettingsCpp.lSetPlaybackGain(value / 100)
 					}
 					//: %1 volume
 					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_speaker_title"))
@@ -155,11 +157,13 @@ ColumnLayout {
 				Slider {
 					id: microVolume
 					Layout.fillWidth: true
-					from: 0.0
-					to: 1.0
-					value: SettingsCpp.captureGain
+					from: 0
+					to: 100
+					stepSize: 5
+					snapMode: Control.Slider.SnapAlways
+					value: Math.round(SettingsCpp.captureGain * 100)
 					onMoved: {
-						SettingsCpp.lSetCaptureGain(value)
+						SettingsCpp.lSetCaptureGain(value / 100)
 					}
 					//: %1 volume
 					Accessible.name: qsTr("device_volume_accessible_name").arg(qsTr("multimedia_settings_microphone_title"))
