@@ -6862,7 +6862,17 @@ To enable them in a commercial project, please contact us.</translation>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
         <source>unread_notification_accessible_name</source>
         <extracomment>%1 notification badge : %2 unread</extracomment>
-        <translation>Unread notification badge : %1 unread</translation>
+        <translation>%1 notification badge: %2 unread</translation>
+    </message>
+    <message>
+        <source>badge_missed_calls_accessible_name</source>
+        <extracomment>&quot;%1 missed calls&quot;</extracomment>
+        <translation>%1 missed calls</translation>
+    </message>
+    <message>
+        <source>badge_unread_messages_accessible_name</source>
+        <extracomment>&quot;%1 unread messages&quot;</extracomment>
+        <translation>%1 unread messages</translation>
     </message>
 </context>
 <context>

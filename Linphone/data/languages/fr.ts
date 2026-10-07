@@ -6868,6 +6868,16 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <extracomment>%1 notification badge : %2 unread</extracomment>
         <translation>Pastille de notifications %1 : %2 non lues</translation>
     </message>
+    <message>
+        <source>badge_missed_calls_accessible_name</source>
+        <extracomment>&quot;%1 appels manqués&quot;</extracomment>
+        <translation>%1 appels manqués</translation>
+    </message>
+    <message>
+        <source>badge_unread_messages_accessible_name</source>
+        <extracomment>&quot;%1 messages non lus&quot;</extracomment>
+        <translation>%1 messages non lus</translation>
+    </message>
 </context>
 <context>
     <name>Utils</name>
