@@ -4,6 +4,7 @@ import QtQuick.Effects
 
 import Linphone
 import UtilsCpp 1.0
+import CustomControls 1.0
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
@@ -23,6 +24,62 @@ Dialog {
 	property bool isTokenVerified: call && call.core.tokenVerified || false
 	property bool isCaseMismatch: call && call.core.isMismatch || false
 	property bool securityError: false
+	property string localToken: call && call.core.localToken || ""
+	property bool localTokenIntroduced: false
+
+	function spelled(token) {
+		return token.split("").join(" ")
+	}
+
+	function isInside(item) {
+		return !!item && (Utils.isDescendant(item, mainItem.contentItem) || Utils.isDescendant(item, mainItem.background))
+	}
+
+	function focusReason() {
+		return FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason
+	}
+
+	function focusLocalToken() {
+		if (!mainItem.opened || mainItem.securityError || mainItem.localToken.length === 0)
+			return
+		var current = localTokenText.Window.activeFocusItem
+		if (current === localTokenText) {
+			localTokenText.Accessible.announce(localTokenText.Accessible.name)
+			return
+		}
+		if (mainItem.isInside(current) && current.visible && current.activeFocusOnTab)
+			return
+		localTokenText.forceActiveFocus(mainItem.focusReason())
+	}
+
+	function keepFocusInside() {
+		if (!mainItem.opened)
+			return
+		var current = localTokenText.Window.activeFocusItem
+		if (mainItem.isInside(current))
+			return
+		if (mainItem.securityError)
+			securityErrorText.forceActiveFocus(mainItem.focusReason())
+		else if (mainItem.localToken.length > 0)
+			localTokenText.forceActiveFocus(mainItem.focusReason())
+	}
+
+	Connections {
+		target: localTokenText.Window.window
+		function onActiveFocusItemChanged() {
+			if (mainItem.opened)
+				Qt.callLater(mainItem.keepFocusInside)
+		}
+	}
+
+	onOpened: {
+		localTokenIntroduced = false
+		Qt.callLater(focusLocalToken)
+	}
+	onLocalTokenChanged: Qt.callLater(focusLocalToken)
+	onSecurityErrorChanged: if (securityError) Qt.callLater(function() {
+		securityErrorText.forceActiveFocus(mainItem.focusReason())
+	})
 	// property bool firstTry: true
 
 	background: Item {
@@ -126,6 +183,7 @@ Dialog {
                 spacing: Utils.getSizeWithScreenRatio(10)
 				Layout.Layout.alignment: Qt.AlignHCenter
 				Text {
+					id: explanationText
                     Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(343)
 					Layout.Layout.alignment: Qt.AlignHCenter
 					horizontalAlignment: Text.AlignHCenter
@@ -148,7 +206,24 @@ Dialog {
                         font.pixelSize: Utils.getSizeWithScreenRatio(14)
 					}
 					Text {
-						text: mainItem.call && mainItem.call.core.localToken || ""
+						id: localTokenText
+						property bool keyboardFocus: FocusHelper.keyboardFocus
+						text: mainItem.localToken
+						activeFocusOnTab: true
+						Accessible.role: Accessible.StaticText
+						Accessible.name: (mainItem.localTokenIntroduced ? "" : qsTr("call_dialog_zrtp_validate_trust_title") + ". " + explanationText.text + " ")
+										 + qsTr("call_dialog_zrtp_validate_trust_local_code_label") + " "
+										 + mainItem.spelled(mainItem.localToken)
+						onActiveFocusChanged: if (!activeFocus && mainItem.localToken.length > 0) mainItem.localTokenIntroduced = true
+						Rectangle {
+							anchors.fill: parent
+							anchors.margins: -Utils.getSizeWithScreenRatio(4)
+							visible: localTokenText.keyboardFocus
+							color: "transparent"
+							border.color: DefaultStyle.main2_900
+							border.width: Utils.getSizeWithScreenRatio(2)
+							radius: Utils.getSizeWithScreenRatio(4)
+						}
 						horizontalAlignment: Text.AlignHCenter
 						Layout.Layout.alignment: Qt.AlignHCenter
 						font {
@@ -185,6 +260,7 @@ Dialog {
 						property var correctIndex
 						property var modelList
 						Repeater {
+							id: remoteTokensRepeater
 							model: mainItem.call && mainItem.call.core.remoteTokens || ""
 							Button {
                                 Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(70)
@@ -195,6 +271,8 @@ Dialog {
                                 textSize: Utils.getSizeWithScreenRatio(32)
                                 textWeight: Utils.getSizeWithScreenRatio(400)
 								text: modelData
+								Accessible.name: qsTr("call_dialog_zrtp_remote_code_accessible_name").arg(index + 1).arg(remoteTokensRepeater.count).arg(mainItem.spelled(modelData))
+								Accessible.description: qsTr("call_dialog_zrtp_remote_code_accessible_hint")
 								onTextChanged: console.log("token changed", text)
                                 shadowEnabled: true
                                 radius: Utils.getSizeWithScreenRatio(71)
@@ -214,6 +292,10 @@ Dialog {
 			spacing: 0
 
 			Text {
+				id: securityErrorText
+				activeFocusOnTab: mainItem.securityError
+				Accessible.role: Accessible.StaticText
+				Accessible.name: qsTr("call_dialog_zrtp_validate_trust_letters_do_not_match_text") + " " + qsTr("call_dialog_zrtp_security_alert_message")
                 width: Utils.getSizeWithScreenRatio(303)
                 // Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(343)
 				Layout.Layout.alignment: Qt.AlignHCenter
