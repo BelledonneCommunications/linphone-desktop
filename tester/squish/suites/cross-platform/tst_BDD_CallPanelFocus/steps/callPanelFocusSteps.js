@@ -143,6 +143,10 @@ Given("the user has opened the |any| with the keyboard", function(context, name)
     snooze(1);
 });
 
+Then("the keyboard focus is on the digit 1 of the dialer", function(context){
+    test.compare(nameOf(focusedItem(context.userData.window)), "numericPadKey1", "The keyboard focus is on the digit 1 of the dialer");
+});
+
 Then("the keyboard focus is in the |any|", function(context, name){
     test.verify(focusIsInPanel(context.userData.window), "The keyboard focus is in the " + name);
 });
