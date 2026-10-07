@@ -703,6 +703,7 @@ void App::initCore() {
 			            currentDirs.push_back(folder.toStdString());
 			            CoreModel::getInstance()->getCore()->setChatMessageFilesDirectories(currentDirs);
 		            });
+		    lDebug() << log().arg("Starting HID devices detection");
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.
@@ -724,8 +725,6 @@ void App::initCore() {
 				    assert(mEngine);
 			    }
 			    mSettings = settings;
-			    lDebug() << log().arg("Starting HID devices detection");
-			    CoreModel::getInstance()->getCore()->startHidDevicesDetection();
 			    // Provide `+custom` folders for custom components and `5.9` for old components.
 			    QStringList selectors("custom");
 			    const QVersionNumber &version = QLibraryInfo::version();
@@ -944,6 +943,7 @@ void App::initCore() {
 }
 
 static inline bool installLocale(App &app, QTranslator &translator, const QLocale &locale) {
+	lInfo() << QStringLiteral("install locale %1").arg(locale.name());
 	bool ok = translator.load(locale.name(), Constants::LanguagePath);
 	ok = ok && app.installTranslator(&translator);
 	if (ok) QLocale::setDefault(locale);
@@ -978,6 +978,7 @@ void App::initLocale() {
 	//	QLocale sysLocale = QLocale(qtLocale.join('_'));
 	// #else
 	QByteArray forcedLanguage = qgetenv("LINPHONE_FORCE_LANGUAGE");
+	lInfo() << log().arg("LINPHONE_FORCE_LANGUAGE=%1").arg(forcedLanguage);
 	QLocale sysLocale =
 	    forcedLanguage.isEmpty() ? QLocale(QLocale::system().name()) : QLocale(QString::fromUtf8(forcedLanguage));
 	if (installLocale(*this, *mTranslatorCore, sysLocale)) {
