@@ -286,7 +286,7 @@ OIDCModel::OIDCModel(const std::shared_ptr<linphone::AuthInfo> &authInfo, QObjec
 }
 
 void OIDCModel::forceTimeout() {
-	lInfo() << log().arg("Froce timeout for OpenID connection.");
+	lInfo() << log().arg("Force timeout for OpenID connection.");
 	stopTimeoutTimer();
 	dynamic_cast<OAuthHttpServerReplyHandler *>(mOidc.replyHandler())->close();
 	CoreModel::getInstance()->getCore()->abortAuthentication(mAuthInfo);
@@ -392,7 +392,7 @@ void OIDCModel::setBearers() {
 		lWarning() << log().arg("No refresh token found");
 	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
-	emit CoreModel::getInstance() -> bearerAccountAdded();
+	emit CoreModel::getInstance()->bearerAccountAdded();
 	emit finished();
 }
 QString OIDCModel::idToken() const {

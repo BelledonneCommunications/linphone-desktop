@@ -102,7 +102,7 @@ ListView {
     Connections {
         target: mainWindow
         function onActiveChanged() {
-            if (mainWindow.active && mainItem.atYEnd) mainItem.chat.core.lMarkAsRead()
+            if (mainWindow.active && mainItem.atYEnd && mainItem.chat) mainItem.chat.core.lMarkAsRead()
         }
     }
 
@@ -244,7 +244,7 @@ ListView {
         contentItem: RowLayout {
             id: composeLayout
             property var composingName: mainItem.chat?.core.composingName
-            height: childrenRect.height
+            // height: childrenRect.height
             Avatar {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
