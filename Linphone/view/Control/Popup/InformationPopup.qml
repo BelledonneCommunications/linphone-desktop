@@ -13,9 +13,11 @@ Popup {
 	property int index
 	signal closePopup(int index)
 	onClosed: closePopup(index)
+	property string accessibleMessage: [title, description].filter(part => part && part.length > 0).join(", ")
 	onAboutToShow: {
 		autoClosePopup.restart()
 	}
+	onOpened: if (accessibleMessage.length > 0) contentItem.Accessible.announce(accessibleMessage, isSuccess ? Accessible.Polite : Accessible.Assertive)
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width
 	// y : parent.y + parent.height - height
@@ -40,8 +42,12 @@ Popup {
 	contentItem: RowLayout {
         spacing: Utils.getSizeWithScreenRatio(24)
 		focus: true
+		Keys.onEscapePressed: event => {
+			mainItem.close()
+			event.accepted = true
+		}
 		Accessible.role: Accessible.AlertMessage
-		Accessible.name: "%1, %2".arg(mainItem.title).arg(mainItem.description)
+		Accessible.name: mainItem.accessibleMessage
 		EffectImage {
 			imageSource: mainItem.isSuccess ? AppIcons.smiley : AppIcons.smileySad
 			colorizationColor: mainItem.isSuccess ? DefaultStyle.success_500_main : DefaultStyle.danger_500_main
