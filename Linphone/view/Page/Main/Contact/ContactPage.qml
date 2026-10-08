@@ -342,6 +342,9 @@ AbstractMainPage {
             objectName: "contactDetail"
             width: parent?.width
             height: parent?.height
+            Keys.onEscapePressed: event => {
+                event.accepted = contactList.focusHighlightedContact(Qt.BacktabFocusReason)
+            }
 
             function focusEditButton(){
                 contactDetail.button.forceActiveFocus(Qt.TabFocusReason)

@@ -141,6 +141,21 @@ Flickable {
             return findNextList(nextItem, count + 1, direction)
     }
 
+    function focusHighlightedContact(focusReason) {
+        var lists = [favoritesList, contactsList, suggestionsList]
+        for (var i = 0; i < lists.length; ++i) {
+            var list = lists[i]
+            if (!list.visible || !list.expanded || list.currentIndex < 0)
+                continue
+            var item = list.itemAtIndex(list.currentIndex)
+            if (item && item.isSelected) {
+                list.selectIndex(list.currentIndex, focusReason)
+                return true
+            }
+        }
+        return false
+    }
+
     function updatePosition(list) {
         Utils.updatePosition(mainItem, list)
     }
