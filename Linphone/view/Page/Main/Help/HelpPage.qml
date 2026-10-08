@@ -40,6 +40,7 @@ AbstractMainPage {
 				}
 			}
 			Text {
+                Accessible.role: Accessible.Heading
                 //: "Aide"
                 text: qsTr("help_title")
 				color: DefaultStyle.main2_700
@@ -66,6 +67,7 @@ AbstractMainPage {
 			}
 		}
 		Text {
+			Accessible.role: Accessible.Heading
 			Layout.leftMargin: leftPanel.leftMargin
 			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(aboutImage.visible ? 41 : 24)
@@ -137,6 +139,7 @@ AbstractMainPage {
 			}
 		}
 		Text {
+			Accessible.role: Accessible.Heading
 			Layout.leftMargin: leftPanel.leftMargin
 			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(32)

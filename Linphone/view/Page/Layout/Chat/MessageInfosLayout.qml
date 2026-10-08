@@ -38,6 +38,7 @@ ColumnLayout {
 			onClicked: mainItem.goBackRequested()
 		}
 		Text {
+			Accessible.role: Accessible.Heading
 			text: mainItem.title
 			font: Typography.h4
 		}

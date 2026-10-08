@@ -68,6 +68,7 @@ Rectangle {
 					Accessible.name: qsTr("return_accessible_name")
 				}
 				Text {
+					Accessible.role: Accessible.Heading
 					text: titleText
 					color: DefaultStyle.main2_600
 					font: Typography.h3
@@ -158,6 +159,7 @@ Rectangle {
 						Layout.maximumWidth: Utils.getSizeWithScreenRatio(341)
 						spacing: Utils.getSizeWithScreenRatio(3)
 						Text {
+							Accessible.role: Accessible.Heading
 							text: modelData.title
 							visible: modelData.title.length > 0
 							font: Typography.h4
