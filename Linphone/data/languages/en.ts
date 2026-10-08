@@ -4771,7 +4771,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="459"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>account list</translation>
+        <translation>Account list</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="497"/>
@@ -5712,6 +5712,11 @@ Expiration : %1</translation>
 <context>
     <name>PopupButton</name>
     <message>
+        <source>popup_button_default_accessible_name</source>
+        <extracomment>&quot;More options&quot;</extracomment>
+        <translation>More options</translation>
+    </message>
+    <message>
         <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
         <source>close_popup_panel_accessible_name</source>
         <extracomment>&quot;Close %1 popup&quot;</extracomment>
@@ -5937,7 +5942,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>record_export_accessible_name</source>
         <extracomment>Export the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Export the recording</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
@@ -5949,7 +5954,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
         <extracomment>Delete the recording</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Delete the recording</translation>
     </message>
     <message>
         <source>meetings_search_hint</source>

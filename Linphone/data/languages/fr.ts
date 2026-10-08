@@ -1322,7 +1322,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="174"/>
         <source>call_history_list_options_accessible_name</source>
         <extracomment>Call history options</extracomment>
-        <translation>Options de la liste de l&apos;historique d&apos;appel</translation>
+        <translation>Options de l&apos;historique d&apos;appels</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="209"/>
@@ -4771,7 +4771,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="459"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>liste des comptes</translation>
+        <translation>Liste des comptes</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="497"/>
@@ -5712,6 +5712,11 @@ Expiration : %1</translation>
 <context>
     <name>PopupButton</name>
     <message>
+        <source>popup_button_default_accessible_name</source>
+        <extracomment>&quot;More options&quot;</extracomment>
+        <translation>Plus d&apos;options</translation>
+    </message>
+    <message>
         <source>open_menu_acessibility_action</source>
         <translation type="vanished">Menu ouvert</translation>
     </message>
@@ -5941,6 +5946,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>record_export_accessible_name</source>
         <extracomment>Export the recording</extracomment>
+        <translation>Exporter l&apos;enregistrement</translation>
         <translation>Exporter les enregistrements</translation>
     </message>
     <message>
@@ -5953,6 +5959,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
         <extracomment>Delete the recording</extracomment>
+        <translation>Supprimer l&apos;enregistrement</translation>
         <translation>Supprimer cet enregistrement</translation>
     </message>
     <message>

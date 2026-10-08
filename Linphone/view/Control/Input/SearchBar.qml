@@ -24,6 +24,7 @@ FocusScope {
 	property real keyboardFocusedBorderWidth: Utils.getSizeWithScreenRatio(3)
 	// Text properties
 	property string placeholderText: ""
+	property string accessibleName: placeholderText
 	property color placeholderTextColor: DefaultStyle.main2_400									
     property real textInputWidth: Utils.getSizeWithScreenRatio(350)
 	property string text: textField.searchText
@@ -76,7 +77,7 @@ FocusScope {
 		
 		property string searchText
 		//: Search bar : %1
-		Accessible.name: qsTr("search_bar_accessible_name").arg(placeholderText)
+		Accessible.name: qsTr("search_bar_accessible_name").arg(mainItem.accessibleName)
 
 		focus: true
 		placeholderText: mainItem.placeholderText
