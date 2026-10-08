@@ -40,6 +40,7 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+                Accessible.role: Accessible.Heading
                 //: Compte SIP tiers
                 text: qsTr("assistant_login_third_party_sip_account_title")
 				font {
@@ -380,6 +381,7 @@ LoginLayout {
 					Layout.fillHeight: true
 					spacing: Utils.getSizeWithScreenRatio(22)
 					Text {
+						Accessible.role: Accessible.Heading
 						id: advancedParametersTitle
 						//: Advanced parameters
 						text: qsTr("login_advanced_parameters_label")

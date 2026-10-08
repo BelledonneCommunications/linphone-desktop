@@ -144,6 +144,7 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {
+                        Accessible.role: Accessible.Heading
                         Layout.fillWidth: true
                         //: "Conversations"
                         text: qsTr("chat_list_title")
@@ -304,6 +305,7 @@ AbstractMainPage {
                         }
                     }
                     Text {
+                        Accessible.role: Accessible.Heading
                         Layout.fillWidth: true
                         //: "New chat"
                         text: qsTr("chat_action_start_new_chat")

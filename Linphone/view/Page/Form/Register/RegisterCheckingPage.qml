@@ -40,6 +40,7 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+				Accessible.role: Accessible.Heading
 				wrapMode: Text.NoWrap
 				text: {
                     //: "email"

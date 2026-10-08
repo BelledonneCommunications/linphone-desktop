@@ -154,6 +154,7 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {
+                        Accessible.role: Accessible.Heading
                         Layout.fillWidth: true
                         //: "Appels"
                         text: qsTr("call_history_call_list_title")
@@ -373,6 +374,7 @@ AbstractMainPage {
                         }
                     }
                     Text {
+                        Accessible.role: Accessible.Heading
                         Layout.fillWidth: true
                         //: "Nouvel appel"
                         text: qsTr("call_action_start_new_call")

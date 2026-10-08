@@ -43,6 +43,7 @@ FocusScope {
                 }
             }
             Text {
+                Accessible.role: Accessible.Heading
                 text: mainItem.formTitle
                 color: DefaultStyle.main1_500_main
                 maximumLineCount: 1

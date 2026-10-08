@@ -16,6 +16,7 @@ ColumnLayout {
     property var entries
 
     Text {
+        Accessible.role: Accessible.Heading
         font: Typography.h4
         color: DefaultStyle.main2_600
         text: title

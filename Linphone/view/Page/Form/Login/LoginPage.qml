@@ -41,6 +41,7 @@ LoginLayout {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 			}
 			Text {
+                Accessible.role: Accessible.Heading
                 //: Connexion
                 text: qsTr("assistant_account_login")
 				font {
