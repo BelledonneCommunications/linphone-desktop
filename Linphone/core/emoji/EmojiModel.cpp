@@ -28,7 +28,7 @@ SOFTWARE.
 
 EmojiModel::EmojiModel() {
 	QFile file(QString(":/data/emoji/emoji.json"));
-	auto open = file.open(QIODevice::ReadOnly);
+	file.open(QIODevice::ReadOnly);
 	QByteArray data = file.readAll();
 	file.close();
 	QJsonDocument doc = QJsonDocument::fromJson(data);
@@ -37,10 +37,10 @@ EmojiModel::EmojiModel() {
 		emojies[category.key()] = category.value().toArray();
 		QJsonArray &emojiesData = emojies[category.key()];
 		for (auto it{emojiesData.begin()}; it != emojiesData.end(); ++it) {
-			QJsonObject emoji = it->toObject();
-			QJsonArray allKeywords = emoji.value("keywords").toArray();
+			QJsonObject obj = it->toObject();
+			QJsonArray allKeywords = obj.value("keywords").toArray();
 			for (auto k{allKeywords.begin()}; k != allKeywords.end(); ++k) {
-				keywords[k->toString()].append(emoji);
+				keywords[k->toString()].append(obj);
 			}
 		}
 	}
@@ -50,12 +50,16 @@ int EmojiModel::count(QString category) {
 	return emojies[category].size();
 }
 
-QString EmojiModel::path(QString category, int index, int skinColor) {
-	QJsonObject emoji = emojies[category][index].toObject();
-	if (emoji.contains("types") && skinColor != -1) {
-		QJsonArray types = emoji.value("types").toArray();
-		return mIconsPath + types[skinColor].toString() + mIconsType;
-	} else return mIconsPath + emoji.value("code").toString() + mIconsType;
+static QString emojiFromObject(const QJsonObject &obj, int skinColor) {
+	if (skinColor != -1 && obj.contains("types")) {
+		QJsonArray types = obj.value("types").toArray();
+		if (skinColor < types.size()) return types[skinColor].toString();
+	}
+	return obj.value("emoji").toString();
+}
+
+QString EmojiModel::emoji(QString category, int index, int skinColor) {
+	return emojiFromObject(emojies[category][index].toObject(), skinColor);
 }
 
 QVector<QString> EmojiModel::search(QString searchKey, int skinColor) {
@@ -63,16 +67,9 @@ QVector<QString> EmojiModel::search(QString searchKey, int skinColor) {
 	QVector<QString> searchResult;
 	for (auto it{keywords.begin()}; it != keywords.end(); ++it) {
 		if (it.key().startsWith(searchKey)) {
-			QVector<QJsonObject> &emojiesData{it.value()};
-			for (auto emoji{emojiesData.begin()}; emoji != emojiesData.end(); ++emoji) {
-				if (emoji->contains("types") && skinColor != -1) {
-					QJsonArray types = emoji->value("types").toArray();
-					QString path = mIconsPath + types[skinColor].toString() + mIconsType;
-					if (!searchResult.contains(path)) searchResult.append(path);
-				} else {
-					QString path = mIconsPath + emoji->value("code").toString() + mIconsType;
-					if (!searchResult.contains(path)) searchResult.append(path);
-				}
+			for (const QJsonObject &obj : it.value()) {
+				QString e = emojiFromObject(obj, skinColor);
+				if (!searchResult.contains(e)) searchResult.append(e);
 			}
 			foundFirstItem = true;
 		} else if (foundFirstItem) {
@@ -80,12 +77,4 @@ QVector<QString> EmojiModel::search(QString searchKey, int skinColor) {
 		}
 	}
 	return searchResult;
-}
-
-void EmojiModel::setIconsPath(QString path) {
-	mIconsPath = path;
-}
-
-void EmojiModel::setIconsType(QString type) {
-	mIconsType = type;
 }
