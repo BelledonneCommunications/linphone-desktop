@@ -66,7 +66,8 @@ ListView {
                 mainItem.currentChatGui = chatProxy.getAt(mainItem.currentIndex) || null
                 selectChat(mainItem.currentChatGui)
             }
-            mainItem.researchDone()
+            if (mainItem.makingResearch)
+                mainItem.researchDone()
         }
         onChatAdded: (chat) => {
             mainItem.chatToSelect = chat

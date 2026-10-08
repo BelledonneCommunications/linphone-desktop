@@ -8570,4 +8570,12 @@ Error in the chat</extracomment>
         <translation>Page %1 of %2</translation>
     </message>
 </context>
+<context>
+    <name>VerticalTabBar</name>
+    <message>
+        <source>tab_selected_accessible_announcement</source>
+        <extracomment>&quot;%1 tab selected&quot;</extracomment>
+        <translation>%1 tab selected</translation>
+    </message>
+</context>
 </TS>
