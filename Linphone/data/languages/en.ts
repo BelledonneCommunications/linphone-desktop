@@ -215,6 +215,11 @@
 <context>
     <name>AccountSettingsGeneralLayout</name>
     <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <extracomment>&quot;Copy SIP address&quot;</extracomment>
+        <translation>Copy SIP address</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="20"/>
         <source>manage_account_details_title</source>
         <extracomment>&quot;Détails&quot;</extracomment>
@@ -2130,6 +2135,11 @@
 </context>
 <context>
     <name>CarddavSettingsLayout</name>
+    <message>
+        <source>settings_contacts_delete_carddav_server_accessible_name</source>
+        <extracomment>&quot;Delete CardDAV address book&quot;</extracomment>
+        <translation>Delete CardDAV address book</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="18"/>
         <source>settings_contacts_carddav_title</source>

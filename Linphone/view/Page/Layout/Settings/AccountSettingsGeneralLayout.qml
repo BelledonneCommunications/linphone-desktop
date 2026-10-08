@@ -193,6 +193,7 @@ AbstractSettingsLayout {
 					Layout.alignment: Qt.AlignRight
 					icon.source: AppIcons.copy
 					style: ButtonStyle.noBackground
+					Accessible.name: qsTr("account_settings_copy_sip_address_accessible_name")
 					onClicked: {
 						if (UtilsCpp.copyToClipboard(model.core.identityAddress)) {
 							//: Copied
@@ -290,6 +291,7 @@ AbstractSettingsLayout {
 					Layout.alignment: Qt.AlignRight
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(5)
 					icon.source: AppIcons.trashCan
+					Accessible.name: qsTr("manage_account_delete")
 					onClicked: {
 						var mainWin = UtilsCpp.getMainWindow()
 						mainWin.showConfirmationLambdaPopup("",

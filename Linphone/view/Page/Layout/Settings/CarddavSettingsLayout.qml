@@ -85,6 +85,7 @@ AbstractSettingsLayout {
                 icon.width: Utils.getSizeWithScreenRatio(32)
                 icon.height: Utils.getSizeWithScreenRatio(32)
 				visible: !isNew
+				Accessible.name: qsTr("settings_contacts_delete_carddav_server_accessible_name")
 				onClicked: {
 					var mainWin = UtilsCpp.getMainWindow()
 					mainWin.showConfirmationLambdaPopup("",
