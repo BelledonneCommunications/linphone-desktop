@@ -8496,4 +8496,12 @@ Error in the chat</extracomment>
         <translation>Ok</translation>
     </message>
 </context>
+<context>
+    <name>Carousel</name>
+    <message>
+        <source>carousel_page_accessible_name</source>
+        <extracomment>&quot;Page %1 of %2&quot;</extracomment>
+        <translation>Page %1 of %2</translation>
+    </message>
+</context>
 </TS>
