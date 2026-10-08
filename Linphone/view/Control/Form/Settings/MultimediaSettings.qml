@@ -179,6 +179,7 @@ ColumnLayout {
 				}
 				Slider {
 					id: audioTestSlider
+					Accessible.name: qsTr("microphone_level_accessible_name")
 					Layout.fillWidth: true
 					enabled: false
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(10)

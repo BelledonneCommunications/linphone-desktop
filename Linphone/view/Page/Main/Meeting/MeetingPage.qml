@@ -204,6 +204,7 @@ AbstractMainPage {
 
 					Button {
 						id: scrollToCurrentDateButton
+						Accessible.name: qsTr("meeting_scroll_to_today_accessible_name")
 						visible: conferenceList.count !== 0 || searchBar.text.length !== 0
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
 						Layout.preferredHeight: visible ? Utils.getSizeWithScreenRatio(32) : 0
@@ -306,6 +307,7 @@ AbstractMainPage {
 						icon.height: Utils.getSizeWithScreenRatio(24)
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
+						Accessible.name: qsTr("panel_back_accessible_name")
 						onClicked: {
 							meetingSetup.conferenceInfoGui.core.undo()
 							leftPanelStackView.pop()
@@ -444,6 +446,7 @@ AbstractMainPage {
 							style: ButtonStyle.noBackground
 							KeyNavigation.left: saveButton
 							KeyNavigation.right: titleText
+							Accessible.name: qsTr("panel_back_accessible_name")
 							KeyNavigation.down: conferenceEdit
 							KeyNavigation.up: conferenceEdit
 							onClicked: {
@@ -583,6 +586,7 @@ AbstractMainPage {
 						spacing: Utils.getSizeWithScreenRatio(10)
 						Button {
 							id: addParticipantsBackButton
+							Accessible.name: qsTr("panel_back_accessible_name")
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.leftArrow
 							icon.width: Utils.getSizeWithScreenRatio(24)
@@ -683,6 +687,7 @@ AbstractMainPage {
 							}
 							RoundButton {
 								id: calendarPlusButton
+								Accessible.name: qsTr("export_conference_info_ics_tooltip")
 								style: ButtonStyle.noBackground
 								icon.source: AppIcons.calendarPlus
 								KeyNavigation.left: calendarPlusButton
@@ -697,6 +702,7 @@ AbstractMainPage {
 							}
 							RoundButton {
 								id: editButton
+								Accessible.name: qsTr("meeting_edit_accessible_name")
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
 								visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
 								icon.source: AppIcons.pencil
@@ -710,6 +716,7 @@ AbstractMainPage {
 							}
 							PopupButton {
 								id: deletePopup
+								popUpTitle: qsTr("meeting_options_accessible_name")
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 								contentImageColor: DefaultStyle.main1_500_main
@@ -777,6 +784,7 @@ AbstractMainPage {
 								}
 								RoundButton {
 									id: shareNetworkButton
+									Accessible.name: qsTr("meeting_copy_address_accessible_name")
 									style: ButtonStyle.noBackground
 									icon.source: AppIcons.shareNetwork
 									KeyNavigation.left: linkButton

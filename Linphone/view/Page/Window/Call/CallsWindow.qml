@@ -1421,6 +1421,7 @@ AbstractWindow {
                                 Component {
                                     id: headerbutton
                                     PopupButton {
+                                        popUpTitle: qsTr("conference_participants_options_accessible_name")
                                         popup.contentItem: IconLabelButton {
                                             icon.source: AppIcons.shareNetwork
                                             //: Partager le lien de la réunion

@@ -92,6 +92,7 @@ ApplicationWindow {
                         style: ButtonStyle.noBackground
                         icon.source:AppIcons.closeX
                         onClicked: addressChooserPopup.close()
+                        Accessible.name: qsTr("close_accessible_name")
                     }
                 }
                 ListView {

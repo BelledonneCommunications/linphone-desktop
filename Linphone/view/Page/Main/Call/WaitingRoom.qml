@@ -41,6 +41,7 @@ RowLayout {
                 spacing: Utils.getSizeWithScreenRatio(16)
                 CheckableButton {
                     id: videoButton
+                    Accessible.name: mainItem.localVideoEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                     visible: SettingsCpp.videoEnabled
                     iconUrl: AppIcons.videoCamera
                     checkedIconUrl: AppIcons.videoCameraSlash
@@ -53,6 +54,7 @@ RowLayout {
                 }
                 CheckableButton {
                     id: microButton
+                    Accessible.name: microButton.checked ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
                     iconUrl: AppIcons.microphone
                     checkedIconUrl: AppIcons.microphoneSlash
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
@@ -63,6 +65,7 @@ RowLayout {
                 }
                 CheckableButton {
                     id: settingsButton
+                    Accessible.name: qsTr("waiting_room_settings_accessible_name")
                     visible: stackLayout.currentIndex === 0
                     icon.source: AppIcons.verticalDots
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
@@ -72,6 +75,7 @@ RowLayout {
                 }
                 CheckableButton {
                     id: speakerButton
+                    Accessible.name: speakerButton.checked ? qsTr("call_activate_speaker_hint") : qsTr("call_deactivate_speaker_hint")
                     visible: stackLayout.currentIndex === 1
                     iconUrl: AppIcons.speaker
                     checkedIconUrl: AppIcons.speakerSlash

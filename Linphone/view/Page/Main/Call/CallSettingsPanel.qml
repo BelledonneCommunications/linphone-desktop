@@ -100,6 +100,7 @@ Control.Page {
                     icon.width: Utils.getSizeWithScreenRatio(24)
                     icon.height: Utils.getSizeWithScreenRatio(24)
 					onClicked: mainItem.returnRequested()
+					Accessible.name: qsTr("panel_back_accessible_name")
 				}
 				ColumnLayout {
 					spacing: 0

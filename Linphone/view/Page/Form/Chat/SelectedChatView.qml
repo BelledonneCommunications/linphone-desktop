@@ -115,6 +115,7 @@ FocusScope {
                             icon.source: AppIcons.leftArrow
                             style: ButtonStyle.noBackground
                             visible: mainItem.backButtonVisible
+                            Accessible.name: qsTr("chat_back_accessible_name")
                             onPressed: mainItem.backButtonPressed()
                         }
                         Avatar {
@@ -186,6 +187,7 @@ FocusScope {
                         RoundButton {
                             visible: !mainItem.call && !mainItem.chat?.core.isReadOnly
                             style: ButtonStyle.noBackground
+                            Accessible.name: qsTr("chat_call_accessible_name")
                             icon.source: AppIcons.phone
                             onPressed: {
                                 if (mainItem.chat.core.isGroupChat) {
@@ -200,6 +202,7 @@ FocusScope {
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.search
                             checkable: true
+                            Accessible.name: qsTr("chat_search_in_history_accessible_name")
                             onCheckedChanged: searchBarLayout.visible = checked
                             Connections {
                                 target: searchBarLayout
@@ -210,6 +213,7 @@ FocusScope {
                             style: ButtonStyle.noBackground
                             icon.source: AppIcons.videoCamera
                             visible: !mainItem.chat?.core.isGroupChat && !mainItem.call
+                            Accessible.name: qsTr("chat_video_call_accessible_name")
                             onPressed: mainItem.oneOneCall(true)
                         }
                         RoundButton {
@@ -221,6 +225,7 @@ FocusScope {
                             Layout.preferredWidth: width
                             icon.source: AppIcons.info
                             checked: detailsPanel.visible
+                            Accessible.name: qsTr("chat_details_accessible_name")
                             onCheckedChanged: {
                                 detailsPanel.visible = checked
                             }
@@ -253,6 +258,7 @@ FocusScope {
                     }
                     SearchBar {
                         id: chatMessagesSearchBar
+                        accessibleName: qsTr("chat_search_in_history_accessible_name")
                         Layout.fillWidth: true
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
                         property ChatMessageGui messageFound
@@ -281,6 +287,7 @@ FocusScope {
                         RoundButton {
                             icon.source: AppIcons.upArrow
                             style: ButtonStyle.noBackground
+                            Accessible.name: qsTr("chat_search_previous_accessible_name")
                             onClicked: {
                                 if (chatMessagesListView.filterText !== chatMessagesSearchBar.text)
                                     chatMessagesListView.filterText = chatMessagesSearchBar.text
@@ -289,6 +296,7 @@ FocusScope {
                             }
                         }
                         RoundButton {
+                            Accessible.name: qsTr("chat_search_next_accessible_name")
                             icon.source: AppIcons.downArrow
                             style: ButtonStyle.noBackground
                             onClicked: {
@@ -302,6 +310,7 @@ FocusScope {
                     RoundButton {
                         icon.source: AppIcons.closeX
                         Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
+                        Accessible.name: qsTr("chat_search_close_accessible_name")
                         visible: !mainItem.call
                         onClicked: {
                             chatMessagesListView.filterText = ""
@@ -451,6 +460,7 @@ FocusScope {
                             anchors.topMargin: selectedFilesArea.topPadding
                             anchors.rightMargin: selectedFilesArea.rightPadding
                             icon.source: AppIcons.closeX
+                            Accessible.name: qsTr("chat_cancel_composer_accessible_name")
                             style: ButtonStyle.noBackground
                             onClicked: {
                                 contents.clear()
@@ -547,6 +557,7 @@ FocusScope {
                                         shadowEnabled: true
                                         padding: Utils.getSizeWithScreenRatio(3)
                                         onClicked: contents.removeContent(modelData)
+                                        Accessible.name: qsTr("chat_remove_attachment_accessible_name").arg(modelData.core.name)
                                     }
                                 }
                                 Control.ScrollBar.horizontal: selectedFilesScrollbar
@@ -635,6 +646,7 @@ FocusScope {
                     style: ButtonStyle.noBackgroundOrange
                     icon.source: AppIcons.leftArrow
                     onClicked: detailsPanel.visible = false
+                    Accessible.name: qsTr("chat_close_details_accessible_name")
                 }
             }
 
@@ -757,6 +769,7 @@ FocusScope {
                         spacing: Utils.getSizeWithScreenRatio(31)
                         SearchBar {
                             id: forwardSearchBar
+                            accessibleName: qsTr("chat_forward_search_accessible_name")
                             Layout.fillWidth: true
                         }
                         Flickable {
@@ -793,6 +806,7 @@ FocusScope {
                                         checkable: true
                                         checked: true
                                         icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
+                                        Accessible.name: qsTr("conversations_title")
                                     }
                                 }
                                 ChatListView {

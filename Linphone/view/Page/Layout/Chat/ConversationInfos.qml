@@ -34,6 +34,8 @@ ColumnLayout {
 		Layout.preferredHeight: Utils.getSizeWithScreenRatio(100)
 		PopupButton {
 			id: debugButton
+			activeFocusOnTab: false
+			Accessible.ignored: true
 			z: parent.z + 1
 			icon.source: ""
 			anchors.right: parent.right
@@ -53,6 +55,7 @@ ColumnLayout {
 					text: chatGui?.core?.chatRoomAddress || ""
 				}
 				SmallButton {
+					Accessible.name: qsTr("chat_copy_address_accessible_name")
 					icon.source: AppIcons.copy
 					onClicked: {
 						UtilsCpp.copyToClipboard(chatroomaddress.text)

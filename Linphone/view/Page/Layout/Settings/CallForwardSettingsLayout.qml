@@ -61,6 +61,7 @@ AbstractSettingsLayout {
 			}
 			ComboBox {
 				id: forwardDestination
+				accessibleLabel: qsTr("settings_call_forward_destination_choose")
 				visible: mainItem.enableCallForward
 				Layout.fillWidth: true
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)

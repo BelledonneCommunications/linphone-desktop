@@ -263,6 +263,7 @@ FocusScope {
 			content: [
 				Button {
 					id: addParticipantsButton
+					Accessible.name: qsTr("meeting_schedule_add_participants_title")
 					Layout.fillWidth: true
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)
 					leftPadding: 0
@@ -334,6 +335,7 @@ FocusScope {
                                 Layout.rightMargin: Utils.getSizeWithScreenRatio(10)
 								icon.source: AppIcons.closeX
 								style: ButtonStyle.noBackgroundOrange
+								Accessible.name: qsTr("remove_participant_accessible_name").arg(UtilsCpp.getDisplayName(modelData.address)?.value || modelData.address)
 								onClicked: mainItem.conferenceInfoGui.core.removeParticipant(index)
 							}
 						}
