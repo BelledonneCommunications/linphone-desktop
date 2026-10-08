@@ -11,6 +11,8 @@ import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
+	Accessible.role: Accessible.List
+	Accessible.name: qsTr("meeting_list_accessible_name")
 	id: mainItem
 	property string searchBarText
 	property bool hoverEnabled: true	
