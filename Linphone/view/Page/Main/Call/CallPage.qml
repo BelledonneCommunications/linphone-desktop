@@ -318,6 +318,11 @@ AbstractMainPage {
                             }
                             CallHistoryListView {
                                 id: historyListView
+                                onContextMenuRequested: Qt.callLater(function() {
+                                    var detail = mainItem.rightPanelStackView.currentItem
+                                    if (detail && detail.openOptions)
+                                        detail.openOptions()
+                                })
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 Layout.topMargin: Utils.getSizeWithScreenRatio(38)
@@ -477,6 +482,10 @@ AbstractMainPage {
     Component {
         id: contactDetailComp
         FocusScope {
+            function openOptions() {
+                detailOptions.openedWithKeyboard = true
+                detailOptions.open()
+            }
             CallHistoryLayout {
                 id: contactDetail
                 anchors.fill: parent
@@ -493,6 +502,7 @@ AbstractMainPage {
 
                 buttonContent: PopupButton {
                     id: detailOptions
+                    objectName: "callHistoryOptionsButton"
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     Accessible.name: contactDetail.contactName
