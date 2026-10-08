@@ -203,14 +203,18 @@ ColumnLayout {
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(40)
                     radius: Utils.getSizeWithScreenRatio(40)
                     color: mouseArea.containsMouse ? '#e6e6e6' : '#ffffff'
-                    Text {
-                        id: emojiText
-                        property url source: mainItem.searchMode ? path : mainItem.model.path(grid.category, index, grid.sc)
-                        textFormat: Text.RichText
-                        anchors.centerIn: parent
-                        text: Utils.codepointFromFilename(UtilsCpp.getFilename(source))
-                        font.pixelSize: Utils.getSizeWithScreenRatio(29)
-                        font.family: DefaultStyle.emojiFont
+                    Loader {
+                        anchors.fill: parent
+                        asynchronous: true
+                        sourceComponent: Text {
+                            id: emojiText
+                            property url source: mainItem.searchMode ? path : mainItem.model.path(grid.category, index, grid.sc)
+                            textFormat: Text.RichText
+                            anchors.centerIn: parent
+                            text: Utils.codepointFromFilename(UtilsCpp.getFilename(source))
+                            font.pixelSize: Utils.getSizeWithScreenRatio(29)
+                            font.family: DefaultStyle.emojiFont
+                        }
                     }
                     MouseArea {
                         id: mouseArea
