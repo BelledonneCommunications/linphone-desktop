@@ -4306,6 +4306,12 @@ Expiration : %1</translation>
 <context>
     <name>HelpPage</name>
     <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
+        <source>back_previous_menu_accessible_name</source>
+        <extracomment>Back to previous menu</extracomment>
+        <translation>Back to previous menu</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="43"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
