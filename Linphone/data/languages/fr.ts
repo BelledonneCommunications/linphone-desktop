@@ -8590,4 +8590,12 @@ Error in the chat</extracomment>
         <translation>Page %1 sur %2</translation>
     </message>
 </context>
+<context>
+    <name>VerticalTabBar</name>
+    <message>
+        <source>tab_selected_accessible_announcement</source>
+        <extracomment>&quot;Onglet %1 sélectionné&quot;</extracomment>
+        <translation>Onglet %1 sélectionné</translation>
+    </message>
+</context>
 </TS>
