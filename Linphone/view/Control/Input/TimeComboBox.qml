@@ -30,7 +30,7 @@ ComboBox {
     listView.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
     popup.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
 	editable: true
-	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
+	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
 	onCurrentTextChanged: input.text = currentText
 	popup.onOpened: {
 		input.forceActiveFocus()

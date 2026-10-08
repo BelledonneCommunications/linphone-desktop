@@ -29,7 +29,8 @@ ComboBox {
 		y: mainItem.height
         width: Utils.getSizeWithScreenRatio(321)
         height: Utils.getSizeWithScreenRatio(270)
-		closePolicy: Popup.NoAutoClose
+		closePolicy: Popup.CloseOnEscape
+		onClosed: mainItem.forceActiveFocus()
         topPadding: Utils.getSizeWithScreenRatio(25)
         bottomPadding: Utils.getSizeWithScreenRatio(24)
         leftPadding: Utils.getSizeWithScreenRatio(21)
