@@ -141,6 +141,8 @@ public:
 	void restartCore();
 	bool autoStartEnabled();
 	void setSysTrayIcon();
+	void updateSysTrayToolTip();
+	void trackDefaultAccountForSysTray();
 	QSystemTrayIcon *getSystemTrayIcon() const {
 		return mSystemTrayIcon;
 	}
@@ -272,6 +274,7 @@ private:
 	NotificationBackend *mNotificationBackend = nullptr;
 #endif
 	QSystemTrayIcon *mSystemTrayIcon = nullptr;
+	QMetaObject::Connection mSysTrayAccountConnection;
 	QQuickWindow *mMainWindow = nullptr;
 	QQuickWindow *mCallsWindow = nullptr;
 	QQuickWindow *mLastActiveWindow = nullptr;
