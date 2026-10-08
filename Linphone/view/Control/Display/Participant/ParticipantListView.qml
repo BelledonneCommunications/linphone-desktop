@@ -8,6 +8,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
+	Accessible.role: Accessible.List
+	Accessible.name: qsTr("participant_list_accessible_name")
 	id: mainItem
 	visible: contentHeight > 0
 	clip: true

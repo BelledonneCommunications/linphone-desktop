@@ -1082,6 +1082,11 @@
 <context>
     <name>CallHistoryListView</name>
     <message>
+        <source>call_history_list_accessible_name</source>
+        <extracomment>&quot;Call history&quot;</extracomment>
+        <translation>Historique des appels</translation>
+    </message>
+    <message>
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="229"/>
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
@@ -1184,6 +1189,11 @@
 </context>
 <context>
     <name>CallListView</name>
+    <message>
+        <source>call_list_accessible_name</source>
+        <extracomment>&quot;Ongoing calls&quot;</extracomment>
+        <translation>Appels en cours</translation>
+    </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
         <source>meeting</source>
@@ -2348,6 +2358,11 @@
 <context>
     <name>ChatListView</name>
     <message>
+        <source>chat_list_accessible_name</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation>Conversations</translation>
+    </message>
+    <message>
         <source>chat_options_accessible_name</source>
         <extracomment>&quot;Options for %1&quot;</extracomment>
         <translation>Options pour %1</translation>
@@ -2751,6 +2766,11 @@ Error</extracomment>
 </context>
 <context>
     <name>ChatMessagesListView</name>
+    <message>
+        <source>chat_messages_list_accessible_name</source>
+        <extracomment>&quot;Messages&quot;</extracomment>
+        <translation>Messages</translation>
+    </message>
     <message>
         <source>chat_scroll_to_last_message_accessible_name</source>
         <extracomment>&quot;Go to the last message&quot;</extracomment>
@@ -5199,6 +5219,11 @@ Expiration : %1</translation>
 <context>
     <name>MeetingListView</name>
     <message>
+        <source>meeting_list_accessible_name</source>
+        <extracomment>&quot;Meetings&quot;</extracomment>
+        <translation>Réunions</translation>
+    </message>
+    <message>
         <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="306"/>
         <source>meeting_info_cancelled</source>
         <extracomment>&quot;Réunion annulée&quot;</extracomment>
@@ -5900,6 +5925,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>ParticipantListView</name>
+    <message>
+        <source>participant_list_accessible_name</source>
+        <extracomment>&quot;Participants&quot;</extracomment>
+        <translation>Participants</translation>
+    </message>
     <message>
         <source>remove_participant_accessible_name</source>
         <extracomment>&quot;Remove participant %1&quot;</extracomment>
