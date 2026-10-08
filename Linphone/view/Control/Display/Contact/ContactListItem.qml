@@ -199,10 +199,12 @@ FocusScope {
                 }
                 PopupButton {
                     id: friendPopup
+                    objectName: "contactMenuButton"
                     z: contactArea.z + 1
                     popup.x: 0
                     popup.padding: Utils.getSizeWithScreenRatio(10)
-                    visible: mainItem.showContactMenu && (contactArea.containsMouse || mainItem.isLastHovered || hovered || popup.opened)
+                    visible: mainItem.showContactMenu && (contactArea.containsMouse || mainItem.isLastHovered || hovered || popup.opened
+                                                          || contactArea.activeFocus || activeFocus)
                     enabled: visible
 
                     popup.contentItem: ColumnLayout {
@@ -273,7 +275,12 @@ FocusScope {
         }
 
         id: contactArea
+        objectName: "contactRow"
         enabled: mainItem.selectionEnabled
+        Accessible.role: Accessible.ListItem
+        Accessible.name: mainItem.displayName
+        Accessible.selectable: true
+        Accessible.selected: mainItem.isSelected
         anchors.fill: parent
         //height: mainItem.height
         hoverEnabled: true
@@ -294,6 +301,12 @@ FocusScope {
                 || event.key == Qt.Key_Enter
                 || event.key == Qt.Key_Return) {
                 contactArea.clicked(undefined)
+                event.accepted = true
+            } else if (mainItem.showContactMenu && friendPopup
+                       && (event.key == Qt.Key_Menu || event.key == Qt.Key_Right
+                           || (event.key == Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier)))) {
+                friendPopup.openedWithKeyboard = true
+                friendPopup.open()
                 event.accepted = true
             }
         }
