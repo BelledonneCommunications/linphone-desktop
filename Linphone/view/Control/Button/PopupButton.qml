@@ -14,6 +14,10 @@ Button {
     property string popUpTitle: ""
     property int popupY: height
     Accessible.role: Accessible.ButtonMenu
+    Accessible.onPressAction: {
+        openedWithKeyboard = true;
+        togglePopup();
+    }
     Accessible.name: popup.visible ?
     //: "Close %1 popup"
     qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :
@@ -156,12 +160,28 @@ Button {
         imageHeight: mainItem.icon.height
         colorizationColor: mainItem.contentImageColor
     }
-    onPressed: {
-        openedWithKeyboard = false;
+    property bool toggledByPress: false
+
+    function togglePopup() {
         if (popup.visible)
             popup.close();
         else
             popup.open();
+    }
+
+    onPressed: {
+        openedWithKeyboard = false;
+        toggledByPress = true;
+        togglePopup();
+    }
+    onPressedChanged: if (!pressed) Qt.callLater(function() {
+        mainItem.toggledByPress = false;
+    })
+    onClicked: {
+        if (toggledByPress)
+            return;
+        openedWithKeyboard = true;
+        togglePopup();
     }
     Control.Popup {
         id: popup

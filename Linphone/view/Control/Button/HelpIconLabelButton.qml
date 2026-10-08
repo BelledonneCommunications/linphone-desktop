@@ -12,23 +12,27 @@ Control.Control {
 	property string title
 	property string subTitle
     property real iconSize: Utils.getSizeWithScreenRatio(32)
-	property bool shadowEnabled: mouseArea.containsMouse || activeFocus
+	property bool shadowEnabled: (actionable && mouseArea.containsMouse) || activeFocus
 	property bool arrowImageVisible: false
 	property alias image: image
 	property int titleLineCount: 1
+	property bool actionable: true
 	signal clicked()
+	Accessible.role: actionable ? Accessible.Button : Accessible.StaticText
+	Accessible.name: subTitle.length > 0 ? title + ", " + subTitle : title
+	Accessible.onPressAction: if (actionable) mainItem.clicked()
 	width: content.implicitWidth
 	height: content.implicitHeight
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
 		hoverEnabled: true
-		cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-		onClicked: mainItem.clicked()
+		cursorShape: containsMouse && mainItem.actionable ? Qt.PointingHandCursor : Qt.ArrowCursor
+		onClicked: if (mainItem.actionable) mainItem.clicked()
 	}
 	activeFocusOnTab: true
 	Keys.onPressed: (event) => {
-		if(event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return){
+		if(mainItem.actionable && (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return)){
 			mainItem.clicked()
 			event.accepted = true
 		}

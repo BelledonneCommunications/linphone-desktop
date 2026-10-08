@@ -32,6 +32,7 @@ AbstractMainPage {
 			RoundButton {
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
+				Accessible.name: qsTr("back_previous_menu_accessible_name")
                 icon.width: Utils.getSizeWithScreenRatio(24)
                 icon.height: Utils.getSizeWithScreenRatio(24)
 				onClicked: {
@@ -97,6 +98,7 @@ AbstractMainPage {
 					Layout.preferredWidth: width
 					Layout.minimumWidth: width
 					iconSource: AppIcons.info
+					actionable: false
 					//: "Version"
 					title: qsTr("help_about_version_title")
 					subTitle: AppCpp.shortApplicationVersion
