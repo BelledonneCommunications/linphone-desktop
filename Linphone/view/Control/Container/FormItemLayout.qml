@@ -96,6 +96,10 @@ FocusScope{
 			}
 			TemporaryText {
 				id: errorText
+				onTextChanged: {
+					for (var i = 0; i < contentItem.children.length; ++i)
+						contentItem.children[i].Accessible.description = text
+				}
 				anchors.top: contentItem.bottom
 				anchors.topMargin: mainItem.errorTextTopMargin
 				color: DefaultStyle.danger_500_main
