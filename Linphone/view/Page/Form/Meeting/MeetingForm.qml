@@ -108,6 +108,7 @@ FocusScope {
 					}
 					CalendarComboBox {
 						id: startDate
+						objectName: "meetingStartDate"
 						background.visible: mainItem.isCreation
 						indicator.visible: mainItem.isCreation
                         contentText.font.weight: isCreation ? Font.Bold : Font.Normal
@@ -134,6 +135,7 @@ FocusScope {
 					RowLayout {
 						TimeComboBox {
 							id: startHour
+							objectName: "meetingStartHour"
 							// indicator.visible: mainItem.isCreation
                             Layout.preferredWidth: Utils.getSizeWithScreenRatio(94)
                             Layout.preferredHeight: Utils.getSizeWithScreenRatio(30)

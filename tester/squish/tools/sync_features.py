@@ -10,6 +10,7 @@ SUITE_ROOT = os.path.join(REPO_ROOT, "tester", "squish", "suites", "cross-platfo
 BDD_TEST_CASES = {
     "tst_BDD_CallPanelFocus": "Features/accessibility/call_panel_focus.feature",
     "tst_BDD_ConversationListKeyboard": "Features/accessibility/conversation_list_keyboard.feature",
+    "tst_BDD_KeyboardAccess": "Features/accessibility/keyboard_access.feature",
     "tst_BDD_KeyboardActivation": "Features/accessibility/keyboard_activation.feature",
     "tst_BDD_MenuFocus": "Features/accessibility/menu_focus.feature",
     "tst_BDD_Redial": "Features/call/redial.feature",

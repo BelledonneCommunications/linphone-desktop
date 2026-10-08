@@ -86,6 +86,7 @@ ColumnLayout {
 				}
 				ComboSetting {
 					id: outputAudioDeviceCBox
+					objectName: "outputAudioDeviceComboBox"
 					Layout.fillWidth: true
 					Layout.preferredWidth: parent.width
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
