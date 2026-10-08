@@ -22,7 +22,9 @@
 #include "core/App.hpp"
 #include "core/call/CallList.hpp"
 #include "tool/Utils.hpp"
+#include <QGuiApplication>
 #include <QKeySequence>
+#include <QQuickItem>
 #include <linphone++/linphone.hh>
 
 DEFINE_ABSTRACT_OBJECT(KeyboardShortcuts)
@@ -37,14 +39,20 @@ KeyboardShortcuts::KeyboardShortcuts(QQuickWindow *window) {
 	// Define shortcuts
 	mAcceptCallShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_A), mWindow);
 	mDeclineCallShortcut = new QShortcut(QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D), mWindow);
+	mNextWindowShortcut = new QShortcut(QKeySequence(Qt::Key_F6), mWindow);
+	mPreviousWindowShortcut = new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F6), mWindow);
 
 	// Make some shortcut active for the whole app
 	mAcceptCallShortcut->setContext(Qt::ApplicationShortcut);
 	mDeclineCallShortcut->setContext(Qt::ApplicationShortcut);
+	mNextWindowShortcut->setContext(Qt::ApplicationShortcut);
+	mPreviousWindowShortcut->setContext(Qt::ApplicationShortcut);
 
 	// Link shortcuts to action
 	QObject::connect(mAcceptCallShortcut, &QShortcut::activated, this, &KeyboardShortcuts::onAcceptCallShortcut);
 	QObject::connect(mDeclineCallShortcut, &QShortcut::activated, this, &KeyboardShortcuts::onDeclineCallShortcut);
+	QObject::connect(mNextWindowShortcut, &QShortcut::activated, this, [] { focusSiblingWindow(1); });
+	QObject::connect(mPreviousWindowShortcut, &QShortcut::activated, this, [] { focusSiblingWindow(-1); });
 }
 
 KeyboardShortcuts::~KeyboardShortcuts() {
@@ -84,5 +92,33 @@ void KeyboardShortcuts::onDeclineCallShortcut() {
 	if (!currentPendingCall.isNull()) {
 		lInfo() << "Decline call with shortcut :" << currentPendingCall;
 		currentPendingCall->lDecline();
+	}
+}
+
+void KeyboardShortcuts::focusSiblingWindow(int step) {
+	auto app = App::getInstance();
+	QList<QQuickWindow *> windows;
+	auto addWindow = [&windows](QQuickWindow *window) {
+		if (window && window->isVisible() && !windows.contains(window)) windows.append(window);
+	};
+	addWindow(app->getMainWindow());
+	for (auto window : QGuiApplication::topLevelWindows()) {
+		auto quickWindow = qobject_cast<QQuickWindow *>(window);
+		if (!quickWindow || (quickWindow->type() != Qt::Window && quickWindow->type() != Qt::Dialog) ||
+		    quickWindow->flags().testFlag(Qt::WindowDoesNotAcceptFocus))
+			continue;
+		addWindow(quickWindow);
+	}
+	if (windows.size() < 2) return;
+	auto current = qobject_cast<QQuickWindow *>(QGuiApplication::focusWindow());
+	if (!windows.contains(current)) current = app->getLastActiveWindow();
+	auto index = windows.indexOf(current);
+	if (index < 0) index = 0;
+	auto target = windows.at((index + step + windows.size()) % windows.size());
+	Utils::smartShowWindow(target);
+	auto focused = target->activeFocusItem();
+	if (!focused || focused == target->contentItem()) {
+		auto first = target->contentItem()->nextItemInFocusChain(true);
+		if (first) first->forceActiveFocus(Qt::TabFocusReason);
 	}
 }

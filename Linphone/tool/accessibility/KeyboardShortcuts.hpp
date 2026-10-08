@@ -46,10 +46,13 @@ private:
 	// The shortcuts
 	QShortcut *mAcceptCallShortcut;
 	QShortcut *mDeclineCallShortcut;
+	QShortcut *mNextWindowShortcut;
+	QShortcut *mPreviousWindowShortcut;
 
 	// Actions callable with the shortcuts
 	static void onAcceptCallShortcut();
 	static void onDeclineCallShortcut();
+	static void focusSiblingWindow(int step);
 
 	DECLARE_ABSTRACT_OBJECT
 };

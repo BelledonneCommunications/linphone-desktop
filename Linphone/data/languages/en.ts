@@ -1659,6 +1659,16 @@
 <context>
     <name>CallsWindow</name>
     <message>
+        <source>call_window_title</source>
+        <extracomment>&quot;%1 - Call with %2&quot;</extracomment>
+        <translation>%1 - Call with %2</translation>
+    </message>
+    <message>
+        <source>call_window_conference_title</source>
+        <extracomment>&quot;%1 - Meeting %2&quot;</extracomment>
+        <translation>%1 - Meeting %2</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="76"/>
         <source>call_transfer_in_progress_toast</source>
         <extracomment>&quot;Transfert en cours, veuillez patienter&quot;</extracomment>

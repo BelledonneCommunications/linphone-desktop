@@ -15,6 +15,11 @@ AbstractWindow {
     id: mainWindow
     objectName: "callsWindow"
     flags: Qt.Window
+    title: !call
+           ? applicationName
+           : isConference && conference
+             ? qsTr("call_window_conference_title").arg(applicationName).arg(conference.core.subject)
+             : qsTr("call_window_title").arg(applicationName).arg(call.core.remoteName)
     minimumWidth: Utils.getSizeWithScreenRatio(1020)
     minimumHeight: Utils.getSizeWithScreenRatio(700)
 
