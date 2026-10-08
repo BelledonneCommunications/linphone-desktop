@@ -73,6 +73,7 @@ Control.Page {
 				Layout.alignment: Qt.AlignVCenter
                 spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
+					Accessible.role: Accessible.Heading
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -105,6 +106,7 @@ Control.Page {
 				ColumnLayout {
 					spacing: 0
 					Text {
+						Accessible.role: Accessible.Heading
 						Layout.alignment: Qt.AlignVCenter
 						verticalAlignment: Text.AlignVCenter
 						text: mainItem.headerTitleText

@@ -52,6 +52,7 @@ AbstractMainPage {
 				Accessible.name: qsTr("back_previous_menu_accessible_name")
 			}
 			Text {
+				Accessible.role: Accessible.Heading
 				text: titleText
 				color: DefaultStyle.main2_700
 				font: Typography.h3

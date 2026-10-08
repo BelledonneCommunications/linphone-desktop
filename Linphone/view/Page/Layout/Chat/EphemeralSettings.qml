@@ -56,6 +56,7 @@ ColumnLayout {
 		}
 
 		Text {
+			Accessible.role: Accessible.Heading
 			text: qsTr("title")
 			color: DefaultStyle.main2_600
 			maximumLineCount: 1

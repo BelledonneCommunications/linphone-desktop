@@ -128,6 +128,8 @@ FocusScope {
                         }
                         ColumnLayout {
                             Text {
+                                Accessible.role: Accessible.Heading
+                                Accessible.name: mainItem.chat?.core.title || ""
                                 Layout.fillWidth: true
                                 text: UtilsCpp.encodeEmojiToQmlRichFormat(mainItem.chat?.core.title) || ""
                                 color: DefaultStyle.main2_600
@@ -792,6 +794,7 @@ FocusScope {
                                 // width: parent.width //- scrollbar.width - Utils.getSizeWithScreenRatio(5)
                                 RowLayout {
                                     Text {
+                                        Accessible.role: Accessible.Heading
                                         //: Conversations
                                         text: qsTr("conversations_title")
                                         font {

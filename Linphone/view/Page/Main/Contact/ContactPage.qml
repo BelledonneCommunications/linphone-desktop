@@ -245,6 +245,7 @@ AbstractMainPage {
             anchors.rightMargin: leftPanel.rightMargin
             Layout.fillHeight: false
             Text {
+                Accessible.role: Accessible.Heading
                 Layout.fillWidth: true
                 //: "Contacts"
                 text: qsTr("bottom_navigation_contacts_label")
@@ -360,6 +361,7 @@ AbstractMainPage {
                 RowLayout {
                     spacing: Utils.getSizeWithScreenRatio(10)
                     Text {
+                        Accessible.role: Accessible.Heading
                         text: contactDetailLayout.label
                         color: DefaultStyle.main1_500_main
                         font {
@@ -461,6 +463,8 @@ AbstractMainPage {
                     ColumnLayout {
                         spacing: 0
                         Text {
+                            Accessible.role: Accessible.Heading
+                            Accessible.name: contactDetail.contactName
                             text: UtilsCpp.encodeEmojiToQmlRichFormat(contactDetail.contactName)
                             textFormat: Text.RichText
                             Layout.fillWidth: true

@@ -71,6 +71,7 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+				Accessible.role: Accessible.Heading
 				Layout.preferredWidth: width
                 //: "Inscription
                 text: qsTr("assistant_account_register")

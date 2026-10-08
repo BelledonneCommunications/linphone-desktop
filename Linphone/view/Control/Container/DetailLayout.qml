@@ -18,6 +18,7 @@ ColumnLayout {
     RowLayout {
         spacing: Utils.getSizeWithScreenRatio(10)
         Text {
+            Accessible.role: Accessible.Heading
             text: mainItem.label
             color: DefaultStyle.main1_500_main
             font {
