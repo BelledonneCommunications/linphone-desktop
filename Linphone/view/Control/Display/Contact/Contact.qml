@@ -15,6 +15,16 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 Control.Control{
 	id: mainItem
 	activeFocusOnTab: true
+	Accessible.role: Accessible.RadioButton
+	Accessible.name: description.topText + (description.bottomText ? ", " + description.bottomText : "")
+	Accessible.checkable: true
+	Accessible.checked: isSelected
+	Keys.onPressed: event => {
+		if (event.key === Qt.Key_Space || event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+			mainItem.backgroundClicked()
+			event.accepted = true
+		}
+	}
     padding: Utils.getSizeWithScreenRatio(10)
 	property AccountGui account
     leftPadding: Utils.getSizeWithScreenRatio(8)
@@ -178,7 +188,7 @@ Control.Control{
             icon.height: Utils.getSizeWithScreenRatio(24)
 			visible: !SettingsCpp.hideAccountSettings
 			//: Account settings of %1
-			Accessible.name: qsTr("account_settings_name_accessible_name")
+			Accessible.name: qsTr("account_settings_name_accessible_name").arg(description.topText)
 			onClicked: {
 				mainItem.edit()
 			}
