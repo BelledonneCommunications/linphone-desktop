@@ -110,7 +110,7 @@ Control.TabBar {
 			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData.visible : true
 			onVisibleChanged: mainItem.updateVisibleCount()
-			text: modelData.accessibilityLabel
+			text: modelData.label
 			property bool keyboardFocus: FocusHelper.keyboardFocus
 			focusPolicy: Qt.StrongFocus
 			activeFocusOnTab: mainItem.currentIndex < 0 ? TabBar.index === 0 : TabBar.index === mainItem.currentIndex

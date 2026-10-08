@@ -18,11 +18,7 @@ Button {
         openedWithKeyboard = true;
         togglePopup();
     }
-    Accessible.name: popup.visible ?
-    //: "Close %1 popup"
-    qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :
-    //: "Open %1" popup
-    qsTr("open_popup_panel_accessible_name").arg(popUpTitle)
+    Accessible.name: popUpTitle.length > 0 ? popUpTitle : qsTr("popup_button_default_accessible_name")
     style: ButtonStyle.popupButton
     checked: popup.visible
     leftPadding: 0

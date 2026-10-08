@@ -162,25 +162,19 @@ Item {
                         "icon": AppIcons.phone,
                         "selectedIcon": AppIcons.phoneSelected,
                         //: "Appels"
-                        "label": qsTr("bottom_navigation_calls_label"),
-                        //: "Open calls page"
-                        "accessibilityLabel": qsTr("open_calls_page_accessible_name")
+                        "label": qsTr("bottom_navigation_calls_label")
                     },
                     {
                         "icon": AppIcons.adressBook,
                         "selectedIcon": AppIcons.adressBookSelected,
                         //: "Contacts"
-                        "label": qsTr("bottom_navigation_contacts_label"),
-                        //: "Open contacts page"
-                        "accessibilityLabel": qsTr("open_contacts_page_accessible_name")
+                        "label": qsTr("bottom_navigation_contacts_label")
                     },
                     {
                         "icon": AppIcons.chatTeardropText,
                         "selectedIcon": AppIcons.chatTeardropTextSelected,
                         //: "Conversations"
                         "label": qsTr("bottom_navigation_conversations_label"),
-                        //: "Open conversations page"
-                        "accessibilityLabel": qsTr("open_conversations_page_accessible_name"),
                         "visible": !SettingsCpp.disableChatFeature
                     },
                     {
@@ -188,8 +182,6 @@ Item {
                         "selectedIcon": AppIcons.videoconferenceSelected,
                         //: "Réunions"
                         "label": qsTr("bottom_navigation_meetings_label"),
-                        //: "Open meetings page"
-                        "accessibilityLabel": qsTr("open_contact_page_accessible_name"),
                         "visible": !SettingsCpp.disableMeetingsFeature
                     }
                 ]
