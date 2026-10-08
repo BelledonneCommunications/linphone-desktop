@@ -131,6 +131,11 @@ ProgressBar {
 					? AppIcons.stopFill
 					: AppIcons.pauseFill
 				: AppIcons.playFill
+			Accessible.name: animationTest.running
+				? mainItem.recording
+					? qsTr("media_stop_recording_accessible_name")
+					: qsTr("media_pause_accessible_name")
+				: qsTr("media_play_accessible_name")
 			onClicked: {
 				mainItem.playStopButtonToggled()
 			}

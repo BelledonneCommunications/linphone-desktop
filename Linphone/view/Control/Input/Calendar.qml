@@ -58,6 +58,7 @@ ListView {
 				}
 				Button {
 					id: previousButton
+					Accessible.name: qsTr("calendar_previous_month_accessible_name")
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width
@@ -68,6 +69,7 @@ ListView {
 				}
 				Button {
 					id: nextButton
+					Accessible.name: qsTr("calendar_next_month_accessible_name")
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width

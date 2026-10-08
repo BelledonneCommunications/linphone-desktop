@@ -30,6 +30,7 @@ ColumnLayout {
 		Item{Layout.fillWidth: true}
 		BigButton {
 			id: expandButton
+			Accessible.name: mainItem.title
 			style: ButtonStyle.noBackground
 			checkable: true
 			checked: true
@@ -102,6 +103,7 @@ ColumnLayout {
 					
 					PopupButton {
 						id: detailOptions
+						popUpTitle: qsTr("participant_options_accessible_name").arg(modelData.core.displayName)
 						popup.x: width
 						popup.contentItem: FocusScope {
 							implicitHeight: detailsButtons.implicitHeight

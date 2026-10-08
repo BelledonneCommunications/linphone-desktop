@@ -367,6 +367,7 @@ Control.Control {
                 }
                 Button {
                     id: reactionsButton
+                    Accessible.name: qsTr("chat_message_reactions_accessible_name")
                     visible: reactionList.count > 0
                     anchors.top: chatBubble.bottom
                     Binding {
@@ -433,6 +434,7 @@ Control.Control {
                 layoutDirection: mainItem.isRemoteMessage ? Qt.LeftToRight : Qt.RightToLeft
                 PopupButton {
                     id: optionsMenu
+                    popUpTitle: qsTr("chat_message_options_accessible_name")
                     popup.padding: 0
                     popup.contentItem: ColumnLayout {
                         spacing: 0
@@ -543,6 +545,7 @@ Control.Control {
                 }
                 PopupButton {
                     id: emojiButton
+                    popUpTitle: qsTr("chat_message_react_accessible_name")
                     style: ButtonStyle.noBackground
                     icon.source: AppIcons.smiley
                     popup.contentItem: RowLayout {
@@ -568,6 +571,7 @@ Control.Control {
                         }
                         PopupButton {
                             id: emojiPickerButton
+                            popUpTitle: qsTr("chat_message_more_emojis_accessible_name")
                             icon.source: AppIcons.plusCircle
                             popup.width: Utils.getSizeWithScreenRatio(393)
                             popup.height: Utils.getSizeWithScreenRatio(291)

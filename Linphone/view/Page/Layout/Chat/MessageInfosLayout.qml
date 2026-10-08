@@ -32,6 +32,7 @@ ColumnLayout {
 		id: titleLayout
 		visible: mainItem.showTitle
 		BigButton {
+			Accessible.name: qsTr("panel_back_accessible_name")
 			icon.source: AppIcons.leftArrow
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.goBackRequested()

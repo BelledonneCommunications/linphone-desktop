@@ -30,6 +30,7 @@ ColumnLayout {
             icon.source: mainItem.icon
             style: ButtonStyle.noBackgroundOrange
             onClicked: mainItem.titleIconClicked()
+            Accessible.name: qsTr("more_info_accessible_name").arg(mainItem.label)
         }
         Item {
             Layout.fillWidth: true
@@ -41,6 +42,7 @@ ColumnLayout {
             checked: true
             icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
             KeyNavigation.down: contentControl
+            Accessible.name: mainItem.label
         }
     }
     RoundedPane {

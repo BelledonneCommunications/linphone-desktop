@@ -54,6 +54,7 @@ ListView {
     Button {
         visible: !mainItem.lastItemVisible && !atYEnd
         icon.source: AppIcons.downArrow
+        Accessible.name: qsTr("chat_scroll_to_last_message_accessible_name")
         leftPadding: Utils.getSizeWithScreenRatio(20)
         rightPadding: Utils.getSizeWithScreenRatio(20)
         topPadding: Utils.getSizeWithScreenRatio(20)

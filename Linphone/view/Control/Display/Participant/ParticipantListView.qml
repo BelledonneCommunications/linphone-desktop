@@ -89,6 +89,8 @@ ListView {
 					Switch {
 						opacity: mainItem.isMeAdmin && !modelData.core.isMe ? 1 : 0
 						Component.onCompleted: if (modelData.core.isAdmin) toggle()
+						enabled: mainItem.isMeAdmin && !modelData.core.isMe
+						Accessible.name: qsTr("participant_admin_accessible_name").arg(modelData.core.displayName)
 						//TODO : Utilser checked et onToggled (pas compris)
 						onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 					}
@@ -104,6 +106,8 @@ ListView {
     				bottomPadding: Utils.getSizeWithScreenRatio(3)
 					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
+					enabled: mainItem.isMeAdmin && !modelData.core.isMe
+					Accessible.name: qsTr("remove_participant_accessible_name").arg(modelData.core.displayName)
 					onClicked: participantModel.removeParticipant(modelData.core)
 				}
 			}

@@ -151,6 +151,7 @@ AbstractMainPage {
                 spacing: Utils.getSizeWithScreenRatio(7)
                 CheckBox {
                     id: neverDisplayAgainCheckbox
+                    Accessible.name: qsTr("popup_do_not_show_again")
                 }
                 Text {
                     //: Ne plus afficher

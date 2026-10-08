@@ -1168,6 +1168,7 @@ AbstractWindow {
                         PopupButton {
                             visible: callsModel.count >= 2 && !callsModel.haveNonAdminMeeting
                             id: popupbutton
+                            popUpTitle: qsTr("call_list_options_accessible_name")
                             popup.contentItem: IconLabelButton {
                                 icon.source: AppIcons.arrowsMerge
                                 icon.width: Utils.getSizeWithScreenRatio(32)
@@ -1340,6 +1341,7 @@ AbstractWindow {
                                 Component {
                                     id: headerbutton
                                     PopupButton {
+                                        popUpTitle: qsTr("conference_participants_options_accessible_name")
                                         popup.contentItem: IconLabelButton {
                                             icon.source: AppIcons.shareNetwork
                                             //: Partager le lien de la réunion

@@ -393,6 +393,7 @@ ListView {
             }
             PopupButton {
                 id: chatroomPopup
+                popUpTitle: qsTr("chat_options_accessible_name").arg(modelData ? modelData.core.title : "")
                 // z: 1
                 popup.x: 0
                 popup.padding: Utils.getSizeWithScreenRatio(10)
