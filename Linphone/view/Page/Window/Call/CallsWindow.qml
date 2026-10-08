@@ -121,6 +121,35 @@ AbstractWindow {
     
     signal keyPressedOnDialer(KeyEvent event)
 
+    function isInPopup(item) {
+        var overlay = Control.Overlay.overlay
+        for (var node = item; node; node = node.parent) {
+            if (node === overlay)
+                return true
+        }
+        return false
+    }
+
+    function sendDtmfFromKeyboard(event) {
+        if (!call || (callState !== LinphoneEnums.CallState.Connected && callState !== LinphoneEnums.CallState.StreamsRunning))
+            return
+        var shortcut = (event.modifiers & Qt.MetaModifier)
+                || ((event.modifiers & Qt.ControlModifier) && !(event.modifiers & Qt.AltModifier))
+        if (event.isAutoRepeat || shortcut)
+            return
+        if (!/^[0-9*#]$/.test(event.text) || isInPopup(activeFocusItem))
+            return
+        call.core.lSendDtmf(event.text)
+        event.accepted = true
+    }
+
+    Connections {
+        target: mainWindow.contentItem.Keys
+        function onPressed(event) {
+            mainWindow.sendDtmfFromKeyboard(event)
+        }
+    }
+
 
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
