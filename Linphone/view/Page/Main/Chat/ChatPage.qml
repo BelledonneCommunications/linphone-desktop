@@ -295,6 +295,7 @@ AbstractMainPage {
                         icon.source: AppIcons.leftArrow
                         focus: true
                         KeyNavigation.down: listStackView
+                        Accessible.name: qsTr("chat_back_accessible_name")
                         onClicked: {
                             console.debug(
                                         "[CallPage]User: return to call history")

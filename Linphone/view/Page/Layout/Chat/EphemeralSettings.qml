@@ -45,6 +45,7 @@ ColumnLayout {
 
 		BigButton {
 			id: manageParticipantsBackButton
+			Accessible.name: qsTr("panel_back_accessible_name")
 			style: ButtonStyle.noBackground
 			icon.source: AppIcons.leftArrow
 			onClicked: {
@@ -102,6 +103,7 @@ ColumnLayout {
 					Layout.leftMargin: Utils.getSizeWithScreenRatio(8)
 					RadioButton {
 						objectName: "ephemeralLifetimeRadioButton"
+						Accessible.name: modelData.title
 						color: DefaultStyle.main1_500_main
 						enabled: modelData.disabled !== true
 						opacity: modelData.disabled !== true ? 1.0 : 0.5

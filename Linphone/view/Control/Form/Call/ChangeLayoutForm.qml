@@ -27,6 +27,9 @@ FocusScope {
 				]
 				RadioButton {
 					id: radiobutton
+					Accessible.name: modelData.text
+					Accessible.checkable: true
+					Accessible.checked: radiobutton.checked
 					enabled: mainItem.call && !mainItem.call.core.paused
 					checkOnClick: false
 					color: DefaultStyle.main1_500_main

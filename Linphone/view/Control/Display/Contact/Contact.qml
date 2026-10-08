@@ -68,6 +68,7 @@ Control.Control{
             spacing: Utils.getSizeWithScreenRatio(10)
 			Button {
 				id: avatarButton
+				Accessible.name: qsTr("account_change_avatar_accessible_name").arg(description.topText)
 				onClicked: mainItem.avatarClicked()
 				Layout.preferredWidth: Utils.getSizeWithScreenRatio(45)
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(45)

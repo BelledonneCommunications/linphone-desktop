@@ -200,6 +200,7 @@ FocusScope {
                 PopupButton {
                     id: friendPopup
                     objectName: "contactMenuButton"
+                    popUpTitle: qsTr("contact_options_accessible_name").arg(mainItem.displayName)
                     z: contactArea.z + 1
                     popup.x: 0
                     popup.padding: Utils.getSizeWithScreenRatio(10)

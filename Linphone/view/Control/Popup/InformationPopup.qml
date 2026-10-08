@@ -82,6 +82,7 @@ Popup {
                     icon.height: Utils.getSizeWithScreenRatio(20)
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					visible: mainItem.hovered || hovered
+					Accessible.name: qsTr("close_accessible_name")
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.closeX
 					onClicked: mainItem.close()

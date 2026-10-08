@@ -35,6 +35,7 @@ ColumnLayout {
 		}
 		Button {
 			id: resetStatusItem
+			Accessible.name: qsTr("presence_reset_accessible_name")
 			style: ButtonStyle.noBackground
 			icon.width: Utils.getSizeWithScreenRatio(17)
 			icon.height: Utils.getSizeWithScreenRatio(17)

@@ -157,6 +157,7 @@ AbstractSettingsLayout {
 				Layout.fillWidth: true
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(49)
 				initialText: model.core.displayName
+				Accessible.name: qsTr("sip_address_display_name")
 				backgroundColor: DefaultStyle.grey_100
 				onEditingFinished: {
 					if (text.length != 0) model.core.displayName = text

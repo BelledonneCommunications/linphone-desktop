@@ -53,6 +53,7 @@ Rectangle {
 			spacing: Utils.getSizeWithScreenRatio(5)
 			BigButton {
 				id: manageParticipantsBackButton
+				Accessible.name: qsTr("panel_back_accessible_name")
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {

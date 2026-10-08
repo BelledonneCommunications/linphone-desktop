@@ -167,6 +167,7 @@ ColumnLayout {
 						}
 						RoundButton {
 							id: calendarPlusButton
+							Accessible.name: qsTr("meeting_add_to_calendar_accessible_name")
 							style: ButtonStyle.noBackground
 							icon.source: AppIcons.calendarPlus
 							onClicked: {

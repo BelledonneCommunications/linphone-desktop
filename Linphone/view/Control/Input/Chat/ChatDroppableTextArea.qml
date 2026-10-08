@@ -85,6 +85,7 @@ Control.Control {
 				spacing: Utils.getSizeWithScreenRatio(16)
 				PopupButton {
 					id: emojiPickerButton
+					popUpTitle: qsTr("chat_emoji_picker_accessible_name")
 					visible: !mainItem.isEditing
 					style: ButtonStyle.noBackground
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley
@@ -109,6 +110,7 @@ Control.Control {
 				BigButton {
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.paperclip
+					Accessible.name: qsTr("chat_attach_file_accessible_name")
 					onClicked: {
 						fileDialog.open()
 					}
@@ -216,6 +218,7 @@ Control.Control {
 							Layout.preferredHeight: Math.max(recordButton.height, sendMessageButton.height)
 							BigButton {
 								id: recordButton
+								Accessible.name: qsTr("chat_record_voice_message_accessible_name")
 								ToolTip.visible: !enabled && hovered
 								Layout.preferredWidth: width
 								//: Cannot record a message while a call is ongoing
@@ -235,6 +238,7 @@ Control.Control {
 							}
 							BigButton {
 								id: sendMessageButton
+								Accessible.name: mainItem.isEditing ? qsTr("chat_edit_message_accessible_name") : qsTr("chat_send_message_accessible_name")
 								Layout.preferredWidth: width
 								Layout.preferredHeight: height
 								visible: sendingTextArea.text.length !== 0 || mainItem.selectedFilesCount > 0
@@ -267,6 +271,7 @@ Control.Control {
 					width: Utils.getSizeWithScreenRatio(30)
 					Layout.preferredWidth: width
 					Layout.preferredHeight: height
+					Accessible.name: qsTr("chat_cancel_voice_message_accessible_name")
 					onClicked: {
 						if (voiceMessage.chatMessage) mainItem.chat.core.lDeleteMessage(voiceMessage.chatMessage)
 						sendingAreaStackView.pop()
@@ -287,6 +292,7 @@ Control.Control {
 				}
 				BigButton {
 					id: sendButton
+					Accessible.name: qsTr("chat_send_voice_message_accessible_name")
 					style: ButtonStyle.noBackgroundOrange
 					icon.source: AppIcons.paperPlaneRight
 					icon.width: Utils.getSizeWithScreenRatio(22)
