@@ -31,5 +31,8 @@ Text {
 		}
 	}
 
-	onTextChanged: if (mainItem.text.length > 0) autoHideErrorMessage.restart()
+	onTextChanged: if (mainItem.text.length > 0) {
+		autoHideErrorMessage.restart()
+		mainItem.Accessible.announce(mainItem.text, Accessible.Assertive)
+	}
 }
