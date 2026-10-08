@@ -69,10 +69,25 @@ Control.ComboBox {
         Accessible.announce(currentText)
     }
 
+    property bool ignoreEnterRelease: false
     Keys.onPressed: event => {
+        mainItem.ignoreEnterRelease = false;
         if (!mainItem.contentItem.activeFocus && (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+            mainItem.ignoreEnterRelease = event.key != Qt.Key_Space;
             mainItem.popup.open();
             event.accepted = true;
+        }
+    }
+    Keys.onReleased: event => {
+        if (mainItem.ignoreEnterRelease && (event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+            mainItem.ignoreEnterRelease = false;
+            event.accepted = true;
+        }
+    }
+    Connections {
+        target: mainItem.popup
+        function onClosed() {
+            mainItem.ignoreEnterRelease = false;
         }
     }
 
