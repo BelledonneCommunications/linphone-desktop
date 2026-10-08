@@ -14,7 +14,6 @@ Item {
     id: mainItem
     property var callObj
     property var contextualMenuOpenedComponent: undefined
-    property bool focusPageOnNextLoad: false // Focus the page on next load - usefull cause of loader
 
     signal addAccountRequest
     signal openNewCallRequest
@@ -207,17 +206,6 @@ Item {
                     if (event.key == Qt.Key_Right) {
                         mainStackView.currentItem.forceActiveFocus();
                     }
-                }
-
-                /**
-                 * Focus the page when user select the page with keyboard.
-                 * Do not add this behavior on the arrows
-                 */
-                onEnterPressed: {
-                    focusPageOnNextLoad = true
-                }
-                onSpacePressed: {
-                    focusPageOnNextLoad = true
                 }
                 
                 Component.onCompleted: {
@@ -708,10 +696,6 @@ Item {
                                     openContextualMenuComponent(page);
                                 }
                             }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
-                            }
                         }
                         Loader {
                             active: mainStackLayout.currentIndex === 1
@@ -726,10 +710,6 @@ Item {
                                         contactPage.initialFriendToDisplay = contactAddress;
                                     }
                                 }
-                            }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
                             }
                         }
                         Loader {
@@ -753,10 +733,6 @@ Item {
                                     magicSearchBar.focus = false;
                                 }
                             }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
-                            }
                         }
 
                         Loader {
@@ -772,10 +748,6 @@ Item {
                                         }
                                     }
                                 }
-                            }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
                             }
                         }
 
