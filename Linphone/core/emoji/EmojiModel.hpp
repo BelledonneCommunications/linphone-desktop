@@ -33,20 +33,14 @@ SOFTWARE.
 
 class EmojiModel : public QObject {
 	Q_OBJECT
-	Q_PROPERTY(QString iconsPath WRITE setIconsPath MEMBER mIconsPath)
-	Q_PROPERTY(QString iconsType WRITE setIconsType MEMBER mIconsType)
 public:
 	EmojiModel();
-	void setIconsPath(QString);
-	void setIconsType(QString);
 public slots:
 	int count(QString);
-	QString path(QString, int, int = -1);
 	QVector<QString> search(QString, int = -1);
+	QString emoji(QString category, int index, int skinColor);
 
 private:
-	QString mIconsPath;
-	QString mIconsType;
 	QMap<QString, QJsonArray> emojies;
 	QMap<QString, QVector<QJsonObject>> keywords;
 };
