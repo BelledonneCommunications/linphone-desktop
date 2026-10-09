@@ -48,11 +48,13 @@ private:
 	QShortcut *mDeclineCallShortcut;
 	QShortcut *mNextWindowShortcut;
 	QShortcut *mPreviousWindowShortcut;
+	QShortcut *mContextMenuShortcut = nullptr;
 
 	// Actions callable with the shortcuts
 	static void onAcceptCallShortcut();
 	static void onDeclineCallShortcut();
 	static void focusSiblingWindow(int step);
+	void forwardContextMenuKey();
 
 	DECLARE_ABSTRACT_OBJECT
 };

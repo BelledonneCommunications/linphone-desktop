@@ -18,6 +18,10 @@ Control.Page {
 	clip: true
 
 	property string headerTitleText
+	property string fallbackAccessibleTitleText
+	property string accessibleTitleText: headerTitleText.length > 0 ? headerTitleText : fallbackAccessibleTitleText
+	Accessible.role: Accessible.Pane
+	Accessible.name: accessibleTitleText
 	property string headerSubtitleText
 	property string headerValidateButtonText
 	signal returnRequested()
@@ -62,7 +66,7 @@ Control.Page {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.rightMargin: Utils.getSizeWithScreenRatio(5)
 				//: Close %1 panel
-				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
+				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.accessibleTitleText)
 				KeyNavigation.tab: mainItem.firstContentFocusableItem ?? null
 			}
 		}
@@ -74,7 +78,8 @@ Control.Page {
                 spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
 					Accessible.role: Accessible.Heading
-					Accessible.name: text
+					Accessible.name: mainItem.accessibleTitleText
+					Accessible.ignored: mainItem.accessibleTitleText.length === 0
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -109,6 +114,7 @@ Control.Page {
 					Text {
 						Accessible.role: Accessible.Heading
 						Accessible.name: text
+						Accessible.ignored: text.length === 0
 						Layout.alignment: Qt.AlignVCenter
 						verticalAlignment: Text.AlignVCenter
 						text: mainItem.headerTitleText

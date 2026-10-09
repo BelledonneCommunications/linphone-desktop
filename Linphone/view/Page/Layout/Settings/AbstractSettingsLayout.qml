@@ -205,7 +205,7 @@ Rectangle {
 
 			function onFocusChanged(item, keyboardFocus) {
 				if(Utils.isDescendant(item,scrollView) && keyboardFocus){
-					Utils.ensureVisibleY(item, scrollView)
+					Utils.ensureVisibleY(item, scrollView.contentItem)
 				}
 			}
 		}

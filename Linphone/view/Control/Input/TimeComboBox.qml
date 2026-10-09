@@ -39,6 +39,8 @@ ComboBox {
 	contentItem: TextInput {
 		id: input
 		validator: IntValidator{}
+		Accessible.role: Accessible.EditableText
+		Accessible.name: mainItem.accessibleLabel
 		// activeFocusOnPress: false
 		inputMask: "00:00"
 		verticalAlignment: TextInput.AlignVCenter

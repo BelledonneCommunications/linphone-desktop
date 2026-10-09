@@ -12,6 +12,7 @@ ComboBox {
 	onSelectedDateChanged: popupItem.close()
 	property alias calendar: calendar
 	property alias contentText: contentText
+	accessibleValue: contentText.text
 	contentItem: Text {
 		id: contentText
 		text: calendar.selectedDate ? UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM") : ""

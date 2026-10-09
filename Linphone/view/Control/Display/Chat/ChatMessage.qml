@@ -27,6 +27,49 @@ Control.Control {
     property string replyMessageId: chatMessage? chatMessage.core.replyMessageId : ""
     property var msgState: chatMessage ? chatMessage.core.messageState : LinphoneEnums.ChatMessageState.StateIdle
     hoverEnabled: true
+    property bool tabStop: false
+    focusPolicy: tabStop ? Qt.StrongFocus : Qt.ClickFocus
+    Accessible.role: Accessible.ListItem
+    Accessible.name: {
+        if (!chatMessage)
+            return ""
+        var parts = [isRemoteMessage ? chatMessage.core.fromName : qsTr("chat_message_sent_by_me_accessible_name")]
+        if (chatMessage.core.text.length > 0)
+            parts.push(chatMessage.core.text)
+        else if (chatMessage.core.isVoiceRecording)
+            parts.push(qsTr("chat_message_voice_accessible_name"))
+        else if (chatMessage.core.hasFileContent)
+            parts.push(qsTr("chat_message_file_accessible_name"))
+        parts.push(UtilsCpp.formatDate(chatMessage.core.timestamp, true, false, "dd/MM"))
+        return parts.join(", ")
+    }
+    Keys.onPressed: event => {
+        if (event.key === Qt.Key_Menu || (event.key === Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier))) {
+            optionsMenuConnections.openedFromMessage = true
+            optionsMenu.openedWithKeyboard = true
+            optionsMenu.open()
+            event.accepted = true
+        }
+    }
+    Connections {
+        id: optionsMenuConnections
+        target: optionsMenu.popup
+        property bool openedFromMessage: false
+        property bool menuHadFocus: false
+        property bool menuFocusedByKeyboard: false
+        function onAboutToHide() {
+            menuHadFocus = optionsMenu.popup.activeFocus
+            menuFocusedByKeyboard = optionsMenu.restoreWithKeyboard
+        }
+        function onClosed() {
+            var current = mainItem.Window.activeFocusItem
+            var focusLost = !current || current === optionsMenu || current === mainItem.Window.contentItem
+            if (menuHadFocus && focusLost && (openedFromMessage || !optionsMenu.activeFocus))
+                mainItem.forceActiveFocus(menuFocusedByKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason)
+            menuHadFocus = false
+            openedFromMessage = false
+        }
+    }
     property bool linkHovered: false
     property real maxWidth: parent ? parent.width : Utils.getSizeWithScreenRatio(300)
 
@@ -57,6 +100,17 @@ Control.Control {
 
     background: Item {
         anchors.fill: parent
+        Rectangle {
+            x: bubbleContainer.mapToItem(mainItem, 0, 0).x - Utils.getSizeWithScreenRatio(3)
+            y: bubbleContainer.mapToItem(mainItem, 0, 0).y - Utils.getSizeWithScreenRatio(3)
+            width: bubbleContainer.width + Utils.getSizeWithScreenRatio(6)
+            height: bubbleContainer.height + Utils.getSizeWithScreenRatio(6)
+            color: "transparent"
+            radius: Utils.getSizeWithScreenRatio(16)
+            border.color: DefaultStyle.main2_900
+            border.width: Utils.getSizeWithScreenRatio(3)
+            visible: mainItem.activeFocus
+        }
     }
     
     function handleDefaultMouseEvent(event) {
@@ -426,6 +480,7 @@ Control.Control {
             RowLayout {
                 id: actionsLayout
                 visible: mainItem.hovered || optionsMenu.hovered || optionsMenu.popup.opened || emojiButton.hovered || emojiButton.popup.opened
+                         || mainItem.activeFocus || optionsMenu.activeFocus || emojiButton.activeFocus
                 Layout.leftMargin: Utils.getSizeWithScreenRatio(8)
                 Layout.rightMargin: Utils.getSizeWithScreenRatio(8)
                 Layout.alignment: Qt.AlignVCenter

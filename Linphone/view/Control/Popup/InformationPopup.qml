@@ -12,12 +12,53 @@ Popup {
 	property string description
 	property int index
 	signal closePopup(int index)
-	onClosed: closePopup(index)
-	property string accessibleMessage: [title, description].filter(part => part && part.length > 0).join(", ")
+	property string accessibleMessage: [title, description].map(part => part ? part.replace(/<[^>]*>/g, "").trim() : "").filter(part => part.length > 0).join(", ")
+	property bool announcementPending: false
+	function announceMessage() {
+		if (accessibleMessage.length > 0)
+			contentItem.Accessible.announce(accessibleMessage, isSuccess ? Accessible.Polite : Accessible.Assertive)
+	}
 	onAboutToShow: {
 		autoClosePopup.restart()
 	}
-	onOpened: if (accessibleMessage.length > 0) contentItem.Accessible.announce(accessibleMessage, isSuccess ? Accessible.Polite : Accessible.Assertive)
+	function canAnnounce() {
+		var window = contentItem.Window.window
+		return Qt.application.state === Qt.ApplicationActive && (!window || window.active)
+	}
+	function announceWhenActive() {
+		if (!announcementPending || !canAnnounce())
+			return
+		announcementPending = false
+		if (!hovered)
+			autoClosePopup.restart()
+		Qt.callLater(announceMessage)
+	}
+	onOpened: {
+		if (canAnnounce()) {
+			announceMessage()
+		} else {
+			announcementPending = true
+			autoClosePopup.stop()
+		}
+	}
+	onClosed: {
+		announcementPending = false
+		closePopup(index)
+	}
+	Connections {
+		target: mainItem.contentItem.Window.window
+		enabled: mainItem.announcementPending
+		function onActiveChanged() {
+			mainItem.announceWhenActive()
+		}
+	}
+	Connections {
+		target: Qt.application
+		enabled: mainItem.announcementPending
+		function onStateChanged() {
+			mainItem.announceWhenActive()
+		}
+	}
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width
 	// y : parent.y + parent.height - height
@@ -30,7 +71,7 @@ Popup {
 
 	onHoveredChanged: {
 		if (hovered) autoClosePopup.stop()
-		else autoClosePopup.restart()
+		else if (!announcementPending) autoClosePopup.restart()
 	}
 	Timer {
 		id: autoClosePopup

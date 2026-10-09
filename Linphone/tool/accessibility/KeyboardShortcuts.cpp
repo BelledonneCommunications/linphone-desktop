@@ -23,6 +23,7 @@
 #include "core/call/CallList.hpp"
 #include "tool/Utils.hpp"
 #include <QGuiApplication>
+#include <QKeyEvent>
 #include <QKeySequence>
 #include <QQuickItem>
 #include <linphone++/linphone.hh>
@@ -53,6 +54,12 @@ KeyboardShortcuts::KeyboardShortcuts(QQuickWindow *window) {
 	QObject::connect(mDeclineCallShortcut, &QShortcut::activated, this, &KeyboardShortcuts::onDeclineCallShortcut);
 	QObject::connect(mNextWindowShortcut, &QShortcut::activated, this, [] { focusSiblingWindow(1); });
 	QObject::connect(mPreviousWindowShortcut, &QShortcut::activated, this, [] { focusSiblingWindow(-1); });
+
+#ifdef Q_OS_WIN
+	mContextMenuShortcut = new QShortcut(QKeySequence(Qt::SHIFT | Qt::Key_F10), mWindow);
+	mContextMenuShortcut->setContext(Qt::ApplicationShortcut);
+	QObject::connect(mContextMenuShortcut, &QShortcut::activated, this, &KeyboardShortcuts::forwardContextMenuKey);
+#endif
 }
 
 KeyboardShortcuts::~KeyboardShortcuts() {
@@ -95,6 +102,17 @@ void KeyboardShortcuts::onDeclineCallShortcut() {
 	}
 }
 
+void KeyboardShortcuts::forwardContextMenuKey() {
+	auto window = QGuiApplication::focusWindow();
+	if (!window || !mContextMenuShortcut->isEnabled()) return;
+	mContextMenuShortcut->setEnabled(false);
+	QKeyEvent press(QEvent::KeyPress, Qt::Key_F10, Qt::ShiftModifier);
+	QCoreApplication::sendEvent(window, &press);
+	QKeyEvent release(QEvent::KeyRelease, Qt::Key_F10, Qt::ShiftModifier);
+	QCoreApplication::sendEvent(window, &release);
+	mContextMenuShortcut->setEnabled(true);
+}
+
 void KeyboardShortcuts::focusSiblingWindow(int step) {
 	auto app = App::getInstance();
 	QList<QQuickWindow *> windows;
@@ -117,7 +135,7 @@ void KeyboardShortcuts::focusSiblingWindow(int step) {
 	auto target = windows.at((index + step + windows.size()) % windows.size());
 	Utils::smartShowWindow(target);
 	auto focused = target->activeFocusItem();
-	if (!focused || focused == target->contentItem()) {
+	if ((!focused || focused == target->contentItem()) && !target->contentItem()->scopedFocusItem()) {
 		auto first = target->contentItem()->nextItemInFocusChain(true);
 		if (first) first->forceActiveFocus(Qt::TabFocusReason);
 	}

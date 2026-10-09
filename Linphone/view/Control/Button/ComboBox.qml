@@ -40,12 +40,20 @@ Control.ComboBox {
 
     // Accessibility properties
     property string accessibleLabel: ""
+    property string displayedText
+    property string accessibleValue: currentText.length > 0 ? currentText : displayedText
     Accessible.name: generateAccessibleName()
+    Accessible.onPressAction: {
+        if (mainItem.popup.visible)
+            mainItem.popup.close();
+        else
+            mainItem.popup.open();
+    }
 
     function generateAccessibleName() {
-        return currentText ?
+        return accessibleValue ?
             //: %1 current value %2
-            qsTr("combobox_with_value_accessible_name").arg(accessibleLabel).arg(currentText) :
+            qsTr("combobox_with_value_accessible_name").arg(accessibleLabel).arg(accessibleValue) :
             accessibleLabel 
     }
 
@@ -58,6 +66,7 @@ Control.ComboBox {
         if (!item)
             return;
         selectedItemText.text = mainItem.textRole ? item[mainItem.textRole] : item.text ? item.text : item ? item : "";
+        mainItem.displayedText = selectedItemText.text;
         if (mainItem.flagRole)
             selectedItemFlag.text = item[mainItem.flagRole];
         selectedItemImg.imageSource = constantImageSource ? constantImageSource : item.img ? item.img : "";
@@ -65,7 +74,6 @@ Control.ComboBox {
 
     // Used for accessibility, contentItem remove value announcement from screen reader
     onCurrentTextChanged: {
-        Accessible.name = generateAccessibleName()
         Accessible.announce(currentText)
     }
 
@@ -190,6 +198,8 @@ Control.ComboBox {
         contentItem: ListView {
             id: listView
             clip: true
+            Accessible.role: Accessible.List
+            Accessible.name: mainItem.accessibleLabel
             implicitHeight: contentHeight
             height: popup.height
             model: visible ? mainItem.model : []
@@ -221,6 +231,11 @@ Control.ComboBox {
                 property string valueText: typeof (modelData) != "undefined" ? mainItem.textRole ? modelData[mainItem.textRole] : modelData.text ? modelData.text : modelData : $modelData ? mainItem.textRole ? $modelData[mainItem.textRole] : $modelData : ""
                 Accessible.name: valueText
                 Accessible.role: Accessible.MenuItem
+                Accessible.onPressAction: {
+                    mainItem.currentIndex = index;
+                    popup.close();
+                }
+                focus: ListView.isCurrentItem
                 RowLayout {
                     anchors.fill: parent
                     EffectImage {

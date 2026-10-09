@@ -147,8 +147,7 @@ AbstractMainPage {
 			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(32)
 			Layout.fillWidth: true
-            //: "À propos de %1"
-            text: qsTr("help_about_title").arg(applicationName)
+            text: qsTr("help_advanced_title")
 			color: DefaultStyle.main2_600
 			font: Typography.h4
 		}

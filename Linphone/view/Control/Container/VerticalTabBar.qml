@@ -114,7 +114,20 @@ Control.TabBar {
 			property bool keyboardFocus: FocusHelper.keyboardFocus
 			focusPolicy: Qt.StrongFocus
 			activeFocusOnTab: mainItem.currentIndex < 0 ? TabBar.index === 0 : TabBar.index === mainItem.currentIndex
+			Accessible.name: tabBadge.visible ? text + ", " + tabBadge.Accessible.name : text
+			Accessible.selectable: true
+			Accessible.selected: TabBar.index === mainItem.currentIndex
+			TabBar.onIndexChanged: if (TabBar.index >= 0 && TabBar.index === mainItem.currentIndex) checked = true
+			Accessible.onCheckableChanged: if (Qt.platform.os === "windows" && Accessible.checkable) Accessible.checkable = false
+			Accessible.onCheckedChanged: if (Qt.platform.os === "windows" && Accessible.checked) Accessible.checked = false
+			Component.onCompleted: if (Qt.platform.os === "windows") {
+				Accessible.checkable = false
+				Accessible.checked = false
+			}
 			UnreadNotification {
+				id: tabBadge
+				focusPolicy: Qt.NoFocus
+				activeFocusOnTab: false
 				badgeType: modelData.label
 				kind: index === 0 ? "missedCalls" : index === 2 ? "unreadMessages" : ""
 				unread: !defaultAccount

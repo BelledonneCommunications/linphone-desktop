@@ -33,6 +33,31 @@ ListView {
     signal requestAutoPlayVoiceRecording(int indexToPlay)
     signal searchMessageByIdRequested(string id)
     currentIndex: -1
+    property int focusedMessageIndex: -1
+    property int newestMessageIndex: -1
+    property int tabStopIndex: focusedMessageIndex >= 0 && focusedMessageIndex < count ? focusedMessageIndex : newestMessageIndex
+    onCountChanged: {
+        for (var i = 0; i < count; ++i) {
+            var event = eventLogProxy.getEventAtIndex(i)
+            if (event && event.core.chatMessageGui) {
+                newestMessageIndex = i
+                return
+            }
+        }
+        newestMessageIndex = -1
+    }
+
+    function focusMessage(from, step) {
+        for (var i = from + step; i >= 0 && i < count; i += step) {
+            positionViewAtIndex(i, ListView.Contain)
+            var item = itemAtIndex(i)
+            if (item && item.chatMessage !== undefined && item.visible) {
+                item.forceActiveFocus(step > 0 ? Qt.BacktabFocusReason : Qt.TabFocusReason)
+                return true
+            }
+        }
+        return false
+    }
 
     property string filterText
     onFilterTextChanged: {
@@ -334,6 +359,10 @@ ListView {
                 property int yoff: Math.round(chatMessageDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 chatMessage: modelData.core.chatMessageGui
+                tabStop: index === mainItem.tabStopIndex
+                onActiveFocusChanged: if (activeFocus) mainItem.focusedMessageIndex = index
+                Keys.onUpPressed: event => event.accepted = mainItem.focusMessage(index, 1)
+                Keys.onDownPressed: event => event.accepted = mainItem.focusMessage(index, -1)
                 onIsFullyVisibleChanged: {
                     if (index === 0) {
                         mainItem.lastItemVisible = isFullyVisible

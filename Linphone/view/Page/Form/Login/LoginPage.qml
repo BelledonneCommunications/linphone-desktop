@@ -15,6 +15,9 @@ LoginLayout {
 	signal useSIPButtonClicked()
 	signal useRemoteConfigButtonClicked()
 	signal goToRegister()
+	Control.StackView.onActivated: Qt.callLater(function() {
+		loginTitle.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason)
+	})
 
 	titleContent: [
 		BigButton {
@@ -41,8 +44,18 @@ LoginLayout {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(34)
 			}
 			Text {
+                id: loginTitle
+                Keys.onPressed: event => {
+                    var target = event.key === Qt.Key_Tab ? loginForm.firstField
+                               : event.key === Qt.Key_Backtab ? loginForm.firstField.nextItemInFocusChain(false) : null
+                    if (target) {
+                        target.forceActiveFocus(event.key === Qt.Key_Tab ? Qt.TabFocusReason : Qt.BacktabFocusReason)
+                        event.accepted = true
+                    }
+                }
                 Accessible.role: Accessible.Heading
                 Accessible.name: text
+                Accessible.focusable: true
                 //: Connexion
                 text: qsTr("assistant_account_login")
 				font {

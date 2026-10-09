@@ -21,9 +21,9 @@ Control.Control {
     property string kind: ""
     Accessible.role: Accessible.StaticText
     Accessible.name: kind === "missedCalls"
-                     ? qsTr("badge_missed_calls_accessible_name").arg(unread)
+                     ? qsTr("badge_missed_calls_accessible_name", "", Number(unread))
                      : kind === "unreadMessages"
-                       ? qsTr("badge_unread_messages_accessible_name").arg(unread)
+                       ? qsTr("badge_unread_messages_accessible_name", "", Number(unread))
                        : qsTr("unread_notification_accessible_name").arg(badgeType).arg(unread)
     background: Item {
         anchors.fill: parent

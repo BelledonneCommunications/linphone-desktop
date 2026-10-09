@@ -389,6 +389,18 @@ AbstractMainPage {
                         checked: true
                         icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
                         KeyNavigation.down: contentControl
+                        Accessible.role: Accessible.Button
+                        Accessible.onPressAction: {
+                            expandButton.toggle()
+                            expandButton.toggled()
+                            expandButton.clicked()
+                        }
+                        Accessible.onCheckableChanged: if (Accessible.checkable) Accessible.checkable = false
+                        Accessible.onCheckedChanged: if (Accessible.checked) Accessible.checked = false
+                        Component.onCompleted: {
+                            Accessible.checkable = false
+                            Accessible.checked = false
+                        }
                         Accessible.name: (checked ?
                             //: Shrink %1
                             qsTr("shrink_accessible_name"):
@@ -747,6 +759,7 @@ AbstractMainPage {
                                 }
                                 ProgressBar {
                                     visible: deviceList.count > 0
+                                    Accessible.name: qsTr("contact_dialog_devices_trust_title")
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
                                     value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0
