@@ -20,6 +20,7 @@ LoginLayout {
 		ColumnLayout {
 			Text {
                 Accessible.role: Accessible.Heading
+                Accessible.name: text
                 //: "Choisir votre mode"
                 text: qsTr("manage_account_choose_mode_title")
 				font {

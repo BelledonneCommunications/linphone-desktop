@@ -48,7 +48,7 @@ RowLayout {
 			mainItem.toggled()
 		}
 		implicitHeight: Utils.getSizeWithScreenRatio(30)
-		Accessible.name: "%1 %2".arg(mainItem.titleText).arg(mainItem.subTitleText)
+		Accessible.name: mainItem.subTitleText.length > 0 ? mainItem.titleText + ", " + mainItem.subTitleText : mainItem.titleText
 	}
 	Binding {
 		id: binding

@@ -72,6 +72,8 @@ FocusScope {
 				}
 				TextInput {
 					id: confTitle
+					Accessible.role: Accessible.EditableText
+					Accessible.name: qsTr("meeting_title_accessible_name")
 					Layout.fillWidth: true
 					maximumLength: width
                     //: "Ajouter un titre"
@@ -226,6 +228,7 @@ FocusScope {
 				}
 				TextArea {
 					id: descriptionEdit
+					Accessible.name: qsTr("meeting_description_accessible_name")
 					Layout.fillWidth: true
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(275)
                     leftPadding: Utils.getSizeWithScreenRatio(8)

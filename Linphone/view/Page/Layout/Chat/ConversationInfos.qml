@@ -107,6 +107,8 @@ ColumnLayout {
 				TextEdit {
 					id: title
 					anchors.fill: parent
+					Accessible.role: Accessible.EditableText
+					Accessible.name: qsTr("chat_subject_accessible_name")
 					anchors.margins: 6
 					font: Typography.p1
 					color: DefaultStyle.main2_700

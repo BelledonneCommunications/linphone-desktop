@@ -503,6 +503,10 @@ ListView {
             focusPolicy: Qt.StrongFocus
 	        property bool keyboardFocus: FocusHelper.keyboardFocus
             objectName: "chatListRow"
+            Accessible.role: Accessible.ListItem
+            Accessible.selectable: true
+            Accessible.selected: mainItem.currentIndex === index
+            Accessible.onPressAction: mainItem.chatClicked(modelData)
             onKeyboardFocusChanged: if (keyboardFocus) mainItem.focusedByKeyboard = true
             onPressed: mainItem.focusedByKeyboard = false
             onActiveFocusChanged: {
@@ -515,7 +519,7 @@ ListView {
             //: %1 chat %2
             Accessible.name: qsTr("focused_chat_accessible_label").arg(modelData.core.title).arg(unreadCount.unread > 0 
             //: : %1 unread messages
-            ? qsTr("unread_messages_accessible_label").arg(unreadCount.unread) : "")
+            ? qsTr("unread_messages_accessible_label").arg(unreadCount.unread) : "").trim()
             onContainsMouseChanged: {
                 if (containsMouse)
                     mainItem.lastMouseContainsIndex = index

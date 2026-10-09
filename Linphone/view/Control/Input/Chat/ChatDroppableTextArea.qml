@@ -168,6 +168,7 @@ Control.Control {
 
 							TextArea {
 								id: sendingTextArea
+								Accessible.name: qsTr("chat_message_input_accessible_name")
 								width: sendingAreaFlickable.width
 								height: implicitHeight// sendingAreaFlickable.height
 								textFormat: TextEdit.PlainText

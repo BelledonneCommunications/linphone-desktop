@@ -74,6 +74,7 @@ Control.Page {
                 spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
 					Accessible.role: Accessible.Heading
+					Accessible.name: text
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -107,6 +108,7 @@ Control.Page {
 					spacing: 0
 					Text {
 						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						Layout.alignment: Qt.AlignVCenter
 						verticalAlignment: Text.AlignVCenter
 						text: mainItem.headerTitleText

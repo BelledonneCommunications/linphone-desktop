@@ -41,6 +41,7 @@ LoginLayout {
 			}
 			Text {
 				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				wrapMode: Text.NoWrap
 				text: {
                     //: "email"

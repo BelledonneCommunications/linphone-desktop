@@ -165,6 +165,7 @@ AbstractMainPage {
                     Layout.fillHeight: false
 					Text {
 						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						Layout.fillWidth: true
 						//: Réunions
 						text: qsTr("meetings_list_title")
@@ -312,6 +313,7 @@ AbstractMainPage {
 					}
 					Text {
 						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						//: "Nouvelle réunion"
 						text: qsTr("meeting_schedule_title")
 						color: DefaultStyle.main2_700
@@ -462,6 +464,8 @@ AbstractMainPage {
 							}
 							TextInput {
 								id: titleText
+								Accessible.role: Accessible.EditableText
+								Accessible.name: qsTr("meeting_title_accessible_name")
 								Layout.fillWidth: true
 								color: DefaultStyle.main2_600
 								clip: true
@@ -595,6 +599,7 @@ AbstractMainPage {
 						}
 						Text {
 							Accessible.role: Accessible.Heading
+							Accessible.name: text
 							//: "Ajouter des participants"
 							text: qsTr("meeting_schedule_add_participants_title")
 							color: DefaultStyle.main1_500_main
@@ -674,6 +679,7 @@ AbstractMainPage {
 							}
 							Text {
 								Accessible.role: Accessible.Heading
+								Accessible.name: text
 								Layout.fillWidth: true
 								text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
 								maximumLineCount: 1

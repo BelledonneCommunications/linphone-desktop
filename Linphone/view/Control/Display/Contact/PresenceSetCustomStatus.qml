@@ -33,6 +33,8 @@ Column {
 			anchors.margins: Utils.getSizeWithScreenRatio(10)
 			TextEdit {
 				id: statusMessage
+				Accessible.role: Accessible.EditableText
+				Accessible.name: qsTr("presence_custom_status_accessible_name")
 				wrapMode: TextEdit.Wrap
 				font: Typography.p1
 				color: DefaultStyle.main2_500_main

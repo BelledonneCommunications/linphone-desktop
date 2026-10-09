@@ -145,6 +145,7 @@ AbstractMainPage {
                     Layout.fillHeight: false
                     Text {
                         Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "Conversations"
                         text: qsTr("chat_list_title")
@@ -306,6 +307,7 @@ AbstractMainPage {
                     }
                     Text {
                         Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "New chat"
                         text: qsTr("chat_action_start_new_chat")

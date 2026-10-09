@@ -17,6 +17,7 @@ ColumnLayout {
 
     Text {
         Accessible.role: Accessible.Heading
+        Accessible.name: text
         font: Typography.h4
         color: DefaultStyle.main2_600
         text: title
