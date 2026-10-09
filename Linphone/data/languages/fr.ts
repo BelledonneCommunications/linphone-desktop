@@ -34,7 +34,7 @@
         <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="76"/>
         <source>settings_page_selection_accessible_name</source>
         <extracomment>Settings page selection</extracomment>
-        <translation>Selection de la page de paramètre</translation>
+        <translation>Sélection de la page de paramètres</translation>
     </message>
 </context>
 <context>
@@ -1057,7 +1057,7 @@
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
         <source>contact_conversation_action</source>
-        <extracomment>&quot;Conversation&quot;</extracomment>
+        <extracomment>Conversation with %1</extracomment>
         <translation>Conversation</translation>
     </message>
     <message>
@@ -1644,7 +1644,7 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="157"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
-        <translation>Choisir le ficher de sonnerie</translation>
+        <translation>Choisir le fichier de sonnerie</translation>
     </message>
 </context>
 <context>
@@ -1678,6 +1678,11 @@
 </context>
 <context>
     <name>CallsWindow</name>
+    <message>
+        <source>call_chat_panel_accessible_title</source>
+        <extracomment>Conversation with %1</extracomment>
+        <translation>Conversation avec %1</translation>
+    </message>
     <message>
         <source>conference_participants_options_accessible_name</source>
         <extracomment>&quot;Participant list options&quot;</extracomment>
@@ -2168,7 +2173,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="18"/>
         <source>settings_contacts_carddav_title</source>
         <extracomment>Carnet d&apos;adresse CardDAV</extracomment>
-        <translation>Carnet  d&apos;adresse CardDAV</translation>
+        <translation>Carnet d&apos;adresses CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="20"/>
@@ -2448,15 +2453,33 @@
         <extracomment>%1 chat %2</extracomment>
         <translation>%1 conversation %2</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
         <source>unread_messages_accessible_label</source>
-        <extracomment>: %1 unread messages</extracomment>
-        <translation>: %1 messages non lus</translation>
+        <extracomment>: %n unread messages</extracomment>
+        <translation>
+            <numerusform>: %n message non lu</numerusform>
+            <numerusform>: %n messages non lus</numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>ChatMessage</name>
+    <message>
+        <source>chat_message_file_accessible_name</source>
+        <extracomment>&quot;File&quot;</extracomment>
+        <translation>Fichier</translation>
+    </message>
+    <message>
+        <source>chat_message_voice_accessible_name</source>
+        <extracomment>&quot;Voice message&quot;</extracomment>
+        <translation>Message vocal</translation>
+    </message>
+    <message>
+        <source>chat_message_sent_by_me_accessible_name</source>
+        <extracomment>&quot;You&quot;</extracomment>
+        <translation>Vous</translation>
+    </message>
     <message>
         <source>chat_message_more_emojis_accessible_name</source>
         <extracomment>&quot;More emojis&quot;</extracomment>
@@ -2932,8 +2955,8 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="164"/>
         <source>chat_option_acccessibility_label</source>
-        <extracomment>&quot;Chat option&quot;</extracomment>
-        <translation>Option de conversation</translation>
+        <extracomment>&quot;Conversation options&quot;</extracomment>
+        <translation>Options des conversations</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="170"/>
@@ -3114,8 +3137,8 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <extracomment>%1 current value %2</extracomment>
-        <translation>%1 valeur actuelle %2</translation>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
     </message>
 </context>
 <context>
@@ -3156,7 +3179,7 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="181"/>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
-        <translation>Paramaètres de compte de %1</translation>
+        <translation>Paramètres de compte de %1</translation>
     </message>
 </context>
 <context>
@@ -3317,7 +3340,7 @@ assurez-vous de ne pas partager d’informations sensibles !</translation>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
         <source>call_with_contact_name_accessible_button</source>
         <extracomment>&quot;Call %1&quot;</extracomment>
-        <translation>Appeller %1</translation>
+        <translation>Appeler %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="173"/>
@@ -3598,7 +3621,7 @@ Vous êtes sur le point d’appeler “%1” voulez vous continuer ?</translatio
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="562"/>
         <source>call_adress_accessible_name</source>
         <extracomment>Call address %1</extracomment>
-        <translation>Appeller l&apos;adresse %1</translation>
+        <translation>Appeler l&apos;adresse %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="595"/>
@@ -3622,7 +3645,7 @@ Vous êtes sur le point d’appeler “%1” voulez vous continuer ?</translatio
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="674"/>
         <source>contact_details_medias_subtitle</source>
         <extracomment>&quot;Show shared medias&quot;</extracomment>
-        <translation>Afficher les medias partagés</translation>
+        <translation>Afficher les médias partagés</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="693"/>
@@ -3765,7 +3788,7 @@ Vous êtes sur le point d’appeler “%1” voulez vous continuer ?</translatio
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="21"/>
         <source>settings_contacts_carddav_title</source>
-        <translation>Carnet  d&apos;adresse CardDAV</translation>
+        <translation>Carnet d&apos;adresses CardDAV</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="22"/>
@@ -4476,6 +4499,11 @@ Expiration : %1</translation>
 <context>
     <name>HelpPage</name>
     <message>
+        <source>help_advanced_title</source>
+        <extracomment>&quot;Advanced&quot;</extracomment>
+        <translation>Avancé</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
         <source>back_previous_menu_accessible_name</source>
         <extracomment>Back to previous menu</extracomment>
@@ -4697,7 +4725,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requit</translation>
+        <translation>%1, requis</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="71"/>
@@ -4855,6 +4883,21 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MainLayout</name>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <extracomment>&quot;Ongoing call&quot;</extracomment>
+        <translation>Appel en cours</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner</source>
+        <extracomment>&quot;Ongoing call: %1&quot;</extracomment>
+        <translation>Appel en cours : %1</translation>
+    </message>
+    <message>
+        <source>main_ongoing_meeting_banner</source>
+        <extracomment>&quot;Ongoing meeting: %1&quot;</extracomment>
+        <translation>Réunion en cours : %1</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="356"/>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="363"/>
@@ -5264,6 +5307,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MeetingPage</name>
+    <message>
+        <source>meeting_call_address_accessible_name</source>
+        <extracomment>&quot;Call the meeting address&quot;</extracomment>
+        <translation>Appeler l&apos;adresse de la réunion</translation>
+    </message>
     <message>
         <source>meeting_title_accessible_name</source>
         <extracomment>&quot;Meeting title&quot;</extracomment>
@@ -5795,8 +5843,8 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="178"/>
         <source>numpad_longpress_accessible_name</source>
-        <extracomment>%1 longpress %2</extracomment>
-        <translation>%1 appui long %2</translation>
+        <extracomment>%1, long press for %2</extracomment>
+        <translation>%1, appui long pour %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="225"/>
@@ -5984,13 +6032,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="62"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>%1 préfix</translation>
+        <translation>%1, indicatif pays</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="85"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>%1 indicatif téléphonique</translation>
+        <translation>%1, numéro</translation>
     </message>
 </context>
 <context>
@@ -6228,7 +6276,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
         <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Rechercher un enregistrement</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
@@ -6494,7 +6542,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requit</translation>
+        <translation>%1, requis</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
@@ -7109,8 +7157,8 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="232"/>
         <source>textfield_custom_button_accessible_name</source>
-        <extracomment>%1 button of %2</extracomment>
-        <translation>Bouton %1 de %2</translation>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="211"/>
@@ -7204,15 +7252,21 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <extracomment>%1 notification badge : %2 unread</extracomment>
         <translation>Pastille de notifications %1 : %2 non lues</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>badge_missed_calls_accessible_name</source>
-        <extracomment>&quot;%1 appels manqués&quot;</extracomment>
-        <translation>%1 appels manqués</translation>
+        <extracomment>&quot;%n missed calls&quot;</extracomment>
+        <translation>
+            <numerusform>%n appel manqué</numerusform>
+            <numerusform>%n appels manqués</numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>badge_unread_messages_accessible_name</source>
-        <extracomment>&quot;%1 messages non lus&quot;</extracomment>
-        <translation>%1 messages non lus</translation>
+        <extracomment>&quot;%n unread messages&quot;</extracomment>
+        <translation>
+            <numerusform>%n message non lu</numerusform>
+            <numerusform>%n messages non lus</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8959,8 +9013,8 @@ Error in the chat</extracomment>
     <name>ContactStatusPopup</name>
     <message>
         <source>contact_status_accessible_name</source>
-        <extracomment>&quot;Status: %1&quot;</extracomment>
-        <translation>Statut : %1</translation>
+        <extracomment>Status of %1: %2</extracomment>
+        <translation>Statut de %1 : %2</translation>
     </message>
 </context>
 <context>

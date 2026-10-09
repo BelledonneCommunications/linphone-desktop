@@ -9,6 +9,7 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 ColumnLayout {
 	id: mainItem
     spacing: Utils.getSizeWithScreenRatio(8)
+	readonly property Item firstField: usernameEdit
 
 	FormItemLayout {
 		id: username
@@ -43,7 +44,7 @@ ColumnLayout {
 				isError: password.errorTextVisible || (errorText.isVisible && text.length > 0)
 				hidden: true
 				onAccepted: connectionButton.trigger()
-				Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
+				accessibleName: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 			}
 			TemporaryText {
 				id: errorText

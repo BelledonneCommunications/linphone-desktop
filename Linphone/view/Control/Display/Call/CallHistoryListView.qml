@@ -27,7 +27,7 @@ ListView {
     property bool lastFocusByNavigationKeyboard: false // Workaround to get the correct focusReason
 
     signal resultsReceived
-    signal contextMenuRequested
+    signal contextMenuRequested(var origin)
 
     onResultsReceived: {
         loading = false
@@ -267,6 +267,7 @@ ListView {
             objectName: "callHistoryRow"
             Accessible.role: Accessible.ListItem
             Accessible.onPressAction: mainItem.currentIndex = model.index
+            Accessible.focusable: true
             hoverEnabled: true
             anchors.fill: parent
             focus: true
@@ -309,7 +310,7 @@ ListView {
                     callButton.forceActiveFocus(Qt.TabFocusReason)
                 } else if (event.key === Qt.Key_Menu || (event.key === Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier))) {
                     mainItem.currentIndex = model.index
-                    mainItem.contextMenuRequested()
+                    mainItem.contextMenuRequested(backgroundMouseArea)
                     event.accepted = true
                 }
             }

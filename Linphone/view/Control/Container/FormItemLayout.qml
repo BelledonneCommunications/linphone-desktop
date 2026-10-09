@@ -97,8 +97,13 @@ FocusScope{
 			TemporaryText {
 				id: errorText
 				onTextChanged: {
-					for (var i = 0; i < contentItem.children.length; ++i)
-						contentItem.children[i].Accessible.description = text
+					for (var i = 0; i < contentItem.children.length; ++i) {
+						var child = contentItem.children[i]
+						if (child.accessibleError !== undefined)
+							child.accessibleError = text
+						else
+							child.Accessible.description = text
+					}
 				}
 				anchors.top: contentItem.bottom
 				anchors.topMargin: mainItem.errorTextTopMargin

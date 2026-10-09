@@ -20,6 +20,7 @@ Item {
 
 	Accessible.name: titleText
 	Accessible.role: Accessible.ListItem
+	Accessible.focusable: true
 	Accessible.onPressAction: mainItem.selected()
 	
 	Keys.onPressed: (event)=>{

@@ -10,6 +10,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Popup {
 	id: mainItem
 	modal: true
+	focus: true
 	anchors.centerIn: parent
 	closePolicy: Control.Popup.NoAutoClose
     leftPadding: Utils.getSizeWithScreenRatio(title.length === 0 ? 10 : 33)
@@ -34,6 +35,7 @@ Popup {
 	property alias secondButton: secondButtonId
 	property bool firstButtonAccept: true
 	property bool secondButtonAccept: false
+	property string accessibleMessage: [title, text, details].filter(function (part) { return part && part.length > 0 }).join(", ")
 
 	signal accepted()
 	signal rejected()
@@ -57,7 +59,7 @@ Popup {
 
 	contentItem: FocusScope {
 		Accessible.role: Accessible.Dialog
-		Accessible.name: mainItem.title
+		Accessible.name: mainItem.title.length > 0 ? mainItem.title : mainItem.text
 		Accessible.description: mainItem.details
 		implicitWidth: child.implicitWidth
 		implicitHeight: child.implicitHeight
@@ -150,6 +152,7 @@ Popup {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.firstButtonText
+					Accessible.name: mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
 					style: mainItem.firstButtonAccept ? ButtonStyle.main : ButtonStyle.secondary
 					focus: !mainItem.firstButtonAccept
 					focusPolicy: Qt.StrongFocus
@@ -172,6 +175,7 @@ Popup {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.secondButtonText
+					Accessible.name: !mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
 					style: mainItem.firstButtonAccept ? ButtonStyle.secondary : ButtonStyle.main
 					focus: !mainItem.secondButtonAccept
 					focusPolicy: Qt.StrongFocus

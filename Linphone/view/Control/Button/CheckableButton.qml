@@ -20,7 +20,21 @@ Button {
 			? pressedColor
 			: color
 	checkable: true
+	property bool accessibleCheckedState: true
 	Accessible.role: Accessible.Button
+	Accessible.onPressAction: {
+		if (!mainItem.enabled)
+			return
+		mainItem.toggle()
+		mainItem.toggled()
+		mainItem.clicked()
+	}
+	Accessible.onCheckableChanged: if (!mainItem.accessibleCheckedState && Accessible.checkable) Accessible.checkable = false
+	Accessible.onCheckedChanged: if (!mainItem.accessibleCheckedState && Accessible.checked) Accessible.checked = false
+	Component.onCompleted: if (!accessibleCheckedState) {
+		Accessible.checkable = false
+		Accessible.checked = false
+	}
 	icon.source: checkedIconUrl && mainItem.checked ? checkedIconUrl : iconUrl
 	icon.width: Math.round(width * 0.58)
 	icon.height: Math.round(width * 0.58)

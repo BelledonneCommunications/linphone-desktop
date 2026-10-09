@@ -14,6 +14,9 @@ LoginLayout {
 	readonly property string countryCode: phoneNumberInput.countryCode
 	readonly property string phoneNumber: phoneNumberInput.phoneNumber
 	readonly property string email: emailInput.text
+	Control.StackView.onActivated: Qt.callLater(function() {
+		registerTitle.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason)
+	})
 
 	Dialog {
 		id: phoneNumberNotAvailableDialog
@@ -71,8 +74,19 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+				id: registerTitle
+				Keys.onPressed: event => {
+					var first = bar.itemAt(0) || usernameInput
+					var target = event.key === Qt.Key_Tab ? first
+							   : event.key === Qt.Key_Backtab ? first.nextItemInFocusChain(false) : null
+					if (target) {
+						target.forceActiveFocus(event.key === Qt.Key_Tab ? Qt.TabFocusReason : Qt.BacktabFocusReason)
+						event.accepted = true
+					}
+				}
 				Accessible.role: Accessible.Heading
 				Accessible.name: text
+				Accessible.focusable: true
 				Layout.preferredWidth: width
                 //: "Inscription
                 text: qsTr("assistant_account_register")
@@ -237,7 +251,7 @@ LoginLayout {
                                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(346)
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 										//: "%1 mandatory"
-										Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
+										accessibleName: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 									}
 								}
 								FormItemLayout {
@@ -253,7 +267,8 @@ LoginLayout {
 										hidden: true
 										backgroundBorderColor: passwordItem.errorMessage.length > 0 ? DefaultStyle.danger_500_main : DefaultStyle.grey_200
 										//: "%1 mandatory"
-										Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("assistant_account_register_password_confirmation"))
+										accessibleName: qsTr("mandatory_field_accessible_name").arg(qsTr("assistant_account_register_password_confirmation"))
+										accessibleError: passwordItem.errorMessage
 									}
 								}
 							}

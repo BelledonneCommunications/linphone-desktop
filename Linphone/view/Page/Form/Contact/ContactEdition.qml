@@ -187,6 +187,14 @@ MainRightPanel {
                 }
             }
 
+			Connections {
+				target: FocusNavigator
+				function onFocusChanged(item, keyboardFocus) {
+					if (keyboardFocus && Utils.isDescendant(item, editionLayout))
+						Utils.ensureVisibleY(item, editionLayout)
+				}
+			}
+
 			signal ensureVisibleRequested(Item item)
 
 			function ensureVisible(r) {

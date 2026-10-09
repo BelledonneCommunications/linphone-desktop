@@ -73,6 +73,7 @@ ListView {
 	
 	function selectIndex(index, focusReason = Qt.OtherFocusReason){
 		if(mainItem.expanded && index >= 0){
+			itemAtIndex(index)?.forceActiveFocus(focusReason)
 			mainItem.currentIndex = index
 			var item = itemAtIndex(mainItem.currentIndex)
 			if(item){// Item is ready and available
@@ -219,10 +220,15 @@ ListView {
 		selectedContacts: mainItem.selectedContacts
 		isSelected: mainItem.highlightedContact && mainItem.highlightedContact.core == searchResultItem.core
 		isLastHovered: mainItem.lastMouseContainsIndex == index
+		tabStop: mainItem.currentIndex < 0 ? index === 0 : index === mainItem.currentIndex
 		previousInitial: mainItem.itemAtIndex(index-1)?.initial
 		itemsRightMargin: mainItem.itemsRightMargin
 		
 		onIsSelectedChanged: if(isSelected) mainItem.currentIndex = index
+		onActiveFocusChanged: if (activeFocus && mainItem.currentIndex !== index) {
+			mainItem.currentIndex = index
+			mainItem.updatePosition()
+		}
 		onContactDeletionRequested: (contact) => mainItem.contactDeletionRequested(contact)
 
 		onClicked: (mouse) => {

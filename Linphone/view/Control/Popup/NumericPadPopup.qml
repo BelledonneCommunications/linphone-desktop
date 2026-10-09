@@ -19,7 +19,11 @@ Control.Popup {
 	focus: true
 	onOpened: {
 		const focusReason = FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason
-		numPad.forceActiveFocus(focusReason)
+		var firstKey = numPad.firstKey()
+		if (firstKey)
+			firstKey.forceActiveFocus(focusReason)
+		else
+			numPad.forceActiveFocus(focusReason)
 	}
 	signal buttonPressed(string text)
 	signal keyPadKeyPressed(KeyEvent event)

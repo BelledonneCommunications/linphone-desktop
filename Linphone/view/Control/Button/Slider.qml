@@ -11,6 +11,16 @@ Control.Slider {
     property bool keyboardFocus: FocusHelper.keyboardFocus
     property bool shadowEnabled: mainItem.hovered || mainItem.activeFocus && !keyboardFocus
 	hoverEnabled: true
+    Keys.onPressed: event => {
+        if (event.key === Qt.Key_Home || event.key === Qt.Key_End) {
+            var target = event.key === Qt.Key_Home ? from : to
+            if (value !== target) {
+                value = target
+                moved()
+            }
+            event.accepted = true
+        }
+    }
     // Border properties
     property color borderColor: "transparent"
     property color keyboardFocusedBorderColor: DefaultStyle.main2_900

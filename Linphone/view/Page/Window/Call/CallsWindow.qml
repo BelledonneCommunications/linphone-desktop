@@ -15,11 +15,13 @@ AbstractWindow {
     id: mainWindow
     objectName: "callsWindow"
     flags: Qt.Window
-    title: !call
-           ? applicationName
-           : isConference && conference
-             ? qsTr("call_window_conference_title").arg(applicationName).arg(conference.core.subject)
+    title: call
+           ? isConference && (conference || joiningConferenceInfo)
+             ? qsTr("call_window_conference_title").arg(applicationName).arg(conference ? conference.core.subject : joiningConferenceInfo.core.subject)
              : qsTr("call_window_title").arg(applicationName).arg(call.core.remoteName)
+           : joiningConferenceInfo
+             ? qsTr("call_window_conference_title").arg(applicationName).arg(joiningConferenceInfo.core.subject)
+             : applicationName
     minimumWidth: Utils.getSizeWithScreenRatio(1020)
     minimumHeight: Utils.getSizeWithScreenRatio(700)
 
@@ -28,6 +30,7 @@ AbstractWindow {
 
     property ConferenceGui conference: call && call.core.conference || null
     property bool isConference: call ? call.core.isConference : false
+    property ConferenceInfoGui joiningConferenceInfo: null
 
     // Chat related to call
     property var chatObj
@@ -195,6 +198,7 @@ AbstractWindow {
 
     signal setUpConferenceRequested(ConferenceInfoGui conferenceInfo)
     function setupConference(conferenceInfo) {
+        joiningConferenceInfo = conferenceInfo
         middleItemStackView.replace(waitingRoom)
         setUpConferenceRequested(conferenceInfo)
     }
@@ -209,6 +213,7 @@ AbstractWindow {
         }
     }
     function cancelJoinConference() {
+        joiningConferenceInfo = null
         if (!callsModel.haveCall) {
             UtilsCpp.closeCallsWindow()
         } else {
@@ -457,6 +462,8 @@ AbstractWindow {
                                 spacing: Utils.getSizeWithScreenRatio(10)
                                 Text {
                                     id: callStatusText
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
                                     Connections {
                                         target: mainWindow
@@ -501,6 +508,8 @@ AbstractWindow {
                                 }
                                 Text {
                                     text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call.core.duration) : ""
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     color: DefaultStyle.grey_0
                                     font {
                                         pixelSize: Typography.h3.pixelSize
@@ -514,6 +523,8 @@ AbstractWindow {
                                 Text {
                                     Layout.leftMargin: Utils.getSizeWithScreenRatio(14)
                                     id: conferenceDate
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString() : ""
                                     color: DefaultStyle.grey_0
                                     font {
@@ -576,6 +587,37 @@ AbstractWindow {
                                 }
                                 Text {
                                     id: encryptionStatusText
+                                    activeFocusOnTab: securityStateLayout.visible
+                                    Accessible.role: Accessible.Button
+                                    Accessible.name: text
+                                    Accessible.onPressAction: encryptionStatusText.toggleEncryptionPanel()
+                                    KeyNavigation.tab: openStatisticPanelButton
+                                    KeyNavigation.backtab: mainWindow.lastButtonInBottomTab
+                                    Keys.onPressed: event => {
+                                        if (event.key === Qt.Key_Space || event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                                            encryptionStatusText.toggleEncryptionPanel()
+                                            event.accepted = true
+                                        }
+                                    }
+                                    function toggleEncryptionPanel() {
+                                        if (rightPanel.visible
+                                                && rightPanel.contentLoader.item.objectName
+                                                === "encryptionPanel")
+                                            rightPanel.visible = false
+                                        else {
+                                            rightPanel.visible = true
+                                            rightPanel.replace(encryptionPanel)
+                                        }
+                                    }
+                                    Rectangle {
+                                        anchors.fill: parent
+                                        anchors.margins: -Utils.getSizeWithScreenRatio(3)
+                                        color: "transparent"
+                                        radius: Utils.getSizeWithScreenRatio(4)
+                                        border.color: DefaultStyle.grey_0
+                                        border.width: Utils.getSizeWithScreenRatio(2)
+                                        visible: encryptionStatusText.activeFocus
+                                    }
                                     text: mainWindow.conference
                                         ? mainWindow.call.core.conferenceSecurityLevel === LinphoneEnums.ConferenceSecurityLevel.EndToEnd
                                             //: End to end encrypted meeting
@@ -614,16 +656,7 @@ AbstractWindow {
                                         anchors.fill: parent
                                         hoverEnabled: true
                                         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                        onClicked: {
-                                            if (rightPanel.visible
-                                                    && rightPanel.contentLoader.item.objectName
-                                                    === "encryptionPanel")
-                                                rightPanel.visible = false
-                                            else {
-                                                rightPanel.visible = true
-                                                rightPanel.replace(encryptionPanel)
-                                            }
-                                        }
+                                        onClicked: encryptionStatusText.toggleEncryptionPanel()
                                     }
                                 }
                                 Item {
@@ -659,7 +692,7 @@ AbstractWindow {
                             }
                         }
                         KeyNavigation.tab: rightPanel.visible ? nextItemInFocusChain() : mainWindow.firstButtonInBottomTab
-                        KeyNavigation.backtab: mainWindow.lastButtonInBottomTab
+                        KeyNavigation.backtab: encryptionStatusText.activeFocusOnTab ? encryptionStatusText : mainWindow.lastButtonInBottomTab
                     }
                 }
 
@@ -756,6 +789,7 @@ AbstractWindow {
                 CallSettingsPanel {
                     id: rightPanel
                     objectName: "callSidePanel"
+                    fallbackAccessibleTitleText: mainWindow.chat ? qsTr("call_chat_panel_accessible_title").arg(mainWindow.chat.core.title) : ""
                     Layout.fillHeight: true
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(393)
@@ -780,7 +814,7 @@ AbstractWindow {
                         var current = mainWindow.activeFocusItem
                         if (!returnItem || !returnItem.visible || !returnItem.enabled)
                             return
-                        if (current && current.activeFocusOnTab && current !== returnItem)
+                        if (current && current.activeFocusOnTab && current !== returnItem && !Utils.isDescendant(current, rightPanel))
                             return
                         if (returnItem.activeFocus)
                             returnItem.focus = false
@@ -1554,7 +1588,7 @@ AbstractWindow {
                         radius: Utils.getSizeWithScreenRatio(71)
                         style: ButtonStyle.phoneGreenLightBorder
                         Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
-                        KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : encryptionStatusText.activeFocusOnTab ? encryptionStatusText : openStatisticPanelButton
                         KeyNavigation.backtab:endCallButton
                         onClicked: {
                             mainWindow.call.core.lAccept(false)
@@ -1575,7 +1609,7 @@ AbstractWindow {
                         radius: Utils.getSizeWithScreenRatio(71)
                         style: ButtonStyle.phoneRedLightBorder
                         Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
-                        KeyNavigation.tab: mainWindow.startingCall ? (acceptCallButton.visible ? acceptCallButton : videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.tab: mainWindow.startingCall ? (acceptCallButton.visible ? acceptCallButton : videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : encryptionStatusText.activeFocusOnTab ? encryptionStatusText : openStatisticPanelButton
                         KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
                         onClicked: {
                             mainWindow.callTerminatedByUser = true
@@ -1607,6 +1641,7 @@ AbstractWindow {
                                                 //: "Mettre l'appel en pause"
                                               : qsTr("call_action_pause_call")
                         Accessible.name: checked ? qsTr("call_action_resume_call") : qsTr("call_action_pause_call")
+                        accessibleCheckedState: false
                         enabled: mainWindow.conference
                                  || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
                         icon.source: enabled
@@ -1721,6 +1756,7 @@ AbstractWindow {
                         //: "Activer la vidéo"
                         ToolTip.text: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         Accessible.name: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        accessibleCheckedState: false
                         checked: !mainWindow.cameraEnabled
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
@@ -1740,6 +1776,7 @@ AbstractWindow {
                             //: "Désactiver le micro"
                             : qsTr("call_deactivate_microphone")
                         Accessible.name: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
+                        accessibleCheckedState: false
                         checked: mainWindow.call && mainWindow.call.core.microphoneMuted
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)

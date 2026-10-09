@@ -169,26 +169,24 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 		wActions += L"</actions>";
 	}
 
-	std::wstring xml = L"<toast scenario=\"reminder\">"
-	                   L"    <visual>"
-	                   L"        <binding template=\"ToastGeneric\">"
-	                   L"            <image src=\"file:///" +
-	                   appIcon +
-	                   L"\" placement=\"appLogoOverride\"/>"
-	                   L"            <text hint-style=\"header\">" +
-	                   displayName +
-	                   L"</text>"
-	                   L"            <text hint-style=\"base\">" +
-	                   remoteAddress +
-	                   L"</text>"
-	                   L"            <text hint-style=\"body\">" +
-	                   callDescription +
-	                   L"</text>"
-	                   L"        </binding>"
-	                   L"    </visual>" +
-	                   wActions +
-	                   L"    <audio silent=\"true\"/>"
-	                   L"</toast>";
+	std::wstring xml =
+	    L"<toast scenario=\"reminder\">"
+	    L"    <visual>"
+	    L"        <binding template=\"ToastGeneric\">"
+	    L"            <image src=\"file:///" +
+	    appIcon +
+	    L"\" placement=\"appLogoOverride\"/>"
+	    L"            <text hint-style=\"header\">" +
+	    displayName + L"</text>" +
+	    (remoteAddress.empty() ? std::wstring()
+	                           : L"            <text hint-style=\"base\">" + remoteAddress + L"</text>") +
+	    L"            <text hint-style=\"body\">" + callDescription +
+	    L"</text>"
+	    L"        </binding>"
+	    L"    </visual>" +
+	    wActions +
+	    L"    <audio silent=\"true\"/>"
+	    L"</toast>";
 
 	ABI::Windows::Data::Xml::Dom::IXmlDocument *doc = nullptr;
 	hr = DesktopNotificationManagerCompat::CreateXmlDocumentFromString(xml.c_str(), &doc);
