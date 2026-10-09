@@ -1502,12 +1502,14 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="62"/>
         <source>settings_calls_noise_suppressor_title</source>
         <extracomment>&quot;Noise suppression&quot;</extracomment>
+        <translation>Suppression du bruit</translation>
         <translation>Suppression de bruit</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
         <source>settings_calls_noise_suppressor_subtitle</source>
         <extracomment>&quot;Cleans up unwanted background noise&quot;</extracomment>
+        <translation>Élimine les bruits de fond indésirables</translation>
         <translation>Enlève le bruit de fond non désiré</translation>
     </message>
     <message>
