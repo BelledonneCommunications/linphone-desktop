@@ -41,6 +41,7 @@ LoginLayout {
 			}
 			Text {
                 Accessible.role: Accessible.Heading
+                Accessible.name: text
                 //: Compte SIP tiers
                 text: qsTr("assistant_login_third_party_sip_account_title")
 				font {
@@ -382,6 +383,7 @@ LoginLayout {
 					spacing: Utils.getSizeWithScreenRatio(22)
 					Text {
 						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						id: advancedParametersTitle
 						//: Advanced parameters
 						text: qsTr("login_advanced_parameters_label")

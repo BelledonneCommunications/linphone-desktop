@@ -42,6 +42,7 @@ LoginLayout {
 			}
 			Text {
                 Accessible.role: Accessible.Heading
+                Accessible.name: text
                 //: Connexion
                 text: qsTr("assistant_account_login")
 				font {

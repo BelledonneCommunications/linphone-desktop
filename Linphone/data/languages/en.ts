@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="91"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Save %1 settings</translation>
+        <translation>Save: %1</translation>
     </message>
 </context>
 <context>
@@ -2321,6 +2321,11 @@
 <context>
     <name>ChatDroppableTextArea</name>
     <message>
+        <source>chat_message_input_accessible_name</source>
+        <extracomment>&quot;Message&quot;</extracomment>
+        <translation>Message</translation>
+    </message>
+    <message>
         <source>chat_cancel_voice_message_accessible_name</source>
         <extracomment>&quot;Cancel the voice message&quot;</extracomment>
         <translation>Cancel the voice message</translation>
@@ -3852,6 +3857,11 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
 <context>
     <name>ConversationInfos</name>
     <message>
+        <source>chat_subject_accessible_name</source>
+        <extracomment>&quot;Conversation name&quot;</extracomment>
+        <translation>Conversation name</translation>
+    </message>
+    <message>
         <source>chat_copy_address_accessible_name</source>
         <extracomment>&quot;Copy the address&quot;</extracomment>
         <translation>Copy the address</translation>
@@ -5164,6 +5174,16 @@ Expiration : %1</translation>
 <context>
     <name>MeetingForm</name>
     <message>
+        <source>meeting_description_accessible_name</source>
+        <extracomment>&quot;Description&quot;</extracomment>
+        <translation>Description</translation>
+    </message>
+    <message>
+        <source>meeting_title_accessible_name</source>
+        <extracomment>&quot;Meeting title&quot;</extracomment>
+        <translation>Meeting title</translation>
+    </message>
+    <message>
         <source>remove_participant_accessible_name</source>
         <extracomment>&quot;Remove participant %1&quot;</extracomment>
         <translation>Remove participant %1</translation>
@@ -5257,6 +5277,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MeetingPage</name>
+    <message>
+        <source>meeting_title_accessible_name</source>
+        <extracomment>&quot;Meeting title&quot;</extracomment>
+        <translation>Meeting title</translation>
+    </message>
     <message>
         <source>meeting_copy_address_accessible_name</source>
         <extracomment>&quot;Copy the meeting address&quot;</extracomment>
@@ -6044,6 +6069,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>PresenceSetCustomStatus</name>
+    <message>
+        <source>presence_custom_status_accessible_name</source>
+        <extracomment>&quot;Status message&quot;</extracomment>
+        <translation>Status message</translation>
+    </message>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="17"/>
         <source>contact_presence_button_set_custom_status_title</source>
@@ -8995,6 +9025,14 @@ Error in the chat</extracomment>
         <source>close_accessible_name</source>
         <extracomment>&quot;Close&quot;</extracomment>
         <translation>Close</translation>
+    </message>
+</context>
+<context>
+    <name>FormItemLayout</name>
+    <message>
+        <source>form_item_help_accessible_name</source>
+        <extracomment>&quot;Help about %1&quot;</extracomment>
+        <translation>Help about %1</translation>
     </message>
 </context>
 </TS>

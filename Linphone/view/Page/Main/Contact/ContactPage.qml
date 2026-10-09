@@ -246,6 +246,7 @@ AbstractMainPage {
             Layout.fillHeight: false
             Text {
                 Accessible.role: Accessible.Heading
+                Accessible.name: text
                 Layout.fillWidth: true
                 //: "Contacts"
                 text: qsTr("bottom_navigation_contacts_label")
@@ -361,6 +362,7 @@ AbstractMainPage {
                     spacing: Utils.getSizeWithScreenRatio(10)
                     Text {
                         Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         text: contactDetailLayout.label
                         color: DefaultStyle.main1_500_main
                         font {

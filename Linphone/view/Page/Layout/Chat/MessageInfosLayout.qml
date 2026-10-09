@@ -39,6 +39,7 @@ ColumnLayout {
 		}
 		Text {
 			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			text: mainItem.title
 			font: Typography.h4
 		}

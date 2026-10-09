@@ -199,6 +199,7 @@ Control.TabBar {
 					}
 				}
 			}
+			Accessible.onPressAction: tabButton.clicked()
 			onClicked: {
 				mainItem.setCurrentIndex(TabBar.index)
 				if (tabButton.keyboardFocus)

@@ -72,6 +72,7 @@ LoginLayout {
 			}
 			Text {
 				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				Layout.preferredWidth: width
                 //: "Inscription
                 text: qsTr("assistant_account_register")

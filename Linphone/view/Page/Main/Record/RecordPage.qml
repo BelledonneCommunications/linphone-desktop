@@ -98,6 +98,7 @@ AbstractMainPage {
 
 		Text {
 			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			Layout.fillWidth: true
 			Layout.rightMargin: Utils.getSizeWithScreenRatio(38)
 			//: "Records"
