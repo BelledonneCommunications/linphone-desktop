@@ -62,6 +62,7 @@ Rectangle {
 			}
 			Text {
 				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				text: qsTr("group_infos_manage_participants")
 				color: DefaultStyle.main2_600
 				maximumLineCount: 1

@@ -13,6 +13,7 @@ LoginLayout {
 	titleContent: [
 		Text {
 			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			id: welcome
             //: "Bienvenue"
             text: qsTr("welcome_page_title")
@@ -27,6 +28,7 @@ LoginLayout {
 		},
 		Text {
 			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			Layout.alignment: Qt.AlignBottom
             Layout.leftMargin: Utils.getSizeWithScreenRatio(29)
             Layout.bottomMargin: Utils.getSizeWithScreenRatio(19)

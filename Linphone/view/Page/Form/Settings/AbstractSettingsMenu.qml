@@ -53,6 +53,7 @@ AbstractMainPage {
 			}
 			Text {
 				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				text: titleText
 				color: DefaultStyle.main2_700
 				font: Typography.h3

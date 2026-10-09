@@ -42,8 +42,6 @@ FocusScope {
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
     signal containsMouseChanged(bool containsMouse)
-    Accessible.name: displayName
-    Accessible.role: Accessible.ListItem
 
     MouseArea {
         Text {
@@ -277,6 +275,7 @@ FocusScope {
 
         id: contactArea
         objectName: "contactRow"
+        Accessible.onPressAction: contactArea.clicked(undefined)
         enabled: mainItem.selectionEnabled
         Accessible.role: Accessible.ListItem
         Accessible.name: mainItem.displayName

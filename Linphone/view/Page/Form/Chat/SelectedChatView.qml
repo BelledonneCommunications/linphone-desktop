@@ -795,6 +795,7 @@ FocusScope {
                                 RowLayout {
                                     Text {
                                         Accessible.role: Accessible.Heading
+                                        Accessible.name: text
                                         //: Conversations
                                         text: qsTr("conversations_title")
                                         font {

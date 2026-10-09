@@ -79,6 +79,7 @@ ApplicationWindow {
                     width: addressChooserPopup.width
                     Text {
                         Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         //: "Choisissez un numéro ou adresse SIP"
                         text: qsTr("contact_dialog_pick_phone_number_or_sip_address_title")
                         wrapMode: Text.Wrap

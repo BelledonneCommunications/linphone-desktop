@@ -150,7 +150,6 @@ ListView {
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(56)
-        Accessible.role: Accessible.ListItem
 
         RowLayout {
             z: 1
@@ -266,6 +265,8 @@ ListView {
         MouseArea {
             id: backgroundMouseArea
             objectName: "callHistoryRow"
+            Accessible.role: Accessible.ListItem
+            Accessible.onPressAction: mainItem.currentIndex = model.index
             hoverEnabled: true
             anchors.fill: parent
             focus: true

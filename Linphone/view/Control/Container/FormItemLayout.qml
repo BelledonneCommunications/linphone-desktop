@@ -70,7 +70,7 @@ FocusScope{
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.info
-				popUpTitle: mainItem.label
+				popUpTitle: qsTr("form_item_help_accessible_name").arg(mainItem.label)
 				popup.contentItem: Text {
 					text: mainItem.tooltip
 				}
