@@ -147,6 +147,14 @@ Then("the keyboard focus is in the contact details", function(context){
     test.verify(waitTrue(function(){ return isInside(window.activeFocusItem, "contactDetail"); }), "The keyboard focus is in the contact details");
 });
 
+Then("the keyboard focus has left the contact list", function(context){
+    var window = context.userData.window;
+    test.verify(waitTrue(function(){
+        var item = window.activeFocusItem;
+        return exists(item) && !isInside(item, "contactRow");
+    }), "The keyboard focus has left the contact list");
+});
+
 Then("the keyboard focus is back on the contact", function(context){
     var row = context.userData.contactRow;
     test.verify(waitTrue(function(){ return row.activeFocus; }), "The keyboard focus is back on the contact");
@@ -172,7 +180,14 @@ Given("the user has a call in the call history", function(context){
 });
 
 Given("the keyboard focus is on the call history entry", function(context){
-    focus(context, named("callHistoryRow"));
+    var row = named("callHistoryRow");
+    context.userData.historyRow = row;
+    focus(context, row);
+});
+
+Then("the keyboard focus is back on the call history entry", function(context){
+    var row = context.userData.historyRow;
+    test.verify(waitTrue(function(){ return row.activeFocus; }), "The keyboard focus is back on the call history entry");
 });
 
 Then("the call options menu is open", function(context){

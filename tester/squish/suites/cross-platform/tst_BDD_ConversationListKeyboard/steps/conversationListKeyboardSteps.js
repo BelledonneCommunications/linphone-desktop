@@ -11,7 +11,12 @@ var signedIn = null;
 
 var KEYS = {
     "Enter": "<Return>",
-    "Space": "<Space>"
+    "Space": "<Space>",
+    "Tab": "<Tab>",
+    "Shift+Tab": "<Shift+Tab>",
+    "Escape": "<Escape>",
+    "Shift+F10": "<Shift+F10>",
+    "Right": "<Right>"
 };
 
 function nameOf(o){ try { return o.objectName ? String(o.objectName) : ""; } catch (e) { return ""; } }
@@ -98,6 +103,36 @@ When("the user presses |any|", function(context, pressed){
     if (!key) test.fatal("Unknown key in the spec: " + pressed);
     type(App.window(10000), key);
     snooze(1);
+});
+
+function isInside(item, name){
+    for (var node = item; node !== null && node !== undefined && !isNull(node); node = node.parent) {
+        if (nameOf(node) === name) return true;
+    }
+    return false;
+}
+
+function waitTrue(check, timeoutMs){
+    var deadline = Date.now() + (timeoutMs || 5000);
+    do {
+        try { if (check()) return true; } catch (e) {}
+        snooze(0.3);
+    } while (Date.now() < deadline);
+    try { return !!check(); } catch (e) { return false; }
+}
+
+Then("the keyboard focus has left the conversation list", function(context){
+    test.verify(waitTrue(function(){
+        var item = focusedItem();
+        return !!item && !isNull(item) && !isInside(item, "chatListView");
+    }), "The keyboard focus has left the conversation list");
+});
+
+Then("the conversation menu is open", function(context){
+    var menu = L.waitForNamed("chatMenuButton", 10000);
+    if (!menu) test.fatal("No visible conversation menu button");
+    test.verify(waitTrue(function(){ return menu.popup.visible; }), "The conversation menu is open");
+    test.verify(waitTrue(function(){ return menu.popup.activeFocus; }), "The keyboard focus is in the conversation menu");
 });
 
 Then("the conversation is open", function(context){
