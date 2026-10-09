@@ -350,6 +350,10 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	auto remoteAddrString = SettingsModel::getInstance()->getHideSipAddresses()
 	                            ? Utils::getUsername(Utils::coreStringToAppString(remoteAddress->asStringUriOnly()))
 	                            : Utils::coreStringToAppString(remoteAddress->asStringUriOnly());
+	if (remoteAddrString == displayName ||
+	    (displayName != Utils::coreStringToAppString(remoteAddress->getUsername()) &&
+	     displayName != Utils::coreStringToAppString(remoteAddress->asStringUriOnly())))
+		remoteAddrString.clear();
 	// Accessibility alert
 	//: New call from %1
 	AccessibilityHelper::announceMessage(tr("new_call_alert_accessible_name").arg(displayName));

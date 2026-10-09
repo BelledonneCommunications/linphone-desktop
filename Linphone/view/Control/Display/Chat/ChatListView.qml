@@ -123,6 +123,7 @@ ListView {
     property int focusedIndex: -1
     property ChatGui focusedChat: null
     property bool focusedByKeyboard: false
+    property int tabStopIndex: focusedIndex >= 0 && focusedIndex < count ? focusedIndex : Math.max(currentIndex, 0)
     keyNavigationEnabled: false
 
     function focusRow(index, reason) {
@@ -395,15 +396,14 @@ ListView {
             }
             PopupButton {
                 id: chatroomPopup
+                objectName: "chatMenuButton"
                 popUpTitle: qsTr("chat_options_accessible_name").arg(modelData ? modelData.core.title : "")
                 // z: 1
                 popup.x: 0
                 popup.padding: Utils.getSizeWithScreenRatio(10)
                 visible: mouseArea.containsMouse || mouseArea.hovered || popup.opened || mouseArea.keyboardFocus
                 enabled: visible
-                focus: true
-                activeFocusOnTab:true
-                focusPolicy: Qt.StrongFocus
+                activeFocusOnTab: false
                 popup.contentItem: ColumnLayout {
 					IconLabelButton {
                         //: "Mute"
@@ -494,16 +494,33 @@ ListView {
             }
 
         }
+        Connections {
+            target: chatroomPopup.popup
+            property bool menuHadFocus: false
+            property bool menuFocusedByKeyboard: false
+            function onAboutToHide() {
+                menuHadFocus = chatroomPopup.popup.activeFocus
+                menuFocusedByKeyboard = chatroomPopup.restoreWithKeyboard
+            }
+            function onClosed() {
+                var current = mainItem.Window.activeFocusItem
+                var focusLost = !current || current === chatroomPopup || current === mainItem.Window.contentItem
+                if (menuHadFocus && focusLost)
+                    mouseArea.forceActiveFocus(menuFocusedByKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason)
+                menuHadFocus = false
+            }
+        }
         MouseArea {
             id: mouseArea
             hoverEnabled: true
             anchors.fill: parent
             acceptedButtons: Qt.RightButton | Qt.LeftButton
             // focus: true
-            focusPolicy: Qt.StrongFocus
+            focusPolicy: index === mainItem.tabStopIndex ? Qt.StrongFocus : Qt.ClickFocus
 	        property bool keyboardFocus: FocusHelper.keyboardFocus
             objectName: "chatListRow"
             Accessible.role: Accessible.ListItem
+            Accessible.focusable: true
             Accessible.selectable: true
             Accessible.selected: mainItem.currentIndex === index
             Accessible.onPressAction: mainItem.chatClicked(modelData)
@@ -519,7 +536,7 @@ ListView {
             //: %1 chat %2
             Accessible.name: qsTr("focused_chat_accessible_label").arg(modelData.core.title).arg(unreadCount.unread > 0 
             //: : %1 unread messages
-            ? qsTr("unread_messages_accessible_label").arg(unreadCount.unread) : "").trim()
+            ? qsTr("unread_messages_accessible_label", "", Number(unreadCount.unread)) : "").trim()
             onContainsMouseChanged: {
                 if (containsMouse)
                     mainItem.lastMouseContainsIndex = index
@@ -559,6 +576,11 @@ ListView {
                     var up = event.key == Qt.Key_Up
                     if (mainItem.focusRow(index + (up ? -1 : 1), up ? Qt.BacktabFocusReason : Qt.TabFocusReason))
                         event.accepted = true
+                } else if (event.key == Qt.Key_Menu || event.key == Qt.Key_Right
+                           || (event.key == Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier))) {
+                    chatroomPopup.openedWithKeyboard = true
+                    chatroomPopup.open()
+                    event.accepted = true
                 }
             }
         }

@@ -56,6 +56,14 @@ Control.TabBar {
 			activeFocusOnTab: true
 			hoverEnabled: true
 			Accessible.name: modelData
+			Accessible.selectable: true
+			Accessible.selected: mainItem.currentIndex === index
+			Accessible.onCheckableChanged: if (Qt.platform.os === "windows" && Accessible.checkable) Accessible.checkable = false
+			Accessible.onCheckedChanged: if (Qt.platform.os === "windows" && Accessible.checked) Accessible.checked = false
+			Component.onCompleted: if (Qt.platform.os === "windows") {
+				Accessible.checkable = false
+				Accessible.checked = false
+			}
 			ToolTip {
 				visible: tabText.truncated && hovered
 				delay: 1000

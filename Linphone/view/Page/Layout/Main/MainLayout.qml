@@ -133,7 +133,11 @@ Item {
             property string remoteName: currentCall ? currentCall.core.remoteName : ""
             contentItem: MediumButton {
                 style: ButtonStyle.toast
-                text: currentCallNotif.currentCall ? currentCallNotif.currentCall.core.conference ? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject : (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
+                text: currentCallNotif.currentCall
+                      ? currentCallNotif.currentCall.core.conference
+                        ? qsTr("main_ongoing_meeting_banner").arg(currentCallNotif.currentCall.core.conference.core.subject)
+                        : qsTr("main_ongoing_call_banner").arg(currentCallNotif.remoteName)
+                      : qsTr("main_ongoing_call_banner_no_name")
                 onClicked: {
                     var callsWindow = UtilsCpp.getOrCreateCallsWindow(currentCallNotif.currentCall);
                     UtilsCpp.smartShowWindow(callsWindow);

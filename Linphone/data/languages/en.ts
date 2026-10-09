@@ -732,7 +732,7 @@
         <location filename="../../core/App.cpp" line="517"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
-        <translation>A new version of Linphone (%1) is available at %1</translation>
+        <translation>A new version of Linphone (%1) is available. %2</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="525"/>
@@ -855,7 +855,7 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>%1 mandatory</extracomment>
-        <translation>%1 mandatory</translation>
+        <translation>%1, required</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
@@ -1017,7 +1017,7 @@
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
         <source>contact_conversation_action</source>
-        <extracomment>&quot;Conversation&quot;</extracomment>
+        <extracomment>Conversation with %1</extracomment>
         <translation>Conversation</translation>
     </message>
     <message>
@@ -1619,6 +1619,11 @@
 </context>
 <context>
     <name>CallsWindow</name>
+    <message>
+        <source>call_chat_panel_accessible_title</source>
+        <extracomment>Conversation with %1</extracomment>
+        <translation>Conversation with %1</translation>
+    </message>
     <message>
         <source>conference_participants_options_accessible_name</source>
         <extracomment>&quot;Participant list options&quot;</extracomment>
@@ -2390,15 +2395,33 @@
         <extracomment>%1 chat %2</extracomment>
         <translation>%1 chat %2</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
         <source>unread_messages_accessible_label</source>
-        <extracomment>: %1 unread messages</extracomment>
-        <translation>: %1 unread messages</translation>
+        <extracomment>: %n unread messages</extracomment>
+        <translation>
+            <numerusform>: %n unread message</numerusform>
+            <numerusform>: %n unread messages</numerusform>
+        </translation>
     </message>
 </context>
 <context>
     <name>ChatMessage</name>
+    <message>
+        <source>chat_message_file_accessible_name</source>
+        <extracomment>&quot;File&quot;</extracomment>
+        <translation>File</translation>
+    </message>
+    <message>
+        <source>chat_message_voice_accessible_name</source>
+        <extracomment>&quot;Voice message&quot;</extracomment>
+        <translation>Voice message</translation>
+    </message>
+    <message>
+        <source>chat_message_sent_by_me_accessible_name</source>
+        <extracomment>&quot;You&quot;</extracomment>
+        <translation>You</translation>
+    </message>
     <message>
         <source>chat_message_more_emojis_accessible_name</source>
         <extracomment>&quot;More emojis&quot;</extracomment>
@@ -2874,8 +2897,8 @@ Only your correspondent can decrypt them.</translation>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="164"/>
         <source>chat_option_acccessibility_label</source>
-        <extracomment>&quot;Chat option&quot;</extracomment>
-        <translation>Chat option</translation>
+        <extracomment>&quot;Conversation options&quot;</extracomment>
+        <translation>Conversation options</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="170"/>
@@ -3056,8 +3079,8 @@ Only your correspondent can decrypt them.</translation>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <extracomment>%1 current value %2</extracomment>
-        <translation>%1 current value %2</translation>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
     </message>
 </context>
 <context>
@@ -4418,6 +4441,11 @@ Expiration : %1</translation>
 <context>
     <name>HelpPage</name>
     <message>
+        <source>help_advanced_title</source>
+        <extracomment>&quot;Advanced&quot;</extracomment>
+        <translation>Advanced</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
         <source>back_previous_menu_accessible_name</source>
         <extracomment>Back to previous menu</extracomment>
@@ -4639,7 +4667,7 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 mandatory</translation>
+        <translation>%1, required</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="71"/>
@@ -4797,6 +4825,21 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MainLayout</name>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <extracomment>&quot;Ongoing call&quot;</extracomment>
+        <translation>Ongoing call</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner</source>
+        <extracomment>&quot;Ongoing call: %1&quot;</extracomment>
+        <translation>Ongoing call: %1</translation>
+    </message>
+    <message>
+        <source>main_ongoing_meeting_banner</source>
+        <extracomment>&quot;Ongoing meeting: %1&quot;</extracomment>
+        <translation>Ongoing meeting: %1</translation>
+    </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="356"/>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="363"/>
@@ -5206,6 +5249,11 @@ Expiration : %1</translation>
 </context>
 <context>
     <name>MeetingPage</name>
+    <message>
+        <source>meeting_call_address_accessible_name</source>
+        <extracomment>&quot;Call the meeting address&quot;</extracomment>
+        <translation>Call the meeting address</translation>
+    </message>
     <message>
         <source>meeting_title_accessible_name</source>
         <extracomment>&quot;Meeting title&quot;</extracomment>
@@ -5737,8 +5785,8 @@ Expiration : %1</translation>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="176"/>
         <source>numpad_longpress_accessible_name</source>
-        <extracomment>%1 longpress %2</extracomment>
-        <translation>%1 longpress %2</translation>
+        <extracomment>%1, long press for %2</extracomment>
+        <translation>%1, long press for %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="222"/>
@@ -5926,13 +5974,13 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="62"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>%1 prefix</translation>
+        <translation>%1, country code</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="85"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>%1 number</translation>
+        <translation>%1, number</translation>
     </message>
 </context>
 <context>
@@ -6166,7 +6214,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
         <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Find recording</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
@@ -6432,7 +6480,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 mandatory</translation>
+        <translation>%1, required</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
@@ -6588,7 +6636,7 @@ To enable them in a commercial project, please contact us.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 mandatory</translation>
+        <translation>%1, required</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -7047,8 +7095,8 @@ To enable them in a commercial project, please contact us.</translation>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="232"/>
         <source>textfield_custom_button_accessible_name</source>
-        <extracomment>%1 button of %2</extracomment>
-        <translation>%1 button on %2</translation>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="211"/>
@@ -7142,15 +7190,21 @@ To enable them in a commercial project, please contact us.</translation>
         <extracomment>%1 notification badge : %2 unread</extracomment>
         <translation>%1 notification badge: %2 unread</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>badge_missed_calls_accessible_name</source>
-        <extracomment>&quot;%1 missed calls&quot;</extracomment>
-        <translation>%1 missed calls</translation>
+        <extracomment>&quot;%n missed calls&quot;</extracomment>
+        <translation>
+            <numerusform>%n missed call</numerusform>
+            <numerusform>%n missed calls</numerusform>
+        </translation>
     </message>
-    <message>
+    <message numerus="yes">
         <source>badge_unread_messages_accessible_name</source>
-        <extracomment>&quot;%1 unread messages&quot;</extracomment>
-        <translation>%1 unread messages</translation>
+        <extracomment>&quot;%n unread messages&quot;</extracomment>
+        <translation>
+            <numerusform>%n unread message</numerusform>
+            <numerusform>%n unread messages</numerusform>
+        </translation>
     </message>
 </context>
 <context>
@@ -8897,8 +8951,8 @@ Error in the chat</extracomment>
     <name>ContactStatusPopup</name>
     <message>
         <source>contact_status_accessible_name</source>
-        <extracomment>&quot;Status: %1&quot;</extracomment>
-        <translation>Status: %1</translation>
+        <extracomment>Status of %1: %2</extracomment>
+        <translation>Status of %1: %2</translation>
     </message>
 </context>
 <context>

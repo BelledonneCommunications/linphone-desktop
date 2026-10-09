@@ -9,6 +9,31 @@ ColumnLayout {
 	id: mainItem
 	property var call
 	property string objectName: "statsPanel"
+
+	component StatText: Text {
+		id: statText
+		activeFocusOnTab: text.length > 0
+		property string accessibleText
+		onTextChanged: if (!activeFocus) accessibleText = text
+		onActiveFocusChanged: if (activeFocus) accessibleText = text
+		Component.onCompleted: accessibleText = text
+		Accessible.role: Accessible.StaticText
+		Accessible.name: accessibleText
+		Layout.alignment: Qt.AlignHCenter
+		font {
+			pixelSize: Utils.getSizeWithScreenRatio(12)
+			weight: Utils.getSizeWithScreenRatio(500)
+		}
+		Rectangle {
+			anchors.fill: parent
+			anchors.margins: -Utils.getSizeWithScreenRatio(3)
+			color: "transparent"
+			radius: Utils.getSizeWithScreenRatio(4)
+			border.color: DefaultStyle.main2_900
+			border.width: Utils.getSizeWithScreenRatio(2)
+			visible: statText.activeFocus
+		}
+	}
     spacing: Utils.getSizeWithScreenRatio(20)
 	
 	RoundedPane {
@@ -28,6 +53,8 @@ ColumnLayout {
 			Text {
                 //: "Audio"
                 text: qsTr("call_stats_audio_title")
+				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				Layout.alignment: Qt.AlignHCenter
 				font {
                     pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -37,37 +64,17 @@ ColumnLayout {
 			ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(8)
 				Layout.alignment: Qt.AlignHCenter
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.audioStats.codec : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.audioStats.bandwidth : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.audioStats.lossRate : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.audioStats.jitterBufferSize : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
 			}
 		}
@@ -90,6 +97,8 @@ ColumnLayout {
 			Text {
                 //: "Vidéo"
                 text: qsTr("call_stats_video_title")
+				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				Layout.alignment: Qt.AlignHCenter
 				font {
                     pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -99,45 +108,20 @@ ColumnLayout {
 			ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(8)
 				Layout.alignment: Qt.AlignHCenter
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.videoStats.codec : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.videoStats.bandwidth : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.videoStats.lossRate : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.videoStats.resolution : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
-				Text {
+				StatText {
 					text: mainItem.call ? mainItem.call.core.videoStats.fps : ""
-					Layout.alignment: Qt.AlignHCenter
-					font {
-                        pixelSize: Utils.getSizeWithScreenRatio(12)
-                        weight: Utils.getSizeWithScreenRatio(500)
-					}
 				}
 			}
 		}

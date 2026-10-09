@@ -769,6 +769,7 @@ AbstractMainPage {
 									id: linkButton
 									Layout.fillWidth: true
 									text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
+									Accessible.name: qsTr("meeting_call_address_accessible_name")
 									textSize: Typography.p1.pixelSize
 									textWeight: Typography.p1.weight
 									underline: true
