@@ -325,7 +325,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 				    ToolModel::createCall(sipAddress, options, prepareTransfertAddress, headers, mediaEncryption);
 			    },
 			    Qt::SingleShotConnection);
-			return false;
+			return true;
 		}
 	}
 
