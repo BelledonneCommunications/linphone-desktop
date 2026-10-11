@@ -319,7 +319,19 @@ QString AccountModel::getOutboundProxyUri() const {
 }
 
 void AccountModel::setOutboundProxyUri(QString value) {
-	auto linOutboundProxyAddress = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(value));
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	QString trimmed = value.trimmed();
+	if (trimmed.isEmpty()) {
+		auto params = mMonitor->getParams()->clone();
+		params->setRoutesAddresses({});
+		mMonitor->setParams(params);
+		emit outboundProxyUriChanged(QString());
+		return;
+	}
+	if (!trimmed.startsWith("sip:") && !trimmed.startsWith("sips:")) {
+		trimmed.prepend("sip:");
+	}
+	auto linOutboundProxyAddress = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(trimmed));
 	if (!linOutboundProxyAddress) {
 		//: Unable to set outbound proxy uri from address %1.
 		//: Please make sure it matches the following format :
@@ -329,7 +341,8 @@ void AccountModel::setOutboundProxyUri(QString value) {
 	} else {
 		auto params = mMonitor->getParams()->clone();
 		params->setRoutesAddresses({linOutboundProxyAddress});
-		emit outboundProxyUriChanged(value);
+		mMonitor->setParams(params);
+		emit outboundProxyUriChanged(trimmed);
 	}
 }
 
