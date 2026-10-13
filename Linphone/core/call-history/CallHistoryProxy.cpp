@@ -55,16 +55,20 @@ void CallHistoryProxy::reload() {
 //------------------------------------------------------------------------------------------
 
 bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QModelIndex &sourceParent) const {
-	bool show = (mFilterText.isEmpty() || mFilterText == "*");
+	bool matchText = mFilterText.isEmpty() || mFilterText == "*";
+	bool matchType = mFilterType != int(CallHistoryProxy::CallHistoryFiltering::Missed);
+	if (matchText && matchType) return true;
 
-	if (!show) {
+	auto callLog = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRow);
+	if (!callLog) return false;
+	if (!matchType) matchType = callLog->mIsMissed;
+	if (matchType && !matchText) {
 		QRegularExpression search(QRegularExpression::escape(mFilterText),
 		                          QRegularExpression::CaseInsensitiveOption |
 		                              QRegularExpression::UseUnicodePropertiesOption);
-		auto callLog = getItemAtSource<CallHistoryList, CallHistoryCore>(sourceRow);
-		show = callLog && (callLog->mDisplayName.contains(search) || callLog->mRemoteAddress.contains(search));
+		matchText = callLog->mDisplayName.contains(search) || callLog->mRemoteAddress.contains(search);
 	}
-	return show;
+	return matchType && matchText;
 }
 
 bool CallHistoryProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {

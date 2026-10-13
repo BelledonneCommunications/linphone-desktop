@@ -51,6 +51,9 @@ CallHistoryCore::CallHistoryCore(const std::shared_ptr<linphone::CallLog> &callL
 	mStatus = LinphoneEnums::fromLinphone(callLog->getStatus());
 	mDate = QDateTime::fromMSecsSinceEpoch(callLog->getStartDate() * 1000);
 	mIsOutgoing = callLog->getDir() == linphone::Call::Dir::Outgoing;
+	mIsMissed = !mIsOutgoing &&
+	            (mStatus == LinphoneEnums::CallStatus::Missed || mStatus == LinphoneEnums::CallStatus::Aborted ||
+	             mStatus == LinphoneEnums::CallStatus::EarlyAborted);
 	mDuration = callLog->getDuration();
 	mDurationString = QString::number(mDuration);
 	mIsConference = callLog->wasConference();

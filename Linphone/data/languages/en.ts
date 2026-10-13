@@ -1349,6 +1349,26 @@
         <translation>No call in history</translation>
     </message>
     <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="264"/>
+        <source>history_list_filter_all</source>
+        <translation>All calls</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="264"/>
+        <source>history_list_filter_missed</source>
+        <translation>Missed</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="265"/>
+        <source>history_list_filter_accessible_name</source>
+        <translation>Filter call history</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="312"/>
+        <source>history_list_empty_missed_history</source>
+        <translation>No missed call…</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="363"/>
         <source>return_to_call_history_accessible_name</source>
         <extracomment>Return to call history</extracomment>
