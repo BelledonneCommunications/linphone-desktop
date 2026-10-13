@@ -38,6 +38,7 @@ class CallHistoryCore : public QObject, public AbstractObject {
 	Q_PROPERTY(QString displayName MEMBER mDisplayName NOTIFY displayNameChanged)
 	Q_PROPERTY(QString remoteAddress MEMBER mRemoteAddress CONSTANT)
 	Q_PROPERTY(bool isOutgoing MEMBER mIsOutgoing CONSTANT)
+	Q_PROPERTY(bool isMissed MEMBER mIsMissed CONSTANT)
 	Q_PROPERTY(bool isConference MEMBER mIsConference CONSTANT)
 	Q_PROPERTY(bool hasChat MEMBER mHasChat CONSTANT)
 	Q_PROPERTY(ConferenceInfoGui *conferenceInfo READ getConferenceInfoGui CONSTANT)
@@ -68,6 +69,7 @@ public:
 	QString mDisplayName;
 	QDateTime mDate;
 	bool mIsOutgoing;
+	bool mIsMissed;
 	bool mIsConference = false;
 	LinphoneEnums::CallStatus mStatus;
 	QString mCallId;

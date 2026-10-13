@@ -32,6 +32,9 @@
 class CallHistoryProxy : public LimitProxy, public AbstractObject {
 	Q_OBJECT
 public:
+	enum CallHistoryFiltering { All = 0, Missed = 1 };
+	Q_ENUM(CallHistoryFiltering)
+
 	DECLARE_SORTFILTER_CLASS()
 
 	CallHistoryProxy(QObject *parent = Q_NULLPTR);

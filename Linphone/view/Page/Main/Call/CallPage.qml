@@ -142,6 +142,14 @@ AbstractMainPage {
             objectName: "historyListItem"
             property alias listView: historyListView
             property alias newCallButton: newCallButton
+            Control.StackView.onActivated: filterTabBar.currentIndex = 0
+            Connections {
+                target: mainItem
+                function onVisibleChanged() {
+                    if (mainItem.visible)
+                        filterTabBar.currentIndex = 0
+                }
+            }
 
             ColumnLayout {
                 anchors.fill: parent
@@ -220,14 +228,20 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     //: "Rechercher un appel"
                     placeholderText: qsTr("call_search_in_history")
-                    visible: historyListView.count !== 0 || text.length !== 0
+                    visible: historyListView.count !== 0 || text.length !== 0 || filterTabBar.currentIndex !== 0
                     focus: true
                     KeyNavigation.up: newCallButton
-                    KeyNavigation.down: historyListView
+                    KeyNavigation.down: filterTabBar.currentItem
                     Binding {
                         target: mainItem
                         property: "showDefaultItem"
                         when: searchBar.text.length != 0
+                        value: false
+                    }
+                    Binding {
+                        target: mainItem
+                        property: "showDefaultItem"
+                        when: filterTabBar.currentIndex !== 0
                         value: false
                     }
                     Keys.onPressed: (event) => {
@@ -235,6 +249,21 @@ AbstractMainPage {
                             mainItem.createCallFromSearchBarRequested()
                         }
                     }
+                }
+                TabBar {
+                    id: filterTabBar
+                    Layout.fillWidth: true
+                    Layout.topMargin: Utils.getSizeWithScreenRatio(18)
+                    Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
+                    visible: searchBar.visible
+                    spacing: Utils.getSizeWithScreenRatio(24)
+                    pixelSize: Typography.p2l.pixelSize
+                    textWeight: Typography.p2l.weight
+                    capitalization: Font.MixedCase
+                    model: [qsTr("history_list_filter_all"), qsTr("history_list_filter_missed")]
+                    Accessible.name: qsTr("history_list_filter_accessible_name")
+                    KeyNavigation.up: searchBar
+                    KeyNavigation.down: historyListView
                 }
                 Button {
                     visible: SettingsCpp.callForwardToAddress.length > 0 && !SettingsCpp.disableCallForward
@@ -279,6 +308,7 @@ AbstractMainPage {
                                 //: "Aucun résultat…"
                                 text: searchBar.text.length != 0 ? qsTr("list_filter_no_result_found")
                                                                    //: "Aucun appel dans votre historique"
+                                                                 : filterTabBar.currentIndex !== 0 ? qsTr("history_list_empty_missed_history")
                                                                  : qsTr("history_list_empty_history")
                                 font {
                                     pixelSize: Typography.h4.pixelSize
@@ -291,6 +321,8 @@ AbstractMainPage {
                                 Layout.fillHeight: true
                                 Layout.topMargin: Utils.getSizeWithScreenRatio(38)
                                 searchBar: searchBar
+                                navigationUpItem: filterTabBar.currentItem
+                                filterType: filterTabBar.currentIndex === 1 ? CallHistoryProxy.Missed : CallHistoryProxy.All
                                 Control.ScrollBar.vertical: scrollbar
 
                                 Connections {
@@ -648,7 +680,7 @@ AbstractMainPage {
                                                     }
                                                 Text {
                                                     //: "Appel manqué"
-                                                    text: modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
+                                                    text: modelData.core.isMissed ? qsTr("notification_missed_call_title")
                                                                                                                     : modelData.core.isOutgoing
                                                                                                                         //: "Appel sortant"
                                                                                                                         ? qsTr("call_outgoing")
@@ -662,7 +694,7 @@ AbstractMainPage {
                                             }
                                             Text {
                                                 text: UtilsCpp.formatDate(modelData.core.date)
-                                                color: modelData.core.status === LinphoneEnums.CallStatus.Missed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                                color: modelData.core.isMissed ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                                 font {
                                                     pixelSize: Utils.getSizeWithScreenRatio(12)
                                                     weight: Utils.getSizeWithScreenRatio(300)
