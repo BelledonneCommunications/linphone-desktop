@@ -56,6 +56,14 @@ Control.TabBar {
 			activeFocusOnTab: true
 			hoverEnabled: true
 			Accessible.name: modelData
+			Keys.onPressed: event => {
+				var next = event.key === Qt.Key_Left ? index - 1 : event.key === Qt.Key_Right ? index + 1 : -1
+				if (next >= 0 && next < mainItem.count) {
+					mainItem.setCurrentIndex(next)
+					mainItem.itemAt(next).forceActiveFocus(Qt.TabFocusReason)
+					event.accepted = true
+				}
+			}
 			ToolTip {
 				visible: tabText.truncated && hovered
 				delay: 1000
