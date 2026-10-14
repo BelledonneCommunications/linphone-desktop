@@ -31,6 +31,9 @@
 
 DEFINE_ABSTRACT_OBJECT(AccountModel)
 
+const std::string AccountModel::CallForwardingSettingsUrlKey = "flexiapi_call_forwarding_settings_url";
+const std::string AccountModel::VoicemailSettingsUrlKey = "flexiapi_voicemail_settings_url";
+
 AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QObject *parent)
     : ::Listener<linphone::Account, linphone::AccountListener>(account, parent) {
 	mustBeInLinphoneThread(getClassName());
@@ -43,6 +46,14 @@ AccountModel::AccountModel(const std::shared_ptr<linphone::Account> &account, QO
 		emit displayNameChanged(
 		    Utils::coreStringToAppString(mMonitor->getParams()->getIdentityAddress()->getDisplayName()));
 	});
+
+	connect(
+	    CoreModel::getInstance().get(), &CoreModel::globalStateChanged, this,
+	    [this](const std::shared_ptr<linphone::Core> &core, linphone::GlobalState gstate, const std::string &message) {
+		    if (gstate != linphone::GlobalState::On) return;
+		    emit callForwardingSettingsUrlChanged(getCallForwardingSettingsUrl());
+		    emit voicemailSettingsUrlChanged(getVoicemailSettingsUrl());
+	    });
 
 	connect(CoreModel::getInstance().get(), &CoreModel::unreadNotificationsChanged, this, [this]() {
 		if (mMonitor->getState() == linphone::RegistrationState::Ok)
@@ -622,4 +633,44 @@ void AccountModel::setCcmpServerUrl(QString value) {
 	params->setCcmpServerUrl(Utils::appStringToCoreString(value));
 	mMonitor->setParams(params);
 	emit ccmpServerUrlChanged(value);
+}
+
+QString AccountModel::getCallForwardingSettingsUrl() const {
+	return getFlexiApiSettingsUrl(CallForwardingSettingsUrlKey);
+}
+
+QString AccountModel::getVoicemailSettingsUrl() const {
+	return getFlexiApiSettingsUrl(VoicemailSettingsUrlKey);
+}
+
+QString AccountModel::getFlexiApiSettingsUrl(const std::string &key) const {
+	auto params = mMonitor->getParams();
+	if (!params) return QString();
+	QString value = Utils::coreStringToAppString(params->getCustomParam(key)).trimmed();
+	if (value.isEmpty()) return QString();
+	QUrl url(value, QUrl::StrictMode);
+	if (!url.isValid() || url.isRelative() || url.host().isEmpty() ||
+	    (url.scheme() != "https" && url.scheme() != "http")) {
+		lWarning() << log().arg(
+		    QStringLiteral("Ignoring invalid %1: %2").arg(Utils::coreStringToAppString(key), value));
+		return QString();
+	}
+	return value;
+}
+
+void AccountModel::importFlexiApiSettingsUrls(const std::shared_ptr<linphone::Core> &core) {
+	if (!core) return;
+	auto config = core->getConfig();
+	for (const auto &account : core->getAccountList()) {
+		auto section = ToolModel::configAccountSection(account);
+		std::shared_ptr<linphone::AccountParams> newParams;
+		for (const auto &key : {CallForwardingSettingsUrlKey, VoicemailSettingsUrlKey}) {
+			if (!config->hasEntry(section, key)) continue;
+			auto value = config->getString(section, key, "");
+			if (account->getParams()->getCustomParam(key) == value) continue;
+			if (!newParams) newParams = account->getParams()->clone();
+			newParams->addCustomParam(key, value);
+		}
+		if (newParams) account->setParams(newParams);
+	}
 }

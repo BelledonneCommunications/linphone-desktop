@@ -93,6 +93,12 @@ public:
 	std::list<std::shared_ptr<linphone::ChatRoom>> getChatRooms();
 	QString getCcmpServerUrl() const;
 	void setCcmpServerUrl(QString value);
+	QString getCallForwardingSettingsUrl() const;
+	QString getVoicemailSettingsUrl() const;
+
+	static const std::string CallForwardingSettingsUrlKey;
+	static const std::string VoicemailSettingsUrlKey;
+	static void importFlexiApiSettingsUrls(const std::shared_ptr<linphone::Core> &core);
 
 signals:
 	void registrationStateChanged(const std::shared_ptr<linphone::Account> &account,
@@ -129,6 +135,8 @@ signals:
 	void voicemailAddressChanged(QString value);
 	void presenceChanged(LinphoneEnums::Presence presence, bool userInitiated);
 	void ccmpServerUrlChanged(QString value);
+	void callForwardingSettingsUrlChanged(QString value);
+	void voicemailSettingsUrlChanged(QString value);
 
 	void setValueFailed(const QString &errorMessage);
 
@@ -148,6 +156,7 @@ private:
 	static void setUserData(const std::shared_ptr<linphone::Account> &account, std::shared_ptr<AccountUserData> &data);
 	static std::shared_ptr<AccountUserData> getUserData(const std::shared_ptr<linphone::Account> &account);
 	static void removeUserData(const std::shared_ptr<linphone::Account> &account);
+	QString getFlexiApiSettingsUrl(const std::string &key) const;
 
 	bool mToRemove = false;
 

@@ -31,6 +31,7 @@
 #include "core/App.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
+#include "model/account/AccountModel.hpp"
 #include "model/call/CallModel.hpp"
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
@@ -593,6 +594,7 @@ void CoreModel::onFirstCallStarted(const std::shared_ptr<linphone::Core> &core) 
 void CoreModel::onGlobalStateChanged(const std::shared_ptr<linphone::Core> &core,
                                      linphone::GlobalState gstate,
                                      const std::string &message) {
+	if (gstate == linphone::GlobalState::On) AccountModel::importFlexiApiSettingsUrls(core);
 	emit globalStateChanged(core, gstate, message);
 }
 void CoreModel::onIsComposingReceived(const std::shared_ptr<linphone::Core> &core,
