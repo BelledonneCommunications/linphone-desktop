@@ -53,6 +53,12 @@ AbstractWindow {
         || mainWindow.callState == LinphoneEnums.CallState.IncomingReceived
     property Item firstButtonInBottomTab : mainWindow.startingCall ? endCallButton : (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton)
     property Item lastButtonInBottomTab : mainWindow.startingCall ? Utils.getLastFocusableItemInItem(controlCallButtons) : endCallButton
+    property bool dtmfPadAvailable: !!call && !isConference && !conference
+        && callState !== LinphoneEnums.CallState.IncomingReceived
+        && callState !== LinphoneEnums.CallState.PushIncomingReceived
+        && callState !== LinphoneEnums.CallState.End
+        && callState !== LinphoneEnums.CallState.Error
+        && callState !== LinphoneEnums.CallState.Released
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -115,15 +121,10 @@ AbstractWindow {
         enabled: activeFocusItem !== null
         target: activeFocusItem ? activeFocusItem.Keys : null
         function onPressed(event) {
-            if (rightPanel.contentLoader.item && rightPanel.contentLoader.item.objectName === "dialerPanel"){
-                mainWindow.keyPressedOnDialer(event)
-            }
             if ((event.key === Qt.Key_Escape || event.key === Qt.Key_Return) && mainWindow.visibility == Window.FullScreen)
                 mainWindow.showNormal()
         }
     }
-    
-    signal keyPressedOnDialer(KeyEvent event)
 
     function isInPopup(item) {
         var overlay = Control.Overlay.overlay
@@ -135,7 +136,7 @@ AbstractWindow {
     }
 
     function sendDtmfFromKeyboard(event) {
-        if (!call || (callState !== LinphoneEnums.CallState.Connected && callState !== LinphoneEnums.CallState.StreamsRunning))
+        if (!dtmfPadAvailable)
             return
         var shortcut = (event.modifiers & Qt.MetaModifier)
                 || ((event.modifiers & Qt.ControlModifier) && !(event.modifiers & Qt.AltModifier))
@@ -143,7 +144,10 @@ AbstractWindow {
             return
         if (!/^[0-9*#]$/.test(event.text) || isInPopup(activeFocusItem))
             return
-        call.core.lSendDtmf(event.text)
+        if (call.core.dtmfSendable)
+            call.core.lSendDtmf(event.text)
+        else
+            dtmfPadButton.Accessible.announce(dtmfPadPopup.unavailableMessage, Accessible.Assertive)
         event.accepted = true
     }
 
@@ -889,10 +893,6 @@ AbstractWindow {
                                     //: "Nouvel appel"
                                     rightPanel.headerTitleText = qsTr("call_action_start_new_call")
                                 }
-                                else if (rightPanel.contentLoader.item.objectName === "dialerPanel") {
-                                    //: "Pavé numérique"
-                                    rightPanel.headerTitleText = qsTr("call_action_show_dialer")
-                                }
                                 else if (rightPanel.contentLoader.item.objectName === "changeLayoutPanel") {
                                     //: "Modifier la disposition"
                                     rightPanel.headerTitleText = qsTr("call_action_change_layout")
@@ -1051,117 +1051,6 @@ AbstractWindow {
                                 if (newCallForm.launchCallOrRedial()) rightPanel.visible = false
                             }
                             Component.onCompleted: parent.height = height
-                        }
-                    }
-                }
-            }
-            Component {
-                id: dialerPanel
-                Control.Control {
-                    id: dialerPanelContent
-                    objectName: "dialerPanel"
-                    width: parent.width
-                    function initialFocusItem() {
-                        return numPad.firstKey()
-                    }
-                    Keys.onEscapePressed: event => {
-                        rightPanel.visible = false
-                        event.accepted = true
-                    }
-                    FocusScope {
-                        width: parent.width
-                        height: rightPanel.contentItemHeight
-                        ColumnLayout {
-                            anchors.fill: parent
-                            spacing: Utils.getSizeWithScreenRatio(41)
-                            Item{Layout.fillHeight: true}
-                            SearchBar {
-                                id: searchBar
-                                height: Utils.getSizeWithScreenRatio(45)
-                                magnifierVisible: false
-                                color: DefaultStyle.grey_0
-                                borderColor: DefaultStyle.grey_200
-                                placeholderText: ""
-                                numericPadPopup: numPad
-                                numericPadButton.visible: false
-                                enabled: false
-                            }
-                            NumericPad {
-                                id: numPad
-                                Layout.alignment: Qt.AlignHCenter | Qt.AlignBottom
-                                Layout.bottomMargin: Utils.getSizeWithScreenRatio(18)
-                                onButtonPressed: (text) => {
-                                    if (callsModel.currentCall) callsModel.currentCall.core.lSendDtmf(text)
-                                }
-                                lastRowVisible: false
-                                onLaunchCall: {
-                                    UtilsCpp.createCall(dialerTextInput.text)
-                                }
-                                Component.onCompleted: parent.height = height
-                                Connections {
-                                    target: mainWindow
-                                    function onKeyPressedOnDialer(event) {
-                                        if (event.modifiers & Qt.KeypadModifier) {
-                                            if (event.key === Qt.Key_0) {
-                                                numPad.keypadKeyPressedAtIndex(10)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_1) {
-                                                numPad.keypadKeyPressedAtIndex(0)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_2) {
-                                                numPad.keypadKeyPressedAtIndex(1)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_3) {
-                                                numPad.keypadKeyPressedAtIndex(2)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_4) {
-                                                numPad.keypadKeyPressedAtIndex(3)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_5) {
-                                                numPad.keypadKeyPressedAtIndex(4)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_6) {
-                                                numPad.keypadKeyPressedAtIndex(5)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_7) {
-                                                numPad.keypadKeyPressedAtIndex(6)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_8) {
-                                                numPad.keypadKeyPressedAtIndex(7)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_9) {
-                                                numPad.keypadKeyPressedAtIndex(8)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Asterisk) {
-                                                numPad.keypadKeyPressedAtIndex(9)
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Plus) {
-                                                numPad.buttonPressed("+")
-                                                event.accepted = true
-                                            }
-                                            if (event.key === Qt.Key_Enter) {
-                                                numPad.launchCall()
-                                                event.accepted = true
-                                            }
-                                        }
-                                        if (event.key === Qt.Key_Backspace) {
-                                            numPad.wipe()
-                                            event.accepted = true
-                                        }
-                                    }
-                                }
-                            }
                         }
                     }
                 }
@@ -1797,6 +1686,42 @@ AbstractWindow {
                         }
                     }
 
+                    CheckableButton {
+                        id: dtmfPadButton
+                        objectName: "dtmfPadButton"
+                        visible: mainWindow.dtmfPadAvailable
+                        iconUrl: AppIcons.dialer
+                        ToolTip.text: qsTr("call_action_show_dialer")
+                        Accessible.name: qsTr("call_action_show_dialer")
+                        Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
+                        icon.width: Utils.getSizeWithScreenRatio(32)
+                        icon.height: Utils.getSizeWithScreenRatio(32)
+                        Binding on checked {
+                            value: dtmfPadPopup.visible
+                        }
+                        onToggled: {
+                            if (checked)
+                                dtmfPadPopup.open()
+                            else
+                                dtmfPadPopup.close()
+                        }
+                        onVisibleChanged: if (!visible) dtmfPadPopup.close()
+                        Connections {
+                            target: mainWindow.call ? mainWindow.call.core : null
+                            function onDtmfProcessed(key, sent) {
+                                if (key === ",")
+                                    return
+                                var name = dtmfPadPopup.keyName(key)
+                                dtmfPadButton.Accessible.announce(sent ? name : qsTr("dtmf_pad_key_failed_announcement").arg(name))
+                            }
+                        }
+                        DtmfPadPopup {
+                            id: dtmfPadPopup
+                            call: mainWindow.call
+                        }
+                    }
+
                     // Screen cast button
                     CheckableButton {
                         id: screencastPanelButton
@@ -1974,21 +1899,6 @@ AbstractWindow {
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                icon.source: AppIcons.dialer
-                                text: qsTr("call_action_show_dialer")
-                                icon.width: Utils.getSizeWithScreenRatio(32)
-                                icon.height: Utils.getSizeWithScreenRatio(32)
-                                style: ButtonStyle.noBackground
-                                onClicked: {
-                                    rightPanel.visible = true
-                                    rightPanel.replace(dialerPanel)
-                                    moreOptionsButton.close()
-                                }
-                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(2) : null
-                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(2) : null
-                            }
-                            IconLabelButton {
-                                Layout.fillWidth: true
                                 checkable: true
                                 style: ButtonStyle.noBackground
                                 icon.width: Utils.getSizeWithScreenRatio(32)
@@ -2020,8 +1930,8 @@ AbstractWindow {
                                         else
                                             mainWindow.call.core.lStartRecording()
                                 }
-                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(3) : null
-                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(3) : null
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(2) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(2) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -2047,8 +1957,8 @@ AbstractWindow {
                                         mainWindow.call.core.lSetSpeakerMuted(
                                                     !mainWindow.call.core.speakerMuted)
                                 }
-                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(4) : null
-                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(4) : null
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(3) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(3) : null
                             }
                             IconLabelButton {
                                 Layout.fillWidth: true
@@ -2063,8 +1973,8 @@ AbstractWindow {
                                     rightPanel.replace(settingsPanel)
                                     moreOptionsButton.close()
                                 }
-                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(5) : null
-                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(5) : null
+                                KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(4) : null
+                                KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(4) : null
                             }
                         }
                     }

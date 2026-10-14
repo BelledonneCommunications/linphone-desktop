@@ -136,6 +136,8 @@ public:
 	Q_PROPERTY(ZrtpStats zrtpStats READ getZrtpStats WRITE setZrtpStats NOTIFY zrtpStatsChanged)
 	Q_PROPERTY(AudioStats audioStats READ getAudioStats WRITE setAudioStats NOTIFY audioStatsChanged)
 	Q_PROPERTY(VideoStats videoStats READ getVideoStats WRITE setVideoStats NOTIFY videoStatsChanged)
+	Q_PROPERTY(bool dtmfSendable READ isDtmfSendable NOTIFY stateChanged)
+	Q_PROPERTY(QVariantList dtmfHistory READ getDtmfHistory NOTIFY dtmfHistoryChanged)
 
 	DECLARE_GUI_GETSET(bool, isStarted, IsStarted)
 
@@ -248,6 +250,10 @@ public:
 
 	void findRemoteFriend(QSharedPointer<CallCore> me);
 
+	bool isDtmfSendable() const;
+	QVariantList getDtmfHistory() const;
+	Q_INVOKABLE void clearDtmfHistory();
+
 signals:
 	void statusChanged(LinphoneEnums::CallStatus status);
 	void stateChanged(LinphoneEnums::CallState state);
@@ -279,6 +285,8 @@ signals:
 	void audioStatsChanged();
 	void videoStatsChanged();
 	void remoteNameChanged();
+	void dtmfHistoryChanged();
+	void dtmfProcessed(QString key, bool sent);
 
 	// Linphone commands
 	void lAccept(bool withVideo); // Accept an incoming call
@@ -360,6 +368,8 @@ private:
 	ZrtpStats mZrtpStats;
 	AudioStats mAudioStats;
 	VideoStats mVideoStats;
+	QVariantList mDtmfHistory;
+	int mLastDtmfId = 0;
 	std::shared_ptr<MagicSearchModel> mRemoteMagicSearchModel;
 	bool mShouldFindRemoteFriend;
 	QSharedPointer<SafeConnection<CallCore, MagicSearchModel>> mRemoteMagicSearchModelConnection;

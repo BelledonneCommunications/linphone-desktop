@@ -107,6 +107,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Input/TimeComboBox.qml
 
 	view/Control/Popup/DesktopPopup.qml
+	view/Control/Popup/DtmfPadPopup.qml
 	view/Control/Popup/InformationPopup.qml
 	view/Control/Popup/NumericPadPopup.qml
 	view/Control/Popup/Popup.qml

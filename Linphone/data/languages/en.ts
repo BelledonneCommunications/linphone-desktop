@@ -2084,6 +2084,11 @@
         <translation>Microphone unmuted</translation>
     </message>
     <message>
+        <source>dtmf_pad_key_failed_announcement</source>
+        <extracomment>&quot;%1 non transmis&quot;</extracomment>
+        <translation>%1 not transmitted</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1650"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1651"/>
         <source>call_share_screen_hint</source>
@@ -4205,6 +4210,94 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
         <source>dialog_cancel</source>
         <extracomment>&quot;Annuler&quot;</extracomment>
         <translation>Cancel</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_show_dialer</source>
+        <extracomment>&quot;Pavé numérique&quot;</extracomment>
+        <translation>Numeric pad</translation>
+    </message>
+    <message>
+        <source>close_numeric_pad_accessible_name</source>
+        <extracomment>&quot;Fermer le pavé numérique&quot;</extracomment>
+        <translation>Close numeric pad</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_subtitle</source>
+        <extracomment>&quot;Tonalités envoyées à %1&quot;</extracomment>
+        <translation>Tones sent to %1</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_placeholder</source>
+        <extracomment>&quot;Composez un code…&quot;</extracomment>
+        <translation>Dial a code…</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_field_accessible_name</source>
+        <extracomment>&quot;Tonalités envoyées&quot;</extracomment>
+        <translation>Sent tones</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_failed_accessible_description</source>
+        <extracomment>&quot;Non transmises : %1&quot;</extracomment>
+        <translation>Not transmitted: %1</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_failed_legend</source>
+        <extracomment>&quot;Les chiffres barrés en rouge n&apos;ont pas été transmis.&quot;</extracomment>
+        <translation>Digits struck through in red were not transmitted.</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_call_paused_message</source>
+        <extracomment>&quot;Appel en pause : reprenez l&apos;appel pour envoyer des tonalités&quot;</extracomment>
+        <translation>Call on hold: resume the call to send tones</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_call_paused_by_remote_message</source>
+        <extracomment>&quot;Votre correspondant a mis l&apos;appel en pause : les tonalités ne peuvent pas être envoyées&quot;</extracomment>
+        <translation>The other party put the call on hold: tones cannot be sent</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_waiting_media_message</source>
+        <extracomment>&quot;Tonalités pas encore disponibles&quot;</extracomment>
+        <translation>Tones not available yet</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_resume_button</source>
+        <extracomment>&quot;Reprendre&quot;</extracomment>
+        <translation>Resume</translation>
+    </message>
+    <message>
+        <source>call_action_resume_call</source>
+        <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
+        <translation>Resume call</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_star</source>
+        <extracomment>&quot;étoile&quot;</extracomment>
+        <translation>star</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_hash</source>
+        <extracomment>&quot;dièse&quot;</extracomment>
+        <translation>hash</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_clear_accessible_name</source>
+        <extracomment>&quot;Effacer les tonalités affichées&quot;</extracomment>
+        <translation>Clear displayed tones</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_keyboard_inactive_hint</source>
+        <extracomment>&quot;Clavier inactif · Échap pour fermer&quot;</extracomment>
+        <translation>Keyboard inactive · Esc to close</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_keyboard_hint</source>
+        <extracomment>&quot;Clavier actif · Échap pour fermer&quot;</extracomment>
+        <translation>Keyboard active · Esc to close</translation>
     </message>
 </context>
 <context>
