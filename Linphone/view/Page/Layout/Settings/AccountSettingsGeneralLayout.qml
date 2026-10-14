@@ -21,7 +21,20 @@ AbstractSettingsLayout {
             //: Éditer les informations de votre compte.
             subTitle: qsTr("manage_account_details_subtitle"),
 			contentComponent: accountParametersComponent
-		},
+		}
+	].concat(callForwardingSettingsUrl.length > 0 ? [
+		{
+			title: qsTr("manage_account_call_forwarding_title"),
+			subTitle: qsTr("manage_account_call_forwarding_subtitle"),
+			contentComponent: callForwardingComponent
+		}
+	] : []).concat(voicemailSettingsUrl.length > 0 ? [
+		{
+			title: qsTr("manage_account_voicemail_title"),
+			subTitle: qsTr("manage_account_voicemail_subtitle"),
+			contentComponent: voicemailComponent
+		}
+	] : []).concat([
 		{
             visible: SettingsCpp.showAccountDevices,
             //: "Vos appareils"
@@ -30,9 +43,68 @@ AbstractSettingsLayout {
             subTitle: qsTr("manage_account_devices_subtitle"),
 			contentComponent: accountDevicesComponent
 		}
-	]
+	])
 
 	property alias account: mainItem.model
+	readonly property string callForwardingSettingsUrl: account?.core?.callForwardingSettingsUrl ?? ""
+	readonly property string voicemailSettingsUrl: account?.core?.voicemailSettingsUrl ?? ""
+
+	component ExternalSettingsLink: RowLayout {
+		id: externalSettingsLink
+		property string url
+		property string buttonText
+		spacing: 0
+		Item {
+			Layout.fillWidth: true
+		}
+		ColumnLayout {
+			Layout.preferredWidth: Math.min(Utils.getSizeWithScreenRatio(320), externalSettingsLink.width)
+			spacing: Utils.getSizeWithScreenRatio(8)
+			MediumButton {
+				Layout.alignment: Qt.AlignHCenter
+				Layout.preferredWidth: Math.max(Utils.getSizeWithScreenRatio(270), implicitWidth)
+				Layout.maximumWidth: parent.width
+				text: externalSettingsLink.buttonText
+				style: ButtonStyle.tertiary
+				Accessible.role: Accessible.Link
+				Accessible.description: externalSettingsLinkCaption.text
+				Keys.onReturnPressed: clicked()
+				Keys.onEnterPressed: clicked()
+				onClicked: {
+					if (!Qt.openUrlExternally(externalSettingsLink.url)) {
+						UtilsCpp.showInformationPopup(qsTr("error"),
+							qsTr("manage_account_external_link_open_error").arg(externalSettingsLink.url), false)
+					}
+				}
+			}
+			Text {
+				id: externalSettingsLinkCaption
+				Layout.fillWidth: true
+				text: qsTr("manage_account_external_link_caption")
+				font: Typography.p1s
+				color: DefaultStyle.main2_600
+				horizontalAlignment: Text.AlignHCenter
+				wrapMode: Text.WordWrap
+				Accessible.ignored: true
+			}
+		}
+	}
+
+	Component {
+		id: callForwardingComponent
+		ExternalSettingsLink {
+			url: mainItem.callForwardingSettingsUrl
+			buttonText: qsTr("manage_account_call_forwarding_open_link")
+		}
+	}
+
+	Component {
+		id: voicemailComponent
+		ExternalSettingsLink {
+			url: mainItem.voicemailSettingsUrl
+			buttonText: qsTr("manage_account_voicemail_open_link")
+		}
+	}
 
 	// Account parameters
 	//////////////////////////
