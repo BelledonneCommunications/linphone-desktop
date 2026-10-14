@@ -703,7 +703,6 @@ void App::initCore() {
 			            currentDirs.push_back(folder.toStdString());
 			            CoreModel::getInstance()->getCore()->setChatMessageFilesDirectories(currentDirs);
 		            });
-		    lDebug() << log().arg("Starting HID devices detection");
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.
