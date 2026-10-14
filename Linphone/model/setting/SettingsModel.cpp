@@ -562,6 +562,17 @@ void SettingsModel::setEchoCancellationEnabled(bool status) {
 	emit echoCancellationEnabledChanged(status);
 }
 
+bool SettingsModel::getHidEnabled() const {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	return CoreModel::getInstance()->getCore()->hidEnabled();
+}
+
+void SettingsModel::setHidEnabled(bool status) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	CoreModel::getInstance()->getCore()->enableHid(status);
+	emit hidEnabledChanged(status);
+}
+
 bool SettingsModel::getNoiseSuppressionEnabled() const {
 	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
 	return CoreModel::getInstance()->getCore()->noiseSuppressionEnabled();

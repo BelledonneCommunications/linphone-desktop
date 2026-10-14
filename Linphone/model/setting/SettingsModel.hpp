@@ -63,6 +63,9 @@ public:
 	bool getEchoCancellationEnabled() const;
 	void setEchoCancellationEnabled(bool enabled);
 
+	bool getHidEnabled() const;
+	void setHidEnabled(bool enabled);
+
 	bool getNoiseSuppressionEnabled() const;
 	void setNoiseSuppressionEnabled(bool enabled);
 
@@ -290,6 +293,7 @@ signals:
 	void cardDAVMinCharResearchChanged(int min);
 
 	void echoCancellationEnabledChanged(bool enabled);
+	void hidEnabledChanged(bool enabled);
 	void noiseSuppressionEnabledChanged(bool enabled);
 	void automaticallyRecordCallsEnabledChanged(bool enabled);
 	void autoAnswerEnabledChanged(bool enabled);

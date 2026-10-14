@@ -409,7 +409,6 @@ void App::connectCoreModel() {
 					    mEngine->clearComponentCache();
 				    }
 			    } else if (gstate == linphone::GlobalState::Off) {
-				    CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
 			    }
 		    });
 	    });
@@ -471,9 +470,6 @@ void App::connectCoreModel() {
 		mCoreModelConnection->invokeToCore([this, state] {
 			setCoreGlobalState((int)state);
 			setCoreStarted(state == linphone::GlobalState::On);
-			if (state == linphone::GlobalState::Off) {
-				CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
-			}
 		});
 	});
 
@@ -537,7 +533,7 @@ void App::connectCoreModel() {
 	                                         });
 	mCoreModelConnection->makeConnectToCore(&App::lForceOidcTimeout, [this] {
 		qDebug() << "App: force oidc timeout";
-		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance()->forceOidcTimeout(); });
+		mCoreModelConnection->invokeToModel([this] { emit CoreModel::getInstance() -> forceOidcTimeout(); });
 	});
 	mCoreModelConnection->makeConnectToModel(&CoreModel::timeoutTimerStarted, [this]() {
 		qDebug() << "App: oidc timer started";
@@ -682,8 +678,6 @@ void App::initCore() {
 			            currentDirs.push_back(folder.toStdString());
 			            CoreModel::getInstance()->getCore()->setChatMessageFilesDirectories(currentDirs);
 		            });
-		    lDebug() << log().arg("Starting HID devices detection");
-		    CoreModel::getInstance()->getCore()->startHidDevicesDetection();
 		    lDebug() << log().arg("Creating Ui");
 		    QMetaObject::invokeMethod(App::getInstance()->thread(), [this, settings] {
 			    // Initialize DestopTools here to have logs into files in case of errors.

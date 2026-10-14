@@ -1548,6 +1548,18 @@
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="96"/>
+        <source>settings_calls_hid_title</source>
+        <extracomment>&quot;Décroché au casque via USB/HID&quot;</extracomment>
+        <translation type="unfinished">Headset-Anrufsteuerung über USB/HID</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
+        <source>settings_calls_hid_subtitle</source>
+        <extracomment>&quot;Permet de contrôler les appels (décrocher, raccrocher, couper le son) avec les boutons d&apos;un casque USB/HID&quot;</extracomment>
+        <translation type="unfinished">Ermöglicht die Anrufsteuerung (annehmen, auflegen, stummschalten) über die Tasten eines USB/HID-Headsets</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
         <source>settings_call_enable_tones_title</source>
         <extracomment>Tonalités</extracomment>
         <translation>Wählton</translation>

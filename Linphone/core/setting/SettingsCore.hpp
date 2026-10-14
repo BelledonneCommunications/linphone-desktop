@@ -42,6 +42,7 @@ public:
 	Q_PROPERTY(bool videoEnabled READ getVideoEnabled WRITE setVideoEnabled NOTIFY videoEnabledChanged)
 	Q_PROPERTY(bool echoCancellationEnabled READ getEchoCancellationEnabled WRITE setEchoCancellationEnabled NOTIFY
 	               echoCancellationEnabledChanged)
+	Q_PROPERTY(bool hidEnabled READ getHidEnabled WRITE setHidEnabled NOTIFY hidEnabledChanged)
 	Q_PROPERTY(bool noiseSuppressionEnabled READ getNoiseSuppressionEnabled WRITE setNoiseSuppressionEnabled NOTIFY
 	               noiseSuppressionEnabledChanged)
 	Q_PROPERTY(bool showPastMeetings READ getShowPastMeetings WRITE setShowPastMeetings NOTIFY showPastMeetingsChanged)
@@ -161,6 +162,11 @@ public:
 		return mEchoCancellationEnabled;
 	}
 	void setEchoCancellationEnabled(bool enabled);
+
+	bool getHidEnabled() {
+		return mHidEnabled;
+	}
+	void setHidEnabled(bool enabled);
 
 	bool getNoiseSuppressionEnabled() {
 		return mNoiseSuppressionEnabled;
@@ -366,6 +372,7 @@ signals:
 	void videoEnabledChanged();
 
 	void echoCancellationEnabledChanged();
+	void hidEnabledChanged();
 	void noiseSuppressionEnabledChanged();
 	void autoDownloadReceivedFilesChanged();
 	void downloadFolderChanged();
@@ -476,6 +483,7 @@ private:
 	// Call
 	bool mVideoEnabled;
 	bool mEchoCancellationEnabled;
+	bool mHidEnabled;
 	bool mNoiseSuppressionEnabled;
 	bool mAutoDownloadReceivedFiles;
 	QString mDownloadFolder;
