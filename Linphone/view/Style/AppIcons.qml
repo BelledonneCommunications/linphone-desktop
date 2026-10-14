@@ -59,6 +59,7 @@ QtObject {
 	property string groupCall: "image://internal/group-call.svg"
 	property string magnifier: "image://internal/magnifying-glass.svg"
 	property string backspaceFill: "image://internal/backspace-fill.svg"
+	property string keypadClose: "image://internal/keypad-close.svg"
 	property string closeX: "image://internal/x.svg"
 	property string arrowDownLeft: "image://internal/arrow-down-left.svg"
 	property string arrowRight: "image://internal/arrow-right.svg"

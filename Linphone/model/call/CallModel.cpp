@@ -48,6 +48,9 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 	if (state == linphone::Call::State::Connected || state == linphone::Call::State::StreamsRunning ||
 	    call->getDuration() > 0)
 		mDurationTimer.start();
+
+	mDtmfTimer.setSingleShot(true);
+	connect(&mDtmfTimer, &QTimer::timeout, this, &CallModel::processDtmfQueue);
 }
 
 CallModel::~CallModel() {
@@ -383,11 +386,55 @@ void CallModel::setVideoSourceDescriptorModel(std::shared_ptr<VideoSourceDescrip
 	}
 }
 
-void CallModel::sendDtmf(const QString &dtmf) {
-	const char key = dtmf.constData()[0].toLatin1();
+bool CallModel::isDtmfSendable(linphone::Call::State state) {
+	switch (state) {
+		case linphone::Call::State::OutgoingEarlyMedia:
+		case linphone::Call::State::IncomingEarlyMedia:
+		case linphone::Call::State::Connected:
+		case linphone::Call::State::StreamsRunning:
+		case linphone::Call::State::Updating:
+		case linphone::Call::State::UpdatedByRemote:
+		case linphone::Call::State::EarlyUpdating:
+		case linphone::Call::State::EarlyUpdatedByRemote:
+			return true;
+		default:
+			return false;
+	}
+}
+
+void CallModel::queueDtmfs(const QList<QPair<int, QChar>> &dtmfs) {
+	mustBeInLinphoneThread(log().arg(Q_FUNC_INFO));
+	mDtmfQueue.append(dtmfs);
+	if (!mDtmfTimer.isActive()) processDtmfQueue();
+}
+
+void CallModel::processDtmfQueue() {
+	if (mDtmfQueue.isEmpty()) return;
+	auto dtmf = mDtmfQueue.takeFirst();
+	if (dtmf.second == QChar(',')) {
+		emit dtmfProcessed(dtmf.first, true);
+		mDtmfTimer.start(gDtmfPauseDelay);
+	} else {
+		emit dtmfProcessed(dtmf.first, sendDtmf(dtmf.second));
+		mDtmfTimer.start(gDtmfSoundDelay);
+	}
+}
+
+bool CallModel::sendDtmf(QChar key) {
+	auto core = CoreModel::getInstance()->getCore();
+	const char dtmf = key.toLatin1();
+	if (!QStringLiteral("0123456789*#").contains(key) || !mMonitor || !isDtmfSendable(mMonitor->getState()) ||
+	    (!core->getUseRfc2833ForDtmf() && !core->getUseInfoForDtmf())) {
+		lWarning() << log().arg("Cannot send dtmf: `%1`.").arg(key);
+		return false;
+	}
 	lInfo() << log().arg("Send dtmf: `%1`.").arg(key);
-	if (mMonitor) mMonitor->sendDtmf(key);
-	CoreModel::getInstance()->getCore()->playDtmf(key, gDtmfSoundDelay);
+	if (mMonitor->sendDtmf(dtmf) != 0) {
+		lWarning() << log().arg("Failed to send dtmf: `%1`.").arg(key);
+		return false;
+	}
+	core->playDtmf(dtmf, gDtmfSoundDelay);
+	return true;
 }
 
 void CallModel::updateCallErrorFromReason(linphone::Reason reason) {
@@ -502,6 +549,9 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		mDurationTimer.start();
 	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();
+		mDtmfTimer.stop();
+		for (const auto &dtmf : std::exchange(mDtmfQueue, {}))
+			emit dtmfProcessed(dtmf.first, false);
 		updateCallErrorFromReason(call->getReason());
 	}
 	emit stateChanged(call, state, message);
