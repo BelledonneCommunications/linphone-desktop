@@ -182,6 +182,8 @@ public:
 	void onCcmpServerUrlChanged(QString value);
 
 	DECLARE_CORE_GET(bool, showMwi, ShowMwi)
+	DECLARE_CORE_GET(QString, callForwardingSettingsUrl, CallForwardingSettingsUrl)
+	DECLARE_CORE_GET(QString, voicemailSettingsUrl, VoicemailSettingsUrl)
 
 	Q_INVOKABLE void save();
 	Q_INVOKABLE void undo();
