@@ -331,6 +331,21 @@
 		}
 	}
 
+	var numericPadDark = {
+		color: {
+			normal: Linphone.DefaultStyle.grey_500,
+			hovered: Linphone.DefaultStyle.grey_600,
+			pressed: Linphone.DefaultStyle.grey_600
+		},
+		text: {
+			normal: Linphone.DefaultStyle.keypad_text,
+			pressed: Linphone.DefaultStyle.keypad_text
+		},
+		borderColor: {
+			keybaordFocused: Linphone.DefaultStyle.grey_0
+		}
+	}
+
 // Green toast
 	var toast = {
 		color: {

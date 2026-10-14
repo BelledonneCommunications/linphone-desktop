@@ -37,6 +37,14 @@ QtObject {
     property var grey_900: "#070707"
     property var grey_1000: "#000000"
 
+    property var keypad_surface: "#1C1D1D"
+    property var keypad_field: "#121313"
+    property var keypad_border: "#3A3C3C"
+    property var keypad_text: "#F2F2F2"
+    property var keypad_text_muted: "#8C8C8C"
+    property var keypad_icon: "#B0B0B0"
+    property var keypad_icon_disabled: "#555757"
+
     property var warning_600: "#DBB820"
     property var warning_700: "#AF9308"
     property var danger_500_main: "#DD5F5F"

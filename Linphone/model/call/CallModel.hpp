@@ -89,7 +89,8 @@ public:
 	bool videoEnabled() const;
 	static void activateLocalVideo(std::shared_ptr<linphone::CallParams> &params, bool enable);
 
-	void sendDtmf(const QString &dtmf);
+	static bool isDtmfSendable(linphone::Call::State state);
+	void queueDtmfs(const QList<QPair<int, QChar>> &dtmfs);
 
 	void updateCallErrorFromReason(linphone::Reason reason);
 
@@ -112,13 +113,20 @@ signals:
 	void conferenceVideoLayoutChanged(LinphoneEnums::ConferenceLayout layout);
 	void videoDescriptorChanged();
 	void errorMessageChanged(const QString &error);
+	void dtmfProcessed(int id, bool sent);
 
 private:
+	bool sendDtmf(QChar key);
+	void processDtmfQueue();
+
 	QTimer mDurationTimer;
 	QTimer mMicroVolumeTimer;
+	QTimer mDtmfTimer;
+	QList<QPair<int, QChar>> mDtmfQueue;
 	std::shared_ptr<linphone::Conference> mConference;
 	LinphoneEnums::ConferenceLayout mConferenceVideoLayout;
 	static constexpr int gDtmfSoundDelay = 200;
+	static constexpr int gDtmfPauseDelay = 2000;
 
 	DECLARE_ABSTRACT_OBJECT
 

@@ -414,7 +414,29 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		        [this, model = gui->getCore()->getModel()]() { mCallModel->setVideoSourceDescriptorModel(model); });
 	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lSendDtmf, [this](QString dtmf) {
-		mCallModelConnection->invokeToModel([this, dtmf]() { mCallModel->sendDtmf(dtmf); });
+		QList<QPair<int, QChar>> dtmfs;
+		for (const auto &key : dtmf) {
+			if (!QStringLiteral("0123456789*#,").contains(key)) continue;
+			dtmfs.append({++mLastDtmfId, key});
+			mDtmfHistory.append(
+			    QVariantMap{{"id", mLastDtmfId}, {"key", QString(key)}, {"status", QStringLiteral("pending")}});
+		}
+		if (dtmfs.isEmpty()) return;
+		emit dtmfHistoryChanged();
+		mCallModelConnection->invokeToModel([this, dtmfs]() { mCallModel->queueDtmfs(dtmfs); });
+	});
+	mCallModelConnection->makeConnectToModel(&CallModel::dtmfProcessed, [this](int id, bool sent) {
+		mCallModelConnection->invokeToCore([this, id, sent]() {
+			for (auto &entry : mDtmfHistory) {
+				auto dtmf = entry.toMap();
+				if (dtmf["id"].toInt() != id) continue;
+				dtmf["status"] = sent ? QStringLiteral("sent") : QStringLiteral("failed");
+				entry = dtmf;
+				emit dtmfHistoryChanged();
+				emit dtmfProcessed(dtmf["key"].toString(), sent);
+				return;
+			}
+		});
 	});
 
 	mCallModelConnection->makeConnectToModel(&CallModel::videoDescriptorChanged, [this]() {
@@ -571,8 +593,29 @@ void CallCore::setState(LinphoneEnums::CallState state) {
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	if (mState != state) {
 		mState = state;
+		if ((state == LinphoneEnums::CallState::End || state == LinphoneEnums::CallState::Error ||
+		     state == LinphoneEnums::CallState::Released) &&
+		    !mDtmfHistory.isEmpty()) {
+			mDtmfHistory.clear();
+			emit dtmfHistoryChanged();
+		}
 		emit stateChanged(mState);
 	}
+}
+
+bool CallCore::isDtmfSendable() const {
+	return CallModel::isDtmfSendable(LinphoneEnums::toLinphone(mState));
+}
+
+QVariantList CallCore::getDtmfHistory() const {
+	return mDtmfHistory;
+}
+
+void CallCore::clearDtmfHistory() {
+	auto count = mDtmfHistory.size();
+	mDtmfHistory.removeIf(
+	    [](const QVariant &entry) { return entry.toMap()["status"].toString() != QStringLiteral("pending"); });
+	if (mDtmfHistory.size() != count) emit dtmfHistoryChanged();
 }
 
 QString CallCore::getLastErrorMessage() const {
