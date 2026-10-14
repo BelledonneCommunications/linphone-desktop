@@ -92,6 +92,15 @@ AbstractSettingsLayout {
                 propertyOwner: SettingsCpp
             }
             SwitchSetting {
+                Layout.fillWidth: true
+                //: "Décroché au casque via USB/HID"
+                titleText: qsTr("settings_calls_hid_title")
+                //: "Permet de contrôler les appels (décrocher, raccrocher, couper le son) avec les boutons d'un casque USB/HID"
+                subTitleText: qsTr("settings_calls_hid_subtitle")
+                propertyName: "hidEnabled"
+                propertyOwner: SettingsCpp
+            }
+            SwitchSetting {
                 //: Tonalités
                 titleText: qsTr("settings_call_enable_tones_title")
                 //: Activer les tonalités

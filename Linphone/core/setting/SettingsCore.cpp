@@ -49,6 +49,7 @@ SettingsCore::SettingsCore(QObject *parent) : QObject(parent) {
 	// Call
 	mVideoEnabled = settingsModel->getVideoEnabled();
 	mEchoCancellationEnabled = settingsModel->getEchoCancellationEnabled();
+	mHidEnabled = settingsModel->getHidEnabled();
 	mNoiseSuppressionEnabled = settingsModel->getNoiseSuppressionEnabled();
 	mAutoDownloadReceivedFiles = settingsModel->getAutoDownloadReceivedFiles();
 	mDisplayNotificationContent = settingsModel->getDisplayNotificationContent();
@@ -176,6 +177,7 @@ SettingsCore::SettingsCore(const SettingsCore &settingsCore) {
 	// Call
 	mVideoEnabled = settingsCore.mVideoEnabled;
 	mEchoCancellationEnabled = settingsCore.mEchoCancellationEnabled;
+	mHidEnabled = settingsCore.mHidEnabled;
 	mNoiseSuppressionEnabled = settingsCore.mNoiseSuppressionEnabled;
 	mAutoDownloadReceivedFiles = settingsCore.mAutoDownloadReceivedFiles;
 	mDisplayNotificationContent = settingsCore.mDisplayNotificationContent;
@@ -403,6 +405,11 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 	    &SettingsModel::echoCancellationEnabledChanged, [this](const bool enabled) {
 		    mSettingsModelConnection->invokeToCore([this, enabled]() { setEchoCancellationEnabled(enabled); });
 	    });
+
+	// HID
+	mSettingsModelConnection->makeConnectToModel(&SettingsModel::hidEnabledChanged, [this](const bool enabled) {
+		mSettingsModelConnection->invokeToCore([this, enabled]() { setHidEnabled(enabled); });
+	});
 
 	// Noise suppression
 	mSettingsModelConnection->makeConnectToModel(
@@ -737,6 +744,7 @@ void SettingsCore::reset(const SettingsCore &settingsCore) {
 	// Call
 	setVideoEnabled(settingsCore.mVideoEnabled);
 	setEchoCancellationEnabled(settingsCore.mEchoCancellationEnabled);
+	setHidEnabled(settingsCore.mHidEnabled);
 	setNoiseSuppressionEnabled(settingsCore.mNoiseSuppressionEnabled);
 	setAutomaticallyRecordCallsEnabled(settingsCore.mAutomaticallyRecordCallsEnabled);
 	setAutoAnswerEnabled(settingsCore.mAutoAnswerEnabled);
@@ -864,6 +872,14 @@ void SettingsCore::setEchoCancellationEnabled(bool enabled) {
 	if (mEchoCancellationEnabled != enabled) {
 		mEchoCancellationEnabled = enabled;
 		emit echoCancellationEnabledChanged();
+		setIsSaved(false);
+	}
+}
+
+void SettingsCore::setHidEnabled(bool enabled) {
+	if (mHidEnabled != enabled) {
+		mHidEnabled = enabled;
+		emit hidEnabledChanged();
 		setIsSaved(false);
 	}
 }
@@ -1433,6 +1449,7 @@ void SettingsCore::writeIntoModel(std::shared_ptr<SettingsModel> model) const {
 	// Call
 	model->setVideoEnabled(mVideoEnabled);
 	model->setEchoCancellationEnabled(mEchoCancellationEnabled);
+	model->setHidEnabled(mHidEnabled);
 	model->setNoiseSuppressionEnabled(mNoiseSuppressionEnabled);
 	model->setAutomaticallyRecordCallsEnabled(mAutomaticallyRecordCallsEnabled);
 	model->setAutoAnswerEnabled(mAutoAnswerEnabled);
@@ -1508,6 +1525,7 @@ void SettingsCore::writeFromModel(const std::shared_ptr<SettingsModel> &model) {
 	// Call
 	mVideoEnabled = model->getVideoEnabled();
 	mEchoCancellationEnabled = model->getEchoCancellationEnabled();
+	mHidEnabled = model->getHidEnabled();
 	mNoiseSuppressionEnabled = model->getNoiseSuppressionEnabled();
 	mAutomaticallyRecordCallsEnabled = model->getAutomaticallyRecordCallsEnabled();
 	mAutoAnswerEnabled = model->getAutoAnswerEnabled();

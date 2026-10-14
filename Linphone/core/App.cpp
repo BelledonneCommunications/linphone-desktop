@@ -435,7 +435,6 @@ void App::connectCoreModel() {
 					    mEngine->clearComponentCache();
 				    }
 			    } else if (gstate == linphone::GlobalState::Off) {
-				    CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
 			    }
 		    });
 	    });
@@ -497,9 +496,6 @@ void App::connectCoreModel() {
 		mCoreModelConnection->invokeToCore([this, state] {
 			setCoreGlobalState((int)state);
 			setCoreStarted(state == linphone::GlobalState::On);
-			if (state == linphone::GlobalState::Off) {
-				CoreModel::getInstance()->getCore()->stopHidDevicesDetection();
-			}
 		});
 	});
 
