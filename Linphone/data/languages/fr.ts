@@ -1174,7 +1174,7 @@
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>local_group_call</source>
         <extracomment>&quot;Local group call&quot;</extracomment>
-        <translation>Appel de groupe local</translation>
+        <translation>Appel de groupe</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="117"/>
@@ -1705,6 +1705,10 @@
         <source>call_window_conference_title</source>
         <extracomment>&quot;%1 - Meeting %2&quot;</extracomment>
         <translation>%1 - Réunion %2</translation>
+    </message>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Fusionner les appels</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="76"/>

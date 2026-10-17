@@ -385,9 +385,8 @@ void CoreModel::checkForUpdate(const std::string &applicationVersion, bool reque
 	mCheckVersionRequestedByUser = requestedByUser;
 	auto settingsModel = SettingsModel::getInstance();
 	if (settingsModel->isCheckForUpdateEnabled()) {
-		if (settingsModel->getVersionCheckUrl().isEmpty())
-			settingsModel->setVersionCheckUrl(Constants::VersionCheckReleaseUrl);
-		lInfo() << log().arg("Checking for update for version") << applicationVersion;
+		lInfo() << log().arg("Checking for update for version") << applicationVersion << "on"
+		        << settingsModel->getVersionCheckUrl();
 		getCore()->checkForUpdate(applicationVersion);
 	} else {
 		lInfo() << log().arg("Check for update settings is not set");

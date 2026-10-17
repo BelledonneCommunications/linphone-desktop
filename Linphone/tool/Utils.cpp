@@ -18,6 +18,8 @@
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
 
+#define NOMINMAX
+
 #include "Utils.hpp"
 
 #include "UriTools.hpp"
@@ -38,6 +40,7 @@
 #include "model/call-history/CallHistoryModel.hpp"
 #include "model/object/VariantObject.hpp"
 #include "model/tool/ToolModel.hpp"
+#include "tool/native/DesktopTools.hpp"
 #include "tool/providers/AvatarProvider.hpp"
 
 #include <limits.h>
@@ -59,6 +62,7 @@
 #include <QRegularExpression>
 #include <QStandardPaths>
 #include <QSvgRenderer>
+#include <QTimer>
 
 #ifdef Q_OS_WIN
 #ifndef NOMINMAX
@@ -295,6 +299,31 @@ VariantObject *Utils::haveAccount() {
 	return result;
 }
 
+static void retryBringToFront(QQuickWindow *window) {
+	auto timer = window->findChild<QTimer *>(QStringLiteral("bringToFrontRetry"), Qt::FindDirectChildrenOnly);
+	if (!timer) {
+		timer = new QTimer(window);
+		timer->setObjectName(QStringLiteral("bringToFrontRetry"));
+		timer->setInterval(150);
+		QObject::connect(timer, &QTimer::timeout, window, [window, timer]() {
+			int attempts = timer->property("attempts").toInt() + 1;
+			timer->setProperty("attempts", attempts);
+			if (DesktopTools::isInForeground(window) || attempts > 12) {
+				lInfo() << "[Utils] : bring to front stopped after" << attempts
+				        << "attempts, foreground =" << DesktopTools::isInForeground(window)
+				        << ", exposed =" << window->isExposed() << ", active =" << window->isActive();
+				timer->stop();
+				return;
+			}
+			lInfo() << "[Utils] : bring to front retry" << attempts << "exposed =" << window->isExposed()
+			        << "active =" << window->isActive();
+			DesktopTools::bringToFront(window);
+		});
+	}
+	timer->setProperty("attempts", 0);
+	timer->start();
+}
+
 void Utils::smartShowWindow(QQuickWindow *window) {
 	if (!window) return;
 	if (window->visibility() == QWindow::Maximized) // Avoid to change visibility mode
@@ -309,6 +338,8 @@ void Utils::smartShowWindow(QQuickWindow *window) {
 	window->raise(); // Raise ensure to get focus on Mac
 	lInfo() << "[Utils] : request activate";
 	window->requestActivate();
+	DesktopTools::bringToFront(window);
+	retryBringToFront(window);
 }
 
 QString Utils::createAvatar(const QUrl &fileUrl) {

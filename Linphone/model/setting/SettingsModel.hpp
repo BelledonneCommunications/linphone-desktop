@@ -134,6 +134,7 @@ public:
 	QString getVideoDevice() const;
 	void setVideoDevice(QString device);
 
+	QString getAccountCreatorUrl() const;
 	QString getDefaultDomain() const;
 
 	//------------------------------------------------------------------------------------------------------------
@@ -212,9 +213,7 @@ public:
 
 	bool autoCheckForUpdateOnStart() const;
 	void setAutoCheckForUpdateOnStart(bool check);
-	bool isCheckForUpdateAvailable() const;
 	bool isCheckForUpdateEnabled() const;
-	void setCheckForUpdateEnabled(bool enable);
 	QString getVersionCheckUrl();
 	void setVersionCheckUrl(const QString &url);
 	void setVersionCheckType(const LinphoneEnums::VersionCheckType &type);
@@ -224,6 +223,7 @@ public:
 	// UI
 	DECLARE_GETSET(bool, disableChatFeature, DisableChatFeature)
 	DECLARE_GETSET(bool, hideNotificationCounter, HideNotificationCounter)
+	DECLARE_GETSET(bool, forceLocalConference, ForceLocalConference)
 	DECLARE_GETSET(bool, disableBroadcastFeature, DisableBroadcastFeature)
 	DECLARE_GETSET(bool, disableCallForward, DisableCallForward)
 	DECLARE_GETSET(bool, hideSettings, HideSettings)
@@ -312,7 +312,6 @@ signals:
 	void showPastMeetingsChanged(bool value);
 
 	void autoCheckForUpdateOnStartChanged();
-	void checkForUpdateEnabledChanged();
 	void versionCheckUrlChanged();
 
 	void setCaptureDeviceFailed(const QString &error);

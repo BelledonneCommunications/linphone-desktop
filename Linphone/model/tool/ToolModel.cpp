@@ -406,7 +406,7 @@ bool ToolModel::createCall(const QString &sipAddress,
 	*/
 }
 
-std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subject, QString *message) {
+std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subject, QString *message, bool forceLocal) {
 	auto core = CoreModel::getInstance()->getCore();
 	auto conferenceParams = core->createConferenceParams(nullptr);
 	conferenceParams->enableVideo(true);
@@ -425,6 +425,11 @@ std::shared_ptr<linphone::Conference> ToolModel::createConference(QString subjec
 
 	conferenceParams->enableChat(true);
 
+	if (forceLocal) {
+		conferenceParams->setConferenceFactoryAddress(nullptr);
+		lInfo() << "[ToolModel] hosting the conference locally, conference factory bypassed";
+	}
+
 	return core->createConferenceWithParams(conferenceParams);
 }
 
@@ -438,6 +443,11 @@ bool ToolModel::createGroupCall(QString subject, const std::list<QString> &parti
 		std::list<std::shared_ptr<linphone::Address>> participants;
 		for (auto &address : participantAddresses) {
 			auto linAddr = ToolModel::interpretUrl(address);
+			if (!linAddr) {
+				lWarning() << "[ToolModel] Unable to interpret participant address" << address;
+				continue;
+			}
+			linAddr->clean();
 			participants.push_back(linAddr);
 		}
 		auto status = conference->inviteParticipants(participants, callParams);
@@ -736,10 +746,12 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::lookupCurrentCallChat(std::shared
 	} else {
 		auto core = CoreModel::getInstance()->getCore();
 		auto params = getChatRoomParams(call);
-		auto remoteaddress = call->getRemoteAddress();
-		auto localAddress = call->getCallLog()->getLocalAddress();
+		auto remoteaddress = call->getRemoteAddress()->clone();
+		remoteaddress->clean();
+		auto localAddress = call->getCallLog()->getLocalAddress()->clone();
+		localAddress->clean();
 		std::list<std::shared_ptr<linphone::Address>> participants;
-		participants.push_back(remoteaddress->clone());
+		participants.push_back(remoteaddress);
 		lInfo() << "[ToolModel] Looking for chat with local address" << localAddress->asStringUriOnly()
 		        << "and participant" << remoteaddress->asStringUriOnly();
 		auto existingChat = core->searchChatRoom(params, localAddress, nullptr, participants);
@@ -762,10 +774,15 @@ std::shared_ptr<linphone::ChatRoom> ToolModel::createCurrentCallChat(std::shared
 	if (call->getConference()) {
 		for (auto &participant : call->getConference()->getParticipantList()) {
 			auto address = participant->getAddress();
-			if (address) participants.push_back(address->clone());
+			if (!address) continue;
+			auto cleanedAddress = address->clone();
+			cleanedAddress->clean();
+			participants.push_back(cleanedAddress);
 		}
 	} else {
-		participants.push_back(remoteAddress->clone());
+		auto cleanedAddress = remoteAddress->clone();
+		cleanedAddress->clean();
+		participants.push_back(cleanedAddress);
 	}
 	auto core = CoreModel::getInstance()->getCore();
 	auto params = getChatRoomParams(call);

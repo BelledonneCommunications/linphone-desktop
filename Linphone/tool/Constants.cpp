@@ -29,9 +29,7 @@ constexpr char Constants::LanguagePath[];
 constexpr char Constants::QmlViewMainWindow[];
 constexpr char Constants::QmlViewCallsWindow[];
 
-#ifdef ENABLE_UPDATE_CHECK
 constexpr int Constants::VersionUpdateCheckInterval;
-#endif // ifdef ENABLE_UPDATE_CHECK
 
 constexpr char Constants::MainQmlUri[];
 

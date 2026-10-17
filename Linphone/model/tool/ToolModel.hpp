@@ -67,7 +67,8 @@ public:
 	                       linphone::MediaEncryption = linphone::MediaEncryption::None,
 	                       QString *errorMessage = nullptr);
 
-	static std::shared_ptr<linphone::Conference> createConference(QString subject, QString *message = nullptr);
+	static std::shared_ptr<linphone::Conference>
+	createConference(QString subject, QString *message = nullptr, bool forceLocal = false);
 	static bool
 	createGroupCall(QString subject, const std::list<QString> &participantAddresses, QString *message = nullptr);
 

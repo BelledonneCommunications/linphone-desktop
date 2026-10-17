@@ -109,6 +109,7 @@ AbstractMainPage {
 				}
 				Item{Layout.fillWidth: true}
 				MediumButton {
+					visible: SettingsCpp.checkForUpdateEnabled
 					style: ButtonStyle.tertiary
 					Layout.fillWidth: true
 					//: Check update

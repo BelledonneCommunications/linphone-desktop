@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import QtQuick.Effects
+import QtQml
 import QtQuick.Controls.Basic as Control
 import Linphone
 import EnumsToStringCpp
@@ -58,6 +59,74 @@ AbstractWindow {
         && callState !== LinphoneEnums.CallState.End
         && callState !== LinphoneEnums.CallState.Error
         && callState !== LinphoneEnums.CallState.Released
+
+    property bool isLocalConference: !!mainWindow.conference
+        && !(AppCpp.currentAccount && AppCpp.currentAccount.core
+             && AppCpp.currentAccount.core.audioVideoConferenceFactoryAddress
+             && AppCpp.currentAccount.core.audioVideoConferenceFactoryAddress.length > 0)
+
+    property int callCount: 0
+    property int connectedCallCount: 0
+    property bool callsConnected: callCount > 0 && connectedCallCount === callCount
+
+    property bool severalCalls: callCount >= 2
+    onSeveralCallsChanged: if (severalCalls && !mainWindow.conference) showCallList()
+
+    function refreshCallCount() {
+        callCount = allCallsModel.count
+    }
+
+    Component.onCompleted: refreshCallCount()
+
+    Connections {
+        target: allCallsModel
+        function onRowsInserted() { mainWindow.refreshCallCount() }
+        function onRowsRemoved() { mainWindow.refreshCallCount() }
+        function onModelReset() { mainWindow.refreshCallCount() }
+    }
+
+    function recountConnectedCalls() {
+        var n = 0
+        for (var i = 0; i < callWatchers.count; ++i) {
+            var watcher = callWatchers.objectAt(i)
+            if (watcher && watcher.connected) ++n
+        }
+        connectedCallCount = n
+    }
+
+    Instantiator {
+        id: callWatchers
+        model: allCallsModel
+        onObjectAdded: mainWindow.recountConnectedCalls()
+        onObjectRemoved: mainWindow.recountConnectedCalls()
+        delegate: QtObject {
+            readonly property int callState: modelData && modelData.core ? modelData.core.state : -1
+            readonly property bool connected: callState === LinphoneEnums.CallState.StreamsRunning
+                || callState === LinphoneEnums.CallState.Connected
+                || callState === LinphoneEnums.CallState.Paused
+                || callState === LinphoneEnums.CallState.PausedByRemote
+            onConnectedChanged: mainWindow.recountConnectedCalls()
+        }
+    }
+
+    onConferenceChanged: if (mainWindow.conference) hideCallList()
+
+    function hideCallList() {
+        if (!rightPanel.visible || !rightPanel.contentLoader.item
+                || rightPanel.contentLoader.item.objectName !== "callListPanel")
+            return
+        rightPanel.visible = false
+        callListButton.checked = false
+    }
+
+    function showCallList() {
+        if (rightPanel.visible && rightPanel.contentLoader.item
+                && rightPanel.contentLoader.item.objectName === "callListPanel")
+            return
+        rightPanel.visible = true
+        rightPanel.replace(callListPanel)
+        callListButton.checked = true
+    }
 
     onCallStateChanged: {
         if (callState === LinphoneEnums.CallState.Connected) {
@@ -172,8 +241,10 @@ AbstractWindow {
     }
 
     function endCall(callToFinish) {
-        if (callToFinish)
-            callToFinish.core.lTerminate()
+        if (callToFinish) {
+            if (mainWindow.isLocalConference) callToFinish.core.lTerminateAllCalls()
+            else callToFinish.core.lTerminate()
+        }
         else {
             if (!callsModel.haveCall) UtilsCpp.closeCallsWindow()
         }
@@ -270,6 +341,12 @@ AbstractWindow {
         title: qsTr("call_close_window_dialog_title")
         //: "La fenêtre est sur le point d'être fermée. Cela terminera tous les appels en cours."
         text: qsTr("call_close_window_dialog_message")
+    }
+
+    CallProxy {
+        id: allCallsModel
+        sourceModel: AppCpp.calls
+        showCurrentCall: true
     }
 
     CallProxy {
@@ -1086,27 +1163,8 @@ AbstractWindow {
                         event.accepted = true
                     }
                     spacing: 0
-                    Component {
-                        id: mergeCallPopupButton
-                        PopupButton {
-                            visible: callsModel.count >= 2 && !callsModel.haveNonAdminMeeting
-                            id: popupbutton
-                            popUpTitle: qsTr("call_list_options_accessible_name")
-                            popup.contentItem: IconLabelButton {
-                                icon.source: AppIcons.arrowsMerge
-                                icon.width: Utils.getSizeWithScreenRatio(32)
-                                icon.height: Utils.getSizeWithScreenRatio(32)
-                                //: call_action_merge_calls
-                                text: qsTr("Merger tous les appels")
-                                textSize: Utils.getSizeWithScreenRatio(14)
-                                onClicked: {
-                                    callsModel.lMergeAll()
-                                    popupbutton.close()
-                                }
-                            }
-                        }
-                    }
                     RoundedPane {
+                        id: callListPane
                         Layout.fillWidth: true
                         Layout.maximumHeight: rightPanel.height
                         visible: callList.contentHeight > 0
@@ -1126,14 +1184,36 @@ AbstractWindow {
                     }
                     Item {
                         Layout.fillHeight: true
+                        Layout.preferredHeight: Math.max(0, rightPanel.contentItemHeight
+                            - callListPane.height - callListPane.Layout.topMargin
+                            - callListPane.Layout.bottomMargin
+                            - (mergeCallsButton.visible
+                                ? mergeCallsButton.height + mergeCallsButton.Layout.bottomMargin
+                                : 0))
                     }
-                    Connections {
-                        target: rightPanel.contentLoader
-                        function onItemChanged() {
-                            if (rightPanel.contentLoader.item.objectName === "callListPanel") {
-                                rightPanel.customHeaderButtons = mergeCallPopupButton.createObject(rightPanel)
-                            }
-                        }
+                    IconLabelButton {
+                        id: mergeCallsButton
+                        visible: mainWindow.callCount >= 2 && mainWindow.callsConnected
+                                 && !callsModel.haveNonAdminMeeting && !mainWindow.conference
+                        Layout.fillWidth: true
+                        Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.bottomMargin: Utils.getSizeWithScreenRatio(16)
+                        Layout.preferredHeight: Utils.getSizeWithScreenRatio(50)
+                        icon.source: AppIcons.usersThree
+                        icon.width: Utils.getSizeWithScreenRatio(16)
+                        icon.height: Utils.getSizeWithScreenRatio(16)
+                        //: "Fusionner les appels"
+                        text: qsTr("call_action_merge_calls")
+                        textSize: Typography.b2.pixelSize
+                        textWeight: Typography.b2.weight
+                        style: ButtonStyle.main
+                        centerContent: true
+                        radius: Math.ceil(height / 2)
+                        spacing: Utils.getSizeWithScreenRatio(10)
+                        topPadding: 0
+                        bottomPadding: 0
+                        onClicked: callsModel.lMergeAll()
                     }
                 }
             }
@@ -1520,6 +1600,7 @@ AbstractWindow {
                     // Pause call button
                     CheckableButton {
                         id: pauseButton
+                        visible: !mainWindow.isLocalConference
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
@@ -1633,7 +1714,7 @@ AbstractWindow {
                     // Video camera button
                     CheckableButton {
                         id: videoCameraButton
-                        visible: SettingsCpp.videoEnabled
+                        visible: SettingsCpp.videoEnabled && !mainWindow.isLocalConference
                         enabled: mainWindow.conferenceInfo
                                  || (mainWindow.callState === LinphoneEnums.CallState.Connected
                                      || mainWindow.callState
@@ -1725,7 +1806,7 @@ AbstractWindow {
                     CheckableButton {
                         id: screencastPanelButton
                         iconUrl: AppIcons.screencast
-                        visible: !!mainWindow.conference
+                        visible: !!mainWindow.conference && !mainWindow.isLocalConference
                         //: Partager l'écran…
                         ToolTip.text: qsTr("call_share_screen_hint")
                         Accessible.name: qsTr("call_share_screen_hint")
@@ -1810,7 +1891,7 @@ AbstractWindow {
                         //: "Gérer les participants"
                         ToolTip.text: qsTr("call_manage_participants_hint")
                         Accessible.name: qsTr("call_manage_participants_hint")
-                        visible: mainWindow.conference
+                        visible: mainWindow.conference && !mainWindow.isLocalConference
                         iconUrl: AppIcons.usersTwo
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
@@ -1858,7 +1939,7 @@ AbstractWindow {
 
                             IconLabelButton {
                                 Layout.fillWidth: true
-                                visible: mainWindow.conference
+                                visible: mainWindow.conference && !mainWindow.isLocalConference
                                 icon.source: AppIcons.layout
                                 icon.width: Utils.getSizeWithScreenRatio(32)
                                 icon.height: Utils.getSizeWithScreenRatio(32)

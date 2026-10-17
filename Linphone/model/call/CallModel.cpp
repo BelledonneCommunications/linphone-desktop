@@ -46,6 +46,11 @@ CallModel::CallModel(const std::shared_ptr<linphone::Call> &call, QObject *paren
 
 	mDtmfTimer.setSingleShot(true);
 	connect(&mDtmfTimer, &QTimer::timeout, this, &CallModel::processDtmfQueue);
+
+	auto state = call->getState();
+	if (state == linphone::Call::State::Connected || state == linphone::Call::State::StreamsRunning ||
+	    call->getDuration() > 0)
+		mDurationTimer.start();
 }
 
 CallModel::~CallModel() {
@@ -540,6 +545,8 @@ void CallModel::onStateChanged(const std::shared_ptr<linphone::Call> &call,
 		emit remoteVideoEnabledChanged(remoteVideoDirection == linphone::MediaDirection::SendOnly ||
 		                               remoteVideoDirection == linphone::MediaDirection::SendRecv);
 		updateConferenceVideoLayout();
+	} else if (state == linphone::Call::State::Connected) {
+		mDurationTimer.start();
 	} else if (state == linphone::Call::State::End || state == linphone::Call::State::Error) {
 		mDurationTimer.stop();
 		mDtmfTimer.stop();

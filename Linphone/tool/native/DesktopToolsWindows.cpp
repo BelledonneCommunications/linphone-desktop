@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QRect>
+#include <QWindow>
 #include <Windows.h>
 #include <dwmapi.h>
 // =============================================================================
@@ -32,6 +33,43 @@ DesktopTools::DesktopTools(QObject *parent) : QObject(parent) {
 
 DesktopTools::~DesktopTools() {
 	setScreenSaverStatus(true);
+}
+
+bool DesktopTools::isInForeground(QWindow *window) {
+	if (!window || !window->isExposed()) return false;
+	HWND handle = reinterpret_cast<HWND>(window->winId());
+	return handle && GetForegroundWindow() == handle;
+}
+
+void DesktopTools::bringToFront(QWindow *window) {
+	if (!window) return;
+	HWND handle = reinterpret_cast<HWND>(window->winId());
+	if (!handle) return;
+	HWND foreground = GetForegroundWindow();
+	DWORD currentThread = GetCurrentThreadId();
+	DWORD foregroundThread = foreground ? GetWindowThreadProcessId(foreground, nullptr) : 0;
+	bool attached = foregroundThread && foregroundThread != currentThread &&
+	                AttachThreadInput(currentThread, foregroundThread, TRUE);
+	qInfo() << "[DesktopTools] bringToFront target=" << static_cast<void *>(handle)
+	        << "foreground=" << static_cast<void *>(foreground) << "attached=" << attached
+	        << "exposed=" << window->isExposed();
+	SetWindowPos(handle, HWND_TOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+	SetWindowPos(handle, HWND_NOTOPMOST, 0, 0, 0, 0, SWP_NOMOVE | SWP_NOSIZE | SWP_NOACTIVATE);
+	BringWindowToTop(handle);
+	SetForegroundWindow(handle);
+	SetActiveWindow(handle);
+	if (attached) AttachThreadInput(currentThread, foregroundThread, FALSE);
+	bool acquired = GetForegroundWindow() == handle;
+	qInfo() << "[DesktopTools] bringToFront foreground acquired =" << acquired;
+	if (!acquired) {
+		FLASHWINFO flashInfo;
+		ZeroMemory(&flashInfo, sizeof(flashInfo));
+		flashInfo.cbSize = sizeof(flashInfo);
+		flashInfo.hwnd = handle;
+		flashInfo.dwFlags = FLASHW_ALL | FLASHW_TIMERNOFG;
+		flashInfo.uCount = 3;
+		FlashWindowEx(&flashInfo);
+	}
 }
 
 bool DesktopTools::getScreenSaverStatus() const {
