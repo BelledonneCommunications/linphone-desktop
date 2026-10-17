@@ -249,6 +249,46 @@
         <translation>The list of devices connected to your account. You can remove devices you no longer use.</translation>
     </message>
     <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="26"/>
+        <source>manage_account_call_forwarding_title</source>
+        <translation>Call forwarding</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_call_forwarding_subtitle</source>
+        <translation>Choose the number or address your calls are forwarded to when you cannot be reached.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>Voicemail</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_voicemail_subtitle</source>
+        <translation>Enable your voicemail, record your greeting and listen to your messages.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="98"/>
+        <source>manage_account_call_forwarding_open_link</source>
+        <translation>Configure call forwarding</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="106"/>
+        <source>manage_account_voicemail_open_link</source>
+        <translation>Configure voicemail</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="82"/>
+        <source>manage_account_external_link_caption</source>
+        <translation>This configuration opens in your web browser.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="71"/>
+        <source>manage_account_external_link_open_error</source>
+        <translation>Unable to open %1</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="60"/>
         <source>manage_account_add_picture</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>

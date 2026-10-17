@@ -114,6 +114,8 @@ AccountCore::AccountCore(const std::shared_ptr<linphone::Account> &account) : QO
 
 	INIT_CORE_MEMBER(VoicemailCount, mAccountModel)
 	INIT_CORE_MEMBER(ShowMwi, mAccountModel)
+	INIT_CORE_MEMBER(CallForwardingSettingsUrl, mAccountModel)
+	INIT_CORE_MEMBER(VoicemailSettingsUrl, mAccountModel)
 }
 
 AccountCore::~AccountCore() {
@@ -151,6 +153,8 @@ AccountCore::AccountCore(const AccountCore &accountCore) {
 	mAudioVideoConferenceFactoryAddress = accountCore.mAudioVideoConferenceFactoryAddress;
 	mLimeServerUrl = accountCore.mLimeServerUrl;
 	mCcmpServerUrl = accountCore.mCcmpServerUrl;
+	mCallForwardingSettingsUrl = accountCore.mCallForwardingSettingsUrl;
+	mVoicemailSettingsUrl = accountCore.mVoicemailSettingsUrl;
 }
 
 void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
@@ -313,6 +317,10 @@ void AccountCore::setSelf(QSharedPointer<AccountCore> me) {
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, voicemailCount,
 	                        VoicemailCount)
 	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, int, showMwi, ShowMwi)
+	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
+	                        callForwardingSettingsUrl, CallForwardingSettingsUrl)
+	DEFINE_CORE_GET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
+	                        voicemailSettingsUrl, VoicemailSettingsUrl)
 	// DEFINE_CORE_GETSET_CONNECT(mAccountModelConnection, AccountCore, AccountModel, mAccountModel, QString,
 	//    voicemailAddress, VoicemailAddress)
 	mAccountModelConnection->makeConnectToModel(&AccountModel::voicemailAddressChanged, [this](QString value) {

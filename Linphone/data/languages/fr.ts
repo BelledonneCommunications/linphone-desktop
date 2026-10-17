@@ -249,6 +249,46 @@
         <translation>La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.</translation>
     </message>
     <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="26"/>
+        <source>manage_account_call_forwarding_title</source>
+        <translation>Renvoi d&apos;appel</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_call_forwarding_subtitle</source>
+        <translation>Choisissez vers quel numéro ou quelle adresse vos appels sont renvoyés lorsque vous êtes injoignable.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>Messagerie vocale</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_voicemail_subtitle</source>
+        <translation>Activez votre messagerie vocale, enregistrez votre annonce d&apos;accueil et consultez vos messages.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="98"/>
+        <source>manage_account_call_forwarding_open_link</source>
+        <translation>Configurer le renvoi d&apos;appel</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="106"/>
+        <source>manage_account_voicemail_open_link</source>
+        <translation>Configurer la messagerie vocale</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="82"/>
+        <source>manage_account_external_link_caption</source>
+        <translation>Cette configuration s&apos;ouvre dans votre navigateur.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="71"/>
+        <source>manage_account_external_link_open_error</source>
+        <translation>Impossible d&apos;ouvrir %1</translation>
+    </message>
+    <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="60"/>
         <source>manage_account_add_picture</source>
         <extracomment>&quot;Ajouter une image&quot;</extracomment>
