@@ -40,6 +40,8 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+                Accessible.role: Accessible.Heading
+                Accessible.name: text
                 //: Compte SIP tiers
                 text: qsTr("assistant_login_third_party_sip_account_title")
 				font {
@@ -213,7 +215,7 @@ LoginLayout {
 									width: parent.width
 									KeyNavigation.up: usernameEdit
 									KeyNavigation.down: domainEdit
-									Accessible.name: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
+									accessibleName: qsTr("mandatory_field_accessible_name").arg(qsTr("password"))
 								}
 							}
 							FormItemLayout {
@@ -380,6 +382,8 @@ LoginLayout {
 					Layout.fillHeight: true
 					spacing: Utils.getSizeWithScreenRatio(22)
 					Text {
+						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						id: advancedParametersTitle
 						//: Advanced parameters
 						text: qsTr("login_advanced_parameters_label")

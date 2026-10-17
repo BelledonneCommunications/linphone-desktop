@@ -102,7 +102,9 @@
 #include "tool/EnumsToString.hpp"
 #include "tool/Utils.hpp"
 #include "tool/accessibility/AccessibilityHelper.hpp"
+#include "tool/accessibility/EnterKeyActivator.hpp"
 #include "tool/accessibility/FocusHelper.hpp"
+#include "tool/accessibility/FocusTrap.hpp"
 #include "tool/accessibility/KeyboardShortcuts.hpp"
 #ifdef HAVE_CRASH_HANDLER
 #include "tool/crash_reporter/CrashReporter.hpp"
@@ -738,6 +740,7 @@ void App::initCore() {
 			    mEngine->rootContext()->setContextProperty("applicationName", APPLICATION_NAME);
 			    mEngine->rootContext()->setContextProperty("executableName", EXECUTABLE_NAME);
 			    mEngine->rootContext()->setContextProperty("FocusNavigator", new FocusNavigator(mEngine));
+			    new EnterKeyActivator(mEngine);
 
 			    // if (!isRestarting()) {
 			    initCppInterfaces();
@@ -1001,6 +1004,7 @@ void App::initCppInterfaces() {
 	    [](QQmlEngine *engine, QJSEngine *) -> QObject * { return new AccessibilityHelper(engine); });
 
 	qmlRegisterType<FocusHelper>("CustomControls", 1, 0, "FocusHelper");
+	qmlRegisterType<FocusTrap>("CustomControls", 1, 0, "FocusTrap");
 
 	qmlRegisterType<DashRectangle>(Constants::MainQmlUri, 1, 0, "DashRectangle");
 	qmlRegisterType<PhoneNumberProxy>(Constants::MainQmlUri, 1, 0, "PhoneNumberProxy");
@@ -1418,9 +1422,32 @@ QSharedPointer<AccountList> App::getAccountList() const {
 
 void App::setAccountList(QSharedPointer<AccountList> data) {
 	if (mAccountList != data) {
+		if (mAccountList)
+			disconnect(mAccountList.get(), &AccountList::defaultAccountChanged, this,
+			           &App::trackDefaultAccountForSysTray);
 		mAccountList = data;
+		if (mAccountList)
+			connect(mAccountList.get(), &AccountList::defaultAccountChanged, this, &App::trackDefaultAccountForSysTray);
+		trackDefaultAccountForSysTray();
 		emit accountsChanged();
 	}
+}
+
+void App::trackDefaultAccountForSysTray() {
+	QObject::disconnect(mSysTrayAccountConnection);
+	auto account = mAccountList ? mAccountList->getDefaultAccountCore() : nullptr;
+	if (account)
+		mSysTrayAccountConnection =
+		    connect(account.get(), &AccountCore::registrationStateChanged, this, &App::updateSysTrayToolTip);
+	updateSysTrayToolTip();
+}
+
+void App::updateSysTrayToolTip() {
+	if (!mSystemTrayIcon) return;
+	QString toolTip = APPLICATION_NAME;
+	auto account = mAccountList ? mAccountList->getDefaultAccountCore() : nullptr;
+	if (account) toolTip += " - " + account->getHumanReadableRegistrationState();
+	mSystemTrayIcon->setToolTip(toolTip);
 }
 
 AccountList *App::getAccounts() const {
@@ -1739,6 +1766,7 @@ void App::setSysTrayIcon() {
 	systemTrayIcon->setToolTip(APPLICATION_NAME);
 	systemTrayIcon->show();
 	if (!mSystemTrayIcon) mSystemTrayIcon = systemTrayIcon;
+	updateSysTrayToolTip();
 	if (!QSystemTrayIcon::isSystemTrayAvailable()) qInfo() << "System tray is not available";
 
 //

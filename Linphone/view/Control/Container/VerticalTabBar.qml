@@ -19,12 +19,19 @@ Control.TabBar {
 
 	property int visibleCount: 0
 
-	signal enterPressed()
-	signal spacePressed()
 	
 	// Call it after model is ready. If done before, Repeater will not be updated
 	function initButtons(){
 		actionsRepeater.model = mainItem.model
+	}
+	function focusTab(fromIndex, step) {
+		for (var i = fromIndex + step; i >= 0 && i < mainItem.count; i += step) {
+			var tab = mainItem.itemAt(i)
+			if (tab && tab.visible) {
+				tab.forceActiveFocus(step > 0 ? Qt.TabFocusReason : Qt.BacktabFocusReason)
+				return
+			}
+		}
 	}
 	function updateVisibleCount() {
 		mainItem.visibleCount = 0
@@ -91,6 +98,7 @@ Control.TabBar {
 		id: actionsRepeater
 		Control.TabButton {
 			id: tabButton
+			objectName: "mainTab" + index
 			width: mainItem.width
 			Binding on height {
 				when: !tabButton.visible
@@ -102,12 +110,26 @@ Control.TabBar {
 			hoverEnabled: true
 			visible: modelData?.visible != undefined ? modelData.visible : true
 			onVisibleChanged: mainItem.updateVisibleCount()
-			text: modelData.accessibilityLabel
+			text: modelData.label
 			property bool keyboardFocus: FocusHelper.keyboardFocus
 			focusPolicy: Qt.StrongFocus
-			activeFocusOnTab: true
+			activeFocusOnTab: mainItem.currentIndex < 0 ? TabBar.index === 0 : TabBar.index === mainItem.currentIndex
+			Accessible.name: tabBadge.visible ? text + ", " + tabBadge.Accessible.name : text
+			Accessible.selectable: true
+			Accessible.selected: TabBar.index === mainItem.currentIndex
+			TabBar.onIndexChanged: if (TabBar.index >= 0 && TabBar.index === mainItem.currentIndex) checked = true
+			Accessible.onCheckableChanged: if (Qt.platform.os === "windows" && Accessible.checkable) Accessible.checkable = false
+			Accessible.onCheckedChanged: if (Qt.platform.os === "windows" && Accessible.checked) Accessible.checked = false
+			Component.onCompleted: if (Qt.platform.os === "windows") {
+				Accessible.checkable = false
+				Accessible.checked = false
+			}
 			UnreadNotification {
+				id: tabBadge
+				focusPolicy: Qt.NoFocus
+				activeFocusOnTab: false
 				badgeType: modelData.label
+				kind: index === 0 ? "missedCalls" : index === 2 ? "unreadMessages" : ""
 				unread: !defaultAccount
 				? -1
 				: index === 0 
@@ -177,24 +199,24 @@ Control.TabBar {
 				}
 			}
 			Keys.onPressed: event => {
-                if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
-                    mainItem.enterPressed()
-                } else if(event.key === Qt.Key_Space){
-					mainItem.spacePressed()
-				} else if(event.key === Qt.Key_Down){
-					event.accepted = true;
-					if(TabBar.index >= mainItem.visibleCount - 1)
-       					return;
-					tabButton.nextItemInFocusChain(true).forceActiveFocus(Qt.TabFocusReason)
-				} else if(event.key === Qt.Key_Up){
-					event.accepted = true;
-					if(TabBar.index <= 0)
-       					return;
-					tabButton.nextItemInFocusChain(false).forceActiveFocus(Qt.BacktabFocusReason)
+				if (event.key === Qt.Key_Down || event.key === Qt.Key_Up || event.key === Qt.Key_Right || event.key === Qt.Key_Left) {
+					event.accepted = true
+					mainItem.focusTab(TabBar.index, event.key === Qt.Key_Down || event.key === Qt.Key_Right ? 1 : -1)
+				} else if (event.key === Qt.Key_Tab || event.key === Qt.Key_Backtab) {
+					var forward = event.key === Qt.Key_Tab && !(event.modifiers & Qt.ShiftModifier)
+					var stop = mainItem.itemAt(mainItem.currentIndex) || tabButton
+					var next = stop.nextItemInFocusChain(forward)
+					if (next && next !== tabButton) {
+						event.accepted = true
+						next.forceActiveFocus(forward ? Qt.TabFocusReason : Qt.BacktabFocusReason)
+					}
 				}
 			}
+			Accessible.onPressAction: tabButton.clicked()
 			onClicked: {
 				mainItem.setCurrentIndex(TabBar.index)
+				if (tabButton.keyboardFocus)
+					tabButton.Accessible.announce(qsTr("tab_selected_accessible_announcement").arg(modelData.label))
 			}
 		}
 	}

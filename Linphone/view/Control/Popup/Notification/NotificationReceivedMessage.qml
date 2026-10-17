@@ -70,6 +70,7 @@ Notification {
 				z: mousearea.z + 1
 				background: Item{anchors.fill: parent}
 				icon.source: AppIcons.closeX
+				Accessible.name: qsTr("close_accessible_name")
 				width: Utils.getSizeWithScreenRatio(14)
 				height: Utils.getSizeWithScreenRatio(14)
 				icon.width: Utils.getSizeWithScreenRatio(14)

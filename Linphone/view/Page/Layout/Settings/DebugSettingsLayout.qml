@@ -119,7 +119,7 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Utils.getSizeWithScreenRatio(20)
 			HelpIconLabelButton {
-				enabled: false
+				actionable: false
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
@@ -137,13 +137,13 @@ AbstractSettingsLayout {
 					}
 				}
 				ToolTip {
-					visible: parent.containsMouse || parent.activeFocus
+					visible: parent.actionable && (parent.containsMouse || parent.activeFocus)
 					//: Copy text
 					text: qsTr("settings_debug_copy_tooltip")
 				}
 			}
 			HelpIconLabelButton {
-				enabled: false
+				actionable: false
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
@@ -161,13 +161,13 @@ AbstractSettingsLayout {
 					}
 				}
 				ToolTip {
-					visible: parent.containsMouse || parent.activeFocus
+					visible: parent.actionable && (parent.containsMouse || parent.activeFocus)
 					//: Copy text
 					text: qsTr("settings_debug_copy_tooltip")
 				}
 			}
 			HelpIconLabelButton {
-				enabled: false
+				actionable: false
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
@@ -185,7 +185,7 @@ AbstractSettingsLayout {
 					}
 				}
 				ToolTip {
-					visible: parent.containsMouse || parent.activeFocus
+					visible: parent.actionable && (parent.containsMouse || parent.activeFocus)
 					//: Copy text
 					text: qsTr("settings_debug_copy_tooltip")
 				}

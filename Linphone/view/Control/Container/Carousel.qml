@@ -95,6 +95,9 @@ ColumnLayout {
                         radius: Utils.getSizeWithScreenRatio(30)
 						anchors.fill: parent
 					}
+					Accessible.name: qsTr("carousel_page_accessible_name").arg(index + 1).arg(mainItem.itemsCount)
+					Accessible.checkable: true
+					Accessible.checked: mainItem.currentIndex === index
 					onClicked: {
 						mainItem.goToSlide(modelData)
 					}

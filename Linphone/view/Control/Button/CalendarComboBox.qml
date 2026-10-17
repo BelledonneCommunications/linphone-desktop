@@ -12,6 +12,7 @@ ComboBox {
 	onSelectedDateChanged: popupItem.close()
 	property alias calendar: calendar
 	property alias contentText: contentText
+	accessibleValue: contentText.text
 	contentItem: Text {
 		id: contentText
 		text: calendar.selectedDate ? UtilsCpp.formatDate(calendar.selectedDate, false, true, "ddd d, MMMM") : ""
@@ -29,7 +30,8 @@ ComboBox {
 		y: mainItem.height
         width: Utils.getSizeWithScreenRatio(321)
         height: Utils.getSizeWithScreenRatio(270)
-		closePolicy: Popup.NoAutoClose
+		closePolicy: Popup.CloseOnEscape
+		onClosed: mainItem.forceActiveFocus()
         topPadding: Utils.getSizeWithScreenRatio(25)
         bottomPadding: Utils.getSizeWithScreenRatio(24)
         leftPadding: Utils.getSizeWithScreenRatio(21)

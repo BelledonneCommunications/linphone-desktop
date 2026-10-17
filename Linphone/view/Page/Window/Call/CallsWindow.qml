@@ -7,12 +7,20 @@ import EnumsToStringCpp
 import UtilsCpp
 import SettingsCpp
 import DesktopToolsCpp
+import CustomControls 1.0
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 import "qrc:/qt/qml/Linphone/view/Style/buttonStyle.js" as ButtonStyle
 
 AbstractWindow {
     id: mainWindow
     flags: Qt.Window
+    title: call
+           ? isConference && (conference || joiningConferenceInfo)
+             ? qsTr("call_window_conference_title").arg(applicationName).arg(conference ? conference.core.subject : joiningConferenceInfo.core.subject)
+             : qsTr("call_window_title").arg(applicationName).arg(call.core.remoteName)
+           : joiningConferenceInfo
+             ? qsTr("call_window_conference_title").arg(applicationName).arg(joiningConferenceInfo.core.subject)
+             : applicationName
     minimumWidth: Utils.getSizeWithScreenRatio(1020)
     minimumHeight: Utils.getSizeWithScreenRatio(700)
 
@@ -21,6 +29,7 @@ AbstractWindow {
 
     property ConferenceGui conference: call && call.core.conference || null
     property bool isConference: call ? call.core.isConference : false
+    property ConferenceInfoGui joiningConferenceInfo: null
 
     // Chat related to call
     property var chatObj
@@ -115,6 +124,35 @@ AbstractWindow {
     
     signal keyPressedOnDialer(KeyEvent event)
 
+    function isInPopup(item) {
+        var overlay = Control.Overlay.overlay
+        for (var node = item; node; node = node.parent) {
+            if (node === overlay)
+                return true
+        }
+        return false
+    }
+
+    function sendDtmfFromKeyboard(event) {
+        if (!call || (callState !== LinphoneEnums.CallState.Connected && callState !== LinphoneEnums.CallState.StreamsRunning))
+            return
+        var shortcut = (event.modifiers & Qt.MetaModifier)
+                || ((event.modifiers & Qt.ControlModifier) && !(event.modifiers & Qt.AltModifier))
+        if (event.isAutoRepeat || shortcut)
+            return
+        if (!/^[0-9*#]$/.test(event.text) || isInPopup(activeFocusItem))
+            return
+        call.core.lSendDtmf(event.text)
+        event.accepted = true
+    }
+
+    Connections {
+        target: mainWindow.contentItem.Keys
+        function onPressed(event) {
+            mainWindow.sendDtmfFromKeyboard(event)
+        }
+    }
+
 
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
@@ -159,6 +197,7 @@ AbstractWindow {
 
     signal setUpConferenceRequested(ConferenceInfoGui conferenceInfo)
     function setupConference(conferenceInfo) {
+        joiningConferenceInfo = conferenceInfo
         middleItemStackView.replace(waitingRoom)
         setUpConferenceRequested(conferenceInfo)
     }
@@ -173,6 +212,7 @@ AbstractWindow {
         }
     }
     function cancelJoinConference() {
+        joiningConferenceInfo = null
         if (!callsModel.haveCall) {
             UtilsCpp.closeCallsWindow()
         } else {
@@ -271,6 +311,13 @@ AbstractWindow {
         call: mainWindow.call
         modal: true
         closePolicy: Popup.NoAutoClose
+        onClosed: {
+            if (!mainWindow.call)
+                return
+            var target = mainWindow.firstButtonInBottomTab
+            if (target && target.visible && target.enabled)
+                target.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason)
+        }
     }
     Timer {
         id: autoCloseZrtpToast
@@ -299,6 +346,12 @@ AbstractWindow {
         Behavior on y {
             NumberAnimation {
                 duration: 1000
+                onRunningChanged: {
+                    if (running || zrtpValidationToast.y < 0)
+                        return
+                    var source = mainWindow.activeFocusItem || zrtpValidationToastText
+                    source.Accessible.announce(zrtpValidationToastText.text, Accessible.Assertive)
+                }
             }
         }
         background: Rectangle {
@@ -318,6 +371,9 @@ AbstractWindow {
                 Layout.fillWidth: true
             }
             Text {
+                id: zrtpValidationToastText
+                Accessible.role: Accessible.StaticText
+                Accessible.name: text
                 color: DefaultStyle.info_500_main
                 //: "Appareil authentifié"
                 text: qsTr("call_can_be_trusted_toast")
@@ -405,6 +461,8 @@ AbstractWindow {
                                 spacing: Utils.getSizeWithScreenRatio(10)
                                 Text {
                                     id: callStatusText
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
                                     Connections {
                                         target: mainWindow
@@ -449,6 +507,8 @@ AbstractWindow {
                                 }
                                 Text {
                                     text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call.core.duration) : ""
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     color: DefaultStyle.grey_0
                                     font {
                                         pixelSize: Typography.h3.pixelSize
@@ -462,6 +522,8 @@ AbstractWindow {
                                 Text {
                                     Layout.leftMargin: Utils.getSizeWithScreenRatio(14)
                                     id: conferenceDate
+                                    Accessible.role: Accessible.StaticText
+                                    Accessible.name: text
                                     text: mainWindow.conferenceInfo ? mainWindow.conferenceInfo.core.getStartEndDateString() : ""
                                     color: DefaultStyle.grey_0
                                     font {
@@ -524,6 +586,37 @@ AbstractWindow {
                                 }
                                 Text {
                                     id: encryptionStatusText
+                                    activeFocusOnTab: securityStateLayout.visible
+                                    Accessible.role: Accessible.Button
+                                    Accessible.name: text
+                                    Accessible.onPressAction: encryptionStatusText.toggleEncryptionPanel()
+                                    KeyNavigation.tab: openStatisticPanelButton
+                                    KeyNavigation.backtab: mainWindow.lastButtonInBottomTab
+                                    Keys.onPressed: event => {
+                                        if (event.key === Qt.Key_Space || event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                                            encryptionStatusText.toggleEncryptionPanel()
+                                            event.accepted = true
+                                        }
+                                    }
+                                    function toggleEncryptionPanel() {
+                                        if (rightPanel.visible
+                                                && rightPanel.contentLoader.item.objectName
+                                                === "encryptionPanel")
+                                            rightPanel.visible = false
+                                        else {
+                                            rightPanel.visible = true
+                                            rightPanel.replace(encryptionPanel)
+                                        }
+                                    }
+                                    Rectangle {
+                                        anchors.fill: parent
+                                        anchors.margins: -Utils.getSizeWithScreenRatio(3)
+                                        color: "transparent"
+                                        radius: Utils.getSizeWithScreenRatio(4)
+                                        border.color: DefaultStyle.grey_0
+                                        border.width: Utils.getSizeWithScreenRatio(2)
+                                        visible: encryptionStatusText.activeFocus
+                                    }
                                     text: mainWindow.conference
                                         ? mainWindow.call.core.conferenceSecurityLevel === LinphoneEnums.ConferenceSecurityLevel.EndToEnd
                                             //: End to end encrypted meeting
@@ -562,16 +655,7 @@ AbstractWindow {
                                         anchors.fill: parent
                                         hoverEnabled: true
                                         cursorShape: containsMouse ? Qt.PointingHandCursor : Qt.ArrowCursor
-                                        onClicked: {
-                                            if (rightPanel.visible
-                                                    && rightPanel.contentLoader.item.objectName
-                                                    === "encryptionPanel")
-                                                rightPanel.visible = false
-                                            else {
-                                                rightPanel.visible = true
-                                                rightPanel.replace(encryptionPanel)
-                                            }
-                                        }
+                                        onClicked: encryptionStatusText.toggleEncryptionPanel()
                                     }
                                 }
                                 Item {
@@ -607,7 +691,7 @@ AbstractWindow {
                             }
                         }
                         KeyNavigation.tab: rightPanel.visible ? nextItemInFocusChain() : mainWindow.firstButtonInBottomTab
-                        KeyNavigation.backtab: mainWindow.lastButtonInBottomTab
+                        KeyNavigation.backtab: encryptionStatusText.activeFocusOnTab ? encryptionStatusText : mainWindow.lastButtonInBottomTab
                     }
                 }
 
@@ -703,13 +787,68 @@ AbstractWindow {
                 }
                 CallSettingsPanel {
                     id: rightPanel
+                    objectName: "callSidePanel"
+                    fallbackAccessibleTitleText: mainWindow.chat ? qsTr("call_chat_panel_accessible_title").arg(mainWindow.chat.core.title) : ""
                     Layout.fillHeight: true
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(393)
                     Layout.topMargin: Utils.getSizeWithScreenRatio(10)
                     property int currentIndex: 0
+                    property Item focusReturnItem: null
+                    property bool keyboardInside: false
                     visible: false
-                    onVisibleChanged: if(!visible) contentLoader.sourceComponent = null
+                    onVisibleChanged: {
+                        if (visible) {
+                            var opener = mainWindow.activeFocusItem
+                            if (opener && opener.activeFocusOnTab && !Utils.isDescendant(opener, rightPanel))
+                                focusReturnItem = opener
+                            keyboardInside = opener ? opener.keyboardFocus === true : false
+                            return
+                        }
+                        contentLoader.sourceComponent = null
+                        var returnItem = focusReturnItem
+                        var keyboard = keyboardInside
+                        focusReturnItem = null
+                        keyboardInside = false
+                        var current = mainWindow.activeFocusItem
+                        if (!returnItem || !returnItem.visible || !returnItem.enabled)
+                            return
+                        if (current && current.activeFocusOnTab && current !== returnItem && !Utils.isDescendant(current, rightPanel))
+                            return
+                        if (returnItem.activeFocus)
+                            returnItem.focus = false
+                        returnItem.forceActiveFocus(keyboard ? Qt.TabFocusReason : Qt.OtherFocusReason)
+                    }
+                    function focusInside() {
+                        if (!rightPanel.visible)
+                            return
+                        var current = mainWindow.activeFocusItem
+                        var inside = current && Utils.isDescendant(current, rightPanel)
+                        if (inside && current.activeFocusOnTab)
+                            return
+                        if (!inside && current && current.activeFocusOnTab)
+                            rightPanel.focusReturnItem = current
+                        var content = rightPanel.contentLoader.item
+                        var preferred = content && content.initialFocusItem ? content.initialFocusItem() : null
+                        var target = preferred ?? rightPanel.firstContentFocusableItem ?? rightPanel.closeButton
+                        target.forceActiveFocus(rightPanel.keyboardInside ? Qt.TabFocusReason : Qt.OtherFocusReason)
+                    }
+                    FocusTrap.enabled: visible
+                    function updateKeyboardInside() {
+                        var item = mainWindow.activeFocusItem
+                        if (rightPanel.visible && item && item.keyboardFocus === true && Utils.isDescendant(item, rightPanel))
+                            rightPanel.keyboardInside = true
+                    }
+                    Connections {
+                        target: mainWindow
+                        function onActiveFocusItemChanged() {
+                            Qt.callLater(rightPanel.updateKeyboardInside)
+                        }
+                    }
+                    Keys.onEscapePressed: event => {
+                        rightPanel.visible = false
+                        event.accepted = true
+                    }
                     function replace(id, properties) {
                         rightPanel.customHeaderButtons = null
                         contentLoader.sourceComponent = null
@@ -720,7 +859,6 @@ AbstractWindow {
                     }
                     headerStack.currentIndex: 0
                     headerValidateButtonText: qsTr("add")
-                    KeyNavigation.tab : Utils.isDescendant(nextItemInFocusChain(), rightPanel) ? nextItemInFocusChain() : videoCameraButton
 
                     // Do not consider padding for chat
                     // Binding on topPadding {
@@ -791,12 +929,9 @@ AbstractWindow {
                             if (!rightPanel.contentLoader.item || rightPanel.contentLoader.item.objectName !== "participantListPanel") participantListButton.checked = false
 
                             // Update tab focus properties
-                            var firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
-                            rightPanel.firstContentFocusableItem = firstContentFocusableItem ?? mainWindow.firstButtonInBottomTab
-                            var lastContentFocusableItem = Utils.getLastFocusableItemInItem(rightPanel.contentLoader.item)
-                            if(lastContentFocusableItem != undefined){
-                                lastContentFocusableItem.KeyNavigation.tab = mainWindow.firstButtonInBottomTab
-                            }
+                            rightPanel.firstContentFocusableItem = Utils.getFirstFocusableItemInItem(rightPanel.contentLoader.item)
+                            if (rightPanel.contentLoader.item)
+                                Qt.callLater(rightPanel.focusInside)
                         }
                     }
 
@@ -926,6 +1061,9 @@ AbstractWindow {
                     id: dialerPanelContent
                     objectName: "dialerPanel"
                     width: parent.width
+                    function initialFocusItem() {
+                        return numPad.firstKey()
+                    }
                     Keys.onEscapePressed: event => {
                         rightPanel.visible = false
                         event.accepted = true
@@ -1064,6 +1202,7 @@ AbstractWindow {
                         PopupButton {
                             visible: callsModel.count >= 2 && !callsModel.haveNonAdminMeeting
                             id: popupbutton
+                            popUpTitle: qsTr("call_list_options_accessible_name")
                             popup.contentItem: IconLabelButton {
                                 icon.source: AppIcons.arrowsMerge
                                 icon.width: Utils.getSizeWithScreenRatio(32)
@@ -1236,6 +1375,7 @@ AbstractWindow {
                                 Component {
                                     id: headerbutton
                                     PopupButton {
+                                        popUpTitle: qsTr("conference_participants_options_accessible_name")
                                         popup.contentItem: IconLabelButton {
                                             icon.source: AppIcons.shareNetwork
                                             //: Partager le lien de la réunion
@@ -1448,7 +1588,7 @@ AbstractWindow {
                         radius: Utils.getSizeWithScreenRatio(71)
                         style: ButtonStyle.phoneGreenLightBorder
                         Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
-                        KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : encryptionStatusText.activeFocusOnTab ? encryptionStatusText : openStatisticPanelButton
                         KeyNavigation.backtab:endCallButton
                         onClicked: {
                             mainWindow.call.core.lAccept(false)
@@ -1468,7 +1608,7 @@ AbstractWindow {
                         radius: Utils.getSizeWithScreenRatio(71)
                         style: ButtonStyle.phoneRedLightBorder
                         Layout.column: mainWindow.startingCall ? 0 : bottomButtonsLayout.columns - 1
-                        KeyNavigation.tab: mainWindow.startingCall ? (acceptCallButton.visible ? acceptCallButton : videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : openStatisticPanelButton
+                        KeyNavigation.tab: mainWindow.startingCall ? (acceptCallButton.visible ? acceptCallButton : videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : encryptionStatusText.activeFocusOnTab ? encryptionStatusText : openStatisticPanelButton
                         KeyNavigation.backtab: mainWindow.startingCall ? rightPanel.visible ? Utils.getLastFocusableItemInItem(rightPanel) : nextItemInFocusChain(false): callListButton
                         onClicked: {
                             mainWindow.callTerminatedByUser = true
@@ -1500,6 +1640,7 @@ AbstractWindow {
                                                 //: "Mettre l'appel en pause"
                                               : qsTr("call_action_pause_call")
                         Accessible.name: checked ? qsTr("call_action_resume_call") : qsTr("call_action_pause_call")
+                        accessibleCheckedState: false
                         enabled: mainWindow.conference
                                  || mainWindow.callState != LinphoneEnums.CallState.PausedByRemote
                         icon.source: enabled
@@ -1569,6 +1710,7 @@ AbstractWindow {
                     // Call list button
                     CheckableButton {
                         id: callListButton
+                        objectName: "callListButton"
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         checkable: true
@@ -1613,6 +1755,7 @@ AbstractWindow {
                         //: "Activer la vidéo"
                         ToolTip.text: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
                         Accessible.name: mainWindow.cameraEnabled ? qsTr("call_deactivate_video_hint") : qsTr("call_activate_video_hint")
+                        accessibleCheckedState: false
                         checked: !mainWindow.cameraEnabled
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
@@ -1632,6 +1775,7 @@ AbstractWindow {
                             //: "Désactiver le micro"
                             : qsTr("call_deactivate_microphone")
                         Accessible.name: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
+                        accessibleCheckedState: false
                         checked: mainWindow.call && mainWindow.call.core.microphoneMuted
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
@@ -1640,6 +1784,16 @@ AbstractWindow {
                         onClicked: mainWindow.call.core.lSetMicrophoneMuted(
                                        !mainWindow.call.core.microphoneMuted)
                         KeyNavigation.backtab: videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : nextItemInFocusChain(false)
+                        Connections {
+                            target: mainWindow.call ? mainWindow.call.core : null
+                            function onMicrophoneMutedChanged() {
+                                if (audioMicrophoneButton.keyboardFocus)
+                                    return
+                                audioMicrophoneButton.Accessible.announce(mainWindow.call.core.microphoneMuted
+                                                                          ? qsTr("call_microphone_muted_announcement")
+                                                                          : qsTr("call_microphone_unmuted_announcement"))
+                            }
+                        }
                     }
 
                     // Screen cast button
@@ -1684,6 +1838,7 @@ AbstractWindow {
                             anchors.top: parent.top
                             anchors.right: parent.right
                             unread: mainWindow.chat ? mainWindow.chat.core.unreadMessagesCount : 0
+                            kind: "unreadMessages"
                         }
                         onToggled: {
                             if (checked) {
@@ -1749,6 +1904,7 @@ AbstractWindow {
                     // More option button
                     PopupButton {
                         id: moreOptionsButton
+                        objectName: "callMoreOptionsButton"
                         //: "Plus d'options…"
                         ToolTip.text: qsTr("call_more_options_hint")
                         popUpTitle: qsTr("call_more_options_hint")

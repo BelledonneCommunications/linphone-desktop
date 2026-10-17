@@ -10,6 +10,7 @@ Control.Page {
 	property alias headerStack: headerStack
 	property alias contentLoader: contentLoader
 	property alias customHeaderButtons: customButtonLayout.children
+	property alias closeButton: closeButton
 	property int contentItemHeight: scrollview.height
 	property bool closeButtonVisible: true
 	property var firstContentFocusableItem: undefined
@@ -17,6 +18,10 @@ Control.Page {
 	clip: true
 
 	property string headerTitleText
+	property string fallbackAccessibleTitleText
+	property string accessibleTitleText: headerTitleText.length > 0 ? headerTitleText : fallbackAccessibleTitleText
+	Accessible.role: Accessible.Pane
+	Accessible.name: accessibleTitleText
 	property string headerSubtitleText
 	property string headerValidateButtonText
 	signal returnRequested()
@@ -61,8 +66,8 @@ Control.Page {
 				anchors.verticalCenter: parent.verticalCenter
 				anchors.rightMargin: Utils.getSizeWithScreenRatio(5)
 				//: Close %1 panel
-				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.headerTitleText)
-				KeyNavigation.tab : firstContentFocusableItem ?? nextItemInFocusChain()
+				Accessible.name: qsTr("close_name_panel_accessible_button").arg(mainItem.accessibleTitleText)
+				KeyNavigation.tab: mainItem.firstContentFocusableItem ?? null
 			}
 		}
 		contentItem: StackLayout {
@@ -72,6 +77,9 @@ Control.Page {
 				Layout.alignment: Qt.AlignVCenter
                 spacing: Utils.getSizeWithScreenRatio(10)
 				Text {
+					Accessible.role: Accessible.Heading
+					Accessible.name: mainItem.accessibleTitleText
+					Accessible.ignored: mainItem.accessibleTitleText.length === 0
 					text: mainItem.headerTitleText
 					Layout.fillWidth: true
 					Layout.fillHeight: true
@@ -99,10 +107,14 @@ Control.Page {
                     icon.width: Utils.getSizeWithScreenRatio(24)
                     icon.height: Utils.getSizeWithScreenRatio(24)
 					onClicked: mainItem.returnRequested()
+					Accessible.name: qsTr("panel_back_accessible_name")
 				}
 				ColumnLayout {
 					spacing: 0
 					Text {
+						Accessible.role: Accessible.Heading
+						Accessible.name: text
+						Accessible.ignored: text.length === 0
 						Layout.alignment: Qt.AlignVCenter
 						verticalAlignment: Text.AlignVCenter
 						text: mainItem.headerTitleText

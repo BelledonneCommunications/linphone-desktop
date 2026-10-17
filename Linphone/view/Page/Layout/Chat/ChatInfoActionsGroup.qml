@@ -16,6 +16,8 @@ ColumnLayout {
     property var entries
 
     Text {
+        Accessible.role: Accessible.Heading
+        Accessible.name: text
         font: Typography.h4
         color: DefaultStyle.main2_600
         text: title
@@ -65,7 +67,7 @@ ColumnLayout {
 
                             Text {
                                 text: modelData.text
-                                font: hovered ? Typography.p1b : Typography.p1
+                                font: hovered || entryArea.activeFocus ? Typography.p1b : Typography.p1
                                 color: modelData.color
                                 Layout.alignment: Qt.AlignVCenter
                                 Layout.fillWidth: true
@@ -82,8 +84,27 @@ ColumnLayout {
                         }
 
                         MouseArea {
+                            id: entryArea
                             anchors.fill: parent
                             cursorShape: Qt.PointingHandCursor
+                            activeFocusOnTab: true
+                            Accessible.role: Accessible.Button
+                            Accessible.name: modelData.text
+                            Accessible.onPressAction: modelData.action()
+                            Keys.onPressed: event => {
+                                if (event.key === Qt.Key_Space || event.key === Qt.Key_Enter || event.key === Qt.Key_Return) {
+                                    modelData.action()
+                                    event.accepted = true
+                                }
+                            }
+                            Rectangle {
+                                anchors.fill: parent
+                                color: "transparent"
+                                radius: Utils.getSizeWithScreenRatio(10)
+                                border.color: DefaultStyle.main2_900
+                                border.width: Utils.getSizeWithScreenRatio(3)
+                                visible: entryArea.activeFocus
+                            }
                             onClicked: modelData.action()
 							onEntered: hovered = true
 							onExited: hovered = false

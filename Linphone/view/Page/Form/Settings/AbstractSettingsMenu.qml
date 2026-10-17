@@ -52,6 +52,8 @@ AbstractMainPage {
 				Accessible.name: qsTr("back_previous_menu_accessible_name")
 			}
 			Text {
+				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				text: titleText
 				color: DefaultStyle.main2_700
 				font: Typography.h3
@@ -69,20 +71,31 @@ AbstractMainPage {
             Layout.topMargin: Utils.getSizeWithScreenRatio(41)
 			Layout.leftMargin: leftPanel.sideMargin
 			property int selectedIndex: mainItem.defaultIndex != -1 ? mainItem.defaultIndex : 0
-			activeFocusOnTab: true
 			spacing: Utils.getSizeWithScreenRatio(5)
 			Accessible.role: Accessible.List
 			//: Settings page selection
 			Accessible.name: qsTr("settings_page_selection_accessible_name")
 			keyNavigationEnabled: false
+
+			function focusEntry(from, step) {
+				for (var i = from + step; i >= 0 && i < count; i += step) {
+					var entry = itemAtIndex(i)
+					if (entry && entry.visible) {
+						entry.forceActiveFocus(step > 0 ? Qt.TabFocusReason : Qt.BacktabFocusReason)
+						return
+					}
+				}
+			}
 			
 			delegate: SettingsMenuItem {
 				titleText: modelData.title
 				visible: modelData.visible != undefined ? modelData.visible : true
 				enabled: visible
 				isSelected: familiesList.selectedIndex == index
-				focus: index == 0
-				focusPolicy: visible ? Qt.StrongFocus : Qt.NoFocus
+				focus: index == familiesList.selectedIndex
+				focusPolicy: !visible ? Qt.NoFocus : index == familiesList.selectedIndex ? Qt.StrongFocus : Qt.ClickFocus
+				Keys.onUpPressed: familiesList.focusEntry(index, -1)
+				Keys.onDownPressed: familiesList.focusEntry(index, 1)
 				onSelected: {
 					familiesList.selectedIndex = index
 					rightPanelStackView.clear()

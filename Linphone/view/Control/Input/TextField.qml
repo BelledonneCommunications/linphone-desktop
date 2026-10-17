@@ -20,6 +20,30 @@ Control.TextField {
     Component.onCompleted: {
         text = "workaround"
         resetText()
+        updateAccessibleDescription()
+    }
+
+    property string accessibleName
+    property string accessibleError
+    Accessible.name: accessibleName
+    onAccessibleNameChanged: updateAccessibleDescription()
+    onAccessibleErrorChanged: {
+        if (echoMode !== TextInput.Password)
+            Accessible.description = accessibleError
+        updateAccessibleDescription()
+    }
+    onEchoModeChanged: {
+        if (echoMode !== TextInput.Password)
+            Accessible.description = accessibleError
+        updateAccessibleDescription()
+    }
+    Accessible.onDescriptionChanged: updateAccessibleDescription()
+    function updateAccessibleDescription() {
+        if (echoMode !== TextInput.Password)
+            return
+        var description = [accessibleName, accessibleError].filter(part => part.length > 0).join(", ")
+        if (Accessible.description !== description)
+            Accessible.description = description
     }
 
     verticalAlignment: TextInput.AlignVCenter
@@ -191,6 +215,7 @@ Control.TextField {
 
     Button {
         id: eyeButton
+        objectName: "passwordVisibilityButton"
         KeyNavigation.left: mainItem
         property real rightMargin: Utils.getSizeWithScreenRatio(15)
         z: 1
@@ -211,7 +236,7 @@ Control.TextField {
             qsTr("hide_accessible_name") :
             //: Show %1
             qsTr("show_accessible_name")
-        ).arg(mainItem.Accessible.name)
+        ).arg(mainItem.accessibleName || mainItem.Accessible.name)
     }
     Button {
         id: customButton
@@ -229,6 +254,6 @@ Control.TextField {
         anchors.rightMargin: Utils.getSizeWithScreenRatio(15)
         onClicked: mainItem.customCallback()
         //: %1 button of %2
-        Accessible.name: qsTr("textfield_custom_button_accessible_name").arg(mainItem.customButtonAccessibleName).arg(mainItem.Accessible.name)
+        Accessible.name: qsTr("textfield_custom_button_accessible_name").arg(mainItem.customButtonAccessibleName).arg(mainItem.accessibleName || mainItem.Accessible.name)
     }
 }

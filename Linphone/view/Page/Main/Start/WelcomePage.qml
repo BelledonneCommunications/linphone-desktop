@@ -12,6 +12,8 @@ LoginLayout {
 
 	titleContent: [
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			id: welcome
             //: "Bienvenue"
             text: qsTr("welcome_page_title")
@@ -25,6 +27,8 @@ LoginLayout {
 			scaleLettersFactor: 1.1
 		},
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			Layout.alignment: Qt.AlignBottom
             Layout.leftMargin: Utils.getSizeWithScreenRatio(29)
             Layout.bottomMargin: Utils.getSizeWithScreenRatio(19)
@@ -94,6 +98,8 @@ LoginLayout {
 					ColumnLayout {
                         spacing: Utils.getSizeWithScreenRatio(10)
 						Text {
+							Accessible.role: Accessible.Heading
+							Accessible.name: modelData.title.replace(/<[^>]*>/g, "")
 							id: title
 							text: modelData.title
 							textFormat: Text.RichText

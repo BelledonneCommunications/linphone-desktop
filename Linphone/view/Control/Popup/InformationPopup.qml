@@ -12,9 +12,52 @@ Popup {
 	property string description
 	property int index
 	signal closePopup(int index)
-	onClosed: closePopup(index)
+	property string accessibleMessage: [title, description].map(part => part ? part.replace(/<[^>]*>/g, "").trim() : "").filter(part => part.length > 0).join(", ")
+	property bool announcementPending: false
+	function announceMessage() {
+		if (accessibleMessage.length > 0)
+			contentItem.Accessible.announce(accessibleMessage, isSuccess ? Accessible.Polite : Accessible.Assertive)
+	}
 	onAboutToShow: {
 		autoClosePopup.restart()
+	}
+	function canAnnounce() {
+		var window = contentItem.Window.window
+		return Qt.application.state === Qt.ApplicationActive && (!window || window.active)
+	}
+	function announceWhenActive() {
+		if (!announcementPending || !canAnnounce())
+			return
+		announcementPending = false
+		if (!hovered)
+			autoClosePopup.restart()
+		Qt.callLater(announceMessage)
+	}
+	onOpened: {
+		if (canAnnounce()) {
+			announceMessage()
+		} else {
+			announcementPending = true
+			autoClosePopup.stop()
+		}
+	}
+	onClosed: {
+		announcementPending = false
+		closePopup(index)
+	}
+	Connections {
+		target: mainItem.contentItem.Window.window
+		enabled: mainItem.announcementPending
+		function onActiveChanged() {
+			mainItem.announceWhenActive()
+		}
+	}
+	Connections {
+		target: Qt.application
+		enabled: mainItem.announcementPending
+		function onStateChanged() {
+			mainItem.announceWhenActive()
+		}
 	}
 	closePolicy: Popup.NoAutoClose
 	x : parent.x + parent.width - width
@@ -28,7 +71,7 @@ Popup {
 
 	onHoveredChanged: {
 		if (hovered) autoClosePopup.stop()
-		else autoClosePopup.restart()
+		else if (!announcementPending) autoClosePopup.restart()
 	}
 	Timer {
 		id: autoClosePopup
@@ -40,8 +83,12 @@ Popup {
 	contentItem: RowLayout {
         spacing: Utils.getSizeWithScreenRatio(24)
 		focus: true
+		Keys.onEscapePressed: event => {
+			mainItem.close()
+			event.accepted = true
+		}
 		Accessible.role: Accessible.AlertMessage
-		Accessible.name: "%1, %2".arg(mainItem.title).arg(mainItem.description)
+		Accessible.name: mainItem.accessibleMessage
 		EffectImage {
 			imageSource: mainItem.isSuccess ? AppIcons.smiley : AppIcons.smileySad
 			colorizationColor: mainItem.isSuccess ? DefaultStyle.success_500_main : DefaultStyle.danger_500_main
@@ -76,6 +123,7 @@ Popup {
                     icon.height: Utils.getSizeWithScreenRatio(20)
 					Layout.alignment: Qt.AlignTop | Qt.AlignRight
 					visible: mainItem.hovered || hovered
+					Accessible.name: qsTr("close_accessible_name")
 					style: ButtonStyle.noBackground
 					icon.source: AppIcons.closeX
 					onClicked: mainItem.close()

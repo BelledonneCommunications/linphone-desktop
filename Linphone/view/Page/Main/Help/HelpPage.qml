@@ -32,6 +32,7 @@ AbstractMainPage {
 			RoundButton {
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
+				Accessible.name: qsTr("back_previous_menu_accessible_name")
                 icon.width: Utils.getSizeWithScreenRatio(24)
                 icon.height: Utils.getSizeWithScreenRatio(24)
 				onClicked: {
@@ -39,6 +40,8 @@ AbstractMainPage {
 				}
 			}
 			Text {
+                Accessible.role: Accessible.Heading
+                Accessible.name: text
                 //: "Aide"
                 text: qsTr("help_title")
 				color: DefaultStyle.main2_700
@@ -65,6 +68,8 @@ AbstractMainPage {
 			}
 		}
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			Layout.leftMargin: leftPanel.leftMargin
 			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(aboutImage.visible ? 41 : 24)
@@ -97,6 +102,7 @@ AbstractMainPage {
 					Layout.preferredWidth: width
 					Layout.minimumWidth: width
 					iconSource: AppIcons.info
+					actionable: false
 					//: "Version"
 					title: qsTr("help_about_version_title")
 					subTitle: AppCpp.shortApplicationVersion
@@ -134,12 +140,13 @@ AbstractMainPage {
 			}
 		}
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			Layout.leftMargin: leftPanel.leftMargin
 			Layout.rightMargin: leftPanel.rightMargin
             Layout.topMargin: Utils.getSizeWithScreenRatio(32)
 			Layout.fillWidth: true
-            //: "À propos de %1"
-            text: qsTr("help_about_title").arg(applicationName)
+            text: qsTr("help_advanced_title")
 			color: DefaultStyle.main2_600
 			font: Typography.h4
 		}

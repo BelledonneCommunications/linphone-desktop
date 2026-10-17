@@ -8,6 +8,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
+	Accessible.role: Accessible.List
+	Accessible.name: qsTr("participant_list_accessible_name")
 	id: mainItem
 	visible: contentHeight > 0
 	clip: true
@@ -89,6 +91,8 @@ ListView {
 					Switch {
 						opacity: mainItem.isMeAdmin && !modelData.core.isMe ? 1 : 0
 						Component.onCompleted: if (modelData.core.isAdmin) toggle()
+						enabled: mainItem.isMeAdmin && !modelData.core.isMe
+						Accessible.name: qsTr("participant_admin_accessible_name").arg(modelData.core.displayName)
 						//TODO : Utilser checked et onToggled (pas compris)
 						onToggled: participantModel.setParticipantAdminStatus(modelData.core, position === 1)
 					}
@@ -104,6 +108,8 @@ ListView {
     				bottomPadding: Utils.getSizeWithScreenRatio(3)
 					style: ButtonStyle.hoveredBackground
 					icon.source: AppIcons.closeX
+					enabled: mainItem.isMeAdmin && !modelData.core.isMe
+					Accessible.name: qsTr("remove_participant_accessible_name").arg(modelData.core.displayName)
 					onClicked: participantModel.removeParticipant(modelData.core)
 				}
 			}

@@ -57,14 +57,16 @@ AbstractMainPage {
         }
     }
 
-    onSelectedRowHistoryGuiChanged: {
-        if (selectedRowHistoryGui)
-            rightPanelStackView.replace(contactDetailComp,
-                                        Control.StackView.Immediate)
-        else
-            rightPanelStackView.replace(emptySelection,
-                                        Control.StackView.Immediate)
+    function updateRightPanel() {
+        var showDetail = !!selectedRowHistoryGui
+        var current = rightPanelStackView.currentItem
+        var showingDetail = !!current && current.objectName === "callHistoryDetail"
+        if (showDetail === showingDetail)
+            return
+        rightPanelStackView.replace(null, showDetail ? contactDetailComp : emptySelection, {},
+                                    Control.StackView.Immediate)
     }
+    onSelectedRowHistoryGuiChanged: Qt.callLater(updateRightPanel)
     rightPanelStackView.initialItem: emptySelection
     rightPanelStackView.width: Utils.getSizeWithScreenRatio(360)
 
@@ -154,6 +156,8 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "Appels"
                         text: qsTr("call_history_call_list_title")
@@ -287,6 +291,11 @@ AbstractMainPage {
                             }
                             CallHistoryListView {
                                 id: historyListView
+                                onContextMenuRequested: origin => Qt.callLater(function() {
+                                    var detail = mainItem.rightPanelStackView.currentItem
+                                    if (detail && detail.openOptions)
+                                        detail.openOptions(origin)
+                                })
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 Layout.topMargin: Utils.getSizeWithScreenRatio(38)
@@ -368,6 +377,8 @@ AbstractMainPage {
                         }
                     }
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "Nouvel appel"
                         text: qsTr("call_action_start_new_call")
@@ -444,6 +455,42 @@ AbstractMainPage {
     Component {
         id: contactDetailComp
         FocusScope {
+            id: callHistoryDetail
+            objectName: "callHistoryDetail"
+            property var optionsOrigin: null
+            function openOptions(origin) {
+                optionsOrigin = origin || null
+                detailOptions.openedWithKeyboard = true
+                detailOptions.open()
+            }
+            Connections {
+                target: detailOptions.popup
+                property bool menuHadFocus: false
+                property bool menuFocusedByKeyboard: false
+                function onAboutToHide() {
+                    menuHadFocus = detailOptions.popup.activeFocus
+                    menuFocusedByKeyboard = detailOptions.restoreWithKeyboard
+                    var origin = callHistoryDetail.optionsOrigin
+                    if (menuHadFocus && origin && origin.visible)
+                        detailOptions.restoreFocusOnClose = false
+                }
+                function onClosed() {
+                    var origin = callHistoryDetail.optionsOrigin
+                    callHistoryDetail.optionsOrigin = null
+                    if (!menuHadFocus)
+                        return
+                    menuHadFocus = false
+                    var reason = menuFocusedByKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason
+                    var current = detailOptions.Window.activeFocusItem
+                    var focusLost = !current || current === detailOptions || current === detailOptions.Window.contentItem
+                    if (origin && origin.visible) {
+                        if (focusLost || current === origin)
+                            origin.forceActiveFocus(reason)
+                    } else if (focusLost && detailOptions.visible) {
+                        detailOptions.forceActiveFocus(reason)
+                    }
+                }
+            }
             CallHistoryLayout {
                 id: contactDetail
                 anchors.fill: parent
@@ -460,9 +507,12 @@ AbstractMainPage {
 
                 buttonContent: PopupButton {
                     id: detailOptions
+                    objectName: "callHistoryOptionsButton"
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    popUpTitle: qsTr("call_history_options_accessible_name")
+                    Accessible.name: contactDetail.contactName
+                                     ? qsTr("call_history_contact_options_accessible_name").arg(contactDetail.contactName)
+                                     : qsTr("call_history_options_accessible_name")
                     popup.x: width
                     popup.contentItem: FocusScope {
                         implicitHeight: detailsButtons.implicitHeight

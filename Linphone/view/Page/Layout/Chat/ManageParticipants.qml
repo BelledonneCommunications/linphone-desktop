@@ -53,6 +53,7 @@ Rectangle {
 			spacing: Utils.getSizeWithScreenRatio(5)
 			BigButton {
 				id: manageParticipantsBackButton
+				Accessible.name: qsTr("panel_back_accessible_name")
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.leftArrow
 				onClicked: {
@@ -60,6 +61,8 @@ Rectangle {
 				}
 			}
 			Text {
+				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				text: qsTr("group_infos_manage_participants")
 				color: DefaultStyle.main2_600
 				maximumLineCount: 1

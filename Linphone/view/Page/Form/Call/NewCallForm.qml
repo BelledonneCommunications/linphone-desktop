@@ -19,6 +19,8 @@ CreationFormLayout {
     topLayoutVisible: mainItem.displayCurrentCalls && callList.count > 0
     topContent: [
         Text {
+            Accessible.role: Accessible.Heading
+            Accessible.name: text
             visible: callList.count > 0
             //: "Appels en cours"
             text: qsTr("call_transfer_active_calls_label")

@@ -32,11 +32,14 @@ ColumnLayout {
 		id: titleLayout
 		visible: mainItem.showTitle
 		BigButton {
+			Accessible.name: qsTr("panel_back_accessible_name")
 			icon.source: AppIcons.leftArrow
 			style: ButtonStyle.noBackground
 			onClicked: mainItem.goBackRequested()
 		}
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			text: mainItem.title
 			font: Typography.h4
 		}

@@ -144,6 +144,8 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "Conversations"
                         text: qsTr("chat_list_title")
@@ -234,6 +236,7 @@ AbstractMainPage {
                         }
                         ChatListView {
                             id: chatListView
+                            objectName: "chatListView"
                             Layout.fillWidth: true
                             Layout.fillHeight: true
                             chatProxy.model: AppCpp.chats
@@ -294,6 +297,7 @@ AbstractMainPage {
                         icon.source: AppIcons.leftArrow
                         focus: true
                         KeyNavigation.down: listStackView
+                        Accessible.name: qsTr("chat_back_accessible_name")
                         onClicked: {
                             console.debug(
                                         "[CallPage]User: return to call history")
@@ -302,6 +306,8 @@ AbstractMainPage {
                         }
                     }
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         Layout.fillWidth: true
                         //: "New chat"
                         text: qsTr("chat_action_start_new_chat")

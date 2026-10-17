@@ -9,6 +9,8 @@ TextEdit {
 	id: mainItem
 	
 	property string placeholderText
+	Accessible.role: Accessible.EditableText
+	Accessible.name: placeholderText
     property real placeholderPixelSize: Typography.p1.pixelSize
     property real placeholderWeight: Typography.p1.weight
 	property color placeholderTextColor: color

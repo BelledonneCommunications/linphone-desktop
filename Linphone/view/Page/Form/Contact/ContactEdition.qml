@@ -45,6 +45,8 @@ MainRightPanel {
 
 	headerContentItem: RowLayout {
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			text: mainItem.title
 			font {
 				pixelSize: Utils.getSizeWithScreenRatio(20)
@@ -183,6 +185,14 @@ MainRightPanel {
                     editionLayout.forceActiveFocus()
                 }
             }
+
+			Connections {
+				target: FocusNavigator
+				function onFocusChanged(item, keyboardFocus) {
+					if (keyboardFocus && Utils.isDescendant(item, editionLayout))
+						Utils.ensureVisibleY(item, editionLayout)
+				}
+			}
 
 			signal ensureVisibleRequested(Item item)
 

@@ -78,6 +78,8 @@ ApplicationWindow {
                     spacing: Utils.getSizeWithScreenRatio(5)
                     width: addressChooserPopup.width
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         //: "Choisissez un numéro ou adresse SIP"
                         text: qsTr("contact_dialog_pick_phone_number_or_sip_address_title")
                         wrapMode: Text.Wrap
@@ -92,6 +94,7 @@ ApplicationWindow {
                         style: ButtonStyle.noBackground
                         icon.source:AppIcons.closeX
                         onClicked: addressChooserPopup.close()
+                        Accessible.name: qsTr("close_accessible_name")
                     }
                 }
                 ListView {

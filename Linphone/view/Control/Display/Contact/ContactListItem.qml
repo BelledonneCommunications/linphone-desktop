@@ -31,6 +31,7 @@ FocusScope {
     // List of default address on selected contacts.
     property bool isSelected: false // selected in list => currentIndex == index
     property bool isLastHovered: false
+    property bool tabStop: false
 
     property var previousInitial
     // Use directly previous initial
@@ -42,8 +43,23 @@ FocusScope {
     signal clicked(var mouse)
     signal contactDeletionRequested(FriendGui contact)
     signal containsMouseChanged(bool containsMouse)
-    Accessible.name: displayName
-    Accessible.role: Accessible.ListItem
+
+    Connections {
+        target: friendPopup.popup
+        property bool menuHadFocus: false
+        property bool menuFocusedByKeyboard: false
+        function onAboutToHide() {
+            menuHadFocus = friendPopup.popup.activeFocus
+            menuFocusedByKeyboard = friendPopup.restoreWithKeyboard
+        }
+        function onClosed() {
+            var current = mainItem.Window.activeFocusItem
+            var focusLost = !current || current === friendPopup || current === mainItem.Window.contentItem
+            if (menuHadFocus && focusLost)
+                contactArea.forceActiveFocus(menuFocusedByKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason)
+            menuHadFocus = false
+        }
+    }
 
     MouseArea {
         Text {
@@ -199,11 +215,15 @@ FocusScope {
                 }
                 PopupButton {
                     id: friendPopup
+                    objectName: "contactMenuButton"
+                    popUpTitle: qsTr("contact_options_accessible_name").arg(mainItem.displayName)
                     z: contactArea.z + 1
                     popup.x: 0
                     popup.padding: Utils.getSizeWithScreenRatio(10)
-                    visible: mainItem.showContactMenu && (contactArea.containsMouse || mainItem.isLastHovered || hovered || popup.opened)
+                    visible: mainItem.showContactMenu && (contactArea.containsMouse || mainItem.isLastHovered || hovered || popup.opened
+                                                          || contactArea.activeFocus || activeFocus)
                     enabled: visible
+                    activeFocusOnTab: false
 
                     popup.contentItem: ColumnLayout {
                         IconLabelButton {
@@ -273,12 +293,23 @@ FocusScope {
         }
 
         id: contactArea
+        objectName: "contactRow"
+        Accessible.onPressAction: contactArea.clicked(undefined)
         enabled: mainItem.selectionEnabled
+        Accessible.role: Accessible.ListItem
+        Accessible.focusable: true
+        Accessible.name: mainItem.displayName
+        Accessible.selectable: true
+        Accessible.selected: mainItem.isSelected
+        Accessible.checkable: mainItem.multiSelectionEnabled
+        Accessible.checked: mainItem.multiSelectionEnabled && mainItem.selectedContacts.indexOf(mainItem.addressFromFilter) != -1
         anchors.fill: parent
         //height: mainItem.height
         hoverEnabled: true
         acceptedButtons: Qt.AllButtons
         focus: !actionButtons.visible
+        activeFocusOnTab: mainItem.tabStop
+        property bool keyboardFocus: FocusHelper.keyboardFocus
         onContainsMouseChanged: {
             mainItem.containsMouseChanged(containsMouse)
         }
@@ -287,13 +318,27 @@ FocusScope {
             radius: Utils.getSizeWithScreenRatio(8)
             opacity: 0.7
             color: mainItem.isSelected ? DefaultStyle.main2_200 : DefaultStyle.main2_100
-            visible: mainItem.isLastHovered || mainItem.isSelected || friendPopup.hovered
+            visible: mainItem.isLastHovered || mainItem.isSelected || friendPopup.hovered || contactArea.activeFocus
+        }
+        Rectangle {
+            anchors.fill: contactArea
+            radius: Utils.getSizeWithScreenRatio(8)
+            color: "transparent"
+            visible: contactArea.keyboardFocus
+            border.color: DefaultStyle.main2_900
+            border.width: Utils.getSizeWithScreenRatio(3)
         }
         Keys.onPressed: event => {
             if (event.key == Qt.Key_Space
                 || event.key == Qt.Key_Enter
                 || event.key == Qt.Key_Return) {
                 contactArea.clicked(undefined)
+                event.accepted = true
+            } else if (mainItem.showContactMenu && friendPopup
+                       && (event.key == Qt.Key_Menu || event.key == Qt.Key_Right
+                           || (event.key == Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier)))) {
+                friendPopup.openedWithKeyboard = true
+                friendPopup.open()
                 event.accepted = true
             }
         }

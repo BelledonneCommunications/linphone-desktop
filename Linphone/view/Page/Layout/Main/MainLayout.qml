@@ -14,7 +14,6 @@ Item {
     id: mainItem
     property var callObj
     property var contextualMenuOpenedComponent: undefined
-    property bool focusPageOnNextLoad: false // Focus the page on next load - usefull cause of loader
 
     signal addAccountRequest
     signal openNewCallRequest
@@ -134,7 +133,11 @@ Item {
             property string remoteName: currentCall ? currentCall.core.remoteName : ""
             contentItem: MediumButton {
                 style: ButtonStyle.toast
-                text: currentCallNotif.currentCall ? currentCallNotif.currentCall.core.conference ? ("Réunion en cours : ") + currentCallNotif.currentCall.core.conference.core.subject : (("Appel en cours : ") + currentCallNotif.remoteName) : "appel en cours"
+                text: currentCallNotif.currentCall
+                      ? currentCallNotif.currentCall.core.conference
+                        ? qsTr("main_ongoing_meeting_banner").arg(currentCallNotif.currentCall.core.conference.core.subject)
+                        : qsTr("main_ongoing_call_banner").arg(currentCallNotif.remoteName)
+                      : qsTr("main_ongoing_call_banner_no_name")
                 onClicked: {
                     var callsWindow = UtilsCpp.getOrCreateCallsWindow(currentCallNotif.currentCall);
                     UtilsCpp.smartShowWindow(callsWindow);
@@ -163,25 +166,19 @@ Item {
                         "icon": AppIcons.phone,
                         "selectedIcon": AppIcons.phoneSelected,
                         //: "Appels"
-                        "label": qsTr("bottom_navigation_calls_label"),
-                        //: "Open calls page"
-                        "accessibilityLabel": qsTr("open_calls_page_accessible_name")
+                        "label": qsTr("bottom_navigation_calls_label")
                     },
                     {
                         "icon": AppIcons.adressBook,
                         "selectedIcon": AppIcons.adressBookSelected,
                         //: "Contacts"
-                        "label": qsTr("bottom_navigation_contacts_label"),
-                        //: "Open contacts page"
-                        "accessibilityLabel": qsTr("open_contacts_page_accessible_name")
+                        "label": qsTr("bottom_navigation_contacts_label")
                     },
                     {
                         "icon": AppIcons.chatTeardropText,
                         "selectedIcon": AppIcons.chatTeardropTextSelected,
                         //: "Conversations"
                         "label": qsTr("bottom_navigation_conversations_label"),
-                        //: "Open conversations page"
-                        "accessibilityLabel": qsTr("open_conversations_page_accessible_name"),
                         "visible": !SettingsCpp.disableChatFeature
                     },
                     {
@@ -189,8 +186,6 @@ Item {
                         "selectedIcon": AppIcons.videoconferenceSelected,
                         //: "Réunions"
                         "label": qsTr("bottom_navigation_meetings_label"),
-                        //: "Open meetings page"
-                        "accessibilityLabel": qsTr("open_contact_page_accessible_name"),
                         "visible": !SettingsCpp.disableMeetingsFeature
                     }
                 ]
@@ -207,17 +202,6 @@ Item {
                     if (event.key == Qt.Key_Right) {
                         mainStackView.currentItem.forceActiveFocus();
                     }
-                }
-
-                /**
-                 * Focus the page when user select the page with keyboard.
-                 * Do not add this behavior on the arrows
-                 */
-                onEnterPressed: {
-                    focusPageOnNextLoad = true
-                }
-                onSpacePressed: {
-                    focusPageOnNextLoad = true
                 }
                 
                 Component.onCompleted: {
@@ -489,6 +473,7 @@ Item {
                         }
                         PopupButton {
                             id: settingsMenuButton
+                            objectName: "mainOptionsButton"
                             icon.width: Utils.getSizeWithScreenRatio(24)
                             icon.height: Utils.getSizeWithScreenRatio(24)
                             popup.width: Utils.getSizeWithScreenRatio(271)
@@ -707,10 +692,6 @@ Item {
                                     openContextualMenuComponent(page);
                                 }
                             }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
-                            }
                         }
                         Loader {
                             active: mainStackLayout.currentIndex === 1
@@ -725,10 +706,6 @@ Item {
                                         contactPage.initialFriendToDisplay = contactAddress;
                                     }
                                 }
-                            }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
                             }
                         }
                         Loader {
@@ -752,10 +729,6 @@ Item {
                                     magicSearchBar.focus = false;
                                 }
                             }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
-                            }
                         }
 
                         Loader {
@@ -771,10 +744,6 @@ Item {
                                         }
                                     }
                                 }
-                            }
-                            onLoaded: {
-                                if(focusPageOnNextLoad) item.forceActiveFocus(Qt.TabFocusReason)
-                                focusPageOnNextLoad = false
                             }
                         }
 

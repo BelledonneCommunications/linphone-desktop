@@ -6,11 +6,14 @@ import QtQuick.Controls.Basic
 import Linphone
 import QtQml
 import UtilsCpp
+import CustomControls 1.0
 
 import 'qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js' as Utils
 import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 
 ListView {
+	Accessible.role: Accessible.List
+	Accessible.name: qsTr("meeting_list_accessible_name")
 	id: mainItem
 	property string searchBarText
 	property bool hoverEnabled: true	
@@ -36,6 +39,38 @@ ListView {
 	
 	function selectIndex(index){
 		mainItem.currentIndex = index
+	}
+
+	keyNavigationEnabled: false
+	property int tabStopIndex: {
+		var start = currentIndex >= 0 ? currentIndex : 0
+		var found = findMeetingIndex(start, 1)
+		return found >= 0 ? found : findMeetingIndex(start, -1)
+	}
+	function meetingAt(index) {
+		var gui = index >= 0 && index < count ? model.getAt(index) : null
+		return gui && gui.core && gui.core.haveModel ? gui : null
+	}
+	function findMeetingIndex(from, step) {
+		for (var i = from; i >= 0 && i < count; i += step)
+			if (meetingAt(i))
+				return i
+		return -1
+	}
+	function focusMeeting(index, reason) {
+		if (index < 0)
+			return false
+		positionViewAtIndex(index, ListView.Contain)
+		var row = itemAtIndex(index)
+		if (!row)
+			return false
+		row.focusRow(reason)
+		return true
+	}
+	function activateMeeting(index) {
+		var gui = meetingAt(index)
+		if (gui && gui.core.state !== LinphoneEnums.ConferenceInfoState.Cancelled)
+			selectIndex(index)
 	}
 		
 	function resetSelections(){
@@ -187,6 +222,10 @@ ListView {
 		property bool isCanceled: itemGui.core ? itemGui.core.state === LinphoneEnums.ConferenceInfoState.Cancelled : false
 		property bool isSelected: itemGui.core == mainItem.selectedConference?.core
 
+		function focusRow(reason) {
+			mouseArea.forceActiveFocus(reason)
+		}
+
 		ColumnLayout {
 			anchors.fill: parent
 			spacing: itemDelegate.topOffset
@@ -274,6 +313,8 @@ ListView {
 						radius: Utils.getSizeWithScreenRatio(10)
 						visible: itemDelegate.haveModel || mainItem.currentIndex === itemDelegate.index
 						color: itemDelegate.isSelected ? DefaultStyle.main2_200 : DefaultStyle.grey_0 // mainItem.currentIndex === index
+						border.color: DefaultStyle.main2_900
+						border.width: mouseArea.keyboardFocus ? Utils.getSizeWithScreenRatio(3) : 0
 						ColumnLayout {
 							anchors.fill: parent
 							anchors.left: parent.left
@@ -342,6 +383,38 @@ ListView {
 						cursorShape: itemDelegate.isCanceled ? Qt.ArrowCursor : Qt.PointingHandCursor
 						visible: itemDelegate.haveModel
 						acceptedButtons: Qt.LeftButton | Qt.RightButton
+						objectName: "meetingListRow"
+						focusPolicy: index === mainItem.tabStopIndex ? Qt.StrongFocus : Qt.ClickFocus
+						property bool keyboardFocus: FocusHelper.keyboardFocus
+						Accessible.role: Accessible.ListItem
+						Accessible.focusable: true
+						Accessible.name: [itemGui.core ? itemGui.core.subject : "", itemDelegate.dateString,
+										  itemDelegate.isCanceled ? qsTr("meeting_info_cancelled")
+																  : UtilsCpp.toDateHourString(dateTime) + " - " + UtilsCpp.toDateHourString(endDateTime)]
+										 .filter(part => part.length > 0).join(", ")
+						Accessible.selectable: true
+						Accessible.selected: itemDelegate.isSelected
+						Accessible.onPressAction: mainItem.activateMeeting(index)
+						Keys.onPressed: (event) => {
+							if (event.key === Qt.Key_Enter || event.key === Qt.Key_Return || event.key === Qt.Key_Space) {
+								mainItem.activateMeeting(index)
+								event.accepted = true
+							} else if (event.key === Qt.Key_Up || event.key === Qt.Key_Down) {
+								var up = event.key === Qt.Key_Up
+								var next = mainItem.findMeetingIndex(index + (up ? -1 : 1), up ? -1 : 1)
+								if (next >= 0) {
+									mainItem.activateMeeting(next)
+									mainItem.focusMeeting(next, up ? Qt.BacktabFocusReason : Qt.TabFocusReason)
+								}
+								event.accepted = true
+							} else if (event.key === Qt.Key_Menu || (event.key === Qt.Key_F10 && (event.modifiers & Qt.ShiftModifier))) {
+								deletePopup.x = 0
+								deletePopup.y = mouseArea.height
+								deletePopup.openedWithKeyboard = true
+								deletePopup.open()
+								event.accepted = true
+							}
+						}
 						onClicked: (mouse) => {
 							if (mouse.button === Qt.RightButton) {
 								deletePopup.x = mouse.x
@@ -355,6 +428,21 @@ ListView {
 							parent: mouseArea
 							padding: Utils.getSizeWithScreenRatio(10)
 							closePolicy: Popup.CloseOnPressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
+							property bool openedWithKeyboard: false
+							property bool hadFocus: false
+							onOpened: {
+								if (openedWithKeyboard)
+									contentItem.forceActiveFocus(Qt.TabFocusReason)
+								openedWithKeyboard = false
+							}
+							onAboutToHide: hadFocus = activeFocus
+							onClosed: {
+								var current = mouseArea.Window.activeFocusItem
+								var focusLost = !current || current === mouseArea.Window.contentItem
+								if (hadFocus && focusLost && mouseArea.visible)
+									mouseArea.forceActiveFocus(Qt.TabFocusReason)
+								hadFocus = false
+							}
 							contentItem: IconLabelButton {
 								style: ButtonStyle.hoveredBackgroundRed
 								property var isMeObj: UtilsCpp.isMe(itemDelegate.itemGui?.core?.organizerAddress)

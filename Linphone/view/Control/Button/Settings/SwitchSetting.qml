@@ -38,6 +38,7 @@ RowLayout {
 	}
 	Switch {
 		id: switchButton
+		objectName: "settingSwitch"
 		Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 		checked: propertyOwnerGui ? propertyOwnerGui.core[mainItem.propertyName]
 						: propertyOwner ? propertyOwner[mainItem.propertyName] : false
@@ -47,7 +48,7 @@ RowLayout {
 			mainItem.toggled()
 		}
 		implicitHeight: Utils.getSizeWithScreenRatio(30)
-		Accessible.name: "%1 %2".arg(mainItem.titleText).arg(mainItem.subTitleText)
+		Accessible.name: mainItem.subTitleText.length > 0 ? mainItem.titleText + ", " + mainItem.subTitleText : mainItem.titleText
 	}
 	Binding {
 		id: binding

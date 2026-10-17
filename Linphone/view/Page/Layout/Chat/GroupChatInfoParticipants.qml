@@ -22,6 +22,8 @@ ColumnLayout {
 
 	RowLayout {
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			font: Typography.h4
 			color: DefaultStyle.main2_600
 			text: title
@@ -30,6 +32,7 @@ ColumnLayout {
 		Item{Layout.fillWidth: true}
 		BigButton {
 			id: expandButton
+			Accessible.name: mainItem.title
 			style: ButtonStyle.noBackground
 			checkable: true
 			checked: true
@@ -102,6 +105,7 @@ ColumnLayout {
 					
 					PopupButton {
 						id: detailOptions
+						popUpTitle: qsTr("participant_options_accessible_name").arg(modelData.core.displayName)
 						popup.x: width
 						popup.contentItem: FocusScope {
 							implicitHeight: detailsButtons.implicitHeight

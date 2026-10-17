@@ -9,6 +9,8 @@ import 'qrc:/qt/qml/Linphone/view/Style/buttonStyle.js' as ButtonStyle
 import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 ListView {
+    Accessible.role: Accessible.List
+    Accessible.name: qsTr("chat_messages_list_accessible_name")
     id: mainItem
     spacing: Utils.getSizeWithScreenRatio(4)
     property ChatGui chat
@@ -31,6 +33,31 @@ ListView {
     signal requestAutoPlayVoiceRecording(int indexToPlay)
     signal searchMessageByIdRequested(string id)
     currentIndex: -1
+    property int focusedMessageIndex: -1
+    property int newestMessageIndex: -1
+    property int tabStopIndex: focusedMessageIndex >= 0 && focusedMessageIndex < count ? focusedMessageIndex : newestMessageIndex
+    onCountChanged: {
+        for (var i = 0; i < count; ++i) {
+            var event = eventLogProxy.getEventAtIndex(i)
+            if (event && event.core.chatMessageGui) {
+                newestMessageIndex = i
+                return
+            }
+        }
+        newestMessageIndex = -1
+    }
+
+    function focusMessage(from, step) {
+        for (var i = from + step; i >= 0 && i < count; i += step) {
+            positionViewAtIndex(i, ListView.Contain)
+            var item = itemAtIndex(i)
+            if (item && item.chatMessage !== undefined && item.visible) {
+                item.forceActiveFocus(step > 0 ? Qt.BacktabFocusReason : Qt.TabFocusReason)
+                return true
+            }
+        }
+        return false
+    }
 
     property string filterText
     onFilterTextChanged: {
@@ -54,6 +81,7 @@ ListView {
     Button {
         visible: !mainItem.lastItemVisible && !atYEnd
         icon.source: AppIcons.downArrow
+        Accessible.name: qsTr("chat_scroll_to_last_message_accessible_name")
         leftPadding: Utils.getSizeWithScreenRatio(20)
         rightPadding: Utils.getSizeWithScreenRatio(20)
         topPadding: Utils.getSizeWithScreenRatio(20)
@@ -74,6 +102,7 @@ ListView {
             anchors.topMargin: Utils.getSizeWithScreenRatio(-5)
             anchors.rightMargin: Utils.getSizeWithScreenRatio(-5)
             unread: mainItem.chat?.core.unreadMessagesCount || 0
+            kind: "unreadMessages"
         }
     }
 
@@ -330,6 +359,10 @@ ListView {
                 property int yoff: Math.round(chatMessageDelegate.y - mainItem.contentY)
                 property bool isFullyVisible: (yoff > mainItem.y && yoff + height < mainItem.y + mainItem.height)
                 chatMessage: modelData.core.chatMessageGui
+                tabStop: index === mainItem.tabStopIndex
+                onActiveFocusChanged: if (activeFocus) mainItem.focusedMessageIndex = index
+                Keys.onUpPressed: event => event.accepted = mainItem.focusMessage(index, 1)
+                Keys.onDownPressed: event => event.accepted = mainItem.focusMessage(index, -1)
                 onIsFullyVisibleChanged: {
                     if (index === 0) {
                         mainItem.lastItemVisible = isFullyVisible

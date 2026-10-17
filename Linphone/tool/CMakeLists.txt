@@ -32,6 +32,8 @@ list(APPEND _LINPHONEAPP_SOURCES
 	tool/accessibility/AccessibilityHelper.cpp
 	tool/accessibility/KeyboardShortcuts.cpp
 	tool/accessibility/FocusHelper.cpp
+	tool/accessibility/EnterKeyActivator.cpp
+	tool/accessibility/FocusTrap.cpp
 
 )
 

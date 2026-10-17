@@ -27,6 +27,8 @@ MainRightPanel {
 
 	headerContentItem: RowLayout {
 		Text {
+			Accessible.role: Accessible.Heading
+			Accessible.name: text
 			text: mainItem.title
 			font {
 				pixelSize: Utils.getSizeWithScreenRatio(20)

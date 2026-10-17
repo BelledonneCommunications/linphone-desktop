@@ -58,6 +58,7 @@ ListView {
 				}
 				Button {
 					id: previousButton
+					Accessible.name: qsTr("calendar_previous_month_accessible_name")
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width
@@ -68,6 +69,7 @@ ListView {
 				}
 				Button {
 					id: nextButton
+					Accessible.name: qsTr("calendar_next_month_accessible_name")
                     Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
 					icon.width: width
@@ -110,6 +112,11 @@ ListView {
 						property bool isSelectedDay: mainItem.selectedDate ? UtilsCpp.datesAreEqual(mainItem.selectedDate, model.date) : false
 						property var d: model.date
 						objectName: 'focusDay'
+						Accessible.role: Accessible.Button
+						Accessible.name: model.date.toLocaleDateString(Qt.locale(AppCpp.localeAsString), "dddd d MMMM yyyy")
+						Accessible.checkable: true
+						Accessible.checked: focusDay.isSelectedDay
+						Accessible.onPressAction: if (!focusDay.isPast) monthGrid.clicked(model.date)
 						activeFocusOnTab: !focusDay.isPast
 						focusPolicy: !focusDay.isPast ? Qt.TabFocus : Qt.NoFocus
 						focus: UtilsCpp.isCurrentMonth(model.date) && UtilsCpp.isCurrentDay(model.date) || index == 0

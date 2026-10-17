@@ -19,6 +19,10 @@ FocusScope {
 	signal launchCall()
 	signal wipe()
 
+	function firstKey() {
+		return numPadGrid.getButtonAt(0)
+	}
+
 	function keypadKeyPressedAtIndex(index) {
 		var button = numPadGrid.getButtonAt(index)
 		button.shadowEnabled = true

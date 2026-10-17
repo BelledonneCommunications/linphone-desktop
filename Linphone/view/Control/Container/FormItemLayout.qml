@@ -70,7 +70,7 @@ FocusScope{
 				Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 				style: ButtonStyle.noBackground
 				icon.source: AppIcons.info
-				popUpTitle: mainItem.label
+				popUpTitle: qsTr("form_item_help_accessible_name").arg(mainItem.label)
 				popup.contentItem: Text {
 					text: mainItem.tooltip
 				}
@@ -96,6 +96,15 @@ FocusScope{
 			}
 			TemporaryText {
 				id: errorText
+				onTextChanged: {
+					for (var i = 0; i < contentItem.children.length; ++i) {
+						var child = contentItem.children[i]
+						if (child.accessibleError !== undefined)
+							child.accessibleError = text
+						else
+							child.Accessible.description = text
+					}
+				}
 				anchors.top: contentItem.bottom
 				anchors.topMargin: mainItem.errorTextTopMargin
 				color: DefaultStyle.danger_500_main

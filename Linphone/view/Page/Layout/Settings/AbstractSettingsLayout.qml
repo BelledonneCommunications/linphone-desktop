@@ -68,6 +68,8 @@ Rectangle {
 					Accessible.name: qsTr("return_accessible_name")
 				}
 				Text {
+					Accessible.role: Accessible.Heading
+					Accessible.name: text
 					text: titleText
 					color: DefaultStyle.main2_600
 					font: Typography.h3
@@ -158,6 +160,8 @@ Rectangle {
 						Layout.maximumWidth: Utils.getSizeWithScreenRatio(341)
 						spacing: Utils.getSizeWithScreenRatio(3)
 						Text {
+							Accessible.role: Accessible.Heading
+							Accessible.name: text
 							text: modelData.title
 							visible: modelData.title.length > 0
 							font: Typography.h4
@@ -201,7 +205,7 @@ Rectangle {
 
 			function onFocusChanged(item, keyboardFocus) {
 				if(Utils.isDescendant(item,scrollView) && keyboardFocus){
-					Utils.ensureVisibleY(item, scrollView)
+					Utils.ensureVisibleY(item, scrollView.contentItem)
 				}
 			}
 		}

@@ -151,6 +151,7 @@ AbstractMainPage {
                 spacing: Utils.getSizeWithScreenRatio(7)
                 CheckBox {
                     id: neverDisplayAgainCheckbox
+                    Accessible.name: qsTr("popup_do_not_show_again")
                 }
                 Text {
                     //: Ne plus afficher
@@ -244,6 +245,8 @@ AbstractMainPage {
             anchors.rightMargin: leftPanel.rightMargin
             Layout.fillHeight: false
             Text {
+                Accessible.role: Accessible.Heading
+                Accessible.name: text
                 Layout.fillWidth: true
                 //: "Contacts"
                 text: qsTr("bottom_navigation_contacts_label")
@@ -341,6 +344,9 @@ AbstractMainPage {
             objectName: "contactDetail"
             width: parent?.width
             height: parent?.height
+            Keys.onEscapePressed: event => {
+                event.accepted = contactList.focusHighlightedContact(Qt.BacktabFocusReason)
+            }
 
             function focusEditButton(){
                 contactDetail.button.forceActiveFocus(Qt.TabFocusReason)
@@ -355,6 +361,8 @@ AbstractMainPage {
                 RowLayout {
                     spacing: Utils.getSizeWithScreenRatio(10)
                     Text {
+                        Accessible.role: Accessible.Heading
+                        Accessible.name: text
                         text: contactDetailLayout.label
                         color: DefaultStyle.main1_500_main
                         font {
@@ -375,11 +383,24 @@ AbstractMainPage {
                     }
                     RoundButton {
                         id: expandButton
+                        objectName: "contactDetailExpandButton"
                         style: ButtonStyle.noBackground
                         checkable: true
                         checked: true
                         icon.source: checked ? AppIcons.upArrow : AppIcons.downArrow
                         KeyNavigation.down: contentControl
+                        Accessible.role: Accessible.Button
+                        Accessible.onPressAction: {
+                            expandButton.toggle()
+                            expandButton.toggled()
+                            expandButton.clicked()
+                        }
+                        Accessible.onCheckableChanged: if (Accessible.checkable) Accessible.checkable = false
+                        Accessible.onCheckedChanged: if (Accessible.checked) Accessible.checked = false
+                        Component.onCompleted: {
+                            Accessible.checkable = false
+                            Accessible.checked = false
+                        }
                         Accessible.name: (checked ?
                             //: Shrink %1
                             qsTr("shrink_accessible_name"):
@@ -455,6 +476,8 @@ AbstractMainPage {
                     ColumnLayout {
                         spacing: 0
                         Text {
+                            Accessible.role: Accessible.Heading
+                            Accessible.name: contactDetail.contactName
                             text: UtilsCpp.encodeEmojiToQmlRichFormat(contactDetail.contactName)
                             textFormat: Text.RichText
                             Layout.fillWidth: true
@@ -736,6 +759,7 @@ AbstractMainPage {
                                 }
                                 ProgressBar {
                                     visible: deviceList.count > 0
+                                    Accessible.name: qsTr("contact_dialog_devices_trust_title")
                                     Layout.fillWidth: true
                                     Layout.preferredHeight: Utils.getSizeWithScreenRatio(28)
                                     value: mainItem.selectedContact ? mainItem.selectedContact.core.verifiedDeviceCount / deviceList.count : 0

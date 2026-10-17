@@ -24,6 +24,7 @@ LoginLayout {
 			Button {
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
+				Accessible.name: qsTr("return_accessible_name")
 				icon.source: AppIcons.leftArrow
 				style: ButtonStyle.noBackground
 				onClicked: {
@@ -39,6 +40,8 @@ LoginLayout {
 				colorizationColor: DefaultStyle.main2_600
 			}
 			Text {
+				Accessible.role: Accessible.Heading
+				Accessible.name: text
 				wrapMode: Text.NoWrap
 				text: {
                     //: "email"
@@ -95,6 +98,7 @@ LoginLayout {
 						signal pasteRequested(string text)
 						DigitInput {
 							id: digitInput
+							Accessible.name: qsTr("register_code_digit_accessible_name").arg(index + 1).arg(repeater.count)
 							required property int index
 							Layout.preferredWidth: width
 							Layout.preferredHeight: height

@@ -30,7 +30,7 @@ ComboBox {
     listView.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
     popup.height: Math.min(Utils.getSizeWithScreenRatio(204), listView.contentHeight)
 	editable: true
-	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside
+	popup.closePolicy: Popup.PressOutsideParent | Popup.CloseOnPressOutside | Popup.CloseOnEscape
 	onCurrentTextChanged: input.text = currentText
 	popup.onOpened: {
 		input.forceActiveFocus()
@@ -39,6 +39,8 @@ ComboBox {
 	contentItem: TextInput {
 		id: input
 		validator: IntValidator{}
+		Accessible.role: Accessible.EditableText
+		Accessible.name: mainItem.accessibleLabel
 		// activeFocusOnPress: false
 		inputMask: "00:00"
 		verticalAlignment: TextInput.AlignVCenter

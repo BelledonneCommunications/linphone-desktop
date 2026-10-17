@@ -14,11 +14,11 @@ Button {
     property string popUpTitle: ""
     property int popupY: height
     Accessible.role: Accessible.ButtonMenu
-    Accessible.name: popup.visible ?
-    //: "Close %1 popup"
-    qsTr("close_popup_panel_accessible_name").arg(popUpTitle) :
-    //: "Open %1" popup
-    qsTr("open_popup_panel_accessible_name").arg(popUpTitle)
+    Accessible.onPressAction: {
+        openedWithKeyboard = true;
+        togglePopup();
+    }
+    Accessible.name: popUpTitle.length > 0 ? popUpTitle : qsTr("popup_button_default_accessible_name")
     style: ButtonStyle.popupButton
     checked: popup.visible
     leftPadding: 0
@@ -35,6 +35,33 @@ Button {
     }
     function open() {
         popup.open();
+    }
+
+    property bool openedWithKeyboard: false
+    property bool restoreFocusOnClose: false
+    property bool restoreWithKeyboard: false
+
+    function firstFocusableItem(item) {
+        if (!item || !item.visible || !item.enabled)
+            return null;
+        if (item.activeFocusOnTab)
+            return item;
+        for (var i = 0; i < item.children.length; ++i) {
+            var found = firstFocusableItem(item.children[i]);
+            if (found)
+                return found;
+        }
+        return null;
+    }
+
+    function focusFirstItem() {
+        var reason = openedWithKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason;
+        openedWithKeyboard = false;
+        if (!popup.visible || popup.activeFocus)
+            return;
+        var item = firstFocusableItem(popup.contentItem);
+        if (item)
+            item.forceActiveFocus(reason);
     }
 
     function isFocusable(item) {
@@ -83,7 +110,7 @@ Button {
 
     Keys.onPressed: event => {
         if (mainItem.checked) {
-            if (event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space) {
+            if (event.key == Qt.Key_Escape || event.key == Qt.Key_Left || event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
                 mainItem.close();
                 mainItem.forceActiveFocus(Qt.TabFocusReason);
                 event.accepted = true;
@@ -94,7 +121,8 @@ Button {
                 getNextItem(-1).forceActiveFocus(Qt.BacktabFocusReason);
                 event.accepted = true;
             }
-        } else if (event.key == Qt.Key_Space) {
+        } else if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
+            mainItem.openedWithKeyboard = true;
             mainItem.open();
             event.accepted = true;
         }
@@ -128,11 +156,28 @@ Button {
         imageHeight: mainItem.icon.height
         colorizationColor: mainItem.contentImageColor
     }
-    onPressed: {
+    property bool toggledByPress: false
+
+    function togglePopup() {
         if (popup.visible)
             popup.close();
         else
             popup.open();
+    }
+
+    onPressed: {
+        openedWithKeyboard = false;
+        toggledByPress = true;
+        togglePopup();
+    }
+    onPressedChanged: if (!pressed) Qt.callLater(function() {
+        mainItem.toggledByPress = false;
+    })
+    onClicked: {
+        if (toggledByPress)
+            return;
+        openedWithKeyboard = true;
+        togglePopup();
     }
     Control.Popup {
         id: popup
@@ -162,6 +207,23 @@ Button {
             if (globalPos.x + popupWidth >= mainItem.Window.width) {
                 x = -popupWidth;
             }
+        }
+
+        onOpened: Qt.callLater(mainItem.focusFirstItem)
+        onAboutToHide: {
+            mainItem.restoreFocusOnClose = popup.activeFocus;
+            var focused = mainItem.Window.activeFocusItem;
+            mainItem.restoreWithKeyboard = focused && focused.keyboardFocus !== undefined ? focused.keyboardFocus : FocusNavigator.doesLastFocusWasKeyboard();
+        }
+        onClosed: {
+            if (!mainItem.restoreFocusOnClose)
+                return;
+            mainItem.restoreFocusOnClose = false;
+            if (!mainItem.visible || !mainItem.enabled)
+                return;
+            if (mainItem.activeFocus)
+                mainItem.focus = false;
+            mainItem.forceActiveFocus(mainItem.restoreWithKeyboard ? Qt.TabFocusReason : Qt.MouseFocusReason);
         }
 
         onHeightChanged: Qt.callLater(updatePosition)

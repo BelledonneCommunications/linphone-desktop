@@ -164,6 +164,8 @@ AbstractMainPage {
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     Layout.fillHeight: false
 					Text {
+						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						Layout.fillWidth: true
 						//: Réunions
 						text: qsTr("meetings_list_title")
@@ -201,6 +203,7 @@ AbstractMainPage {
 
 					Button {
 						id: scrollToCurrentDateButton
+						Accessible.name: qsTr("meeting_scroll_to_today_accessible_name")
 						visible: conferenceList.count !== 0 || searchBar.text.length !== 0
 						Layout.preferredWidth: Utils.getSizeWithScreenRatio(32)
 						Layout.preferredHeight: visible ? Utils.getSizeWithScreenRatio(32) : 0
@@ -302,12 +305,15 @@ AbstractMainPage {
 						icon.height: Utils.getSizeWithScreenRatio(24)
 						KeyNavigation.right: createButton
 						KeyNavigation.down: meetingSetup
+						Accessible.name: qsTr("panel_back_accessible_name")
 						onClicked: {
 							meetingSetup.conferenceInfoGui.core.undo()
 							leftPanelStackView.pop()
 						}
 					}
 					Text {
+						Accessible.role: Accessible.Heading
+						Accessible.name: text
 						//: "Nouvelle réunion"
 						text: qsTr("meeting_schedule_title")
 						color: DefaultStyle.main2_700
@@ -440,6 +446,7 @@ AbstractMainPage {
 							style: ButtonStyle.noBackground
 							KeyNavigation.left: saveButton
 							KeyNavigation.right: titleText
+							Accessible.name: qsTr("panel_back_accessible_name")
 							KeyNavigation.down: conferenceEdit
 							KeyNavigation.up: conferenceEdit
 							onClicked: {
@@ -457,6 +464,8 @@ AbstractMainPage {
 							}
 							TextInput {
 								id: titleText
+								Accessible.role: Accessible.EditableText
+								Accessible.name: qsTr("meeting_title_accessible_name")
 								Layout.fillWidth: true
 								color: DefaultStyle.main2_600
 								clip: true
@@ -579,6 +588,7 @@ AbstractMainPage {
 						spacing: Utils.getSizeWithScreenRatio(10)
 						Button {
 							id: addParticipantsBackButton
+							Accessible.name: qsTr("panel_back_accessible_name")
 							style: ButtonStyle.noBackgroundOrange
 							icon.source: AppIcons.leftArrow
 							icon.width: Utils.getSizeWithScreenRatio(24)
@@ -588,6 +598,8 @@ AbstractMainPage {
 							onClicked: container.pop()
 						}
 						Text {
+							Accessible.role: Accessible.Heading
+							Accessible.name: text
 							//: "Ajouter des participants"
 							text: qsTr("meeting_schedule_add_participants_title")
 							color: DefaultStyle.main1_500_main
@@ -666,6 +678,8 @@ AbstractMainPage {
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 							}
 							Text {
+								Accessible.role: Accessible.Heading
+								Accessible.name: text
 								Layout.fillWidth: true
 								text: mainItem.selectedConference && mainItem.selectedConference.core? mainItem.selectedConference.core.subject : ""
 								maximumLineCount: 1
@@ -679,6 +693,7 @@ AbstractMainPage {
 							}
 							RoundButton {
 								id: calendarPlusButton
+								Accessible.name: qsTr("export_conference_info_ics_tooltip")
 								style: ButtonStyle.noBackground
 								icon.source: AppIcons.calendarPlus
 								KeyNavigation.left: calendarPlusButton
@@ -693,6 +708,7 @@ AbstractMainPage {
 							}
 							RoundButton {
 								id: editButton
+								Accessible.name: qsTr("meeting_edit_accessible_name")
 								property var isMeObj: UtilsCpp.isMe(mainItem.selectedConference?.core?.organizerAddress)
 								visible: mainItem.selectedConference && isMeObj && isMeObj.value || false
 								icon.source: AppIcons.pencil
@@ -706,6 +722,7 @@ AbstractMainPage {
 							}
 							PopupButton {
 								id: deletePopup
+								popUpTitle: qsTr("meeting_options_accessible_name")
 								Layout.preferredWidth: Utils.getSizeWithScreenRatio(24)
 								Layout.preferredHeight: Utils.getSizeWithScreenRatio(24)
 								contentImageColor: DefaultStyle.main1_500_main
@@ -752,6 +769,7 @@ AbstractMainPage {
 									id: linkButton
 									Layout.fillWidth: true
 									text: mainItem.selectedConference ? mainItem.selectedConference.core?.uri : ""
+									Accessible.name: qsTr("meeting_call_address_accessible_name")
 									textSize: Typography.p1.pixelSize
 									textWeight: Typography.p1.weight
 									underline: true
@@ -773,6 +791,7 @@ AbstractMainPage {
 								}
 								RoundButton {
 									id: shareNetworkButton
+									Accessible.name: qsTr("meeting_copy_address_accessible_name")
 									style: ButtonStyle.noBackground
 									icon.source: AppIcons.shareNetwork
 									KeyNavigation.left: linkButton
