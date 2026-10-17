@@ -18,6 +18,8 @@ ListView {
     activeFocusOnTab: true
 
     property SearchBar searchBar
+    property Item navigationUpItem: searchBar
+    property int filterType: CallHistoryProxy.All
     property bool loading: false
     property string searchText: searchBar?.text
     property real busyIndicatorSize: Utils.getSizeWithScreenRatio(60)
@@ -35,7 +37,13 @@ ListView {
         id: callHistoryProxy
         onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
+        filterType: mainItem.filterType
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
+        onFilterTypeChanged: {
+            maxDisplayItems = initialDisplayItems
+            mainItem.currentIndex = mainItem.count > 0 ? 0 : -1
+            mainItem.positionViewAtBeginning()
+        }
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelAboutToBeReset: loading = true
@@ -56,7 +64,7 @@ ListView {
         // Re-implement key navigation to have Qt.TabFocusReason and Qt.BacktabFocusReason instead of Qt.OtherFocusReason when using arrows to navigate in listView
         else if (event.key === Qt.Key_Up) {
             if(currentIndex === 0){
-                searchBar.forceActiveFocus(Qt.BacktabFocusReason)
+                navigationUpItem.forceActiveFocus(Qt.BacktabFocusReason)
                 lastFocusByNavigationKeyboard = false
             }else{
                 decrementCurrentIndex()
@@ -266,7 +274,7 @@ ListView {
             //: %1 - %2 - %3 - right arrow for call-back button
             Accessible.name: qsTr("call_history_entry_accessible_name").arg(
                     //: "Appel manqué"
-                    modelData.core.status === LinphoneEnums.CallStatus.Missed ? qsTr("notification_missed_call_title")
+                    modelData.core.isMissed ? qsTr("notification_missed_call_title")
                     //: "Appel sortant"
                     : modelData.core.isOutgoing ? qsTr("call_outgoing")
                     //: "Appel entrant"
