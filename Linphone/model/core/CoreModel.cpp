@@ -36,12 +36,6 @@
 #include "model/tool/ToolModel.hpp"
 #include "tool/Utils.hpp"
 
-#if defined(Q_OS_MACOS)
-#include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
-#else
-#include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
-#endif // if defined(Q_OS_MACOS)
-
 // =============================================================================
 DEFINE_ABSTRACT_OBJECT(CoreModel)
 

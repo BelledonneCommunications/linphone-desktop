@@ -20,8 +20,6 @@
 
 #include "tool/LinphoneEnums.hpp"
 
-#include "App.hpp"
-
 #include <QCoreApplication>
 #include <QDirIterator>
 #include <QFileSelector>
@@ -124,6 +122,7 @@
 #if defined(Q_OS_MACOS)
 #include "core/event-count-notifier/EventCountNotifierMacOs.hpp"
 #else
+#include "App.hpp"
 #include "core/event-count-notifier/EventCountNotifierSystemTrayIcon.hpp"
 #endif // if defined(Q_OS_MACOS)
 
