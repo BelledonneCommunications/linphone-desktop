@@ -46,8 +46,9 @@
     - *build_all_linux_script
   artifacts:
     paths:
-      - build/OUTPUT
-    expire_in: 1 week
+      - build/OUTPUT/Packages/
+      - build/OUTPUT/RELEASE
+    expire_in: 3 days
 
 .linux-sign-build:
   extends: .linux-desktop
