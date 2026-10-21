@@ -28,6 +28,8 @@
 #include <QSysInfo>
 #include <QTimer>
 
+#include <belr/grammarbuilder.h>
+
 #include "core/App.hpp"
 #include "core/notifier/Notifier.hpp"
 #include "core/path/Paths.hpp"
@@ -168,6 +170,9 @@ void CoreModel::refreshOidcRemainingTime() {
 	} while (0);
 
 void CoreModel::setPathBeforeCreation() {
+	// GrammarLoader's fallback path is relative to the CWD, not the executable; pin it explicitly.
+	belr::GrammarLoader::get().addPath((QCoreApplication::applicationDirPath() + "/share/belr/grammars").toStdString());
+
 	std::shared_ptr<linphone::Factory> factory = linphone::Factory::get();
 	SET_FACTORY_PATH(Msplugins, Paths::getPackageMsPluginsDirPath());
 	SET_FACTORY_PATH(TopResources, Paths::getPackageTopDirPath());
