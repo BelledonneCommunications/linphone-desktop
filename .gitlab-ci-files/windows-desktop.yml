@@ -82,12 +82,11 @@
   artifacts:
     paths:
       - build-desktop\ninja_buildlog.txt
-      - build-desktop\ninja_buildlog.txt
       - build-desktop\invertSearch.ps1
       - build-desktop\OUTPUT\*
       - build-desktop\external\linphone-sdk\openh264-prefix\src\openh264-stamp\*
     when: always
-    expire_in: 1 week
+    expire_in: 1 day
 
 
 .windows-vs2022:
@@ -244,7 +243,7 @@ win64-codesigning:
     paths:
       - build-desktop\OUTPUT\Packages\*
     when: always
-    expire_in: 1 week
+    expire_in: 3 days
 
 #################################################
 #               DEPLOY
