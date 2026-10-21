@@ -273,7 +273,7 @@ ListView {
         contentItem: RowLayout {
             id: composeLayout
             property var composingName: mainItem.chat?.core.composingName
-            // height: childrenRect.height
+            height: visible ? childrenRect.height : 0
             Avatar {
                 Layout.preferredWidth: Utils.getSizeWithScreenRatio(20)
                 Layout.preferredHeight: Utils.getSizeWithScreenRatio(20)
