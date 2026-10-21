@@ -26,7 +26,7 @@ Control.Control {
 	MouseArea {
 		id: mouseArea
 		anchors.fill: parent
-		hoverEnabled: true
+		hoverEnabled: mainItem.enabled
 		cursorShape: containsMouse && mainItem.actionable ? Qt.PointingHandCursor : Qt.ArrowCursor
 		onClicked: if (mainItem.actionable) mainItem.clicked()
 	}

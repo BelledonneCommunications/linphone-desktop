@@ -128,8 +128,8 @@ AbstractSettingsLayout {
 				iconSource: AppIcons.appWindow
 				subTitle: AppCpp.applicationVersion + ' ('+ AppCpp.gitBranchName + ')'
 				onClicked: {
-					var text = UtilsCpp.copyToClipboard(AppCpp.applicationVersion)
-					if (text.length !== "") {
+					var success = UtilsCpp.copyToClipboard(AppCpp.applicationVersion)
+					if (success) {
 						//: Copied
 						UtilsCpp.showInformationPopup(qsTr("copied"),
 						//: App version has been copied to clipboard
@@ -152,8 +152,8 @@ AbstractSettingsLayout {
 				iconSource: AppIcons.resourcePackage
 				subTitle: AppCpp.sdkVersion
 				onClicked: {
-					var text = UtilsCpp.copyToClipboard(AppCpp.sdkVersion)
-					if (text.length !== "") {
+					var success = UtilsCpp.copyToClipboard(AppCpp.sdkVersion)
+					if (success) {
 						//: Copied
 						UtilsCpp.showInformationPopup(qsTr("copied"),
 						//: SDK version has been copied to clipboard
@@ -176,8 +176,8 @@ AbstractSettingsLayout {
 				title: qsTr("settings_debug_qt_version_title")
 				subTitle: AppCpp.qtVersion
 				onClicked: {
-					var text = UtilsCpp.copyToClipboard(AppCpp.qtVersion)
-					if (text.length !== "") {
+					var success = UtilsCpp.copyToClipboard(AppCpp.qtVersion)
+					if (success) {
 						//: Copied
 						UtilsCpp.showInformationPopup(qsTr("copied"),
 						//: Qt version has been copied to clipboard
