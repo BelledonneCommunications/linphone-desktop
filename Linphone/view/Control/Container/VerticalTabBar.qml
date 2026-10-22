@@ -216,6 +216,7 @@ Control.TabBar {
 			onClicked: {
 				mainItem.setCurrentIndex(TabBar.index)
 				if (tabButton.keyboardFocus)
+					//: "Onglet %1 sélectionné"
 					tabButton.Accessible.announce(qsTr("tab_selected_accessible_announcement").arg(modelData.label))
 			}
 		}
