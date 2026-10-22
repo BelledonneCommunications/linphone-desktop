@@ -10,6 +10,33 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [6.2.4] 2026-10-22
+
+### Added
+- DTMF can be sent with keyboard without opening the numeric pad during a call
+- "All/Missed" filter in call history
+- Call forwarding and voicemail settings links
+- Setting to host merged calls in a local conference
+- Setting to disable USB/HID headset controls
+- Support Mac Packaging for any application name
+
+### Fixed
+- Accessibility :
+    - global key navigation improved
+    - add missing names for annoucement and apply naming conventions
+    - add missing open/close actions for popups and list menus
+    - force focus on first item when opening a menu
+    - audio volume sliders exposed as percent values
+- Improve emoji selector performance
+- End to end security not forced when creating a meeting if it is unavailable
+- Crash when opening the numeric pad for the second time during a call
+- Participant names in conference
+
+### Changed
+- Simplify the call window UI when calls are merged into a local conference
+- Translations update
+- SDK version is now 5.5.36
+
 ## [6.2.3] 2026-09-22
 
 ### Fixed
