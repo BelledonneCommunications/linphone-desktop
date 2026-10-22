@@ -95,6 +95,7 @@ ColumnLayout {
                         radius: Utils.getSizeWithScreenRatio(30)
 						anchors.fill: parent
 					}
+					//: "Page %1 sur %2"
 					Accessible.name: qsTr("carousel_page_accessible_name").arg(index + 1).arg(mainItem.itemsCount)
 					Accessible.checkable: true
 					Accessible.checked: mainItem.currentIndex === index

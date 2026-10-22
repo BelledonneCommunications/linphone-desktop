@@ -32,6 +32,7 @@ ColumnLayout {
             icon.source: mainItem.icon
             style: ButtonStyle.noBackgroundOrange
             onClicked: mainItem.titleIconClicked()
+            //: "More info %1"
             Accessible.name: qsTr("more_info_accessible_name").arg(mainItem.label)
         }
         Item {
