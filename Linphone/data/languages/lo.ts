@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="91"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>ບັນທຶກການຕັ້ງຄ່າ %1</translation>
+        <translation type="unfinished">ບັນທຶກການຕັ້ງຄ່າ %1</translation>
     </message>
 </context>
 <context>
@@ -49,6 +49,10 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="330"/>
         <source>fps_counter</source>
         <translation>ຕົວນັບ FPS</translation>
+    </message>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>ປິດ</translation>
     </message>
 </context>
 <context>
@@ -357,6 +361,15 @@
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
         <translation>ບໍ່ມີຂໍ້ມູນ</translation>
+    </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>ສຳເນົາທີ່ຢູ່ SIP</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>ຂໍ້ຄວາມສຽງ</translation>
     </message>
 </context>
 <context>
@@ -722,7 +735,7 @@
         <location filename="../../core/App.cpp" line="514"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
-        <translation>ມີ Linphone ເວີຊັນໃໝ່ (%1) ໃຫ້ໃຊ້ແລ້ວ. %2</translation>
+        <translation type="unfinished">ມີ Linphone ເວີຊັນໃໝ່ (%1) ໃຫ້ໃຊ້ແລ້ວ. %2</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="522"/>
@@ -845,7 +858,7 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>%1 mandatory</extracomment>
-        <translation>%1 ຕ້ອງປ້ອນຂໍ້ມູນ</translation>
+        <translation type="unfinished">%1 ຕ້ອງປ້ອນຂໍ້ມູນ</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
@@ -1118,7 +1131,7 @@
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
         <extracomment>&quot;Local group call&quot;</extracomment>
-        <translation>ການໂທກຸ່ມພາຍໃນ</translation>
+        <translation>ໂທກຸ່ມ</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1156,7 +1169,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="71"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>%1 ກຳລັງດຳເນີນການ</translation>
+        <translation type="unfinished">%1 ກຳລັງດຳເນີນການ</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="99"/>
@@ -1533,6 +1546,10 @@
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
         <translation>ປິດແຜງ %1</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
     </message>
 </context>
 <context>
@@ -2158,6 +2175,10 @@
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>ບໍ່ສາມາດບັນທຶກຂໍ້ຄວາມໄດ້ໃນຂະນະທີ່ກຳລັງໂທຢູ່</translation>
     </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>ຂໍ້ຄວາມ</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2242,6 +2263,10 @@
         <source>unread_messages_accessible_label</source>
         <extracomment>: %1 unread messages</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>ການສົນທະນາ</translation>
     </message>
 </context>
 <context>
@@ -4003,6 +4028,10 @@ Error</extracomment>
         <source>custom</source>
         <translation>ກຳນົດເອງ </translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
+    </message>
 </context>
 <context>
     <name>EventLogCore</name>
@@ -4405,7 +4434,7 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 (ຈຳເປັນ)</translation>
+        <translation type="unfinished">%1 (ຈຳເປັນ)</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
@@ -4681,7 +4710,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="441"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>ລາຍຊື່ບັນຊີ</translation>
+        <translation type="unfinished">ລາຍຊື່ບັນຊີ</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="479"/>
@@ -4735,6 +4764,10 @@ Error</extracomment>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
         <translation>ເພີ່ມບັນຊີ</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <translation>ສາຍທີ່ກຳລັງໂທ</translation>
     </message>
 </context>
 <context>
@@ -4847,6 +4880,10 @@ Error</extracomment>
         <extracomment>Apply</extracomment>
         <translation>ນຳໃຊ້</translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4910,6 +4947,14 @@ Error</extracomment>
         <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
         <translation>ສົ່ງຄຳເຊີນໃຫ້ຜູ້ເຂົ້າຮ່ວມ</translation>
     </message>
+    <message>
+        <source>meeting_description_accessible_name</source>
+        <translation>ລາຍລະອຽດ</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>ລຶບຜູ້ເຂົ້າຮ່ວມ %1 ອອກ</translation>
+    </message>
 </context>
 <context>
     <name>MeetingListView</name>
@@ -4930,6 +4975,10 @@ Error</extracomment>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>ລຶບການປະຊຸມ</translation>
+    </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>ການປະຊຸມ</translation>
     </message>
 </context>
 <context>
@@ -5172,6 +5221,10 @@ Error</extracomment>
         <source>meeting_info_join_title</source>
         <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
         <translation>ເຂົ້າຮ່ວມການປະຊຸມ</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
     </message>
 </context>
 <context>
@@ -5592,6 +5645,14 @@ Error</extracomment>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>ເພີ່ມຜູ້ເຂົ້າຮ່ວມ</translation>
     </message>
+    <message>
+        <source>participant_list_accessible_name</source>
+        <translation>ຜູ້ເຂົ້າຮ່ວມ</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>ລຶບຜູ້ເຂົ້າຮ່ວມ %1 ອອກ</translation>
+    </message>
 </context>
 <context>
     <name>PhoneNumberInput</name>
@@ -5599,13 +5660,13 @@ Error</extracomment>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="62"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>ຄຳນຳໜ້າ %1</translation>
+        <translation type="unfinished">ຄຳນຳໜ້າ %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="85"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>ເບີ %1</translation>
+        <translation type="unfinished">ເບີ %1</translation>
     </message>
 </context>
 <context>
@@ -5864,6 +5925,10 @@ Error</extracomment>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
         <translation>ສົ່ງລະຫັດຄືນໃໝ່</translation>
     </message>
+    <message>
+        <source>return_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
+    </message>
 </context>
 <context>
     <name>RegisterPage</name>
@@ -5931,7 +5996,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 (ຈຳເປັນ)</translation>
+        <translation type="unfinished">%1 (ຈຳເປັນ)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
@@ -6087,7 +6152,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 (ຈຳເປັນ)</translation>
+        <translation type="unfinished">%1 (ຈຳເປັນ)</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -6340,6 +6405,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>Conversations</extracomment>
         <translation>ການສົນທະນາ</translation>
     </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>ຍົກເລີກ</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>ວິດີໂອຄໍ</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>ໂທ</translation>
+    </message>
 </context>
 <context>
     <name>SettingsCore</name>
@@ -6487,7 +6564,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Input/TextField.qml" line="230"/>
         <source>textfield_custom_button_accessible_name</source>
         <extracomment>%1 button of %2</extracomment>
-        <translation>ປຸ່ມ %1 ຂອງ %2</translation>
+        <translation type="unfinished">ປຸ່ມ %1 ຂອງ %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="209"/>
@@ -6575,7 +6652,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
         <source>unread_notification_accessible_name</source>
         <extracomment>%1 notification badge : %2 unread</extracomment>
-        <translation>ແຖບແຈ້ງເຕືອນ %1 : ຍັງບໍ່ໄດ້ອ່ານ %2 ຂໍ້ຄວາມ</translation>
+        <translation type="unfinished">ແຖບແຈ້ງເຕືອນ %1 : ຍັງບໍ່ໄດ້ອ່ານ %2 ຂໍ້ຄວາມ</translation>
     </message>
 </context>
 <context>
@@ -6877,6 +6954,30 @@ Error in the chat</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation>ທ່ານກຳລັງຈະເຂົ້າຮ່ວມການປະຊຸມໃນອີກຈັກບຶດໜຶ່ງ...</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>ເປີດວິດີໂອ</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <translation>ປິດວິດີໂອ</translation>
+    </message>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <translation>ປິດລຳໂພງ</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <translation>ເປີດລຳໂພງ</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <translation>ປິດໄມ</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <translation>ເປີດໄມ</translation>
     </message>
 </context>
 <context>
@@ -8247,6 +8348,48 @@ Error in the chat</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="805"/>
         <source>okButton</source>
         <translation>ຕົກລົງ</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_resume_call</source>
+        <translation>ສົນທະນາຕໍ່</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>ກັບຄືນ</translation>
+    </message>
+</context>
+<context>
+    <name>DetailLayout</name>
+    <message>
+        <source>more_info_accessible_name</source>
+        <translation>ຂໍ້ມູນເພີ່ມເຕີມ %1</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <translation>ຢຸດການບັນທຶກ</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>ປິດ</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>ປິດ</translation>
     </message>
 </context>
 </TS>

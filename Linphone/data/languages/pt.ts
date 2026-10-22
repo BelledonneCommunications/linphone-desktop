@@ -309,6 +309,10 @@
         <source>copied</source>
         <translation>Copiado</translation>
     </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>Copiar endereço SIP</translation>
+    </message>
 </context>
 <context>
     <name>AccountSettingsPage</name>
@@ -980,7 +984,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation type="unfinished"></translation>
+        <translation>Chamada em grupo</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1018,7 +1022,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>%1 em andamento</translation>
+        <translation type="unfinished">%1 em andamento</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -2000,6 +2004,10 @@
         <source>cannot_record_while_in_call_tooltip</source>
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>Mensagem</translation>
     </message>
 </context>
 <context>
@@ -5585,6 +5593,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>Conversations</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Video chamada</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Chamar</translation>
+    </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
@@ -5997,6 +6017,10 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>Habilitar video</translation>
     </message>
 </context>
 <context>

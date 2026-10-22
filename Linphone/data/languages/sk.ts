@@ -2045,6 +2045,10 @@
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>Konverzácie</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessage</name>
@@ -4306,6 +4310,10 @@ Error</extracomment>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>Schôdzky</translation>
+    </message>
 </context>
 <context>
     <name>MeetingPage</name>
@@ -5512,6 +5520,14 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
         <translation>Konverzácie</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Videohovor</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Volať</translation>
     </message>
 </context>
 <context>

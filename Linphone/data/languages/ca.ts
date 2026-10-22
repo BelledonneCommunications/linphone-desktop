@@ -721,7 +721,7 @@
     <message>
         <location filename="../../core/App.cpp" line="459"/>
         <source>info_popup_new_version_available_message</source>
-        <translation>Una nova versió del Linphone (1%) és accessible a l&apos;1%</translation>
+        <translation type="unfinished">Una nova versió del Linphone (1%) és accessible a l&apos;1%</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="465"/>

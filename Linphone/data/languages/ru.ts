@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Сохранить %1 настройки</translation>
+        <translation type="unfinished">Сохранить %1 настройки</translation>
     </message>
 </context>
 <context>
@@ -34,6 +34,10 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="302"/>
         <source>fps_counter</source>
         <translation>%1 Кадров в секунду</translation>
+    </message>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -308,6 +312,10 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
         <source>copied</source>
         <translation>Скопированный</translation>
+    </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>Копировать SIP-адрес</translation>
     </message>
 </context>
 <context>
@@ -981,7 +989,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation type="unfinished"></translation>
+        <translation>Групповой вызов</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1019,7 +1027,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>Непрерывный</translation>
+        <translation type="unfinished">Непрерывный</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -1396,6 +1404,10 @@
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -2003,6 +2015,10 @@
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>Сообщение</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2069,6 +2085,10 @@
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>Разговоры</translation>
     </message>
 </context>
 <context>
@@ -3535,6 +3555,10 @@ Error</extracomment>
         <source>custom</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Назад</translation>
+    </message>
 </context>
 <context>
     <name>EventLogCore</name>
@@ -4236,6 +4260,10 @@ Error</extracomment>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <translation>Сохранить</translation>
     </message>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <translation>Продолжающийся вызов</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -4328,6 +4356,10 @@ Error</extracomment>
         <source>info_popup_error_title</source>
         <translation>Ошибка</translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Назад</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4392,6 +4424,10 @@ Error</extracomment>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Удалить собрание</translation>
+    </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>Встречи</translation>
     </message>
 </context>
 <context>
@@ -4608,6 +4644,10 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
         <source>new_meeting_acccessibility_label</source>
         <translation>Новая встреча</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Назад</translation>
     </message>
 </context>
 <context>
@@ -5172,6 +5212,10 @@ Error</extracomment>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
         <translation>Повторная отправка кода</translation>
     </message>
+    <message>
+        <source>return_accessible_name</source>
+        <translation>Вернуться</translation>
+    </message>
 </context>
 <context>
     <name>RegisterPage</name>
@@ -5609,6 +5653,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>Conversations</extracomment>
         <translation>Разговоры</translation>
     </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Отмена</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Видеозвонок</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Звонок</translation>
+    </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
@@ -6031,6 +6087,30 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation>Вы присоединитесь к собранию через несколько минут...</translation>
+    </message>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <translation>Отключить динамик</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <translation>Активировать динамик</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <translation>Выключить микрофон</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <translation>Включить микрофон</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>Включить видео</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <translation>Выключить видео</translation>
     </message>
 </context>
 <context>
@@ -7479,6 +7559,41 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/setting/SettingsCore.cpp" line="447"/>
         <source>info_popup_error_title</source>
         <translation>Ошибка</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_resume_call</source>
+        <translation>Возобновить вызов</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Назад</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <translation>Прекратить запись</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Закрыть</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Закрыть</translation>
     </message>
 </context>
 </TS>

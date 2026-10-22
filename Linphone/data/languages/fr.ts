@@ -772,7 +772,7 @@
         <location filename="../../core/App.cpp" line="517"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
-        <translation>Une nouvelle version de Linphone (%1) est disponible. %2</translation>
+        <translation type="unfinished">Une nouvelle version de Linphone (%1) est disponible. %2</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="525"/>
@@ -895,7 +895,7 @@
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>%1 mandatory</extracomment>
-        <translation>%1 requis</translation>
+        <translation type="unfinished">%1 requis</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
@@ -1217,7 +1217,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="71"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>%1 en cours</translation>
+        <translation type="unfinished">%1 en cours</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="99"/>
@@ -6384,7 +6384,7 @@ Expiration : %1</translation>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
         <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
-        <translation>Rechercher un enregistrement</translation>
+        <translation type="unfinished">Rechercher un enregistrement</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
@@ -6808,7 +6808,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 requis</translation>
+        <translation type="unfinished">%1 requis</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -7360,7 +7360,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</translatio
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
         <source>unread_notification_accessible_name</source>
         <extracomment>%1 notification badge : %2 unread</extracomment>
-        <translation>Pastille de notifications %1 : %2 non lues</translation>
+        <translation type="unfinished">Pastille de notifications %1 : %2 non lues</translation>
     </message>
     <message numerus="yes">
         <source>badge_missed_calls_accessible_name</source>

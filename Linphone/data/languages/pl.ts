@@ -35,6 +35,10 @@
         <source>fps_counter</source>
         <translation>%1 FPS</translation>
     </message>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zamknij</translation>
+    </message>
 </context>
 <context>
     <name>AccountCore</name>
@@ -323,6 +327,10 @@
         <source>device_last_updated_time_no_info</source>
         <extracomment>&quot;No information&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>Kopiuj adres SIP</translation>
     </message>
 </context>
 <context>
@@ -1051,7 +1059,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmowa grupowa</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1089,7 +1097,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="69"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>Trwa %1</translation>
+        <translation type="unfinished">Trwa %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="89"/>
@@ -1466,6 +1474,10 @@
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Wstecz</translation>
     </message>
 </context>
 <context>
@@ -2073,6 +2085,10 @@
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>Wyślij wiadomość</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2139,6 +2155,10 @@
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>Konwersacje</translation>
     </message>
 </context>
 <context>
@@ -3674,6 +3694,10 @@ Error</extracomment>
         <source>custom</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Wstecz</translation>
+    </message>
 </context>
 <context>
     <name>EventLogCore</name>
@@ -4473,6 +4497,10 @@ Error</extracomment>
         <source>info_popup_error_title</source>
         <translation>Błąd</translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Wstecz</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4537,6 +4565,10 @@ Error</extracomment>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Usuń spotkanie</translation>
+    </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>Spotkania</translation>
     </message>
 </context>
 <context>
@@ -4753,6 +4785,10 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
         <source>new_meeting_acccessibility_label</source>
         <translation>Nowe spotkanie</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Wstecz</translation>
     </message>
 </context>
 <context>
@@ -5756,6 +5792,18 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>Conversations</extracomment>
         <translation>Konwersacje</translation>
     </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Anuluj</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Wideorozmowa</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Zadzwoń</translation>
+    </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
@@ -6178,6 +6226,30 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <translation>Wycisz głośnik</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <translation>Aktywuj głośnik</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <translation>Wycisz mikrofon</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <translation>Aktywuj mikrofon</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>Włącz wideo</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <translation>Wyłącz wideo</translation>
     </message>
 </context>
 <context>
@@ -7623,6 +7695,41 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/setting/SettingsCore.cpp" line="447"/>
         <source>info_popup_error_title</source>
         <translation>Błąd</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <translation>Zatrzymaj nagrywanie</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zamknij</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_resume_call</source>
+        <translation>Wznów połączenie</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Wstecz</translation>
     </message>
 </context>
 </TS>

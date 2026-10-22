@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Uložit nastavení %1</translation>
+        <translation type="unfinished">Uložit nastavení %1</translation>
     </message>
 </context>
 <context>
@@ -34,6 +34,10 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="302"/>
         <source>fps_counter</source>
         <translation>%1 FPS</translation>
+    </message>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zavřít</translation>
     </message>
 </context>
 <context>
@@ -333,6 +337,15 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
         <source>no_device_message</source>
         <translation>Nebylo načteno žádné zařízení</translation>
+    </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>Zkopirovat SIP adresu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>Hlasová schránka</translation>
     </message>
 </context>
 <context>
@@ -767,7 +780,7 @@
     <message>
         <location filename="../../core/App.cpp" line="459"/>
         <source>info_popup_new_version_available_message</source>
-        <translation>Nová verze Linphone (%1) je k dispozici na %1</translation>
+        <translation type="unfinished">Nová verze Linphone (%1) je k dispozici na %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="465"/>
@@ -825,7 +838,7 @@
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
-        <translation>%1 vyžadováno</translation>
+        <translation type="unfinished">%1 vyžadováno</translation>
     </message>
 </context>
 <context>
@@ -1071,7 +1084,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation>Místní skupinový hovor</translation>
+        <translation>Skupinový hovor</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1109,7 +1122,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>Probíhá %1</translation>
+        <translation type="unfinished">Probíhá %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -1512,6 +1525,10 @@
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
         <translation>Zavřít panel %1</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Zpět</translation>
     </message>
 </context>
 <context>
@@ -2135,6 +2152,10 @@
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>Nelze nahrávat zprávu během hovoru</translation>
     </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>Zpráva</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2205,7 +2226,7 @@
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
         <source>unread_messages_accessible_label</source>
-        <translation>: %1 nepřečtených zpráv</translation>
+        <translation type="unfinished">: %1 nepřečtených zpráv</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="332"/>
@@ -2216,6 +2237,10 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="470"/>
         <source>focused_chat_accessible_label</source>
         <translation>%1 chat %2</translation>
+    </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>Konverzace</translation>
     </message>
 </context>
 <context>
@@ -2717,7 +2742,7 @@ proto nezveřejňujte žádné citlivé informace!</translation>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="164"/>
         <source>chat_option_acccessibility_label</source>
-        <translation>Volby chatu</translation>
+        <translation type="unfinished">Volby chatu</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="191"/>
@@ -3863,6 +3888,10 @@ Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
         <source>custom</source>
         <translation>Vlastní: </translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Zpět</translation>
+    </message>
 </context>
 <context>
     <name>EventLogCore</name>
@@ -4251,7 +4280,7 @@ Expirace : %1</translation>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vyžadováno</translation>
+        <translation type="unfinished">%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
@@ -4496,7 +4525,7 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="394"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>Seznam účtů</translation>
+        <translation type="unfinished">Seznam účtů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="432"/>
@@ -4579,6 +4608,10 @@ Expirace : %1</translation>
     <message>
         <source>main_auto_answer_enabled_accessible_name</source>
         <translation>Automatické přijímání hovorů je zapnuto</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <translation>Probíhající hovor</translation>
     </message>
 </context>
 <context>
@@ -4692,6 +4725,10 @@ Expirace : %1</translation>
         <source>manage_participant_waiting_popup</source>
         <translation>Aktualizace účastníků...</translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Zpět</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4751,6 +4788,14 @@ Expirace : %1</translation>
         <source>end_time_accessible_name</source>
         <translation>Konečný čas</translation>
     </message>
+    <message>
+        <source>meeting_description_accessible_name</source>
+        <translation>Popis</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>Odstranit účastníka %1</translation>
+    </message>
 </context>
 <context>
     <name>MeetingListView</name>
@@ -4771,6 +4816,10 @@ Expirace : %1</translation>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Smazat schůzku</translation>
+    </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>Schůzky</translation>
     </message>
 </context>
 <context>
@@ -4992,6 +5041,10 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
         <source>new_meeting_acccessibility_label</source>
         <translation>Nová schůzka</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Zpět</translation>
     </message>
 </context>
 <context>
@@ -5344,6 +5397,14 @@ Expirace : %1</translation>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Přidat účastníky</translation>
     </message>
+    <message>
+        <source>participant_list_accessible_name</source>
+        <translation>Účastníci</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>Odstranit účastníka %1</translation>
+    </message>
 </context>
 <context>
     <name>PhoneNumberInput</name>
@@ -5351,13 +5412,13 @@ Expirace : %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="58"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>prefix %1</translation>
+        <translation type="unfinished">prefix %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="76"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>číslo %1</translation>
+        <translation type="unfinished">číslo %1</translation>
     </message>
 </context>
 <context>
@@ -5581,6 +5642,10 @@ Expirace : %1</translation>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
         <translation>Znovu odeslat kód</translation>
     </message>
+    <message>
+        <source>return_accessible_name</source>
+        <translation>Návrat</translation>
+    </message>
 </context>
 <context>
     <name>RegisterPage</name>
@@ -5630,7 +5695,7 @@ Expirace : %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vyžadováno</translation>
+        <translation type="unfinished">%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
@@ -5797,7 +5862,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vyžadováno</translation>
+        <translation type="unfinished">%1 vyžadováno</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -6048,6 +6113,18 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
         <source>conversation_editing_message_title</source>
         <translation>Zpráva se právě upravuje</translation>
     </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Volat</translation>
+    </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Videohovor</translation>
+    </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
@@ -6141,7 +6218,7 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="230"/>
         <source>textfield_custom_button_accessible_name</source>
-        <translation>%1 tlačítko na %2</translation>
+        <translation type="unfinished">%1 tlačítko na %2</translation>
     </message>
 </context>
 <context>
@@ -6505,6 +6582,30 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation>Za chvíli se připojíte ke schůzce...</translation>
+    </message>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <translation>Ztlumit reproduktor</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <translation>Zapnout reproduktor</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <translation>Ztlumit mikrofon</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <translation>Zapnout mikrofon</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>Zapnout video</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <translation>Vypnout video</translation>
     </message>
 </context>
 <context>
@@ -7927,17 +8028,17 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
         <source>record_list_search_hint</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
         <source>record_export_accessible_name</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
         <source>record_delete_accessible_name</source>
-        <translation>Žádný token nenalezen</translation>
+        <translation type="unfinished">Žádný token nenalezen</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
@@ -7978,7 +8079,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="177"/>
         <source>numpad_longpress_accessible_name</source>
-        <translation>%1 dlouhé stisknutí %2</translation>
+        <translation type="unfinished">%1 dlouhé stisknutí %2</translation>
     </message>
 </context>
 <context>
@@ -8073,7 +8174,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <translation>%1 aktuální hodnota %2</translation>
+        <translation type="unfinished">%1 aktuální hodnota %2</translation>
     </message>
 </context>
 <context>
@@ -8086,7 +8187,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
         <source>unread_notification_accessible_name</source>
-        <translation>Oznámení o nepřečtených zprávách: %1 nepřečtených</translation>
+        <translation type="unfinished">Oznámení o nepřečtených zprávách: %1 nepřečtených</translation>
     </message>
 </context>
 <context>
@@ -8103,6 +8204,48 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../model/setting/SettingsModel.cpp" line="392"/>
         <source>set_capture_device_error</source>
         <translation>Nelze nastavit zařízení pro snímání. ID nelze přiřadit k žádnému existujícímu zařízení: %1</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Zpět</translation>
+    </message>
+</context>
+<context>
+    <name>DetailLayout</name>
+    <message>
+        <source>more_info_accessible_name</source>
+        <translation>Více informací o %1</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <translation>Zastavit nahrávání</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_resume_call</source>
+        <translation>Obnovit hovor</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zavřít</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Zavřít</translation>
     </message>
 </context>
 </TS>

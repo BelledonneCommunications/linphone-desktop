@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Instellingen %1 opslaan</translation>
+        <translation type="unfinished">Instellingen %1 opslaan</translation>
     </message>
 </context>
 <context>
@@ -34,6 +34,10 @@
         <location filename="../../view/Page/Window/AbstractWindow.qml" line="302"/>
         <source>fps_counter</source>
         <translation>%1 FPS</translation>
+    </message>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Sluiten</translation>
     </message>
 </context>
 <context>
@@ -333,6 +337,15 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
         <source>no_device_message</source>
         <translation>Geen apparaat opgehaald</translation>
+    </message>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <translation>Kopieer SIP adres</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>Voicemail</translation>
     </message>
 </context>
 <context>
@@ -771,7 +784,7 @@
     <message>
         <location filename="../../core/App.cpp" line="509"/>
         <source>info_popup_new_version_available_message</source>
-        <translation>Een nieuwe versie van Linphone (%1) is beschikbaar op %1</translation>
+        <translation type="unfinished">Een nieuwe versie van Linphone (%1) is beschikbaar op %1</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="517"/>
@@ -824,7 +837,7 @@
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
-        <translation>%1 vereist</translation>
+        <translation type="unfinished">%1 vereist</translation>
     </message>
 </context>
 <context>
@@ -1070,7 +1083,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="106"/>
         <source>local_group_call</source>
-        <translation>Lokaal groepsgesprek</translation>
+        <translation>Groepsoproep</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
@@ -1108,7 +1121,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation>Lopende %1</translation>
+        <translation type="unfinished">Lopende %1</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -1485,6 +1498,10 @@
         <source>close_name_panel_accessible_button</source>
         <extracomment>Close %1 panel</extracomment>
         <translation>Sluit paneel %1</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
@@ -2107,6 +2124,10 @@
         <extracomment>Cannot record a message while a call is ongoing</extracomment>
         <translation>Kan geen bericht opnemen tijdens een lopende oproep</translation>
     </message>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <translation>Bericht</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2187,7 +2208,11 @@
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
         <source>unread_messages_accessible_label</source>
-        <translation>: %1 ongelezen berichten</translation>
+        <translation type="unfinished">: %1 ongelezen berichten</translation>
+    </message>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <translation>Conversaties</translation>
     </message>
 </context>
 <context>
@@ -3823,6 +3848,10 @@ Je staat op het punt om &quot;%1&quot; te bellen. Wil je doorgaan?</translation>
         <source>custom</source>
         <translation>Aangepast: </translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Terug</translation>
+    </message>
 </context>
 <context>
     <name>EventLogCore</name>
@@ -4211,7 +4240,7 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vereist</translation>
+        <translation type="unfinished">%1 vereist</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="69"/>
@@ -4456,7 +4485,7 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="394"/>
         <source>account_list_accessible_name</source>
         <extracomment>&quot;Account list&quot;</extracomment>
-        <translation>accountlijst</translation>
+        <translation type="unfinished">accountlijst</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="432"/>
@@ -4535,6 +4564,10 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="96"/>
         <source>contact_editor_dialog_abort_confirmation_save</source>
         <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <translation>Lopende oproep</translation>
     </message>
 </context>
 <context>
@@ -4643,6 +4676,10 @@ Verlooptijd: %1</translation>
         <source>apply_button_text</source>
         <translation>Toepassen</translation>
     </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Terug</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4702,6 +4739,14 @@ Verlooptijd: %1</translation>
         <source>day_accessible_name</source>
         <translation>Dag</translation>
     </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>Verwijder deelnemer %1</translation>
+    </message>
+    <message>
+        <source>meeting_description_accessible_name</source>
+        <translation>Omschrijving</translation>
+    </message>
 </context>
 <context>
     <name>MeetingListView</name>
@@ -4722,6 +4767,10 @@ Verlooptijd: %1</translation>
         <source>meeting_info_delete</source>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation>Meeting verwijderen</translation>
+    </message>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <translation>Meetings</translation>
     </message>
 </context>
 <context>
@@ -4937,6 +4986,10 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
         <source>new_meeting_acccessibility_label</source>
         <translation>Nieuwe meeting</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Terug</translation>
     </message>
 </context>
 <context>
@@ -5289,6 +5342,14 @@ Verlooptijd: %1</translation>
         <extracomment>&quot;Ajouter des participants&quot;</extracomment>
         <translation>Deelnemers toevoegen</translation>
     </message>
+    <message>
+        <source>participant_list_accessible_name</source>
+        <translation>Deelnemers</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <translation>Verwijder deelnemer %1</translation>
+    </message>
 </context>
 <context>
     <name>PhoneNumberInput</name>
@@ -5296,13 +5357,13 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="58"/>
         <source>prefix_phone_number_accessible_name</source>
         <extracomment>%1 prefix</extracomment>
-        <translation>%1 prefix</translation>
+        <translation type="unfinished">%1 prefix</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="76"/>
         <source>number_phone_number_accessible_name</source>
         <extracomment>%1 number</extracomment>
-        <translation>%1 nummer</translation>
+        <translation type="unfinished">%1 nummer</translation>
     </message>
 </context>
 <context>
@@ -5526,6 +5587,10 @@ Verlooptijd: %1</translation>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
         <translation>Code opnieuw versturen</translation>
     </message>
+    <message>
+        <source>return_accessible_name</source>
+        <translation>Terugkeren</translation>
+    </message>
 </context>
 <context>
     <name>RegisterPage</name>
@@ -5575,7 +5640,7 @@ Verlooptijd: %1</translation>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vereist</translation>
+        <translation type="unfinished">%1 vereist</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
@@ -5742,7 +5807,7 @@ Neem contact met ons op om deze in te schakelen voor een commercieel project.</t
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>mandatory_field_accessible_name</source>
         <extracomment>&quot;%1 mandatory&quot;</extracomment>
-        <translation>%1 vereist</translation>
+        <translation type="unfinished">%1 vereist</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
@@ -5993,6 +6058,18 @@ Neem contact met ons op om deze in te schakelen voor een commercieel project.</t
         <source>conversation_editing_message_title</source>
         <translation>Bericht wordt bewerkt</translation>
     </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Annuleer</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <translation>Videogesprek</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <translation>Bellen</translation>
+    </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
@@ -6086,7 +6163,7 @@ Neem contact met ons op om deze in te schakelen voor een commercieel project.</t
     <message>
         <location filename="../../view/Control/Input/TextField.qml" line="230"/>
         <source>textfield_custom_button_accessible_name</source>
-        <translation>%1 knop op %2</translation>
+        <translation type="unfinished">%1 knop op %2</translation>
     </message>
 </context>
 <context>
@@ -6440,6 +6517,30 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>meeting_waiting_room_joining_subtitle</source>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation>Je zal in enkele ogenblikken aan de meeting deelnemen...</translation>
+    </message>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <translation>Luidspreker dempen</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <translation>Spreker activeren</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <translation>Microfoon dempen</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <translation>Microfoon activeren</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <translation>Video inschakelen</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <translation>Video uitschakelen</translation>
     </message>
 </context>
 <context>
@@ -7879,7 +7980,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <translation>%1 huidige waarde %2</translation>
+        <translation type="unfinished">%1 huidige waarde %2</translation>
     </message>
 </context>
 <context>
@@ -7926,7 +8027,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="177"/>
         <source>numpad_longpress_accessible_name</source>
-        <translation>%1 lang drukken %2</translation>
+        <translation type="unfinished">%1 lang drukken %2</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
@@ -7984,7 +8085,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
         <source>unread_notification_accessible_name</source>
-        <translation>Ongelezen notificatie badge: %1 ongelezen</translation>
+        <translation type="unfinished">Ongelezen notificatie badge: %1 ongelezen</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/UnreadNotification.qml" line="19"/>
@@ -7998,6 +8099,48 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/setting/SettingsCore.cpp" line="447"/>
         <source>info_popup_error_title</source>
         <translation>Fout</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_resume_call</source>
+        <translation>Oproep hervatten</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <translation>Terug</translation>
+    </message>
+</context>
+<context>
+    <name>DetailLayout</name>
+    <message>
+        <source>more_info_accessible_name</source>
+        <translation>Meer info %1</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <translation>Opname stoppen</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Sluiten</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <translation>Sluiten</translation>
     </message>
 </context>
 </TS>

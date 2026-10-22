@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation>Salva le impostazioni</translation>
+        <translation type="unfinished">Salva le impostazioni</translation>
     </message>
 </context>
 <context>
@@ -5736,6 +5736,10 @@ Error</extracomment>
         <source>assistant_account_creation_confirmation_resend_code</source>
         <extracomment>&quot;Renvoyer un code&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>return_accessible_name</source>
+        <translation>indietro</translation>
     </message>
 </context>
 <context>
