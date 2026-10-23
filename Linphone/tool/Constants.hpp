@@ -192,12 +192,14 @@ public:
 	static constexpr char VcardScheme[] = EXECUTABLE_NAME "-desktop:/";
 	static constexpr int CbsCallInterval = 20;
 	static constexpr char RcVersionName[] = "rc_version";
-	static constexpr int RcVersionCurrent = 7; // 2 = Conference URI
+	static constexpr int RcVersionCurrent = 9; // 2 = Conference URI
 	                                           // 3 = CPIM on basic chat rooms
 	                                           // 4 = RTP bundle mode
 	                                           // 5 = Video Conference URI
 	                                           // 6 = 5.2.6 Publish expires
 	                                           // 7 = 6.0.0 Lime algo + Video Policy + Routes + Log upload URL
+	                                           // 8 = 5.3.x Video Policy (accept direction send/recv)
+	                                           // 9 = 6.2.x Video Policy (accept direction recv only)
 	static constexpr char DownloadDefaultFileName[] = "download";
 
 //--------------------------------------------------------------------------------

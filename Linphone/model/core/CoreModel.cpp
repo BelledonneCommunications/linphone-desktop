@@ -368,6 +368,16 @@ void CoreModel::migrate() {
 		lInfo() << log().arg("Migrating) Video Policy for version 7.");
 	}
 
+	if (rcVersion < 9) {
+		config->setInt("video", "automatically_accept_direction", 2);
+		auto videoPolicy = mCore->getVideoActivationPolicy()->clone();
+		videoPolicy->setAutomaticallyAccept(config->getBool("video", "automatically_accept", true));
+		videoPolicy->setAutomaticallyInitiate(config->getBool("video", "automatically_initiate", false));
+		videoPolicy->setAutomaticallyAcceptDirection(linphone::MediaDirection::RecvOnly);
+		mCore->setVideoActivationPolicy(videoPolicy);
+		lInfo() << log().arg("Migrating Video Policy for version 9. automatically_accept_direction = 2");
+	}
+
 	config->setInt(SettingsModel::UiSection, Constants::RcVersionName, Constants::RcVersionCurrent);
 }
 
