@@ -261,7 +261,8 @@ AbstractMainPage {
                     Layout.topMargin: Utils.getSizeWithScreenRatio(18)
                     Layout.rightMargin: Utils.getSizeWithScreenRatio(39)
                     visible: searchBar.visible
-                    spacing: Utils.getSizeWithScreenRatio(24)
+                    spacing: 0
+                    equalTabWidth: true
                     pixelSize: Typography.p2l.pixelSize
                     textWeight: Typography.p2l.weight
                     capitalization: Font.MixedCase

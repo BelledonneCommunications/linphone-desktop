@@ -15,6 +15,8 @@ Control.TabBar {
     property real pixelSize: Typography.h3.pixelSize
     property real textWeight: Typography.h3.weight
 	property int capitalization: Font.Capitalize
+	property bool equalTabWidth: false
+	property real indicatorHeight: Utils.getSizeWithScreenRatio(4)
 	wheelEnabled: true
 	background: Item {
 		id: tabBarBackground
@@ -22,7 +24,7 @@ Control.TabBar {
 
 		Rectangle {
 			id: barBG
-            height: Utils.getSizeWithScreenRatio(4)
+            height: mainItem.indicatorHeight
 			color: DefaultStyle.grey_200
 			anchors.bottom: parent.bottom
 			width: parent.width
@@ -50,9 +52,11 @@ Control.TabBar {
 			id: tabButton
 			required property string modelData
 			required property int index
-			property bool shadowEnabled: activeFocus || hovered
+			property bool shadowEnabled: activeFocus
 			property bool keyboardFocus: FocusHelper.keyboardFocus
-			width: implicitWidth
+			width: mainItem.equalTabWidth && mainItem.count > 0
+				? (mainItem.availableWidth - mainItem.spacing * (mainItem.count - 1)) / mainItem.count
+				: implicitWidth
 			activeFocusOnTab: true
 			hoverEnabled: true
 			Accessible.name: modelData
@@ -88,7 +92,7 @@ Control.TabBar {
 				Rectangle {
 					id: tabBackground
 					visible: mainItem.currentIndex === index || tabButton.hovered
-                    height: Utils.getSizeWithScreenRatio(5)
+                    height: mainItem.indicatorHeight
 					color: mainItem.currentIndex === index ? DefaultStyle.main1_500_main : DefaultStyle.main2_400
 					anchors.bottom: parent.bottom
 					anchors.left: parent.left
