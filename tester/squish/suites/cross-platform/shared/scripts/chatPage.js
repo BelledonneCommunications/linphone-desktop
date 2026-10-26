@@ -7,7 +7,7 @@ function tx(o){try{return o.text?String(o.text):"";}catch(e){return "";}}
 
 export var ChatPage = {
     open: function(){
-        L.click(tr("MainLayout", "open_conversations_page_accessible_name"), 15000);
+        L.click(tr("MainLayout", "bottom_navigation_conversations_label"), 15000);
         snooze(1);
     },
     startChatWith: function(account){

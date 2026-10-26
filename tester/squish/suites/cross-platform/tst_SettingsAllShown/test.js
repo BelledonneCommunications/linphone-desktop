@@ -19,7 +19,7 @@ function checkLoggedIn(){
     var ctx = App.launchInstance("set-shown");
     App.withInstance(ctx, function(){
         test.verify(MainPage.waitLoaded(), "main loaded (shown)");
-        test.verify(Settings.shows("MainLayout", "open_conversations_page_accessible_name"), "Conversations tab shown when disable_chat_feature=0");
+        test.verify(Settings.shows("MainLayout", "bottom_navigation_conversations_label"), "Conversations tab shown when disable_chat_feature=0");
         test.verify(Settings.shows("MainLayout", "bottom_navigation_meetings_label"), "Meetings tab shown when disable_meetings_feature=0");
 
         test.verify(Settings.openMenuWith(account.username), "account menu opened (shown)");

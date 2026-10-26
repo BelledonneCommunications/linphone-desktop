@@ -1,5 +1,6 @@
 ubuntu2204-squish-tests:
   stage: test
+  timeout: 4h
   tags: [ "docker-squish-flat" ]
   image: $SQUISH_LINUX_IMAGE
   needs:

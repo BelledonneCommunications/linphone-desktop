@@ -3,7 +3,7 @@ import { tr } from "translate.js";
 
 export var HistoryPage = {
     open: function(){
-        L.click(tr("MainLayout", "open_calls_page_accessible_name"), 15000);
+        L.click(tr("MainLayout", "bottom_navigation_calls_label"), 15000);
         snooze(1.5);
     },
     callEntry: function(candidates){

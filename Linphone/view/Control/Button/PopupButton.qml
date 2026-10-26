@@ -14,10 +14,11 @@ Button {
     property string popUpTitle: ""
     property int popupY: height
     Accessible.role: Accessible.ButtonMenu
-    Accessible.onPressAction: {
+    function accessiblePressAction() {
         openedWithKeyboard = true;
         togglePopup();
     }
+    Accessible.onPressAction: accessiblePressAction()
     Accessible.name: popUpTitle.length > 0 ? popUpTitle : qsTr("popup_button_default_accessible_name")
     style: ButtonStyle.popupButton
     checked: popup.visible

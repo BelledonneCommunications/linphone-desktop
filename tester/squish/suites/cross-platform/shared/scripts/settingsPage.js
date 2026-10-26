@@ -44,9 +44,32 @@ export var Settings = {
         return true;
     },
     openMeetingForm: function(){
-        L.clickLabel(tr("MainLayout", "bottom_navigation_meetings_label"), 10000);
-        snooze(2);
-        L.clickLabel(tr("MeetingPage", "meetings_add"), 8000);
+        for (var attempt = 0; attempt < 3; attempt++) {
+            L.clickNamed("mainTab3", 10000);
+            snooze(2);
+            var meetingsTab = L.waitForNamed("mainTab3", 2000);
+            if (meetingsTab && meetingsTab.checked) break;
+            L.clickIfVisible(tr("MainLayout", "contact_editor_dialog_abort_confirmation_do_not_save"), 5000);
+        }
+        var addLabel = tr("MeetingPage", "meetings_add");
+        var addButton = L.waitFor(function(o){
+            try {
+                if (!o.visible) return false;
+                if (String(o.objectName) === "newMeetingButton") return true;
+                return /BigButton/.test(className(o)) && String(o.text) === addLabel;
+            } catch (e) { return false; }
+        }, 30000);
+        if (!addButton) {
+            var tab = L.waitForNamed("mainTab3", 1000);
+            var shown = L.findAll(function(o){
+                try { return o.visible && o.text && String(o.text).length > 0; } catch (e) { return false; }
+            }).map(function(o){ return String(o.text).substring(0, 40); });
+            test.log("Meetings tab checked: " + (tab ? tab.checked : "not found") + ", visible texts: " + shown.slice(0, 60).join(" | "));
+            try { test.attachDesktopScreenshot("Meetings page without a create button"); } catch (e) {}
+            test.fatal("No button to create a meeting on the meetings page");
+            return false;
+        }
+        mouseClick(addButton);
         snooze(2);
         return true;
     },

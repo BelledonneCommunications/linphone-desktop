@@ -147,6 +147,7 @@ Control.Popup {
 
 	contentItem: FocusScope {
 		id: content
+		objectName: "dtmfPadPanel"
 		implicitHeight: contentLayout.implicitHeight
 		Accessible.role: Accessible.Dialog
 		Accessible.name: qsTr("call_action_show_dialer")
@@ -367,6 +368,7 @@ Control.Popup {
 					model: mainItem.keys.length
 					Button {
 						id: keyButton
+						objectName: "numericPadKey" + key
 						required property int index
 						property string key: mainItem.keys[index]
 						property bool flashed: false

@@ -22,6 +22,8 @@ def build_config(user, password, domain, conference):
         "verify_server_certs=1\n"
         "verify_server_cn=1\n"
         "default_proxy=0\n"
+        "\n[rtp]\n"
+        "nortp_timeout=0\n"
     )
 
     auth_section = (
@@ -43,6 +45,7 @@ def build_config(user, password, domain, conference):
     if conference:
         proxy_section += (
             "conference_factory_uri=" + CONFERENCE_FACTORY_URI + "\n"
+            "audio_video_conference_factory_uri=" + CONFERENCE_FACTORY_URI + "\n"
             "lime_server_url=" + LIME_SERVER_URL + "\n"
             "im_encryption_mandatory=0\n"
             "reg_route=<sip:" + domain + ";transport=tls>\n"

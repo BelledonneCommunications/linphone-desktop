@@ -176,6 +176,7 @@ AbstractMainPage {
 					}
                     Button {
 						id: newConfButton
+						objectName: "newMeetingButton"
 						focus: true
 						style: ButtonStyle.noBackground
 						icon.source: AppIcons.plusCircle
