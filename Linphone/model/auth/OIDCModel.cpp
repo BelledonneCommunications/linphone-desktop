@@ -359,25 +359,42 @@ void OIDCModel::setBearers() {
 	auto decoded = Utils::decodeJwtPayload(Utils::coreStringToAppString(accessBearer->getToken()));
 
 	// Extract primary identifier from token
-	QString usernameFull;
-	if (decoded.contains("preferred_username")) {
-		usernameFull = decoded["preferred_username"].toString();
-	}
-	if (usernameFull.isEmpty() && decoded.contains("username")) {
-		usernameFull = decoded["username"].toString();
+	QString username;
+	if (decoded.contains("sip_identity")) {
+		auto sipIdentity = decoded["sip_identity"].toString();
+		auto address = linphone::Factory::get()->createAddress(Utils::appStringToCoreString(sipIdentity));
+		if (address) {
+			username = Utils::coreStringToAppString(address->getUsername());
+			qDebug() << "OIDC: Extracted username [" << username << "] from sip_identity [" << sipIdentity << "]";
+		} else {
+			lWarning() << "OIDC: Failed to parse sip_identity address [" << sipIdentity << "]";
+		}
 	}
 
-	if (!usernameFull.isEmpty()) {
-		// Extract user part (before @) and domain (after @) if present
-		int atPos = usernameFull.indexOf('@');
-		if (atPos > 0) {
-			QString userPart = usernameFull.left(atPos);
-			qDebug() << "OIDC: Extracted user [" << userPart << "] from [" << usernameFull << "]";
-			mAuthInfo->setUsername(Utils::appStringToCoreString(userPart));
-		} else {
-			qDebug() << "OIDC: Username (no domain) [" << usernameFull << "]";
-			mAuthInfo->setUsername(Utils::appStringToCoreString(usernameFull));
+	if (username.isEmpty()) {
+		QString usernameFull;
+		if (decoded.contains("preferred_username")) {
+			usernameFull = decoded["preferred_username"].toString();
 		}
+		if (usernameFull.isEmpty() && decoded.contains("username")) {
+			usernameFull = decoded["username"].toString();
+		}
+
+		if (!usernameFull.isEmpty()) {
+			// Extract user part (before @) if present
+			int atPos = usernameFull.indexOf('@');
+			if (atPos != -1) {
+				username = usernameFull.left(atPos);
+				qDebug() << "OIDC: Extracted user [" << username << "] from [" << usernameFull << "]";
+			} else {
+				username = usernameFull;
+				qDebug() << "OIDC: Username (no domain) [" << username << "]";
+			}
+		}
+	}
+
+	if (!username.isEmpty()) {
+		mAuthInfo->setUsername(Utils::appStringToCoreString(username));
 	} else {
 		lWarning() << "OIDC: No username claim found in JWT payload. Available claims: "
 		           << QStringList(decoded.keys().begin(), decoded.keys().end()).join(", ");
@@ -392,7 +409,7 @@ void OIDCModel::setBearers() {
 		lWarning() << log().arg("No refresh token found");
 	}
 	CoreModel::getInstance()->getCore()->addAuthInfo(mAuthInfo);
-	emit CoreModel::getInstance()->bearerAccountAdded();
+	emit CoreModel::getInstance() -> bearerAccountAdded();
 	emit finished();
 }
 QString OIDCModel::idToken() const {
