@@ -63,6 +63,8 @@
 	<string>Streaming Video between devices</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Streaming Audio between devices</string>
+	<key>NSLocalNetworkUsageDescription</key>
+	<string>@APPLICATION_NAME@ uses the local network to exchange audio and video directly with devices on the same network during calls.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Store attachment and allow camera record when selected</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
