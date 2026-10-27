@@ -88,7 +88,7 @@ void EventCountNotifier::notifyEventCount(int n) {
 	QSystemTrayIcon *sysTrayIcon = App::getInstance()->getSystemTrayIcon();
 	if (!sysTrayIcon) return;
 
-	if (!n || SettingsModel::getInstance()->getHideNotificationCounter()) {
+	if (!n || App::getInstance()->getSettings()->getHideNotificationCounter()) {
 		mBlinkTimer->stop();
 		sysTrayIcon->setIcon(QIcon(*mBuf));
 		return;
