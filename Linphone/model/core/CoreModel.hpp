@@ -112,6 +112,7 @@ private:
 	std::shared_ptr<MagicSearchModel> mMagicSearch;
 	bool mStarted = false;
 	bool mCheckVersionRequestedByUser = false;
+	bool mLocalNetworkWarningShown = false;
 
 	void setPathBeforeCreation();
 	void setPathAfterStart();

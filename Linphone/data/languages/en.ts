@@ -4049,6 +4049,14 @@ You are about to call &quot;%1&quot; do you want to continue?</translation>
         <extracomment>&quot;Could not get file path for fetching config, return&quot;</extracomment>
         <translation>Could not get file path for fetching config, return</translation>
     </message>
+    <message>
+        <source>info_popup_local_network_denied_title</source>
+        <translation>Local network access denied</translation>
+    </message>
+    <message>
+        <source>info_popup_local_network_denied_message</source>
+        <translation>Local calls might not work. Allow %1 in System Settings &gt; Privacy &amp; Security &gt; Local Network, then restart %1.</translation>
+    </message>
 </context>
 <context>
     <name>CreationFormLayout</name>

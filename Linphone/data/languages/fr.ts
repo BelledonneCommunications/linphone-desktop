@@ -4051,6 +4051,14 @@ Vous êtes sur le point d’appeler “%1” voulez vous continuer ?</translatio
         <extracomment>&quot;Could not get file path for fetching config, return&quot;</extracomment>
         <translation>Impossible de récupérer le chemin de configuration distante.</translation>
     </message>
+    <message>
+        <source>info_popup_local_network_denied_title</source>
+        <translation>Accès au réseau local refusé</translation>
+    </message>
+    <message>
+        <source>info_popup_local_network_denied_message</source>
+        <translation>Les appels en réseau local risquent de ne pas fonctionner. Autorisez %1 dans Réglages Système &gt; Confidentialité et sécurité &gt; Réseau local, puis relancez %1.</translation>
+    </message>
 </context>
 <context>
     <name>CreationFormLayout</name>

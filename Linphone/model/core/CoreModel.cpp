@@ -19,6 +19,7 @@
  */
 
 #include "CoreModel.hpp"
+#include "config.h"
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -491,6 +492,18 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
                                    linphone::Call::State state,
                                    const std::string &message) {
 	lInfo() << log().arg("Call state changed") << call.get() << (int)state;
+#ifdef Q_OS_MACOS
+	if (state == linphone::Call::State::StreamsRunning && !mLocalNetworkWarningShown &&
+	    !core->localPermissionEnabled()) {
+		mLocalNetworkWarningShown = true;
+		lWarning() << log().arg("Local network access denied, local calls might not work");
+		App::postCoreAsync([]() {
+			Utils::showInformationPopup(tr("info_popup_local_network_denied_title"),
+			                            tr("info_popup_local_network_denied_message").arg(APPLICATION_NAME), false,
+			                            App::getInstance()->getCallsWindow());
+		});
+	}
+#endif
 	if (state == linphone::Call::State::IncomingReceived) {
 		bool autoAnswered = false;
 		if (SettingsModel::getInstance()->getAutoAnswerEnabled()) {
