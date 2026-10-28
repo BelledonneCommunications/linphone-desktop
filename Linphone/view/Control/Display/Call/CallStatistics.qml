@@ -8,7 +8,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 ColumnLayout {
 	id: mainItem
 	property var call
-	property string objectName: "statsPanel"
+	objectName: "statsPanel"
 
 	component StatText: Text {
 		id: statText

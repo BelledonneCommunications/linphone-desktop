@@ -1425,7 +1425,6 @@ AbstractWindow {
             Component {
                 id: statsPanel
                 CallStatistics {
-                    objectName: "statsPanel"
                     width: parent.width
                     call: mainWindow.call
                 }

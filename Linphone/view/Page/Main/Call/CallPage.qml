@@ -473,6 +473,10 @@ AbstractMainPage {
                     UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
                                 //: "Vous n'etes pas connecté"
                                 qsTr("group_call_error_not_connected"), false)
+                } else if (addParticipantsLayout.selectedParticipants.length === 0) {
+                    UtilsCpp.showInformationPopup(qsTr("information_popup_error_title"),
+                                //: "Veuillez sélectionner au moins un participant"
+                                qsTr("group_call_error_no_participant"), false)
                 } else {
                     UtilsCpp.createGroupCall(groupName.text, addParticipantsLayout.selectedParticipants)
                 }
