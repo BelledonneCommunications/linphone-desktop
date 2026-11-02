@@ -33,17 +33,25 @@ ListView {
         loading = false
     }
 
+    property bool filterSwitching: false
+    function applyFilterType() {
+        if (callHistoryProxy.filterType === filterType)
+            return
+        filterSwitching = true
+        contentY = contentY
+        callHistoryProxy.filterType = filterType
+        callHistoryProxy.maxDisplayItems = callHistoryProxy.initialDisplayItems
+        currentIndex = count > 0 ? 0 : -1
+        positionViewAtBeginning()
+        filterSwitching = false
+    }
+    onFilterTypeChanged: applyFilterType()
+
     model: CallHistoryProxy {
         id: callHistoryProxy
         onListAboutToBeReset: loading = true
         filterText: mainItem.searchText
-        filterType: mainItem.filterType
         onFilterTextChanged: maxDisplayItems = initialDisplayItems
-        onFilterTypeChanged: {
-            maxDisplayItems = initialDisplayItems
-            mainItem.currentIndex = mainItem.count > 0 ? 0 : -1
-            mainItem.positionViewAtBeginning()
-        }
         initialDisplayItems: Math.max(20, Math.round(2 * mainItem.height / Utils.getSizeWithScreenRatio(56)))
         displayItemsStep: 3 * initialDisplayItems / 2
         onModelAboutToBeReset: loading = true
@@ -81,7 +89,10 @@ ListView {
         }
     }
 
-    Component.onCompleted: cacheBuffer = Math.max(mainItem.height,0) //contentHeight>0 ? contentHeight : 0// cache all items
+    Component.onCompleted: {
+        cacheBuffer = Math.max(mainItem.height, 0)
+        applyFilterType()
+    }
     // remove binding loop
     // onContentHeightChanged: Qt.callLater(function () {
     //     if (mainItem)
@@ -110,7 +121,7 @@ ListView {
     }
     //----------------------------------------------------------------
     function moveToCurrentItem() {
-        if (mainItem.currentIndex >= 0)
+        if (mainItem.currentIndex >= 0 && !mainItem.filterSwitching)
             Utils.updatePosition(mainItem, mainItem)
     }
     onCurrentItemChanged: {
@@ -122,6 +133,7 @@ ListView {
         moveToCurrentItem()
     }
     Behavior on contentY {
+        enabled: !mainItem.filterSwitching
         NumberAnimation {
             id: moveAnimation
             duration: 500
