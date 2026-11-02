@@ -34,6 +34,8 @@ CallHistoryProxy::CallHistoryProxy(QObject *parent) : LimitProxy(parent) {
 	mHistoryList = App::getInstance()->getCallHistoryList();
 	connect(mHistoryList.get(), &CallHistoryList::listAboutToBeReset, this, &CallHistoryProxy::listAboutToBeReset);
 	setSourceModels(new SortFilterList(mHistoryList.get(), Qt::DescendingOrder));
+	connect(this, &CallHistoryProxy::filterTypeChanged, this, [this] { invalidateFilter(); });
+	connect(this, &CallHistoryProxy::filterTextChanged, this, [this] { invalidateFilter(); });
 	connect(App::getInstance(), &App::currentDateChanged, this, [this] { emit mHistoryList->lUpdate(); });
 }
 
