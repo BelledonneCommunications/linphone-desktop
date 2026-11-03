@@ -111,7 +111,18 @@ void ChatMessageContentList::addFiles(const QStringList &paths) {
 			++nbExcess;
 			continue;
 		}
-		finalList.append(path);
+		auto name = file.fileName();
+		bool soFarSoGood;
+		const QString safeFilePath = Utils::getSafeFilePath(
+		    QStringLiteral("%1%2").arg(App::getInstance()->getSettings()->getDownloadFolder()).arg(name), &soFarSoGood);
+		if (!soFarSoGood)
+			lWarning() << log().arg(Q_FUNC_INFO)
+			           << QStringLiteral("Unable to create safe file path for: %1.").arg(name);
+		bool success = QFile::copy(path, safeFilePath);
+		if (!success) lWarning() << log().arg(Q_FUNC_INFO) << "Could not copy file into cache directory";
+		file.setFile(safeFilePath);
+
+		finalList.append(safeFilePath);
 		fileList.append(file);
 	}
 	if (nbNotFound > 0) {
@@ -130,7 +141,7 @@ void ChatMessageContentList::addFiles(const QStringList &paths) {
 		                            tr("popup_error_max_files_count_message", "", nbExcess), false);
 	}
 
-	mModelConnection->invokeToModel([this, finalList, fileList] {
+	mModelConnection->invokeToModel([this, fileList] {
 		int nbTooBig = 0;
 		int nbMimeError = 0;
 		QString lastMimeError;
@@ -190,6 +201,35 @@ void ChatMessageContentList::addFiles(const QStringList &paths) {
 			}
 		});
 	});
+}
+
+bool ChatMessageContentList::remove(QSharedPointer<QObject> itemToRemove) {
+	if (!itemToRemove) return false;
+	auto contentCore = itemToRemove.objectCast<ChatMessageContentCore>();
+	if (contentCore) {
+		auto path = contentCore->getFilePath();
+		if (path.startsWith(App::getInstance()->getSettings()->getDownloadFolder())) {
+			QFile fileToRemove(path);
+			lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
+			fileToRemove.remove();
+		}
+	}
+	return ListProxy::remove(itemToRemove);
+}
+
+void ChatMessageContentList::clearFilesFromCache() {
+	for (auto &item : mList) {
+		auto contentCore = item.objectCast<ChatMessageContentCore>();
+		if (contentCore) {
+			auto path = contentCore->getFilePath();
+			if (path.startsWith(App::getInstance()->getSettings()->getDownloadFolder())) {
+				QFile fileToRemove(path);
+				lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
+				fileToRemove.remove();
+			}
+		}
+	}
+	return ListProxy::clearData();
 }
 
 void ChatMessageContentList::setSelf(QSharedPointer<ChatMessageContentList> me) {

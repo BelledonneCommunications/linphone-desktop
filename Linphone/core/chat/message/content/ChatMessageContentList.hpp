@@ -45,6 +45,8 @@ public:
 	int findFirstUnreadIndex();
 
 	void addFiles(const QStringList &paths);
+	virtual bool remove(QSharedPointer<QObject> itemToRemove) override;
+	void clearFilesFromCache();
 
 	void setSelf(QSharedPointer<ChatMessageContentList> me);
 	virtual QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;

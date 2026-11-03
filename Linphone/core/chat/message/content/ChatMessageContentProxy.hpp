@@ -52,6 +52,8 @@ public:
 	Q_INVOKABLE void addFiles(const QStringList &paths);
 	Q_INVOKABLE void removeContent(ChatMessageContentGui *contentGui);
 	Q_INVOKABLE void clear();
+	// Used to clear files copied in cache if they are finally not used
+	Q_INVOKABLE void clearFilesFromCache();
 
 signals:
 	void chatChanged();
