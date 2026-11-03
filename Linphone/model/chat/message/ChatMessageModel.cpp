@@ -117,6 +117,16 @@ void ChatMessageModel::deleteMessageFromChatRoom(bool deletedByUser) {
 void ChatMessageModel::retractMessageFromChatRoom() {
 	auto chatRoom = mMonitor->getChatRoom();
 	if (chatRoom) {
+		auto contents = mMonitor->getContents();
+		for (auto &content : contents) {
+			auto path = Utils::coreStringToAppString(content->getFilePath());
+			lInfo() << log().arg("Remove content at path : %1").arg(path);
+			if (path.startsWith(SettingsModel::getInstance()->getDownloadFolder())) {
+				QFile fileToRemove(path);
+				lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
+				fileToRemove.remove();
+			}
+		}
 		chatRoom->retractMessage(mMonitor);
 	}
 }

@@ -78,6 +78,11 @@ void ChatMessageContentProxy::removeContent(ChatMessageContentGui *contentGui) {
 	if (model && contentGui) model->remove(contentGui->mCore);
 }
 
+void ChatMessageContentProxy::clearFilesFromCache() {
+	auto model = getListModel<ChatMessageContentList>();
+	if (model) model->clearFilesFromCache();
+}
+
 void ChatMessageContentProxy::clear() {
 	auto model = getListModel<ChatMessageContentList>();
 	if (model) model->clearData();

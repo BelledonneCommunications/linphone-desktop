@@ -465,6 +465,7 @@ FocusScope {
                             Accessible.name: qsTr("chat_cancel_composer_accessible_name")
                             style: ButtonStyle.noBackground
                             onClicked: {
+                                contents.clearFilesFromCache();
                                 contents.clear()
                                 if (mainItem.replyingToMessage)
                                 	mainItem.replyingToMessage = false
