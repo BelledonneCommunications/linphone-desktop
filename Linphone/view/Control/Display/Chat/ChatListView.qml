@@ -389,7 +389,11 @@ ListView {
                                         ? AppIcons.warningCircle
                                         : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateDisplayed
                                             ? AppIcons.checks
-                                            : ""
+                                            : modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StatePendingDelivery
+                                                    || modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateIdle
+                                                    || modelData.core.lastMessageState === LinphoneEnums.ChatMessageState.StateQueued
+                                                        ? AppIcons.hourglass
+                                                        : ""
                             : ""
                     }
                 }
