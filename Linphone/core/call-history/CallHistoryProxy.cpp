@@ -74,5 +74,5 @@ bool CallHistoryProxy::SortFilterList::filterAcceptsRow(int sourceRow, const QMo
 }
 
 bool CallHistoryProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, const QModelIndex &sourceRight) const {
-	return true;
+	return sourceLeft.row() < sourceRight.row();
 }
