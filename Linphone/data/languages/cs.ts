@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished">Uložit nastavení %1</translation>
+        <translation>Uložit: %1</translation>
     </message>
 </context>
 <context>
@@ -346,6 +346,41 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
         <source>manage_account_voicemail_title</source>
         <translation>Hlasová schránka</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="26"/>
+        <source>manage_account_call_forwarding_title</source>
+        <translation>Přesměrování hovorů</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_call_forwarding_subtitle</source>
+        <translation>Zvolte číslo nebo adresu, na kterou se mají vaše hovory přesměrovat, když nejste k zastižení.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_voicemail_subtitle</source>
+        <translation>Aktivujte si hlasovou schránku, nahrajte si uvítací zprávu a poslechněte si své zprávy.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="98"/>
+        <source>manage_account_call_forwarding_open_link</source>
+        <translation>Nastavení přesměrování hovorů</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="106"/>
+        <source>manage_account_voicemail_open_link</source>
+        <translation>Nastavení hlasové schránky</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="82"/>
+        <source>manage_account_external_link_caption</source>
+        <translation>Tato konfigurace se otevře ve vašem webovém prohlížeči.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="71"/>
+        <source>manage_account_external_link_open_error</source>
+        <translation>Nelze otevřít %1</translation>
     </message>
 </context>
 <context>
@@ -780,7 +815,7 @@
     <message>
         <location filename="../../core/App.cpp" line="459"/>
         <source>info_popup_new_version_available_message</source>
-        <translation type="unfinished">Nová verze Linphone (%1) je k dispozici na %1</translation>
+        <translation>Nová verze Linphone (%1) je k dispozici. %2</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="465"/>
@@ -838,7 +873,7 @@
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
         <source>mandatory_field_accessible_name</source>
-        <translation type="unfinished">%1 vyžadováno</translation>
+        <translation>%1, vyžadováno</translation>
     </message>
 </context>
 <context>
@@ -1028,6 +1063,10 @@
         <source>call_history_entry_accessible_name</source>
         <translation>%1 – %2 – %3 – šipka vpravo pro tlačítko zpětného volání</translation>
     </message>
+    <message>
+        <source>call_history_list_accessible_name</source>
+        <translation>Historie hovorů</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -1122,7 +1161,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation type="unfinished">Probíhá %1</translation>
+        <translation>%1 probíhá</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -1147,6 +1186,10 @@
         <source>end_call_name_accessible_name</source>
         <extracomment>End %1 call</extracomment>
         <translation>Ukončit hovor %1</translation>
+    </message>
+    <message>
+        <source>call_list_accessible_name</source>
+        <translation>Probíhající hovory</translation>
     </message>
 </context>
 <context>
@@ -1411,6 +1454,30 @@
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Příchozí hovor</translation>
     </message>
+    <message>
+        <source>call_history_contact_options_accessible_name</source>
+        <translation>Možnosti pro %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="263"/>
+        <source>history_list_filter_all</source>
+        <translation>Všechny hovory</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="263"/>
+        <source>history_list_filter_missed</source>
+        <translation>Zmeškané</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="264"/>
+        <source>history_list_filter_accessible_name</source>
+        <translation>Filtrovat historii hovorů</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="311"/>
+        <source>history_list_empty_missed_history</source>
+        <translation>Žádný zmeškaný hovor…</translation>
+    </message>
 </context>
 <context>
     <name>CallSettingsLayout</name>
@@ -1516,6 +1583,16 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
         <source>settings_calls_noise_suppressor_subtitle</source>
         <translation>Odstraňuje nežádoucí šum v pozadí</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="96"/>
+        <source>settings_calls_hid_title</source>
+        <translation>Ovládání hovorů pomocí sluchátek přes USB/HID</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
+        <source>settings_calls_hid_subtitle</source>
+        <translation>Povolit ovládání hovorů (přijetí, zavěšení, ztlumení) pomocí tlačítek USB/HID sluchátek</translation>
     </message>
 </context>
 <context>
@@ -1995,6 +2072,38 @@
         <source>call_action_accept_call</source>
         <translation>Zvednout hovor</translation>
     </message>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Sloučit hovory</translation>
+    </message>
+    <message>
+        <source>call_chat_panel_accessible_title</source>
+        <translation>Konverzace s %1</translation>
+    </message>
+    <message>
+        <source>conference_participants_options_accessible_name</source>
+        <translation>Možnosti seznamu účastníků</translation>
+    </message>
+    <message>
+        <source>call_window_title</source>
+        <translation>%1 – Hovor s %2</translation>
+    </message>
+    <message>
+        <source>call_window_conference_title</source>
+        <translation>%1 - Schůzka %2</translation>
+    </message>
+    <message>
+        <source>call_microphone_muted_announcement</source>
+        <translation>Mikrofon ztlumen</translation>
+    </message>
+    <message>
+        <source>call_microphone_unmuted_announcement</source>
+        <translation>Mikrofon není ztlumen</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_failed_announcement</source>
+        <translation>%1 nebylo přeneseno</translation>
+    </message>
 </context>
 <context>
     <name>CarddavSettingsLayout</name>
@@ -2088,6 +2197,10 @@
         <source>save</source>
         <translation>Uložit</translation>
     </message>
+    <message>
+        <source>settings_contacts_delete_carddav_server_accessible_name</source>
+        <translation>Odstranit adresář CardDAV</translation>
+    </message>
 </context>
 <context>
     <name>ChangeLayoutForm</name>
@@ -2156,6 +2269,34 @@
         <source>chat_message_input_accessible_name</source>
         <translation>Zpráva</translation>
     </message>
+    <message>
+        <source>chat_cancel_voice_message_accessible_name</source>
+        <translation>Zrušit hlasovou zprávu</translation>
+    </message>
+    <message>
+        <source>chat_send_voice_message_accessible_name</source>
+        <translation>Odeslat hlasovou zprávu</translation>
+    </message>
+    <message>
+        <source>chat_edit_message_accessible_name</source>
+        <translation>Uložit změnu</translation>
+    </message>
+    <message>
+        <source>chat_send_message_accessible_name</source>
+        <translation>Odeslat</translation>
+    </message>
+    <message>
+        <source>chat_record_voice_message_accessible_name</source>
+        <translation>Nahrát hlasovou zprávu</translation>
+    </message>
+    <message>
+        <source>chat_attach_file_accessible_name</source>
+        <translation>Přiložit soubor</translation>
+    </message>
+    <message>
+        <source>chat_emoji_picker_accessible_name</source>
+        <translation>Emotikony</translation>
+    </message>
 </context>
 <context>
     <name>ChatListView</name>
@@ -2223,10 +2364,14 @@
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation>Tato konverzace a všechny její zprávy budou smazány. Chcete pokračovat?</translation>
     </message>
-    <message>
+    <message numerus="yes">
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
         <source>unread_messages_accessible_label</source>
-        <translation type="unfinished">: %1 nepřečtených zpráv</translation>
+        <translation>
+            <numerusform>: %1 nepřečtená zpráva</numerusform>
+            <numerusform>: %1 nepřečtené zprávy</numerusform>
+            <numerusform>: %1 nepřečtených zpráv</numerusform>
+        </translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="332"/>
@@ -2241,6 +2386,10 @@
     <message>
         <source>chat_list_accessible_name</source>
         <translation>Konverzace</translation>
+    </message>
+    <message>
+        <source>chat_options_accessible_name</source>
+        <translation>Možnosti pro %1</translation>
     </message>
 </context>
 <context>
@@ -2337,6 +2486,34 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="316"/>
         <source>conversation_message_edited_label</source>
         <translation>Upraveno</translation>
+    </message>
+    <message>
+        <source>chat_message_file_accessible_name</source>
+        <translation>Soubor</translation>
+    </message>
+    <message>
+        <source>chat_message_voice_accessible_name</source>
+        <translation>Hlasová zpráva</translation>
+    </message>
+    <message>
+        <source>chat_message_sent_by_me_accessible_name</source>
+        <translation>Já</translation>
+    </message>
+    <message>
+        <source>chat_message_more_emojis_accessible_name</source>
+        <translation>Více emotikonů</translation>
+    </message>
+    <message>
+        <source>chat_message_react_accessible_name</source>
+        <translation>Reakce</translation>
+    </message>
+    <message>
+        <source>chat_message_options_accessible_name</source>
+        <translation>Možnosti zprávy</translation>
+    </message>
+    <message>
+        <source>chat_message_reactions_accessible_name</source>
+        <translation>Zobrazit reakce</translation>
     </message>
 </context>
 <context>
@@ -2521,6 +2698,10 @@ Error</extracomment>
             <numerusform>%1 účastníků</numerusform>
         </translation>
     </message>
+    <message>
+        <source>meeting_add_to_calendar_accessible_name</source>
+        <translation>Přidat do kalendáře</translation>
+    </message>
 </context>
 <context>
     <name>ChatMessagesListView</name>
@@ -2612,6 +2793,14 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="288"/>
         <source>conversation_dialog_delete_for_everyone_label</source>
         <translation>Pro všechny</translation>
+    </message>
+    <message>
+        <source>chat_messages_list_accessible_name</source>
+        <translation>Zprávy</translation>
+    </message>
+    <message>
+        <source>chat_scroll_to_last_message_accessible_name</source>
+        <translation>Přejít na poslední zprávu</translation>
     </message>
 </context>
 <context>
@@ -2742,12 +2931,16 @@ proto nezveřejňujte žádné citlivé informace!</translation>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="164"/>
         <source>chat_option_acccessibility_label</source>
-        <translation type="unfinished">Volby chatu</translation>
+        <translation>Možnosti konverzace</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="191"/>
         <source>new_chat_acccessibility_label</source>
         <translation>Nový chat</translation>
+    </message>
+    <message>
+        <source>chat_back_accessible_name</source>
+        <translation>Zpět na seznam konverzací</translation>
     </message>
 </context>
 <context>
@@ -2838,6 +3031,10 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <source>account_settings_name_accessible_name</source>
         <extracomment>Account settings of %1</extracomment>
         <translation>Nastavení účtu %1</translation>
+    </message>
+    <message>
+        <source>account_change_avatar_accessible_name</source>
+        <translation>Změnit obrázek %1</translation>
     </message>
 </context>
 <context>
@@ -3055,6 +3252,10 @@ proto nezveřejňujte žádné citlivé informace!</translation>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="196"/>
         <source>message_with_contact_name_accessible_button</source>
         <translation>Zpráva %1</translation>
+    </message>
+    <message>
+        <source>contact_options_accessible_name</source>
+        <translation>Možnosti pro %1</translation>
     </message>
 </context>
 <context>
@@ -3624,6 +3825,14 @@ Chystáte se zavolat na &quot;%1&quot;, chcete pokračovat?</translation>
         <source>one_one_infos_delete_history_toast_message</source>
         <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
         <translation>Z chatovací místnosti budou odstraněny všechny zprávy. Chcete pokračovat?</translation>
+    </message>
+    <message>
+        <source>chat_subject_accessible_name</source>
+        <translation>Název konverzace</translation>
+    </message>
+    <message>
+        <source>chat_copy_address_accessible_name</source>
+        <translation>Kopírovat adresu</translation>
     </message>
 </context>
 <context>
@@ -8174,7 +8383,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
         <source>combobox_with_value_accessible_name</source>
-        <translation type="unfinished">%1 aktuální hodnota %2</translation>
+        <translation>%1, %2</translation>
     </message>
 </context>
 <context>
@@ -8232,6 +8441,26 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <source>call_action_resume_call</source>
         <translation>Obnovit hovor</translation>
+    </message>
+    <message>
+        <source>call_action_show_dialer</source>
+        <translation>Číselná klávesnice</translation>
+    </message>
+    <message>
+        <source>close_numeric_pad_accessible_name</source>
+        <translation>Zavřít číselnou klávesnici</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_subtitle</source>
+        <translation>Tóny odeslány na %1</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_placeholder</source>
+        <translation>Vytočit kód…</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_field_accessible_name</source>
+        <translation>Odeslané tóny</translation>
     </message>
 </context>
 <context>

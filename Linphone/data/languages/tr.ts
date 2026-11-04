@@ -1,0 +1,9155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="tr">
+<context>
+    <name>AbstractSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="68"/>
+        <source>return_accessible_name</source>
+        <extracomment>Return</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="87"/>
+        <source>save</source>
+        <extracomment>&quot;Enregistrer&quot;</extracomment>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="91"/>
+        <source>save_settings_accessible_name</source>
+        <extracomment>Save %1 settings</extracomment>
+        <translation>%1 ayarlarını kaydet</translation>
+    </message>
+</context>
+<context>
+    <name>AbstractSettingsMenu</name>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="52"/>
+        <source>back_previous_menu_accessible_name</source>
+        <extracomment>Back to previous menu</extracomment>
+        <translation>Önceki menüye dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="76"/>
+        <source>settings_page_selection_accessible_name</source>
+        <extracomment>Settings page selection</extracomment>
+        <translation>Ayarlar sayfası seçimi</translation>
+    </message>
+</context>
+<context>
+    <name>AbstractWindow</name>
+    <message>
+        <source>close_accessible_name</source>
+        <extracomment>&quot;Close&quot;</extracomment>
+        <translation>Kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/AbstractWindow.qml" line="82"/>
+        <source>contact_dialog_pick_phone_number_or_sip_address_title</source>
+        <extracomment>&quot;Choisissez un numéro ou adresse SIP&quot;</extracomment>
+        <translation>Bir numara veya SIP adresi seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/AbstractWindow.qml" line="330"/>
+        <source>fps_counter</source>
+        <translation>FPS sayacı</translation>
+    </message>
+</context>
+<context>
+    <name>AccountCore</name>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="465"/>
+        <source>drawer_menu_account_connection_status_connected</source>
+        <extracomment>&quot;Connecté&quot;</extracomment>
+        <translation>Bağlı</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="468"/>
+        <source>drawer_menu_account_connection_status_refreshing</source>
+        <translation>Yenileniyor</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="471"/>
+        <source>drawer_menu_account_connection_status_progress</source>
+        <translation>İlerliyor</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="474"/>
+        <source>drawer_menu_account_connection_status_failed</source>
+        <translation>Başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="478"/>
+        <source>drawer_menu_account_connection_status_cleared</source>
+        <translation>Temizlendi</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="512"/>
+        <source>manage_account_status_connected_summary</source>
+        <extracomment>&quot;Vous êtes en ligne et joignable.&quot;</extracomment>
+        <translation>Çevrimiçisiniz ve ulaşılabilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="515"/>
+        <source>manage_account_status_failed_summary</source>
+        <extracomment>&quot;Erreur de connexion, vérifiez vos paramètres.&quot;</extracomment>
+        <translation>Bağlantı hatası, ayarlarınızı kontrol edin.</translation>
+    </message>
+    <message>
+        <location filename="../../core/account/AccountCore.cpp" line="519"/>
+        <source>manage_account_status_cleared_summary</source>
+        <extracomment>&quot;Compte désactivé, vous ne recevrez ni appel ni message.&quot;</extracomment>
+        <translation>Hesap devre dışı, çağrı veya mesaj almayacaksınız.</translation>
+    </message>
+</context>
+<context>
+    <name>AccountDeviceList</name>
+    <message>
+        <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
+        <source>manage_account_no_device_found_error_message</source>
+        <extracomment>&quot;Erreur lors de la récupération des appareils : %1&quot;</extracomment>
+        <translation>Cihazlar alınırken hata: %1</translation>
+    </message>
+</context>
+<context>
+    <name>AccountListView</name>
+    <message>
+        <location filename="../../view/Page/Main/Account/AccountListView.qml" line="87"/>
+        <source>add_an_account</source>
+        <extracomment>Add an account</extracomment>
+        <translation>Bir hesap ekle</translation>
+    </message>
+</context>
+<context>
+    <name>AccountManager</name>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="95"/>
+        <source>assistant_account_login_already_connected_error</source>
+        <extracomment>&quot;The account is already connected&quot;</extracomment>
+        <translation>Hesap zaten bağlı</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="147"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <extracomment>Outbound proxy uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Giden proxy URI geçersiz. Lütfen şu formata uyduğundan emin olun: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; isteğe bağlıdır)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="110"/>
+        <source>assistant_account_login_proxy_address_error</source>
+        <extracomment>&quot;Unable to create proxy address. Please check the domain name.&quot;</extracomment>
+        <translation>Proxy adresi oluşturulamadı. Lütfen alan adını kontrol edin.</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="123"/>
+        <source>assistant_account_login_address_configuration_error</source>
+        <extracomment>&quot;Unable to configure address: `%1`.&quot;</extracomment>
+        <translation>Adres yapılandırılamadı: `%1`.</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="134"/>
+        <source>assistant_account_login_registrar_uri_error</source>
+        <extracomment>Registrar uri is invalid. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Registrar URI geçersiz. Lütfen şu formata uyduğundan emin olun: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; isteğe bağlıdır)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="154"/>
+        <source>assistant_account_login_params_configuration_error</source>
+        <extracomment>&quot;Unable to configure account settings.&quot;</extracomment>
+        <translation>Hesap ayarları yapılandırılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="178"/>
+        <source>assistant_account_login_forbidden_error</source>
+        <extracomment>&quot;Username and password do not match&quot;</extracomment>
+        <translation>Kullanıcı adı ve şifre eşleşmiyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="180"/>
+        <source>assistant_account_login_error</source>
+        <extracomment>&quot;Error during connection, please verify your parameters&quot;</extracomment>
+        <translation>Bağlantı sırasında hata, lütfen parametrelerinizi kontrol edin</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="195"/>
+        <source>assistant_account_add_error</source>
+        <extracomment>&quot;Unable to add account.&quot;</extracomment>
+        <translation>Hesap eklenemedi.</translation>
+    </message>
+</context>
+<context>
+    <name>AccountModel</name>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="259"/>
+        <source>set_mwi_server_address_failed_error_message</source>
+        <extracomment>&quot;Unable to set voicemail server address, failed creating address from %1&quot; : %1 is address</extracomment>
+        <translation>Sesli mesaj sunucu adresi ayarlanamadı, %1 adresinden adres oluşturma başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="298"/>
+        <source>set_server_address_failed_error_message</source>
+        <extracomment>&quot;Unable to set server address, failed creating address from %1&quot;</extracomment>
+        <translation>Sunucu adresi ayarlanamadı, %1 adresinden adres oluşturma başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="316"/>
+        <source>set_outbound_proxy_uri_failed_error_message</source>
+        <extracomment>Unable to set outbound proxy uri from address %1. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</extracomment>
+        <translation>Giden proxy URI&apos;si %1 adresinden ayarlanamadı. Lütfen şu formata uyduğundan emin olun: sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; isteğe bağlıdır)</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="425"/>
+        <source>set_conference_factory_address_failed_error_message</source>
+        <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
+        <translation>Konuşma sunucu adresi ayarlanamadı, %1 adresinden adres oluşturma başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="447"/>
+        <source>set_audio_conference_factory_address_failed_error_message</source>
+        <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
+        <translation>Toplantı sunucu adresi ayarlanamadı, %1 adresinden adres oluşturma başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountModel.cpp" line="494"/>
+        <source>set_voicemail_address_failed_error_message</source>
+        <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
+        <translation>Sesli mesaj adresi ayarlanamadı, %1 adresinden adres oluşturma başarısız</translation>
+    </message>
+</context>
+<context>
+    <name>AccountSettingsGeneralLayout</name>
+    <message>
+        <source>account_settings_copy_sip_address_accessible_name</source>
+        <extracomment>&quot;Copy SIP address&quot;</extracomment>
+        <translation>SIP adresini kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="20"/>
+        <source>manage_account_details_title</source>
+        <extracomment>&quot;Détails&quot;</extracomment>
+        <translation>Detaylar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="22"/>
+        <source>manage_account_details_subtitle</source>
+        <extracomment>Éditer les informations de votre compte.</extracomment>
+        <translation>Hesabınızın bilgilerini düzenleyin.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_devices_title</source>
+        <extracomment>&quot;Vos appareils&quot;</extracomment>
+        <translation>Cihazlarınız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="30"/>
+        <source>manage_account_devices_subtitle</source>
+        <extracomment>&quot;La liste des appareils connectés à votre compte. Vous pouvez retirer les appareils que vous n’utilisez plus.&quot;</extracomment>
+        <translation>Hesabınıza bağlı cihazların listesi. Artık kullanmadığınız cihazları kaldırabilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="26"/>
+        <source>manage_account_call_forwarding_title</source>
+        <translation>Çağrı yönlendirme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_call_forwarding_subtitle</source>
+        <translation>Çağrı yönlendirme ayarları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="32"/>
+        <source>manage_account_voicemail_title</source>
+        <translation>Sesli mesaj</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="28"/>
+        <source>manage_account_voicemail_subtitle</source>
+        <translation>Sesli mesaj ayarları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="98"/>
+        <source>manage_account_call_forwarding_open_link</source>
+        <translation>Bağlantıyı aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="106"/>
+        <source>manage_account_voicemail_open_link</source>
+        <translation>Bağlantıyı aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="82"/>
+        <source>manage_account_external_link_caption</source>
+        <translation>Harici bağlantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="71"/>
+        <source>manage_account_external_link_open_error</source>
+        <translation>Bağlantı açılamadı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="60"/>
+        <source>manage_account_add_picture</source>
+        <extracomment>&quot;Ajouter une image&quot;</extracomment>
+        <translation>Resim ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="75"/>
+        <source>manage_account_edit_picture</source>
+        <extracomment>&quot;Modifier l&apos;image&quot;</extracomment>
+        <translation>Resmi düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="85"/>
+        <source>manage_account_remove_picture</source>
+        <extracomment>&quot;Supprimer l&apos;image&quot;</extracomment>
+        <translation>Resmi kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="107"/>
+        <source>sip_address</source>
+        <extracomment>SIP address</extracomment>
+        <translation>SIP adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="127"/>
+        <source>copied</source>
+        <extracomment>Copied</extracomment>
+        <translation>Kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="129"/>
+        <source>account_settings_sip_address_copied_message</source>
+        <extracomment>Your SIP address has been copied in the clipboard</extracomment>
+        <translation>SIP adresiniz panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="133"/>
+        <source>account_settings_sip_address_copied_error_message</source>
+        <extracomment>Error copying your SIP address</extracomment>
+        <translation>SIP adresiniz kopyalanırken hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="143"/>
+        <source>sip_address_display_name</source>
+        <extracomment>&quot;Nom d&apos;affichage</extracomment>
+        <translation>Görünen ad</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="149"/>
+        <source>sip_address_display_name_explaination</source>
+        <extracomment>&quot;Le nom qui sera affiché à vos correspondants lors de vos échanges.&quot;</extracomment>
+        <translation>Karşınızdakilere gösterilecek ad.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="167"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="179"/>
+        <source>manage_account_international_prefix</source>
+        <extracomment>Indicatif international*</extracomment>
+        <translation>Uluslararası önek*</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="198"/>
+        <source>manage_account_delete</source>
+        <extracomment>&quot;Supprimer mon compte&quot;</extracomment>
+        <translation>Hesabımı sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="206"/>
+        <source>manage_account_delete_message</source>
+        <translation>Hesabı silmek istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="225"/>
+        <source>manage_account_dialog_remove_account_title</source>
+        <extracomment>&quot;Se déconnecter du compte ?&quot;</extracomment>
+        <translation>Hesaptan çıkış yap?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="227"/>
+        <source>manage_account_dialog_remove_account_message</source>
+        <extracomment>Si vous souhaitez supprimer définitivement votre compte rendez-vous sur : https://subscribe.linphone.org</extracomment>
+        <translation>Hesabınızı kalıcı olarak silmek isterseniz şu adrese gidin: https://subscribe.linphone.org</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="131"/>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="291"/>
+        <source>error</source>
+        <extracomment>Erreur</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="276"/>
+        <source>no_device_message</source>
+        <extracomment>No device fetched</extracomment>
+        <translation>Cihaz bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="329"/>
+        <source>manage_account_device_remove</source>
+        <extracomment>&quot;Supprimer&quot;</extracomment>
+        <translation>Kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="338"/>
+        <source>manage_account_device_remove_confirm_dialog</source>
+        <translation>Cihazı kaldırmak istediğinize emin misiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="352"/>
+        <source>manage_account_device_last_connection</source>
+        <extracomment>&quot;Dernière connexion:&quot;</extracomment>
+        <translation>Son bağlantı:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="370"/>
+        <source>device_last_updated_time_no_info</source>
+        <extracomment>&quot;No information&quot;</extracomment>
+        <translation>Bilgi yok</translation>
+    </message>
+</context>
+<context>
+    <name>AccountSettingsPage</name>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="13"/>
+        <source>drawer_menu_manage_account</source>
+        <extracomment>&quot;Mon compte&quot;</extracomment>
+        <translation>Hesabım</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="18"/>
+        <source>settings_general_title</source>
+        <extracomment>&quot;Général&quot;</extracomment>
+        <translation>Genel</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="20"/>
+        <source>settings_account_title</source>
+        <extracomment>&quot;Paramètres de compte&quot;</extracomment>
+        <translation>Hesap ayarları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="28"/>
+        <source>contact_editor_popup_abort_confirmation_title</source>
+        <extracomment>&quot;Modifications non enregistrées&quot;</extracomment>
+        <translation>Kaydedilmemiş değişiklikler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="30"/>
+        <source>contact_editor_popup_abort_confirmation_message</source>
+        <extracomment>&quot;Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?&quot;</extracomment>
+        <translation>Kaydedilmemiş değişiklikleriniz var. Bu sayfadan çıkarsanız değişiklikleriniz kaybolacak. Devam etmeden önce değişikliklerinizi kaydetmek ister misiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
+        <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
+        <extracomment>&quot;Ne pas enregistrer&quot; &quot;Enregistrer&quot;</extracomment>
+        <translation>Kaydetme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AccountSettingsPage.qml" line="41"/>
+        <source>contact_editor_dialog_abort_confirmation_save</source>
+        <translation>Kaydet</translation>
+    </message>
+</context>
+<context>
+    <name>AccountSettingsParametersLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="18"/>
+        <source>settings_title</source>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="22"/>
+        <source>settings_account_title</source>
+        <translation>Hesap ayarları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="39"/>
+        <source>information_popup_success_title</source>
+        <translation>Başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="41"/>
+        <source>contact_editor_saved_changes_toast</source>
+        <extracomment>&quot;Modifications sauvegardés&quot;</extracomment>
+        <translation>Değişiklikler kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="47"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="65"/>
+        <source>account_settings_mwi_uri_title</source>
+        <extracomment>&quot;MWI server address&quot;</extracomment>
+        <translation>MWI sunucu adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="68"/>
+        <source>mwi_server_address_tooltip</source>
+        <extracomment>Address of the MWI server that sends SIP notifications to display new voicemail indicators</extracomment>
+        <translation>Yeni sesli mesaj göstergelerini görüntülemek için SIP bildirimleri gönderen MWI sunucusunun adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="88"/>
+        <source>account_settings_voicemail_uri_title</source>
+        <extracomment>&quot;Voicemail address&quot;</extracomment>
+        <translation>Sesli mesaj adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="90"/>
+        <source>voicemail_address_tooltip</source>
+        <extracomment>SIP address dialed when clicking the voicemail button</extracomment>
+        <translation>Sesli mesaj düğmesine tıklandığında aranan SIP adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="117"/>
+        <source>account_settings_registrar_uri_title</source>
+        <translation>Registrar URI</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="134"/>
+        <source>account_settings_sip_proxy_url_title</source>
+        <translation>SIP proxy URL&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="138"/>
+        <source>login_proxy_server_url_tooltip</source>
+        <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
+        <translation>Bu alan doldurulursa giden proxy otomatik olarak etkinleştirilir. Devre dışı bırakmak için boş bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="155"/>
+        <source>account_settings_stun_server_url_title</source>
+        <extracomment>&quot;Adresse du serveur STUN&quot;</extracomment>
+        <translation>STUN sunucu adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="169"/>
+        <source>account_settings_enable_ice_title</source>
+        <extracomment>&quot;Activer ICE&quot;</extracomment>
+        <translation>ICE&apos;yi etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="184"/>
+        <source>account_settings_avpf_title</source>
+        <extracomment>&quot;AVPF&quot;</extracomment>
+        <translation>AVPF</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="199"/>
+        <source>account_settings_bundle_mode_title</source>
+        <extracomment>&quot;Mode bundle&quot;</extracomment>
+        <translation>Bundle modu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="217"/>
+        <source>account_settings_expire_title</source>
+        <extracomment>&quot;Expiration (en seconde)&quot;</extracomment>
+        <translation>Süre sonu (saniye)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="235"/>
+        <source>account_settings_conference_factory_uri_title</source>
+        <extracomment>&quot;URI du serveur de conversations&quot;</extracomment>
+        <translation>Konuşma sunucu URI&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="252"/>
+        <source>account_settings_audio_video_conference_factory_uri_title</source>
+        <extracomment>&quot;URI du serveur de réunions&quot;</extracomment>
+        <translation>Toplantı sunucu URI&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="267"/>
+        <source>account_settings_lime_server_url_title</source>
+        <extracomment>&quot;URL du serveur d’échange de clés de chiffrement&quot;</extracomment>
+        <translation>Şifreleme anahtarı değişim sunucu URL&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="282"/>
+        <source>account_settings_ccmp_server_url_title</source>
+        <extracomment>&quot;URL du serveur CCMP&quot;</extracomment>
+        <translation>CCMP sunucu URL&apos;si</translation>
+    </message>
+</context>
+<context>
+    <name>AddParticipantsForm</name>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="14"/>
+        <source>search_bar_search_contacts_placeholder</source>
+        <extracomment>&quot;Rechercher des contacts&quot;</extracomment>
+        <translation>Kişilerde ara</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="56"/>
+        <source>add_participant_selected_count</source>
+        <comment>0</comment>
+        <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
+        <translation>
+            <numerusform>%1 selected participant</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="95"/>
+        <source>remove_participant_accessible_name</source>
+        <extracomment>Remove participant %1</extracomment>
+        <translation>%1 katılımcıyı kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>&quot;Aucun contact&quot;</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/AddParticipantsForm.qml" line="151"/>
+        <source>contact_list_empty</source>
+        <translation>Kişi yok</translation>
+    </message>
+</context>
+<context>
+    <name>AdvancedSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="16"/>
+        <source>settings_system_title</source>
+        <extracomment>System</extracomment>
+        <translation>Sistem</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="22"/>
+        <source>settings_remote_provisioning_title</source>
+        <extracomment>Remote provisioning</extracomment>
+        <translation>Uzaktan sağlama</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="29"/>
+        <source>settings_security_title</source>
+        <extracomment>Security / Encryption</extracomment>
+        <translation>Güvenlik / Şifreleme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="35"/>
+        <source>settings_advanced_audio_codecs_title</source>
+        <extracomment>Audio codecs</extracomment>
+        <translation>Ses kodekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="41"/>
+        <source>settings_advanced_video_codecs_title</source>
+        <extracomment>Video codecs</extracomment>
+        <translation>Video kodekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="67"/>
+        <source>settings_advanced_auto_start_title</source>
+        <extracomment>Auto start %1</extracomment>
+        <translation>%1 otomatik başlat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="85"/>
+        <source>settings_advanced_remote_provisioning_url</source>
+        <extracomment>Remote provisioning URL</extracomment>
+        <translation>Uzaktan sağlama URL&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="92"/>
+        <source>settings_advanced_download_apply_remote_provisioning</source>
+        <extracomment>Download and apply</extracomment>
+        <translation>İndir ve uygula</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="99"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Invalid URL format</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="99"/>
+        <source>settings_advanced_invalid_url_message</source>
+        <translation>Geçersiz URL formatı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="102"/>
+        <source>download_apply_remote_provisioning_accessible_name</source>
+        <extracomment>&quot;Download and apply remote provisioning&quot;</extracomment>
+        <translation>Uzaktan sağlamayı indir ve uygula</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="115"/>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="128"/>
+        <source>settings_advanced_media_encryption_title</source>
+        <extracomment>Media encryption</extracomment>
+        <translation>Medya şifreleme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="134"/>
+        <source>settings_advanced_media_encryption_mandatory_title</source>
+        <extracomment>Media encryption mandatory</extracomment>
+        <translation>Medya şifreleme zorunlu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="142"/>
+        <source>settings_advanced_create_endtoend_encrypted_meetings_title</source>
+        <extracomment>Create end to end encrypted meetings and group calls</extracomment>
+        <translation>Uçtan uca şifreli toplantılar ve grup çağrıları oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="263"/>
+        <source>settings_advanced_hide_fps_title</source>
+        <translation>FPS&apos;yi gizle</translation>
+    </message>
+</context>
+<context>
+    <name>AllContactListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="298"/>
+        <source>car_favorites_contacts_title</source>
+        <extracomment>&quot;Favoris&quot;</extracomment>
+        <translation>Favoriler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="346"/>
+        <source>generic_address_picker_contacts_list_title</source>
+        <extracomment>&apos;Contacts&apos;</extracomment>
+        <translation>Kişiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="396"/>
+        <source>generic_address_picker_suggestions_list_title</source>
+        <extracomment>&quot;Suggestions&quot;</extracomment>
+        <translation>Öneriler</translation>
+    </message>
+</context>
+<context>
+    <name>App</name>
+    <message>
+        <location filename="../../core/App.cpp" line="378"/>
+        <source>remote_provisioning_dialog</source>
+        <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
+        <translation>Bu adresten yapılandırmayı indirip uygulamak istiyor musunuz?</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="428"/>
+        <location filename="../../core/App.cpp" line="437"/>
+        <location filename="../../core/App.cpp" line="441"/>
+        <location filename="../../core/App.cpp" line="502"/>
+        <location filename="../../core/App.cpp" line="881"/>
+        <source>info_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="429"/>
+        <location filename="../../core/App.cpp" line="883"/>
+        <source>info_popup_configuration_failed_message</source>
+        <extracomment>Remote provisioning failed : %1</extracomment>
+        <translation>Uzaktan sağlama başarısız: %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="505"/>
+        <source>info_popup_error_checking_update</source>
+        <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
+        <translation>Güncelleme kontrol edilirken bir hata oluştu. Lütfen daha sonra tekrar deneyin veya destek ekibiyle iletişime geçin.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="512"/>
+        <source>info_popup_new_version_download_label</source>
+        <extracomment>Download it !</extracomment>
+        <translation>İndir!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="515"/>
+        <source>info_popup_new_version_available_title</source>
+        <extracomment>New version available !</extracomment>
+        <translation>Yeni sürüm mevcut!</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="517"/>
+        <source>info_popup_new_version_available_message</source>
+        <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
+        <translation>Linphone&apos;un yeni bir sürümü (%1) mevcut. %2</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="525"/>
+        <source>info_popup_version_up_to_date_title</source>
+        <extracomment>Up to date</extracomment>
+        <translation>Güncel</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="527"/>
+        <source>info_popup_version_up_to_date_message</source>
+        <extracomment>Your version is up to date</extracomment>
+        <translation>Sürümünüz güncel</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="876"/>
+        <source>configuration_error_detail</source>
+        <extracomment>not reachable</extracomment>
+        <translation>ulaşılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1182"/>
+        <source>application_description</source>
+        <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
+        <translation>Ücretsiz ve açık kaynaklı bir SIP video telefonu.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1184"/>
+        <source>command_line_arg_order</source>
+        <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
+        <translation>Uygulamaya komut satırından bir emir gönder</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1188"/>
+        <source>command_line_option_show_help</source>
+        <translation>Yardımı göster</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1193"/>
+        <source>command_line_option_show_app_version</source>
+        <translation>Uygulama sürümünü göster</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1201"/>
+        <source>command_line_option_config_to_fetch</source>
+        <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
+        <translation>Alınacak linphone yapılandırma dosyasını belirtin. Mevcut yapılandırmayla birleştirilecektir.</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1203"/>
+        <source>command_line_option_config_to_fetch_arg</source>
+        <extracomment>&quot;URL, path or file&quot;</extracomment>
+        <translation>URL, yol veya dosya</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1208"/>
+        <source>command_line_option_minimized</source>
+        <translation>Küçültülmüş</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1211"/>
+        <source>command_line_option_log_to_stdout</source>
+        <translation>Stdout&apos;a logla</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1214"/>
+        <source>command_line_option_print_app_logs_only</source>
+        <extracomment>&quot;Print only logs from the application&quot;</extracomment>
+        <translation>Sadece uygulama loglarını yazdır</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1691"/>
+        <source>hide_action</source>
+        <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
+        <translation>Gizle</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1691"/>
+        <source>show_action</source>
+        <translation>Göster</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1706"/>
+        <source>quit_action</source>
+        <extracomment>&quot;Quitter&quot;</extracomment>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1724"/>
+        <source>check_for_update</source>
+        <extracomment>Check for update</extracomment>
+        <translation>Güncellemeleri kontrol et</translation>
+    </message>
+    <message>
+        <location filename="../../core/App.cpp" line="1873"/>
+        <source>mark_all_read_action</source>
+        <translation>Tümünü okundu olarak işaretle</translation>
+    </message>
+</context>
+<context>
+    <name>AuthenticationDialog</name>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="50"/>
+        <source>account_settings_dialog_invalid_password_title</source>
+        <extracomment>&quot;Authentification requise&quot;</extracomment>
+        <translation>Kimlik doğrulama gerekli</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="59"/>
+        <source>account_settings_dialog_invalid_password_message</source>
+        <extracomment>La connexion a échoué pour le compte %1. Vous pouvez renseigner votre mot de passe à nouveau ou bien vérifier les options de configuration de votre compte.</extracomment>
+        <translation>%1 hesabı için bağlantı başarısız. Şifrenizi tekrar girebilir veya hesap yapılandırma seçeneklerinizi kontrol edebilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="69"/>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
+        <source>password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="79"/>
+        <source>mandatory_field_accessible_name</source>
+        <extracomment>%1 mandatory</extracomment>
+        <translation>%1 zorunlu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="89"/>
+        <source>cancel</source>
+        <extracomment>&quot;Annuler</extracomment>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="99"/>
+        <source>assistant_account_login</source>
+        <extracomment>Connexion</extracomment>
+        <translation>Giriş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="107"/>
+        <source>assistant_account_login_missing_password</source>
+        <extracomment>Veuillez saisir un mot de passe</extracomment>
+        <translation>Lütfen bir şifre girin</translation>
+    </message>
+</context>
+<context>
+    <name>CallCore</name>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="224"/>
+        <source>call_record_end_message</source>
+        <extracomment>&quot;Enregistrement terminé&quot;</extracomment>
+        <translation>Kayıt tamamlandı</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="226"/>
+        <source>call_record_saved_in_file_message</source>
+        <extracomment>&quot;L&apos;appel a été enregistré dans le fichier : %1&quot;</extracomment>
+        <translation>Çağrı şu dosyaya kaydedildi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="435"/>
+        <location filename="../../core/call/CallCore.cpp" line="460"/>
+        <source>call_stats_codec_label</source>
+        <extracomment>&quot;Codec: %1 / %2 kHz&quot;</extracomment>
+        <translation>Kodek: %1 / %2 kHz</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="439"/>
+        <location filename="../../core/call/CallCore.cpp" line="463"/>
+        <source>call_stats_bandwidth_label</source>
+        <extracomment>&quot;Bande passante : %1 %2 kbits/s %3 %4 kbits/s&quot;</extracomment>
+        <translation>Bant genişliği: %1 %2 kbit/s %3 %4 kbit/s</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="445"/>
+        <location filename="../../core/call/CallCore.cpp" line="468"/>
+        <source>call_stats_loss_rate_label</source>
+        <extracomment>&quot;Taux de perte: %1% %2%&quot;</extracomment>
+        <translation>Kayıp oranı: %1% %2%</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="450"/>
+        <source>call_stats_jitter_buffer_label</source>
+        <extracomment>&quot;Tampon de gigue: %1 ms&quot;</extracomment>
+        <translation>Jitter tamponu: %1 ms</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="477"/>
+        <source>call_stats_resolution_label</source>
+        <extracomment>&quot;Définition vidéo : %1 %2 %3 %4&quot;</extracomment>
+        <translation>Video çözünürlüğü: %1 %2 %3 %4</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="483"/>
+        <source>call_stats_fps_label</source>
+        <extracomment>&quot;FPS : %1 %2 %3 %4&quot;</extracomment>
+        <translation>FPS: %1 %2 %3 %4</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="763"/>
+        <source>media_encryption_dtls</source>
+        <extracomment>DTLS</extracomment>
+        <translation>DTLS</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="766"/>
+        <source>media_encryption_none</source>
+        <extracomment>None</extracomment>
+        <translation>Yok</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="759"/>
+        <location filename="../../core/call/CallCore.cpp" line="769"/>
+        <source>media_encryption_srtp</source>
+        <extracomment>SRTP</extracomment>
+        <translation>SRTP</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallCore.cpp" line="772"/>
+        <source>media_encryption_post_quantum</source>
+        <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
+        <translation>ZRTP - Post kuantum</translation>
+    </message>
+</context>
+<context>
+    <name>CallForwardSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="42"/>
+        <source>settings_call_forward_activate_title</source>
+        <extracomment>&quot;Forward calls&quot;</extracomment>
+        <translation>Çağrıları yönlendir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="44"/>
+        <source>settings_call_forward_activate_subtitle</source>
+        <extracomment>&quot;Enable call forwarding to voicemail or sip address&quot;</extracomment>
+        <translation>Sesli mesaja veya SIP adresine çağrı yönlendirmeyi etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="56"/>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="97"/>
+        <source>settings_call_forward_destination_choose</source>
+        <extracomment>Forward to destination</extracomment>
+        <translation>Hedefe yönlendir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="68"/>
+        <source>settings_call_forward_to_voicemail</source>
+        <translation>Sesli mesaja</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="69"/>
+        <source>settings_call_forward_to_sipaddress</source>
+        <translation>SIP adresine</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="106"/>
+        <source>settings_call_forward_sipaddress_title</source>
+        <extracomment>SIP Address</extracomment>
+        <translation>SIP Adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="107"/>
+        <source>settings_call_forward_sipaddress_placeholder</source>
+        <translation>SIP adresi girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallForwardSettingsLayout.qml" line="26"/>
+        <source>settings_call_forward_address_cannot_be_empty</source>
+        <translation>Adres boş olamaz</translation>
+    </message>
+</context>
+<context>
+    <name>CallHistoryLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="116"/>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="140"/>
+        <source>meeting_info_join_title</source>
+        <extracomment>&quot;Rejoindre la réunion&quot;
+----------
+&quot;Join&quot;</extracomment>
+        <translation>Toplantıya katıl</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
+        <source>contact_conversation_action</source>
+        <extracomment>Conversation with %1</extracomment>
+        <translation>%1 ile konuşma</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="174"/>
+        <source>contact_call_action</source>
+        <extracomment>&quot;Appel&quot;</extracomment>
+        <translation>Ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="188"/>
+        <source>contact_message_action</source>
+        <extracomment>&quot;Message&quot;</extracomment>
+        <translation>Mesaj</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="208"/>
+        <source>contact_video_call_action</source>
+        <extracomment>&quot;Appel Video&quot;</extracomment>
+        <translation>Video ara</translation>
+    </message>
+</context>
+<context>
+    <name>CallHistoryListView</name>
+    <message>
+        <source>call_history_list_accessible_name</source>
+        <extracomment>&quot;Call history&quot;</extracomment>
+        <translation>Çağrı geçmişi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="229"/>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="227"/>
+        <source>call_name_accessible_button</source>
+        <extracomment>Call %1</extracomment>
+        <translation>%1 ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="261"/>
+        <source>call_history_entry_accessible_name</source>
+        <extracomment>%1 - %2 - %3 - right arrow for call-back button</extracomment>
+        <translation>%1 - %2 - %3 - geri ara düğmesi için sağ ok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="263"/>
+        <source>notification_missed_call_title</source>
+        <extracomment>&quot;Appel manqué&quot;</extracomment>
+        <translation>Cevapsız çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="265"/>
+        <source>call_outgoing</source>
+        <extracomment>&quot;Appel sortant&quot;</extracomment>
+        <translation>Giden çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="267"/>
+        <source>call_audio_incoming</source>
+        <extracomment>&quot;Appel entrant&quot;</extracomment>
+        <translation>Gelen çağrı</translation>
+    </message>
+</context>
+<context>
+    <name>CallLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="91"/>
+        <source>meeting_event_conference_destroyed</source>
+        <extracomment>&quot;Vous avez quitté la conférence&quot;</extracomment>
+        <translation>Konferanstan ayrıldınız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="94"/>
+        <source>call_ended_by_user</source>
+        <extracomment>&quot;Vous avez terminé l&apos;appel&quot;</extracomment>
+        <translation>Çağrıyı sonlandırdınız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="97"/>
+        <source>call_ended_by_remote</source>
+        <extracomment>&quot;Votre correspondant a terminé l&apos;appel&quot;</extracomment>
+        <translation>Karşınızdaki çağrıyı sonlandırdı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="172"/>
+        <source>conference_call_empty</source>
+        <extracomment>&quot;En attente d&apos;autres participants…&quot;</extracomment>
+        <translation>Diğer katılımcılar bekleniyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="190"/>
+        <source>conference_share_link_title</source>
+        <extracomment>&quot;Partager le lien&quot;</extracomment>
+        <translation>Bağlantıyı paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="196"/>
+        <source>copied</source>
+        <translation>Kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallLayout.qml" line="198"/>
+        <source>information_popup_meeting_address_copied_to_clipboard</source>
+        <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
+        <translation>Toplantı bağlantısı panoya kopyalandı</translation>
+    </message>
+</context>
+<context>
+    <name>CallList</name>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="109"/>
+        <source>remote_group_call</source>
+        <extracomment>Remote group call</extracomment>
+        <translation>Uzak grup çağrısı</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="111"/>
+        <source>local_group_call</source>
+        <extracomment>&quot;Local group call&quot;</extracomment>
+        <translation>Yerel grup çağrısı</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="117"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/call/CallList.cpp" line="119"/>
+        <source>info_popup_merge_calls_failed_message</source>
+        <extracomment>Failed to merge calls !</extracomment>
+        <translation>Çağrılar birleştirilemedi!</translation>
+    </message>
+</context>
+<context>
+    <name>CallListView</name>
+    <message>
+        <source>call_list_accessible_name</source>
+        <extracomment>&quot;Ongoing calls&quot;</extracomment>
+        <translation>Devam eden çağrılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="62"/>
+        <source>meeting</source>
+        <extracomment>&quot;Réunion</extracomment>
+        <translation>Toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="64"/>
+        <source>call</source>
+        <extracomment>&quot;Appel&quot;</extracomment>
+        <translation>Çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="69"/>
+        <source>paused_call_or_meeting</source>
+        <extracomment>&quot;%1 en pause&quot;</extracomment>
+        <translation>%1 duraklatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="71"/>
+        <source>ongoing_call_or_meeting</source>
+        <extracomment>&quot;%1 en cours&quot;</extracomment>
+        <translation>%1 devam ediyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="99"/>
+        <source>transfer_call_name_accessible_name</source>
+        <extracomment>Transfer call %1</extracomment>
+        <translation>%1 çağrısını aktar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="128"/>
+        <source>resume_call_name_accessible_name</source>
+        <extracomment>Resume %1 call</extracomment>
+        <translation>%1 çağrısını devam ettir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="130"/>
+        <source>pause_call_name_accessible_name</source>
+        <extracomment>Pause %1 call</extracomment>
+        <translation>%1 çağrısını duraklat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallListView.qml" line="153"/>
+        <source>end_call_name_accessible_name</source>
+        <extracomment>End %1 call</extracomment>
+        <translation>%1 çağrısını sonlandır</translation>
+    </message>
+</context>
+<context>
+    <name>CallModel</name>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="397"/>
+        <source>call_error_no_response_toast</source>
+        <extracomment>&quot;No response&quot;</extracomment>
+        <translation>Yanıt yok</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="401"/>
+        <source>call_error_forbidden_resource_toast</source>
+        <extracomment>&quot;403 : Forbidden resource&quot;</extracomment>
+        <translation>403: Yasak kaynak</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="405"/>
+        <source>call_error_not_answered_toast</source>
+        <extracomment>&quot;Request timeout&quot;</extracomment>
+        <translation>İstek zaman aşımı</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="409"/>
+        <source>call_error_user_declined_toast</source>
+        <extracomment>&quot;User declined the call&quot;</extracomment>
+        <translation>Kullanıcı çağrıyı reddetti</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="413"/>
+        <source>call_error_user_not_found_toast</source>
+        <extracomment>&quot;User was not found&quot;</extracomment>
+        <translation>Kullanıcı bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="417"/>
+        <source>call_error_user_busy_toast</source>
+        <extracomment>&quot;User is busy&quot;</extracomment>
+        <translation>Kullanıcı meşgul</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="421"/>
+        <source>call_error_incompatible_media_params_toast</source>
+        <extracomment>&quot;User can&amp;apos;t accept your call&quot;</extracomment>
+        <translation>Kullanıcı çağrınızı kabul edemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="425"/>
+        <source>call_error_io_error_toast</source>
+        <extracomment>&quot;Unavailable service or network error&quot;</extracomment>
+        <translation>Hizmet kullanılamıyor veya ağ hatası</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="429"/>
+        <source>call_error_do_not_disturb_toast</source>
+        <extracomment>&quot;Le correspondant ne peut être dérangé&quot;</extracomment>
+        <translation>Karşınızdaki rahatsız edilemez</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="433"/>
+        <source>call_error_temporarily_unavailable_toast</source>
+        <extracomment>&quot;Temporarily unavailable&quot;</extracomment>
+        <translation>Geçici olarak kullanılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/call/CallModel.cpp" line="437"/>
+        <source>call_error_server_timeout_toast</source>
+        <extracomment>&quot;Server timeout&quot;</extracomment>
+        <translation>Sunucu zaman aşımı</translation>
+    </message>
+</context>
+<context>
+    <name>CallPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="249"/>
+        <source>call_forward_to_address_info</source>
+        <translation>Adrese yönlendiriliyor </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="249"/>
+        <source>call_forward_to_address_info_voicemail</source>
+        <translation>Sesli mesaja yönlendiriliyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="14"/>
+        <source>history_call_start_title</source>
+        <extracomment>&quot;Nouvel appel&quot;</extracomment>
+        <translation>Yeni çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="16"/>
+        <source>call_history_empty_title</source>
+        <extracomment>&quot;Historique d&apos;appel vide&quot;</extracomment>
+        <translation>Çağrı geçmişi boş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="92"/>
+        <source>history_dialog_delete_all_call_logs_title</source>
+        <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
+        <translation>Çağrı geçmişini sil?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="94"/>
+        <source>history_dialog_delete_all_call_logs_message</source>
+        <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels sera définitivement supprimé.&quot;</extracomment>
+        <translation>Tüm çağrı geçmişiniz kalıcı olarak silinecek.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="100"/>
+        <source>history_dialog_delete_call_logs_title</source>
+        <extracomment>Supprimer l&apos;historique d&apos;appels ?</extracomment>
+        <translation>Çağrı geçmişini sil?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="102"/>
+        <source>history_dialog_delete_call_logs_message</source>
+        <extracomment>&quot;L&apos;ensemble de votre historique d&apos;appels avec ce correspondant sera définitivement supprimé.&quot;</extracomment>
+        <translation>Bu kişiyle olan tüm çağrı geçmişiniz kalıcı olarak silinecek.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="159"/>
+        <source>call_history_call_list_title</source>
+        <extracomment>&quot;Appels&quot;</extracomment>
+        <translation>Çağrılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="465"/>
+        <source>call_history_options_accessible_name</source>
+        <translation>Çağrı geçmişi seçenekleri</translation>
+    </message>
+    <message>
+        <source>call_history_contact_options_accessible_name</source>
+        <extracomment>&quot;Options for %1&quot;</extracomment>
+        <translation>%1 için seçenekler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="180"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="557"/>
+        <source>menu_delete_history</source>
+        <extracomment>&quot;Supprimer l&apos;historique&quot;</extracomment>
+        <translation>Geçmişi sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="174"/>
+        <source>call_history_list_options_accessible_name</source>
+        <extracomment>Call history options</extracomment>
+        <translation>Çağrı geçmişi seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="209"/>
+        <source>create_new_call_accessible_name</source>
+        <extracomment>Create new call</extracomment>
+        <translation>Yeni çağrı oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="222"/>
+        <source>call_search_in_history</source>
+        <extracomment>&quot;Rechercher un appel&quot;</extracomment>
+        <translation>Çağrı ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="280"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>&quot;Aucun résultat…&quot;</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="282"/>
+        <source>history_list_empty_history</source>
+        <extracomment>&quot;Aucun appel dans votre historique&quot;</extracomment>
+        <translation>Geçmişinizde çağrı yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="263"/>
+        <source>history_list_filter_all</source>
+        <translation>Tümü</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="263"/>
+        <source>history_list_filter_missed</source>
+        <translation>Cevapsız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="264"/>
+        <source>history_list_filter_accessible_name</source>
+        <translation>Filtre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="311"/>
+        <source>history_list_empty_missed_history</source>
+        <translation>Cevapsız çağrı yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="362"/>
+        <source>return_to_call_history_accessible_name</source>
+        <extracomment>Return to call history</extracomment>
+        <translation>Çağrı geçmişine dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="373"/>
+        <source>call_action_start_new_call</source>
+        <extracomment>&quot;Nouvel appel&quot;</extracomment>
+        <translation>Yeni çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="412"/>
+        <source>call_start_group_call_title</source>
+        <extracomment>&quot;Appel de groupe&quot;</extracomment>
+        <translation>Grup çağrısı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="414"/>
+        <source>call_action_start_group_call</source>
+        <extracomment>&quot;Lancer&quot;</extracomment>
+        <translation>Başlat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="424"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="428"/>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="526"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="426"/>
+        <source>group_call_error_must_have_name</source>
+        <extracomment>&quot;Un nom doit être donné à l&apos;appel de groupe</extracomment>
+        <translation>Grup çağrısına bir isim verilmeli</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="430"/>
+        <source>group_call_error_not_connected</source>
+        <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
+        <translation>Bağlı değilsiniz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="484"/>
+        <source>menu_see_existing_contact</source>
+        <extracomment>&quot;Show contact&quot;</extracomment>
+        <translation>Kişiyi göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="486"/>
+        <source>menu_add_address_to_contacts</source>
+        <extracomment>&quot;Add to contacts&quot;</extracomment>
+        <translation>Kişilere ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="508"/>
+        <source>menu_copy_sip_address</source>
+        <extracomment>&quot;Copier l&apos;adresse SIP&quot;</extracomment>
+        <translation>SIP adresini kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="520"/>
+        <source>sip_address_copied_to_clipboard_toast</source>
+        <extracomment>Adresse copiée</extracomment>
+        <translation>Adres kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="522"/>
+        <source>sip_address_copied_to_clipboard_message</source>
+        <extracomment>L&apos;adresse a été copié dans le presse_papiers</extracomment>
+        <translation>Adres panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="528"/>
+        <source>sip_address_copy_to_clipboard_error</source>
+        <extracomment>&quot;Erreur lors de la copie de l&apos;adresse&quot;</extracomment>
+        <translation>Adres kopyalanırken hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="651"/>
+        <source>notification_missed_call_title</source>
+        <extracomment>&quot;Appel manqué&quot;</extracomment>
+        <translation>Cevapsız çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="654"/>
+        <source>call_outgoing</source>
+        <extracomment>&quot;Appel sortant&quot;</extracomment>
+        <translation>Giden çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="656"/>
+        <source>call_audio_incoming</source>
+        <extracomment>&quot;Appel entrant&quot;</extracomment>
+        <translation>Gelen çağrı</translation>
+    </message>
+</context>
+<context>
+    <name>CallSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="23"/>
+        <source>settings_call_devices_title</source>
+        <extracomment>&quot;Périphériques&quot;</extracomment>
+        <translation>Cihazlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="25"/>
+        <source>settings_call_devices_subtitle</source>
+        <extracomment>&quot;Vous pouvez modifier les périphériques de sortie audio, le microphone et la caméra de capture.&quot;</extracomment>
+        <translation>Ses çıkış cihazlarını, mikrofonu ve yakalama kamerasını değiştirebilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="54"/>
+        <source>settings_calls_echo_canceller_title</source>
+        <extracomment>&quot;Annulateur d&apos;écho&quot;</extracomment>
+        <translation>Yankı iptal edici</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="56"/>
+        <source>settings_calls_echo_canceller_subtitle</source>
+        <extracomment>&quot;Évite que de l&apos;écho soit entendu par votre correspondant&quot;</extracomment>
+        <translation>Karşınızdakinin yankı duymasını önler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="62"/>
+        <source>settings_calls_noise_suppressor_title</source>
+        <extracomment>&quot;Noise suppression&quot;</extracomment>
+        <translation>Gürültü bastırma</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
+        <source>settings_calls_noise_suppressor_subtitle</source>
+        <extracomment>&quot;Cleans up unwanted background noise&quot;</extracomment>
+        <translation>İstenmeyen arka plan gürültüsünü temizler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="71"/>
+        <source>settings_calls_auto_record_title</source>
+        <extracomment>&quot;Activer l’enregistrement automatique des appels&quot;</extracomment>
+        <translation>Çağrıların otomatik kaydını etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="79"/>
+        <source>settings_calls_auto_answer_title</source>
+        <extracomment>&quot;Répondre automatiquement aux appels entrants&quot;</extracomment>
+        <translation>Gelen çağrıları otomatik cevapla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="81"/>
+        <source>settings_calls_auto_answer_subtitle</source>
+        <extracomment>&quot;Les appels entrants seront décrochés automatiquement&quot;</extracomment>
+        <translation>Gelen çağrılar otomatik olarak cevaplanacak</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
+        <source>settings_calls_call_view_in_background_title</source>
+        <extracomment>&quot;Afficher la vue d&apos;appel en arrière-plan&quot;</extracomment>
+        <translation>Çağrı görünümünü arka planda göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="90"/>
+        <source>settings_calls_call_view_in_background_subtitle</source>
+        <extracomment>&quot;La fenêtre d&apos;appel ne passera pas au premier plan&quot;</extracomment>
+        <translation>Çağrı penceresi ön plana gelmeyecek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="96"/>
+        <source>settings_calls_hid_title</source>
+        <extracomment>&quot;Décroché au casque via USB/HID&quot;</extracomment>
+        <translation>USB/HID kulaklıkla cevapla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
+        <source>settings_calls_hid_subtitle</source>
+        <extracomment>&quot;Permet de contrôler les appels (décrocher, raccrocher, couper le son) avec les boutons d&apos;un casque USB/HID&quot;</extracomment>
+        <translation>USB/HID kulaklığın düğmeleriyle çağrıları kontrol etmeyi (cevapla, kapat, sesi kapat) sağlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
+        <source>settings_call_enable_tones_title</source>
+        <extracomment>Tonalités</extracomment>
+        <translation>Tonlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="98"/>
+        <source>settings_call_enable_tones_subtitle</source>
+        <extracomment>Activer les tonalités</extracomment>
+        <translation>Tonları etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
+        <source>settings_calls_enable_video_title</source>
+        <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
+        <translation>Videoya izin ver</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="115"/>
+        <source>settings_calls_command_line_title</source>
+        <extracomment>Command line</extracomment>
+        <translation>Komut satırı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="116"/>
+        <source>settings_calls_command_line_title_place_holder</source>
+        <translation>Komut</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="124"/>
+        <source>settings_calls_change_ringtone_title</source>
+        <extracomment>&quot;Change ringtone&quot;</extracomment>
+        <translation>Zil sesini değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="132"/>
+        <source>settings_calls_current_ringtone_filename</source>
+        <extracomment>Current ringtone :</extracomment>
+        <translation>Mevcut zil sesi:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="157"/>
+        <source>choose_ringtone_file_accessible_name</source>
+        <extracomment>Choose ringtone file</extracomment>
+        <translation>Zil sesi dosyası seç</translation>
+    </message>
+</context>
+<context>
+    <name>CallSettingsPanel</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <extracomment>&quot;Back&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallSettingsPanel.qml" line="64"/>
+        <source>close_name_panel_accessible_button</source>
+        <extracomment>Close %1 panel</extracomment>
+        <translation>%1 panelini kapat</translation>
+    </message>
+</context>
+<context>
+    <name>CallStatistics</name>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="30"/>
+        <source>call_stats_audio_title</source>
+        <extracomment>&quot;Audio&quot;</extracomment>
+        <translation>Ses</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallStatistics.qml" line="92"/>
+        <source>call_stats_video_title</source>
+        <extracomment>&quot;Vidéo&quot;</extracomment>
+        <translation>Video</translation>
+    </message>
+</context>
+<context>
+    <name>CallsWindow</name>
+    <message>
+        <source>call_action_merge_calls</source>
+        <translation>Çağrıları birleştir</translation>
+    </message>
+    <message>
+        <source>call_chat_panel_accessible_title</source>
+        <extracomment>Conversation with %1</extracomment>
+        <translation>%1 ile konuşma</translation>
+    </message>
+    <message>
+        <source>conference_participants_options_accessible_name</source>
+        <extracomment>&quot;Participant list options&quot;</extracomment>
+        <translation>Katılımcı listesi seçenekleri</translation>
+    </message>
+    <message>
+        <source>call_window_title</source>
+        <extracomment>&quot;%1 - Call with %2&quot;</extracomment>
+        <translation>%1 - %2 ile çağrı</translation>
+    </message>
+    <message>
+        <source>call_window_conference_title</source>
+        <extracomment>&quot;%1 - Meeting %2&quot;</extracomment>
+        <translation>%1 - Toplantı %2</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="76"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="75"/>
+        <source>call_transfer_in_progress_toast</source>
+        <extracomment>&quot;Transfert en cours, veuillez patienter&quot;</extracomment>
+        <translation>Aktarım devam ediyor, lütfen bekleyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="84"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="168"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="86"/>
+        <source>call_transfer_failed_toast</source>
+        <extracomment>&quot;Le transfert d&apos;appel a échoué&quot;</extracomment>
+        <translation>Çağrı aktarımı başarısız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="170"/>
+        <source>conference_error_empty_uri</source>
+        <extracomment>&quot;La conférence n&apos;a pas pu démarrer en raison d&apos;une erreur d&apos;uri.&quot;</extracomment>
+        <translation>Konferans URI hatası nedeniyle başlatılamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="226"/>
+        <source>call_close_window_dialog_title</source>
+        <extracomment>&quot;Terminer tous les appels en cours ?&quot;</extracomment>
+        <translation>Tüm devam eden çağrıları sonlandır?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="228"/>
+        <source>call_close_window_dialog_message</source>
+        <extracomment>&quot;La fenêtre est sur le point d&apos;être fermée. Cela terminera tous les appels en cours.&quot;</extracomment>
+        <translation>Pencere kapanmak üzere. Bu, tüm devam eden çağrıları sonlandıracak.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="323"/>
+        <source>call_can_be_trusted_toast</source>
+        <extracomment>&quot;Appareil authentifié&quot;</extracomment>
+        <translation>Cihaz doğrulandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="408"/>
+        <source>call_dir</source>
+        <translation>Çağrı dizini</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="419"/>
+        <source>call_ended</source>
+        <extracomment>Appel terminé</extracomment>
+        <translation>Çağrı sonlandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="423"/>
+        <source>conference_paused</source>
+        <extracomment>Meeting paused</extracomment>
+        <translation>Toplantı duraklatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="428"/>
+        <source>call_paused</source>
+        <extracomment>Call paused</extracomment>
+        <translation>Çağrı duraklatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="536"/>
+        <source>call_srtp_point_to_point_encrypted</source>
+        <extracomment>Appel chiffré de point à point</extracomment>
+        <translation>Noktadan noktaya şifreli çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="540"/>
+        <source>call_zrtp_sas_validation_required</source>
+        <extracomment>Vérification nécessaire</extracomment>
+        <translation>Doğrulama gerekli</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="542"/>
+        <source>call_zrtp_end_to_end_encrypted</source>
+        <extracomment>Appel chiffré de bout en bout</extracomment>
+        <translation>Uçtan uca şifreli çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="545"/>
+        <source>call_not_encrypted</source>
+        <extracomment>&quot;Appel non chiffré&quot;</extracomment>
+        <translation>Şifrelenmemiş çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="493"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="546"/>
+        <source>call_waiting_for_encryption_info</source>
+        <extracomment>Waiting for encryption</extracomment>
+        <translation>Şifreleme bekleniyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="426"/>
+        <source>call_paused_by_remote</source>
+        <extracomment>Call paused by remote</extracomment>
+        <translation>Karşınızdaki tarafından duraklatıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="659"/>
+        <source>conference_user_is_recording</source>
+        <extracomment>&quot;You are recording the meeting&quot;</extracomment>
+        <translation>Toplantıyı kaydediyorsunuz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="661"/>
+        <source>call_user_is_recording</source>
+        <extracomment>&quot;You are recording the call&quot;</extracomment>
+        <translation>Çağrıyı kaydediyorsunuz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="664"/>
+        <source>conference_remote_is_recording</source>
+        <extracomment>&quot;Someone is recording the meeting&quot;</extracomment>
+        <translation>Birisi toplantıyı kaydediyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="666"/>
+        <source>call_remote_recording</source>
+        <extracomment>&quot;%1 is recording the call&quot;</extracomment>
+        <translation>%1 çağrıyı kaydediyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="678"/>
+        <source>call_stop_recording</source>
+        <extracomment>&quot;Stop recording&quot;</extracomment>
+        <translation>Kaydı durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="722"/>
+        <source>add</source>
+        <translation>Ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="747"/>
+        <source>call_transfer_current_call_title</source>
+        <extracomment>&quot;Transférer %1 à…&quot;</extracomment>
+        <translation>%1 kişisini şuraya aktar…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="850"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="862"/>
+        <source>call_transfer_confirm_dialog_tittle</source>
+        <extracomment>&quot;Confirmer le transfert&quot;</extracomment>
+        <translation>Aktarmayı onayla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="852"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="863"/>
+        <source>call_transfer_confirm_dialog_message</source>
+        <extracomment>&quot;Vous allez transférer %1 à %2.&quot;</extracomment>
+        <translation>%1 kişisini %2 kişisine aktaracaksınız.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="751"/>
+        <source>call_action_start_new_call</source>
+        <extracomment>&quot;Nouvel appel&quot;</extracomment>
+        <translation>Yeni çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="755"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1821"/>
+        <source>call_action_show_dialer</source>
+        <extracomment>&quot;Pavé numérique&quot;</extracomment>
+        <translation>Tuş takımı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="759"/>
+        <source>call_action_change_layout</source>
+        <extracomment>&quot;Modifier la disposition&quot;</extracomment>
+        <translation>Düzeni değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="763"/>
+        <source>call_action_go_to_calls_list</source>
+        <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
+        <translation>Arama listesi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1072"/>
+        <source>Merger tous les appels</source>
+        <extracomment>call_action_merge_calls</extracomment>
+        <translation>Tüm aramaları birleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="770"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1902"/>
+        <source>call_action_go_to_settings</source>
+        <extracomment>&quot;Paramètres&quot;</extracomment>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="774"/>
+        <source>conference_action_screen_sharing</source>
+        <extracomment>&quot;Partage de votre écran&quot;</extracomment>
+        <translation>Ekran paylaşımı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1242"/>
+        <source>conference_share_link_title</source>
+        <extracomment>Partager le lien de la réunion</extracomment>
+        <translation>Bağlantıyı paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1246"/>
+        <source>copied</source>
+        <extracomment>Copié</extracomment>
+        <translation>Kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1248"/>
+        <source>information_popup_meeting_address_copied_to_clipboard</source>
+        <extracomment>Le lien de la réunion a été copié dans le presse-papier</extracomment>
+        <translation>Toplantı bağlantısı panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1257"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1261"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1267"/>
+        <source>conference_participants_list_title</source>
+        <extracomment>&quot;Participants (%1)&quot;</extracomment>
+        <translation>Katılımcılar (%1)</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1288"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1296"/>
+        <source>group_call_participant_selected</source>
+        <translation>
+            <numerusform>%1 selected participant</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1295"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <translation>Katılımcı ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="778"/>
+        <source>call_encryption_title</source>
+        <extracomment>Chiffrement</extracomment>
+        <translation>Şifreleme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="598"/>
+        <source>open_statistic_panel_accessible_name</source>
+        <translation>İstatistik panelini aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="655"/>
+        <source>conference_user_is_sharing_screen</source>
+        <extracomment>&quot;You are sharing your screen&quot;</extracomment>
+        <translation>Ekranınızı paylaşıyorsunuz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="676"/>
+        <source>call_stop_screen_sharing</source>
+        <extracomment>&quot;Stop sharing&quot;</extracomment>
+        <translation>Paylaşımı durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="683"/>
+        <source>stop_recording_accessible_name</source>
+        <extracomment>Stop recording</extracomment>
+        <translation>Kaydı durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="681"/>
+        <source>stop_screen_sharing_accessible_name</source>
+        <extracomment>&quot;Stop screen sharing&quot;</extracomment>
+        <translation>Ekran paylaşımını durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="530"/>
+        <source>conference_end_to_end_encrypted</source>
+        <extracomment>End to end encrypted meeting</extracomment>
+        <translation>Uçtan uca şifrelenmiş toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="532"/>
+        <source>conference_srtp_point_to_point_encrypted</source>
+        <extracomment>Point to point encrypted meeting</extracomment>
+        <translation>Noktadan noktaya şifrelenmiş toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="782"/>
+        <source>call_stats_title</source>
+        <extracomment>Statistiques</extracomment>
+        <translation>İstatistikler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1444"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1445"/>
+        <source>call_action_accept_call</source>
+        <extracomment>&quot;Accepter l&apos;appel&quot;</extracomment>
+        <translation>Aramayı kabul et</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1464"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1465"/>
+        <source>call_action_end_call</source>
+        <extracomment>&quot;Terminer l&apos;appel&quot;</extracomment>
+        <translation>Aramayı sonlandır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1499"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1502"/>
+        <source>call_action_resume_call</source>
+        <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
+        <translation>Aramayı devam ettir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1501"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1502"/>
+        <source>call_action_pause_call</source>
+        <extracomment>&quot;Mettre l&apos;appel en pause&quot;</extracomment>
+        <translation>Aramayı beklet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1533"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1534"/>
+        <source>call_action_transfer_call</source>
+        <extracomment>&quot;Transférer l&apos;appel&quot;</extracomment>
+        <translation>Aramayı aktar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1556"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1557"/>
+        <source>call_action_start_new_call_hint</source>
+        <extracomment>&quot;Initier un nouvel appel&quot;</extracomment>
+        <translation>Yeni arama başlat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1579"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1580"/>
+        <source>call_display_call_list_hint</source>
+        <extracomment>&quot;Afficher la liste d&apos;appels&quot;</extracomment>
+        <translation>Arama listesini göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1614"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1615"/>
+        <source>call_deactivate_video_hint</source>
+        <extracomment>&quot;Désactiver la vidéo&quot; &quot;Activer la vidéo&quot;</extracomment>
+        <translation>Videoyu kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1614"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1615"/>
+        <source>call_activate_video_hint</source>
+        <translation>Videoyu aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1631"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1634"/>
+        <source>call_activate_microphone</source>
+        <extracomment>&quot;Activer le micro&quot;</extracomment>
+        <translation>Mikrofonu aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1633"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1634"/>
+        <source>call_deactivate_microphone</source>
+        <extracomment>&quot;Désactiver le micro&quot;</extracomment>
+        <translation>Mikrofonu kapat</translation>
+    </message>
+    <message>
+        <source>call_microphone_muted_announcement</source>
+        <extracomment>&quot;Microphone muted&quot;</extracomment>
+        <translation>Mikrofon sessiz</translation>
+    </message>
+    <message>
+        <source>call_microphone_unmuted_announcement</source>
+        <extracomment>&quot;Microphone unmuted&quot;</extracomment>
+        <translation>Mikrofon açık</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_failed_announcement</source>
+        <extracomment>&quot;%1 non transmis&quot;</extracomment>
+        <translation>%1 iletilemedi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1651"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1652"/>
+        <source>call_share_screen_hint</source>
+        <extracomment>Partager l&apos;écran…</extracomment>
+        <translation>Ekran paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1674"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1675"/>
+        <source>call_open_chat_hint</source>
+        <extracomment>Open chat…</extracomment>
+        <translation>Sohbeti aç…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1705"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1706"/>
+        <source>call_rise_hand_hint</source>
+        <extracomment>&quot;Lever la main&quot;</extracomment>
+        <translation>El kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1719"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1720"/>
+        <source>call_send_reaction_hint</source>
+        <extracomment>&quot;Envoyer une réaction&quot;</extracomment>
+        <translation>Tepki gönder</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1731"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1732"/>
+        <source>call_manage_participants_hint</source>
+        <extracomment>&quot;Gérer les participants&quot;</extracomment>
+        <translation>Katılımcıları yönet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1753"/>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1754"/>
+        <source>call_more_options_hint</source>
+        <extracomment>&quot;Plus d&apos;options…&quot;</extracomment>
+        <translation>Daha fazla seçenek…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1785"/>
+        <source>call_action_change_conference_layout</source>
+        <extracomment>&quot;Modifier la disposition&quot;</extracomment>
+        <translation>Düzeni değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1799"/>
+        <source>call_action_full_screen</source>
+        <extracomment>&quot;Mode Plein écran&quot;</extracomment>
+        <translation>Tam ekran</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1852"/>
+        <source>call_action_stop_recording</source>
+        <extracomment>&quot;Terminer l&apos;enregistrement&quot;</extracomment>
+        <translation>Kaydı durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1854"/>
+        <source>call_action_record</source>
+        <extracomment>&quot;Enregistrer l&apos;appel&quot;</extracomment>
+        <translation>Aramayı kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1882"/>
+        <source>call_activate_speaker_hint</source>
+        <extracomment>&quot;Activer le son&quot;</extracomment>
+        <translation>Sesi aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1884"/>
+        <source>call_deactivate_speaker_hint</source>
+        <extracomment>&quot;Désactiver le son&quot;</extracomment>
+        <translation>Sesi kapat</translation>
+    </message>
+</context>
+<context>
+    <name>CarddavSettingsLayout</name>
+    <message>
+        <source>settings_contacts_delete_carddav_server_accessible_name</source>
+        <extracomment>&quot;Delete CardDAV address book&quot;</extracomment>
+        <translation>CardDAV adres defterini sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="18"/>
+        <source>settings_contacts_carddav_title</source>
+        <extracomment>Carnet d&apos;adresse CardDAV</extracomment>
+        <translation>CardDAV adres defteri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="20"/>
+        <source>settings_contacts_carddav_subtitle</source>
+        <extracomment>&quot;Ajouter un carnet d’adresse CardDAV pour synchroniser vos contacts Linphone avec un carnet d’adresse tiers.&quot;</extracomment>
+        <translation>Kişileri senkronize etmek için bir CardDAV adres defteri ekleyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="32"/>
+        <source>save</source>
+        <extracomment>&quot;Save&quot;</extracomment>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="53"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="55"/>
+        <source>settings_contacts_carddav_popup_invalid_error</source>
+        <extracomment>&quot;Vérifiez que toutes les informations ont été saisies.&quot;</extracomment>
+        <translation>Tüm bilgilerin doğru girildiğinden emin olun</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="63"/>
+        <source>information_popup_synchronization_success_title</source>
+        <translation>Senkronizasyon başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="65"/>
+        <source>settings_contacts_carddav_synchronization_success_message</source>
+        <extracomment>&quot;Le carnet d&apos;adresse CardDAV est synchronisé.&quot;</extracomment>
+        <translation>CardDAV adres defteri senkronize edildi.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="67"/>
+        <source>settings_contacts_carddav_popup_synchronization_error_title</source>
+        <translation>Senkronizasyon hatası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="69"/>
+        <source>settings_contacts_carddav_popup_synchronization_error_message</source>
+        <extracomment>&quot;Erreur de synchronisation : %1&quot;</extracomment>
+        <translation>Senkronizasyon hatası: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="92"/>
+        <source>settings_contacts_delete_carddav_server_title</source>
+        <extracomment>&quot;Supprimer le carnet d&apos;adresse CardDAV ?&quot;</extracomment>
+        <translation>CardDAV adres defteri silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="118"/>
+        <source>sip_address_display_name</source>
+        <extracomment>Nom d&apos;affichage</extracomment>
+        <translation>Görünen ad</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="127"/>
+        <source>settings_contacts_carddav_server_url_title</source>
+        <extracomment>&quot;URL du serveur&quot;</extracomment>
+        <translation>Sunucu URL’si</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="135"/>
+        <source>username</source>
+        <translation>Kullanıcı adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="143"/>
+        <source>password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="151"/>
+        <source>settings_contacts_carddav_realm_title</source>
+        <extracomment>Domaine d’authentification</extracomment>
+        <translation>Kimlik doğrulama alanı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="157"/>
+        <source>settings_contacts_carddav_use_as_default_title</source>
+        <extracomment>&quot;Stocker ici les contacts nouvellement crées&quot;</extracomment>
+        <translation>Yeni oluşturulan kişileri burada sakla</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeLayoutForm</name>
+    <message>
+        <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="24"/>
+        <source>conference_layout_grid</source>
+        <translation>Izgara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="25"/>
+        <source>conference_layout_active_speaker</source>
+        <translation>Aktif konuşmacı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="26"/>
+        <source>conference_layout_audio_only</source>
+        <translation>Sadece ses</translation>
+    </message>
+</context>
+<context>
+    <name>ChatAudioContent</name>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="36"/>
+        <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="78"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="38"/>
+        <source>information_popup_voice_message_error_message</source>
+        <extracomment>Failed to create voice message : error in recorder</extracomment>
+        <translation>Sesli mesaj oluşturulamadı: kayıt cihazı hatası</translation>
+    </message>
+</context>
+<context>
+    <name>ChatCore</name>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="145"/>
+        <source>info_toast_deleted_title</source>
+        <extracomment>Deleted</extracomment>
+        <translation>Silindi</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/ChatCore.cpp" line="147"/>
+        <source>info_toast_deleted_message_history</source>
+        <extracomment>Message history has been deleted</extracomment>
+        <translation>Mesaj geçmişi silindi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatDroppableTextArea</name>
+    <message>
+        <source>chat_message_input_accessible_name</source>
+        <extracomment>&quot;Message&quot;</extracomment>
+        <translation>Mesaj</translation>
+    </message>
+    <message>
+        <source>chat_cancel_voice_message_accessible_name</source>
+        <extracomment>&quot;Cancel the voice message&quot;</extracomment>
+        <translation>Sesli mesajı iptal et</translation>
+    </message>
+    <message>
+        <source>chat_send_voice_message_accessible_name</source>
+        <extracomment>&quot;Send the voice message&quot;</extracomment>
+        <translation>Sesli mesajı gönder</translation>
+    </message>
+    <message>
+        <source>chat_edit_message_accessible_name</source>
+        <extracomment>&quot;Save the change&quot;</extracomment>
+        <translation>Değişikliği kaydet</translation>
+    </message>
+    <message>
+        <source>chat_send_message_accessible_name</source>
+        <extracomment>&quot;Send&quot;</extracomment>
+        <translation>Gönder</translation>
+    </message>
+    <message>
+        <source>chat_record_voice_message_accessible_name</source>
+        <extracomment>&quot;Record a voice message&quot;</extracomment>
+        <translation>Sesli mesaj kaydet</translation>
+    </message>
+    <message>
+        <source>chat_attach_file_accessible_name</source>
+        <extracomment>&quot;Attach a file&quot;</extracomment>
+        <translation>Dosya ekle</translation>
+    </message>
+    <message>
+        <source>chat_emoji_picker_accessible_name</source>
+        <extracomment>&quot;Emojis&quot;</extracomment>
+        <translation>Emojiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="181"/>
+        <source>chat_view_send_area_placeholder_text</source>
+        <extracomment>Say something… : placeholder text for sending message text area</extracomment>
+        <translation>Bir şey yazın…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="222"/>
+        <source>cannot_record_while_in_call_tooltip</source>
+        <extracomment>Cannot record a message while a call is ongoing</extracomment>
+        <translation>Arama sırasında mesaj kaydedilemez</translation>
+    </message>
+</context>
+<context>
+    <name>ChatListView</name>
+    <message>
+        <source>chat_list_accessible_name</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation>Sohbetler</translation>
+    </message>
+    <message>
+        <source>chat_options_accessible_name</source>
+        <extracomment>&quot;Options for %1&quot;</extracomment>
+        <translation>%1 seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="281"/>
+        <source>chat_message_is_writing_info</source>
+        <extracomment>%1 is writing…</extracomment>
+        <translation>%1 yazıyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="283"/>
+        <source>chat_message_draft_sending_text</source>
+        <translation>Taslak gönderiliyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="435"/>
+        <source>chat_room_delete</source>
+        <extracomment>&quot;Delete&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="374"/>
+        <source>chat_room_mute</source>
+        <translation>Sessize al</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="332"/>
+        <source>chat</source>
+        <extracomment>%1 chat</extracomment>
+        <translation>%1 sohbeti</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="373"/>
+        <source>chat_room_unmute</source>
+        <extracomment>&quot;Mute&quot;</extracomment>
+        <translation>Sesi aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="387"/>
+        <source>chat_room_mark_as_read</source>
+        <extracomment>&quot;Mark as read&quot;</extracomment>
+        <translation>Okundu olarak işaretle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="406"/>
+        <source>chat_room_leave</source>
+        <extracomment>&quot;leave&quot;</extracomment>
+        <translation>Ayrıl</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="412"/>
+        <source>chat_list_leave_chat_popup_title</source>
+        <extracomment>leave the conversation ?</extracomment>
+        <translation>Sohbetten ayrıl?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="414"/>
+        <source>chat_list_leave_chat_popup_message</source>
+        <extracomment>You will not be able to send or receive messages in this conversation anymore. Do You want to continue ?</extracomment>
+        <translation>Artık mesaj gönderemez veya alamazsınız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="441"/>
+        <source>chat_list_delete_chat_popup_title</source>
+        <extracomment>Delete the conversation ?</extracomment>
+        <translation>Sohbeti sil?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="443"/>
+        <source>chat_list_delete_chat_popup_message</source>
+        <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
+        <translation>Bu sohbet ve tüm mesajları silinecek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="470"/>
+        <source>focused_chat_accessible_label</source>
+        <extracomment>%1 chat %2</extracomment>
+        <translation>%1 sohbeti %2</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="472"/>
+        <source>unread_messages_accessible_label</source>
+        <extracomment>: %n unread messages</extracomment>
+        <translation>
+            <numerusform>: %n unread message</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessage</name>
+    <message>
+        <source>chat_message_file_accessible_name</source>
+        <extracomment>&quot;File&quot;</extracomment>
+        <translation>Dosya</translation>
+    </message>
+    <message>
+        <source>chat_message_voice_accessible_name</source>
+        <extracomment>&quot;Voice message&quot;</extracomment>
+        <translation>Sesli mesaj</translation>
+    </message>
+    <message>
+        <source>chat_message_sent_by_me_accessible_name</source>
+        <extracomment>&quot;You&quot;</extracomment>
+        <translation>Sen</translation>
+    </message>
+    <message>
+        <source>chat_message_more_emojis_accessible_name</source>
+        <extracomment>&quot;More emojis&quot;</extracomment>
+        <translation>Daha fazla emoji</translation>
+    </message>
+    <message>
+        <source>chat_message_react_accessible_name</source>
+        <extracomment>&quot;React&quot;</extracomment>
+        <translation>Tepki ver</translation>
+    </message>
+    <message>
+        <source>chat_message_options_accessible_name</source>
+        <extracomment>&quot;Message options&quot;</extracomment>
+        <translation>Mesaj seçenekleri</translation>
+    </message>
+    <message>
+        <source>chat_message_reactions_accessible_name</source>
+        <extracomment>&quot;Show reactions&quot;</extracomment>
+        <translation>Tepkileri göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="494"/>
+        <source>chat_message_copy_selection</source>
+        <extracomment>&quot;Copy selection&quot;</extracomment>
+        <translation>Seçimi kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="496"/>
+        <source>chat_message_copy</source>
+        <extracomment>&quot;Copy&quot;</extracomment>
+        <translation>Kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="504"/>
+        <source>chat_message_copied_to_clipboard_title</source>
+        <extracomment>Copied</extracomment>
+        <translation>Kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="506"/>
+        <source>chat_message_copied_to_clipboard_toast</source>
+        <extracomment>&quot;to clipboard&quot;</extracomment>
+        <translation>panoya</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="132"/>
+        <source>chat_message_remote_replied</source>
+        <extracomment>%1 replied</extracomment>
+        <translation>%1 yanıtladı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="99"/>
+        <source>chat_message_forwarded</source>
+        <extracomment>Forwarded</extracomment>
+        <translation>İletildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="130"/>
+        <source>chat_message_remote_replied_to</source>
+        <extracomment>%1 replied to %2</extracomment>
+        <translation>%1, %2 kişisine yanıtladı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="135"/>
+        <source>chat_message_user_replied_to</source>
+        <extracomment>You replied to %1</extracomment>
+        <translation>%1 kişisine yanıt verdin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="137"/>
+        <source>chat_message_user_replied</source>
+        <extracomment>You replied</extracomment>
+        <translation>Yanıt verdin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="443"/>
+        <source>chat_message_send_again</source>
+        <extracomment>&quot;Re-send&quot;</extracomment>
+        <translation>Tekrar gönder</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="454"/>
+        <source>chat_message_reception_info</source>
+        <extracomment>&quot;Reception info&quot;</extracomment>
+        <translation>Alındı bilgisi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="466"/>
+        <source>menu_edit_chat_message</source>
+        <extracomment>&quot;Edit&quot;</extracomment>
+        <translation>Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="480"/>
+        <source>chat_message_reply</source>
+        <extracomment>Reply</extracomment>
+        <translation>Yanıtla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="514"/>
+        <source>chat_message_forward</source>
+        <extracomment>Forward</extracomment>
+        <translation>İlet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="531"/>
+        <source>chat_message_delete</source>
+        <extracomment>&quot;Delete&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="319"/>
+        <source>conversation_message_edited_label</source>
+        <translation>Düzenlendi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageContentCore</name>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="111"/>
+        <source>download_file_default_error</source>
+        <extracomment>Error downloading file %1</extracomment>
+        <translation>Dosya indirme hatası: %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="144"/>
+        <source>popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="146"/>
+        <source>popup_open_file_error_does_not_exist_message</source>
+        <extracomment>Could not open file : unknown path %1</extracomment>
+        <translation>Dosya açılamadı: bilinmeyen yol</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageContentList</name>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="119"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="128"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="165"/>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="171"/>
+        <source>popup_error_title</source>
+        <extracomment>Error adding file
+----------
+Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="121"/>
+        <source>popup_error_path_does_not_exist_message</source>
+        <extracomment>File was not found: %1</extracomment>
+        <translation>Dosya bulunamadı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="123"/>
+        <source>popup_error_nb_files_not_found_message</source>
+        <extracomment>%n files were not found</extracomment>
+        <translation>%n dosya bulunamadı</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="130"/>
+        <source>popup_error_max_files_count_message</source>
+        <extracomment>You can send 12 files maximum at a time. %n files were ignored</extracomment>
+        <translation>
+            <numerusform>You can send 12 files maximum at a time. %n file was ignored</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="167"/>
+        <source>popup_error_file_too_big_message</source>
+        <extracomment>%n files were ignored cause they exceed the maximum size. (Size limit=%2)</extracomment>
+        <translation>%n dosya boyut sınırını aştığı için yok sayıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="176"/>
+        <source>popup_error_unsupported_files_message</source>
+        <extracomment>Unable to get supported mime type for %1 files.</extracomment>
+        <translation>Desteklenen mime türü alınamadı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentList.cpp" line="174"/>
+        <source>popup_error_unsupported_file_message</source>
+        <extracomment>Unable to get supported mime type for: `%1`.</extracomment>
+        <translation>Desteklenen mime türü alınamadı</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageContentModel</name>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="87"/>
+        <source>download_error_object_doesnt_exist</source>
+        <extracomment>Internal error : message object associated to this content does not exist anymore !</extracomment>
+        <translation>Dahili hata: mesaj nesnesi bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="104"/>
+        <source>download_file_server_error</source>
+        <extracomment>Error while trying to download content : %1</extracomment>
+        <translation>İçerik indirilirken hata</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="114"/>
+        <source>download_file_error_no_safe_file_path</source>
+        <extracomment>Unable to create safe file path for: %1</extracomment>
+        <translation>%1 için güvenli dosya yolu oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="123"/>
+        <source>download_file_error_file_transfer_unavailable</source>
+        <extracomment>This file was already downloaded and is no more on the server. Your peer have to resend it if you want to get it</extracomment>
+        <translation>Bu dosya zaten indirildi ve artık mevcut değil</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="128"/>
+        <source>download_file_error_null_name</source>
+        <extracomment>Content name is null, can&apos;t download it !</extracomment>
+        <translation>İçerik adı boş, indirilemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/chat/message/content/ChatMessageContentModel.cpp" line="136"/>
+        <source>download_file_error_unable_to_download</source>
+        <extracomment>Unable to download file of entry %1</extracomment>
+        <translation>%1 girdisinin dosyası indirilemedi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageCore</name>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="163"/>
+        <source>all_reactions_label</source>
+        <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
+        <translation>Tepkiler</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="224"/>
+        <source>info_toast_deleted_title</source>
+        <extracomment>Deleted</extracomment>
+        <translation>Silindi</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/ChatMessageCore.cpp" line="226"/>
+        <source>info_toast_deleted_message</source>
+        <extracomment>The message has been deleted</extracomment>
+        <translation>Mesaj silindi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessageInvitationBubble</name>
+    <message>
+        <source>meeting_add_to_calendar_accessible_name</source>
+        <extracomment>&quot;Add to calendar&quot;</extracomment>
+        <translation>Takvime ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="40"/>
+        <source>ics_bubble_meeting_from</source>
+        <translation>Başlangıç </translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="41"/>
+        <source>ics_bubble_meeting_to</source>
+        <translation> Bitiş </translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="63"/>
+        <source>ics_bubble_meeting_modified</source>
+        <extracomment>Meeting has been updated</extracomment>
+        <translation>Toplantı güncellendi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="66"/>
+        <source>ics_bubble_meeting_cancelled</source>
+        <extracomment>Meeting has been canceled</extracomment>
+        <translation>Toplantı iptal edildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="182"/>
+        <source></source>
+        <extracomment>from %1 to %2 (UTC%3)</extracomment>
+        <translation>%1 ile %2 arası (UTC%3)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="245"/>
+        <source>ics_bubble_description_title</source>
+        <extracomment>Description</extracomment>
+        <translation>Açıklama</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="297"/>
+        <source>ics_bubble_join</source>
+        <extracomment>&quot;Rejoindre&quot;</extracomment>
+        <translation>Katıl</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="287"/>
+        <source>ics_bubble_participants</source>
+        <extracomment>%n participant(s)</extracomment>
+        <translation>
+            <numerusform>%1 participant</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>ChatMessagesListView</name>
+    <message>
+        <source>chat_messages_list_accessible_name</source>
+        <extracomment>&quot;Messages&quot;</extracomment>
+        <translation>Mesajlar</translation>
+    </message>
+    <message>
+        <source>chat_scroll_to_last_message_accessible_name</source>
+        <extracomment>&quot;Go to the last message&quot;</extracomment>
+        <translation>Son mesaja git</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="143"/>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="154"/>
+        <source>popup_info_find_message_title</source>
+        <extracomment>Find message</extracomment>
+        <translation>Mesaj bul</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="156"/>
+        <source>info_popup_no_result_message</source>
+        <extracomment>No result found</extracomment>
+        <translation>Sonuç bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="148"/>
+        <source>info_popup_first_result_message</source>
+        <extracomment>First result reached</extracomment>
+        <translation>İlk sonuca ulaşıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="146"/>
+        <source>info_popup_last_result_message</source>
+        <extracomment>Last result reached</extracomment>
+        <translation>Son sonuca ulaşıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="204"/>
+        <source>chat_message_list_encrypted_header_title</source>
+        <extracomment>End to end encrypted chat</extracomment>
+        <translation>Uçtan uca şifrelenmiş sohbet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="206"/>
+        <source>unencrypted_conversation_warning</source>
+        <extracomment>This conversation is not encrypted !</extracomment>
+        <translation>Bu sohbet şifrelenmemiş!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="217"/>
+        <source>chat_message_list_encrypted_header_message</source>
+        <extracomment>Messages in this conversation are e2e encrypted. 
+ Only your correspondent can decrypt them.</extracomment>
+        <translation>Bu sohbetteki mesajlar uçtan uca şifrelenmiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="219"/>
+        <source>chat_message_list_not_encrypted_header_message</source>
+        <extracomment>Messages are not end to end encrypted, 
+ make sure you don&apos;t share any sensitive information !</extracomment>
+        <translation>Mesajlar uçtan uca şifrelenmemiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="260"/>
+        <source>chat_message_is_writing_info</source>
+        <extracomment>%1 is writing…</extracomment>
+        <translation>%1 yazıyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="281"/>
+        <source>conversation_dialog_delete_chat_message_title</source>
+        <extracomment>&quot;Supprimer le message ?&quot;</extracomment>
+        <translation>Mesaj silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="289"/>
+        <source>conversation_dialog_delete_locally_label</source>
+        <translation>Yerel olarak sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="301"/>
+        <source>conversation_dialog_delete_for_everyone_label</source>
+        <translation>Herkes için sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="312"/>
+        <source>dialog_cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="390"/>
+        <source>info_toast_deleted_title</source>
+        <translation>Silindi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="392"/>
+        <source>info_toast_deleted_message</source>
+        <extracomment>The message has been deleted</extracomment>
+        <translation>Mesaj silindi</translation>
+    </message>
+</context>
+<context>
+    <name>ChatPage</name>
+    <message>
+        <source>chat_back_accessible_name</source>
+        <extracomment>&quot;Back to the conversation list&quot;</extracomment>
+        <translation>Sohbet listesine dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="14"/>
+        <source>chat_start_title</source>
+        <extracomment>&quot;Nouvelle conversation&quot;</extracomment>
+        <translation>Yeni sohbet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="16"/>
+        <source>chat_empty_title</source>
+        <extracomment>&quot;Aucune conversation&quot;</extracomment>
+        <translation>Sohbet yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="52"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="66"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="54"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="68"/>
+        <source>info_popup_chatroom_creation_failed</source>
+        <extracomment>Chat room creation failed !</extracomment>
+        <translation>Sohbet odası oluşturulamadı!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="48"/>
+        <source>loading_popup_chatroom_creation_pending_message</source>
+        <extracomment>Chat room is being created...</extracomment>
+        <translation>Sohbet odası oluşturuluyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="113"/>
+        <source>chat_dialog_delete_chat_title</source>
+        <extracomment>Supprimer la conversation ?</extracomment>
+        <translation>Sohbet silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="115"/>
+        <source>chat_dialog_delete_chat_message</source>
+        <extracomment>&quot;La conversation et tous ses messages seront supprimés.&quot;</extracomment>
+        <translation>Sohbet ve tüm mesajları silinecek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="149"/>
+        <source>chat_list_title</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation>Sohbetler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="164"/>
+        <source>chat_option_acccessibility_label</source>
+        <extracomment>&quot;Conversation options&quot;</extracomment>
+        <translation>Sohbet seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="170"/>
+        <source>menu_mark_all_as_read</source>
+        <extracomment>&quot;mark all as read&quot;</extracomment>
+        <translation>Tümünü okundu olarak işaretle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="191"/>
+        <source>new_chat_acccessibility_label</source>
+        <extracomment>&quot;New chat&quot;</extracomment>
+        <translation>Yeni sohbet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="204"/>
+        <source>chat_search_in_history</source>
+        <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
+        <translation>Sohbet ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="227"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>&quot;Aucun résultat…&quot;</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="229"/>
+        <source>chat_list_empty_history</source>
+        <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
+        <translation>Geçmişinizde sohbet yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="307"/>
+        <source>chat_action_start_new_chat</source>
+        <extracomment>&quot;New chat&quot;</extracomment>
+        <translation>Yeni sohbet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="345"/>
+        <source>chat_start_group_chat_title</source>
+        <extracomment>&quot;Nouveau groupe&quot;</extracomment>
+        <translation>Yeni grup</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="347"/>
+        <source>chat_action_start_group_chat</source>
+        <extracomment>&quot;Créer&quot;</extracomment>
+        <translation>Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="363"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="386"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="391"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="365"/>
+        <source>information_popup_chat_creation_failed_message</source>
+        <extracomment>&quot;La création a échoué&quot;</extracomment>
+        <translation>Oluşturma başarısız oldu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="383"/>
+        <source>group_chat_error_must_have_name</source>
+        <extracomment>&quot;Un nom doit être donné au groupe</extracomment>
+        <translation>Gruba bir isim verilmelidir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="388"/>
+        <source>group_chat_error_no_participant</source>
+        <extracomment>&quot;Please select at least one participant</extracomment>
+        <translation>Lütfen en az bir katılımcı seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="393"/>
+        <source>group_call_error_not_connected</source>
+        <extracomment>&quot;Vous n&apos;etes pas connecté&quot;</extracomment>
+        <translation>Bağlı değilsiniz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="399"/>
+        <source>chat_creation_in_progress</source>
+        <extracomment>Creation de la conversation en cours …</extracomment>
+        <translation>Sohbet oluşturuluyor</translation>
+    </message>
+</context>
+<context>
+    <name>ChatSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="16"/>
+        <source>settings_chat_attached_files_title</source>
+        <extracomment>Attached files</extracomment>
+        <translation>Ekli dosyalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="23"/>
+        <source>settings_chat_notifications_title</source>
+        <extracomment>Notifications</extracomment>
+        <translation>Bildirimler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="48"/>
+        <source>settings_chat_attached_files_auto_download_title</source>
+        <extracomment>&quot;Automatic download&quot;</extracomment>
+        <translation>Otomatik indirme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="50"/>
+        <source>settings_chat_attached_files_auto_download_subtitle</source>
+        <extracomment>&quot;Automatically download transferred or received files in conversations&quot;</extracomment>
+        <translation>Aktarılan dosyaları otomatik indir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="57"/>
+        <source>settings_chat_download_folder_title</source>
+        <extracomment>&quot;Dossier de téléchargement des fichiers&quot;</extracomment>
+        <translation>Dosya indirme klasörü</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="64"/>
+        <source>settings_chat_download_folder_browse_button</source>
+        <extracomment>Browse folders</extracomment>
+        <translation>Klasörlere göz at</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="80"/>
+        <source>settings_chat_display_notification_content_title</source>
+        <extracomment>&quot;Display content&quot;</extracomment>
+        <translation>İçeriği göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ChatSettingsLayout.qml" line="82"/>
+        <source>settings_chat_display_notification_content_subtitle</source>
+        <extracomment>&quot;Display the content of the received message&quot;</extracomment>
+        <translation>Alınan mesajın içeriğini bildirimde göster</translation>
+    </message>
+</context>
+<context>
+    <name>CliModel</name>
+    <message>
+        <source>show_function_description</source>
+        <translation type="vanished">Show</translation>
+    </message>
+    <message>
+        <source>fetch_config_function_description</source>
+        <translation type="vanished">Fetch config</translation>
+    </message>
+    <message>
+        <source>call_function_description</source>
+        <translation type="vanished">Call</translation>
+    </message>
+    <message>
+        <source>bye_function_description</source>
+        <translation type="vanished">Bye</translation>
+    </message>
+    <message>
+        <source>accept_function_description</source>
+        <translation type="vanished">Accept</translation>
+    </message>
+    <message>
+        <source>decline_function_description</source>
+        <translation type="vanished">Decline</translation>
+    </message>
+    <message>
+        <source>use_sips_function_description</source>
+        <translation type="vanished">Use sips</translation>
+    </message>
+    <message>
+        <location filename="../../model/cli/CliModel.cpp" line="471"/>
+        <source>info_popup_cli_unsupported_scheme_message</source>
+        <extracomment>&quot;Not a valid URI: `%1` Unsupported scheme: `%2`.&quot;</extracomment>
+        <translation>Geçersiz URI: `%1` Desteklenmeyen şema</translation>
+    </message>
+</context>
+<context>
+    <name>ComboBox</name>
+    <message>
+        <location filename="../../view/Control/Button/ComboBox.qml" line="48"/>
+        <source>combobox_with_value_accessible_name</source>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
+    </message>
+</context>
+<context>
+    <name>ConferenceInfoCore</name>
+    <message>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="597"/>
+        <source>information_popup_error_title</source>
+        <extracomment>&quot;Erreur&quot;</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/conference/ConferenceInfoCore.cpp" line="599"/>
+        <source>information_popup_disconnected_account_message</source>
+        <extracomment>&quot;Votre compte est déconnecté&quot;</extracomment>
+        <translation>Hesabınızın bağlantısı kesildi</translation>
+    </message>
+</context>
+<context>
+    <name>Contact</name>
+    <message>
+        <source>account_change_avatar_accessible_name</source>
+        <extracomment>&quot;Change the picture of %1&quot;</extracomment>
+        <translation>%1 resmini değiştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="165"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Erreur</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="167"/>
+        <source>information_popup_voicemail_address_undefined_message</source>
+        <extracomment>L&apos;URI de messagerie vocale n&apos;est pas définie.</extracomment>
+        <translation>Sesli mesaj URI’si tanımlı değil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Contact.qml" line="181"/>
+        <source>account_settings_name_accessible_name</source>
+        <extracomment>Account settings of %1</extracomment>
+        <translation>%1 hesap ayarları</translation>
+    </message>
+</context>
+<context>
+    <name>ContactEdition</name>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="27"/>
+        <source>contact_editor_title</source>
+        <extracomment>&quot;Modifier contact&quot;</extracomment>
+        <translation>Kişiyi düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="29"/>
+        <source>save</source>
+        <extracomment>&quot;Enregistrer</extracomment>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="43"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="66"/>
+        <source>contact_editor_dialog_cancel_change_message</source>
+        <extracomment>&quot;Les changements seront annulés. Souhaitez-vous continuer ?&quot;</extracomment>
+        <translation>Değişiklikler iptal edilecek. Emin misiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="63"/>
+        <source>close_accessible_name</source>
+        <extracomment>Close %1</extracomment>
+        <translation>Kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="94"/>
+        <source>contact_editor_mandatory_first_name_or_company_not_filled</source>
+        <extracomment>&quot;Veuillez saisir un prénom ou un nom d&apos;entreprise&quot;</extracomment>
+        <translation>Lütfen bir ad veya şirket adı girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="98"/>
+        <source>contact_editor_mandatory_address_or_number_not_filled</source>
+        <extracomment>&quot;Veuillez saisir une adresse ou un numéro de téléphone&quot;</extracomment>
+        <translation>Lütfen bir adres veya numara girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="115"/>
+        <source>contact_editor_add_image_label</source>
+        <extracomment>&quot;Ajouter une image&quot;</extracomment>
+        <translation>Resim ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="133"/>
+        <source>contact_details_edit</source>
+        <extracomment>&quot;Modifier&quot;</extracomment>
+        <translation>Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="142"/>
+        <source>edit_contact_image_accessible_name</source>
+        <extracomment>&quot;Edit contact image&quot;</extracomment>
+        <translation>Kişi resmini düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="160"/>
+        <source>contact_details_delete</source>
+        <extracomment>&quot;Supprimer&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="169"/>
+        <source>delete_contact_image_accessible_name</source>
+        <extracomment>&quot;Delete contact image&quot;</extracomment>
+        <translation>Kişi resmini sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="222"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="235"/>
+        <source>contact_editor_first_name</source>
+        <extracomment>&quot;Prénom&quot;</extracomment>
+        <translation>Ad</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="240"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="250"/>
+        <source>contact_editor_last_name</source>
+        <extracomment>&quot;Nom&quot;</extracomment>
+        <translation>Soyad</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="255"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="265"/>
+        <source>contact_editor_company</source>
+        <extracomment>&quot;Entreprise&quot;</extracomment>
+        <translation>Şirket</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="270"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="285"/>
+        <source>contact_editor_job_title</source>
+        <extracomment>&quot;Fonction&quot;</extracomment>
+        <translation>Ünvan</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="319"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="351"/>
+        <source>sip_address</source>
+        <translation>SIP adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="329"/>
+        <source>sip_address_number_accessible_name</source>
+        <extracomment>&quot;SIP address number %1&quot;</extracomment>
+        <translation>SIP adresi numarası %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
+        <source>remove_sip_address_accessible_name</source>
+        <extracomment>&quot;Remove SIP address %1&quot;</extracomment>
+        <translation>SIP adresini kaldır %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="375"/>
+        <source>new_sip_address_accessible_name</source>
+        <extracomment>&quot;New SIP address&quot;</extracomment>
+        <translation>Yeni SIP adresi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="413"/>
+        <source>phone_number_number_accessible_name</source>
+        <extracomment>&quot;Phone number number %1&quot;</extracomment>
+        <translation>Telefon numarası %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="428"/>
+        <source>remove_phone_number_accessible_name</source>
+        <extracomment>Remove phone number %1</extracomment>
+        <translation>Telefon numarasını kaldır %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="459"/>
+        <source>new_phone_number_accessible_name</source>
+        <extracomment>&quot;New phone number&quot;</extracomment>
+        <translation>Yeni telefon numarası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="410"/>
+        <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="436"/>
+        <source>phone</source>
+        <extracomment>&quot;Téléphone&quot;</extracomment>
+        <translation>Telefon</translation>
+    </message>
+</context>
+<context>
+    <name>ContactListItem</name>
+    <message>
+        <source>contact_options_accessible_name</source>
+        <extracomment>&quot;Options for %1&quot;</extracomment>
+        <translation>%1 seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="155"/>
+        <source>call_with_contact_name_accessible_button</source>
+        <extracomment>&quot;Call %1&quot;</extracomment>
+        <translation>%1 ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="173"/>
+        <source>video_call_with_contact_name_accessible_button</source>
+        <extracomment>&quot;Video call %1&quot;</extracomment>
+        <translation>%1 görüntülü ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="196"/>
+        <source>message_with_contact_name_accessible_button</source>
+        <extracomment>&quot;Message %1&quot;</extracomment>
+        <translation>%1 mesaj gönder</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="214"/>
+        <source>contact_details_remove_from_favourites</source>
+        <extracomment>&quot;Enlever des favoris&quot;</extracomment>
+        <translation>Favorilerden çıkar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="216"/>
+        <source>contact_details_add_to_favourites</source>
+        <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
+        <translation>Favorilere ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="230"/>
+        <source>Partager</source>
+        <translation>Paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="243"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="245"/>
+        <source>information_popup_vcard_creation_error</source>
+        <extracomment>La création du fichier vcard a échoué</extracomment>
+        <translation>vCard dosyası oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="249"/>
+        <source>information_popup_vcard_creation_title</source>
+        <extracomment>VCard créée</extracomment>
+        <translation>vCard oluşturuldu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="251"/>
+        <source>information_popup_vcard_creation_success</source>
+        <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
+        <translation>Kişinin vCard’ı %1 konumuna kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="253"/>
+        <source>contact_sharing_email_title</source>
+        <extracomment>Partage de contact</extracomment>
+        <translation>Kişi paylaşımı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="259"/>
+        <source>contact_details_delete</source>
+        <extracomment>&quot;Supprimer&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+</context>
+<context>
+    <name>ContactListView</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="194"/>
+        <source>shrink_accessible_name</source>
+        <extracomment>Shrink %1</extracomment>
+        <translation>%1 küçült</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/ContactListView.qml" line="196"/>
+        <source>expand_accessible_name</source>
+        <extracomment>Expand %1</extracomment>
+        <translation>%1 genişlet</translation>
+    </message>
+</context>
+<context>
+    <name>ContactPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="16"/>
+        <source>contacts_add</source>
+        <extracomment>&quot;Ajouter un contact&quot;</extracomment>
+        <translation>Kişi ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="18"/>
+        <source>contacts_list_empty</source>
+        <extracomment>&quot;Aucun contact pour le moment&quot;</extracomment>
+        <translation>Henüz kişi yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="93"/>
+        <source>contact_new_title</source>
+        <extracomment>&quot;Nouveau contact&quot;</extracomment>
+        <translation>Yeni kişi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="95"/>
+        <source>create</source>
+        <translation>Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="103"/>
+        <source>contact_edit_title</source>
+        <extracomment>&quot;Modifier contact&quot;</extracomment>
+        <translation>Kişiyi düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="104"/>
+        <source>save</source>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="118"/>
+        <source>contact_dialog_delete_title</source>
+        <extracomment>Supprimer %1 ?&quot;</extracomment>
+        <translation>%1 silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="120"/>
+        <source>contact_dialog_delete_message</source>
+        <extracomment>Ce contact sera définitivement supprimé.</extracomment>
+        <translation>Bu kişi kalıcı olarak silinecek.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="127"/>
+        <source>contact_deleted_toast</source>
+        <extracomment>&quot;Contact supprimé&quot;</extracomment>
+        <translation>Kişi silindi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="129"/>
+        <source>contact_deleted_message</source>
+        <extracomment>&quot;%1 a été supprimé&quot;</extracomment>
+        <translation>%1 silindi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="145"/>
+        <source>contact_dialog_devices_trust_popup_title</source>
+        <extracomment>&quot;Augmenter la confiance&quot;</extracomment>
+        <translation>Güveni artır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="148"/>
+        <source>contact_dialog_devices_trust_popup_message</source>
+        <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.</extracomment>
+        <translation>Güven seviyesini artırmak için kişinizin cihazlarını doğrulayın</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="157"/>
+        <source>popup_do_not_show_again</source>
+        <extracomment>Ne plus afficher</extracomment>
+        <translation>Bir daha gösterme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="172"/>
+        <source>cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="178"/>
+        <source>dialog_call</source>
+        <extracomment>&quot;Appeler&quot;</extracomment>
+        <translation>Ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="195"/>
+        <source>contact_dialog_devices_trust_help_title</source>
+        <extracomment>&quot;Niveau de confiance&quot;</extracomment>
+        <translation>Güven seviyesi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="197"/>
+        <source>contact_dialog_devices_trust_help_message</source>
+        <extracomment>&quot;Vérifiez les appareils de votre contact pour confirmer que vos communications seront sécurisées et sans compromission. &lt;br&gt;Quand tous seront vérifiés, vous atteindrez le niveau de confiance maximal.&quot;</extracomment>
+        <translation>Kişinizin cihazlarını kontrol edin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="220"/>
+        <source>dialog_ok</source>
+        <extracomment>&quot;Ok&quot;</extracomment>
+        <translation>Tamam</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="249"/>
+        <source>bottom_navigation_contacts_label</source>
+        <extracomment>&quot;Contacts&quot;</extracomment>
+        <translation>Kişiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="290"/>
+        <source>search_bar_look_for_contact_text</source>
+        <extracomment>Rechercher un contact</extracomment>
+        <translation>Kişi ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="302"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>Aucun résultat…</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="304"/>
+        <source>contact_list_empty</source>
+        <extracomment>Aucun contact pour le moment</extracomment>
+        <translation>Kişi yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="387"/>
+        <source>expand_accessible_name</source>
+        <extracomment>Expand %1</extracomment>
+        <translation>%1 genişlet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="637"/>
+        <source>contact_details_medias_and_documents_title</source>
+        <extracomment>&quot;Medias &amp; documents&quot;</extracomment>
+        <translation>Medya ve belgeler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="385"/>
+        <source>shrink_accessible_name</source>
+        <extracomment>Shrink %1</extracomment>
+        <translation>%1 küçült</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="271"/>
+        <source>create_contact_accessible_name</source>
+        <extracomment>Create new contact</extracomment>
+        <translation>Yeni kişi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="371"/>
+        <source>more_info_accessible_name</source>
+        <extracomment>More info %1</extracomment>
+        <translation>%1 hakkında daha fazla bilgi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="407"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="822"/>
+        <source>contact_details_edit</source>
+        <extracomment>Edit
+----------
+&quot;Éditer&quot;</extracomment>
+        <translation>Düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="421"/>
+        <source>contact_call_action</source>
+        <extracomment>&quot;Appel&quot;</extracomment>
+        <translation>Ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="432"/>
+        <source>contact_message_action</source>
+        <extracomment>&quot;Message&quot;</extracomment>
+        <translation>Mesaj</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="446"/>
+        <source>contact_video_call_action</source>
+        <extracomment>&quot;Appel vidéo&quot;</extracomment>
+        <translation>Video ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="505"/>
+        <source>contact_details_numbers_and_addresses_title</source>
+        <extracomment>&quot;Coordonnées&quot;</extracomment>
+        <translation>İletişim bilgileri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="561"/>
+        <source>call_adress_accessible_name</source>
+        <extracomment>Call address %1</extracomment>
+        <translation>%1 adresini ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="594"/>
+        <source>contact_details_company_name</source>
+        <extracomment>&quot;Société :&quot;</extracomment>
+        <translation>Şirket:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="615"/>
+        <source>contact_details_job_title</source>
+        <extracomment>&quot;Poste :&quot;</extracomment>
+        <translation>Ünvan:</translation>
+    </message>
+    <message>
+        <source>contact_details_medias_title</source>
+        <extracomment>&quot;Medias&quot;</extracomment>
+        <translation type="vanished">Medias</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="653"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="673"/>
+        <source>contact_details_medias_subtitle</source>
+        <extracomment>&quot;Show shared medias&quot;</extracomment>
+        <translation>Paylaşılan medyaları göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="692"/>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="712"/>
+        <source>contact_details_documents_subtitle</source>
+        <extracomment>&quot;Show shared documents&quot;</extracomment>
+        <translation>Paylaşılan belgeleri göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="719"/>
+        <source>contact_details_trust_title</source>
+        <extracomment>&quot;Confiance&quot;</extracomment>
+        <translation>Güven</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="726"/>
+        <source>contact_dialog_devices_trust_title</source>
+        <extracomment>&quot;Niveau de confiance - Appareils vérifiés&quot;</extracomment>
+        <translation>Güven seviyesi - Doğrulanmış cihazlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="735"/>
+        <source>contact_details_no_device_found</source>
+        <extracomment>&quot;Aucun appareil&quot;</extracomment>
+        <translation>Cihaz yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="760"/>
+        <source>contact_device_without_name</source>
+        <extracomment>&quot;Appareil inconnu&quot;</extracomment>
+        <translation>Bilinmeyen cihaz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="784"/>
+        <source>contact_make_call_check_device_trust</source>
+        <extracomment>&quot;Vérifier&quot;</extracomment>
+        <translation>Doğrula</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="786"/>
+        <source>verify_device_accessible_name</source>
+        <extracomment>Verify %1 device</extracomment>
+        <translation>%1 cihazını doğrula</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="812"/>
+        <source>contact_details_actions_title</source>
+        <extracomment>&quot;Autres actions&quot;</extracomment>
+        <translation>Diğer işlemler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="842"/>
+        <source>contact_details_remove_from_favourites</source>
+        <extracomment>&quot;Retirer des favoris&quot;</extracomment>
+        <translation>Favorilerden çıkar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="844"/>
+        <source>contact_details_add_to_favourites</source>
+        <extracomment>&quot;Ajouter aux favoris&quot;</extracomment>
+        <translation>Favorilere ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="861"/>
+        <source>contact_details_share</source>
+        <extracomment>&quot;Partager&quot;</extracomment>
+        <translation>Paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="872"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="874"/>
+        <source>contact_details_share_error_mesage</source>
+        <extracomment>&quot;La création du fichier vcard a échoué&quot;</extracomment>
+        <translation>vCard dosyası oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="879"/>
+        <source>contact_details_share_success_title</source>
+        <extracomment>&quot;VCard créée&quot;</extracomment>
+        <translation>vCard oluşturuldu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="881"/>
+        <source>contact_details_share_success_mesage</source>
+        <extracomment>&quot;VCard du contact enregistrée dans %1&quot;</extracomment>
+        <translation>Kişinin vCard’ı %1 konumuna kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="884"/>
+        <source>contact_details_share_email_title</source>
+        <extracomment>&quot;Partage de contact&quot;</extracomment>
+        <translation>Kişi paylaşımı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="925"/>
+        <source>contact_details_delete</source>
+        <extracomment>&quot;Supprimer ce contact&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+</context>
+<context>
+    <name>ContactSharedFiles</name>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="22"/>
+        <source>contact_shared_medias_title</source>
+        <extracomment>&quot;Shared medias&quot;</extracomment>
+        <translation>Paylaşılan medyalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
+        <source>contact_shared_documents_title</source>
+        <extracomment>&quot;Shared documents&quot;</extracomment>
+        <translation>Paylaşılan belgeler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="45"/>
+        <source>close_accessible_name</source>
+        <extracomment>Close %1</extracomment>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>ContactsSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="14"/>
+        <source>settings_contacts_ldap_title</source>
+        <extracomment>Annuaires LDAP</extracomment>
+        <translation>LDAP dizinleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="16"/>
+        <source>settings_contacts_ldap_subtitle</source>
+        <extracomment>&quot;Ajouter vos annuaires LDAP pour pouvoir effectuer des recherches dans la barre de recherche.&quot;</extracomment>
+        <translation>Kişileri aramak için LDAP dizinlerinizi ekleyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="21"/>
+        <source>settings_contacts_carddav_title</source>
+        <translation>CardDAV adres defteri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="22"/>
+        <source>settings_contacts_carddav_subtitle</source>
+        <translation>Kişileri senkronize etmek için bir CardDAV adres defteri ekleyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="42"/>
+        <source>settings_contacts_add_ldap_server_title</source>
+        <extracomment>&quot;Ajouter un annuaire LDAP&quot;</extracomment>
+        <translation>LDAP dizini ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="44"/>
+        <source>settings_contacts_edit_ldap_server_title</source>
+        <extracomment>&quot;Modifier un annuaire LDAP&quot;</extracomment>
+        <translation>LDAP dizinini düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="46"/>
+        <source>edit_ldap_server_accessible_name</source>
+        <extracomment>&quot;Editer le serveur LDAP %1&quot;</extracomment>
+        <translation>%1 LDAP sunucusunu düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="48"/>
+        <source>use_ldap_server_accessible_name</source>
+        <extracomment>&quot;Utiliser le serveur LDAP %1&quot;</extracomment>
+        <translation>%1 LDAP sunucusunu kullan</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="73"/>
+        <source>settings_contacts_add_carddav_server_title</source>
+        <extracomment>&quot;Ajouter un carnet d&apos;adresse CardDAV&quot;</extracomment>
+        <translation>CardDAV adres defteri ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="75"/>
+        <source>settings_contacts_edit_carddav_server_title</source>
+        <extracomment>&quot;Modifier un carnet d&apos;adresse CardDAV&quot;</extracomment>
+        <translation>CardDAV adres defterini düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="77"/>
+        <source>edit_cardav_server_accessible_name</source>
+        <extracomment>&quot;Editer le carnet d&apos;adresses CardDAV %1&quot;</extracomment>
+        <translation>%1 CardDAV adres defterini düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsLayout.qml" line="79"/>
+        <source>use_cardav_server_accessible_name</source>
+        <extracomment>&quot;Utiliser le d&apos;adresses CardDAV %1&quot;</extracomment>
+        <translation>%1 CardDAV adres defterini kullan</translation>
+    </message>
+</context>
+<context>
+    <name>ContactsSettingsProviderLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="100"/>
+        <source>information_popup_success_title</source>
+        <translation>Başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="102"/>
+        <source>information_popup_changes_saved</source>
+        <extracomment>&quot;Les changements ont été sauvegardés&quot;</extracomment>
+        <translation>Değişiklikler kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/ContactsSettingsProviderLayout.qml" line="124"/>
+        <source>add</source>
+        <extracomment>&quot;Ajouter&quot;</extracomment>
+        <translation>Ekle</translation>
+    </message>
+</context>
+<context>
+    <name>ConversationInfos</name>
+    <message>
+        <source>chat_subject_accessible_name</source>
+        <extracomment>&quot;Conversation name&quot;</extracomment>
+        <translation>Sohbet adı</translation>
+    </message>
+    <message>
+        <source>chat_copy_address_accessible_name</source>
+        <extracomment>&quot;Copy the address&quot;</extracomment>
+        <translation>Adresi kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="208"/>
+        <source>one_one_infos_call</source>
+        <extracomment>&quot;Appel&quot;</extracomment>
+        <translation>Arama</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="222"/>
+        <source>one_one_infos_unmute</source>
+        <extracomment>&quot;Sourdine&quot;</extracomment>
+        <translation>Sesi aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="222"/>
+        <source>one_one_infos_mute</source>
+        <translation>Sessize al</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="289"/>
+        <source>group_infos_participants</source>
+        <translation>Katılımcılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="306"/>
+        <source>group_infos_media_docs</source>
+        <extracomment>Medias &amp; documents</extracomment>
+        <translation>Medya ve belgeler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="312"/>
+        <source>group_infos_shared_medias</source>
+        <extracomment>Shared medias</extracomment>
+        <translation>Paylaşılan medyalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="323"/>
+        <source>group_infos_shared_docs</source>
+        <extracomment>Shared documents</extracomment>
+        <translation>Paylaşılan belgeler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="336"/>
+        <source>group_infos_other_actions</source>
+        <extracomment>Other actions</extracomment>
+        <translation>Diğer işlemler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="342"/>
+        <source>group_infos_ephemerals</source>
+        <translation>Geçici mesajlar </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="342"/>
+        <source>group_infos_enable_ephemerals</source>
+        <translation>Geçici mesajları etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="244"/>
+        <source>group_infos_meeting</source>
+        <extracomment>Schedule a meeting</extracomment>
+        <translation>Toplantı planla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="353"/>
+        <source>group_infos_leave_room</source>
+        <extracomment>Leave chat room</extracomment>
+        <translation>Sohbet odasından ayrıl</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="358"/>
+        <source>group_infos_leave_room_toast_title</source>
+        <extracomment>Leave Chat Room ?</extracomment>
+        <translation>Sohbet odasından ayrıl?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="360"/>
+        <source>group_infos_leave_room_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation>Tüm mesajlar bu cihazdan kaldırılacak</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="373"/>
+        <source>group_infos_delete_history</source>
+        <extracomment>Delete history</extracomment>
+        <translation>Geçmişi sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="378"/>
+        <source>group_infos_delete_history_toast_title</source>
+        <extracomment>Delete history ?</extracomment>
+        <translation>Geçmiş silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="380"/>
+        <source>group_infos_delete_history_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation>Tüm mesajlar bu cihazdan kaldırılacak</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="247"/>
+        <source>one_one_infos_open_contact</source>
+        <extracomment>Show contact</extracomment>
+        <translation>Kişiyi göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="249"/>
+        <source>one_one_infos_create_contact</source>
+        <extracomment>Create contact</extracomment>
+        <translation>Kişi oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="394"/>
+        <source>one_one_infos_ephemerals</source>
+        <translation>Geçici mesajlar </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="394"/>
+        <source>one_one_infos_enable_ephemerals</source>
+        <translation>Geçici mesajları etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="404"/>
+        <source>one_one_infos_delete_history</source>
+        <translation>Geçmişi sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="409"/>
+        <source>one_one_infos_delete_history_toast_title</source>
+        <extracomment>Delete history ?</extracomment>
+        <translation>Geçmiş silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="411"/>
+        <source>one_one_infos_delete_history_toast_message</source>
+        <extracomment>All the messages will be removed from the chat room. Do you want to continue ?</extracomment>
+        <translation>Tüm mesajlar bu cihazdan kaldırılacak</translation>
+    </message>
+</context>
+<context>
+    <name>CoreModel</name>
+    <message>
+        <source>info_popup_error_title</source>
+        <translation type="vanished">Error</translation>
+    </message>
+    <message>
+        <source>fetching_config_failed_error_message</source>
+        <extracomment>&quot;Remote provisioning cannot be retrieved&quot;</extracomment>
+        <translation type="vanished">Remote provisioning cannot be retrieved</translation>
+    </message>
+    <message>
+        <location filename="../../model/core/CoreModel.cpp" line="254"/>
+        <source>fetching_config_empty_path_failure_error_message</source>
+        <extracomment>&quot;Could not get file path for fetching config, return&quot;</extracomment>
+        <translation>Yapılandırma dosyası yolu alınamadı</translation>
+    </message>
+</context>
+<context>
+    <name>CreationFormLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/CreationFormLayout.qml" line="47"/>
+        <source>search_bar_look_for_contact_text</source>
+        <extracomment>&quot;Rechercher un contact&quot;</extracomment>
+        <translation>Kişi ara</translation>
+    </message>
+</context>
+<context>
+    <name>DebugSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="33"/>
+        <source>settings_debug_clean_logs_message</source>
+        <extracomment>&quot;Les traces de débogage seront supprimées. Souhaitez-vous continuer ?&quot;</extracomment>
+        <translation>Hata ayıklama izleri silinecek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="44"/>
+        <source>settings_debug_share_logs_message</source>
+        <extracomment>&quot;Les traces de débogage ont été téléversées. Comment souhaitez-vous partager le lien ? &quot;</extracomment>
+        <translation>Hata ayıklama izleri yüklendi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="48"/>
+        <source>settings_debug_clipboard</source>
+        <extracomment>&quot;Presse-papier&quot;</extracomment>
+        <translation>Pano</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="57"/>
+        <source>settings_debug_email</source>
+        <extracomment>&quot;E-Mail&quot;</extracomment>
+        <translation>E-posta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="63"/>
+        <source>debug_settings_trace</source>
+        <extracomment>&quot;Traces %1&quot;</extracomment>
+        <translation>İzler %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="69"/>
+        <source>information_popup_email_sharing_failed</source>
+        <extracomment>&quot;Le partage par mail a échoué. Veuillez envoyer le lien %1 directement à l&apos;adresse %2.&quot;</extracomment>
+        <translation>E-posta ile paylaşım başarısız oldu. Lütfen tekrar deneyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="67"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="204"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Une erreur est survenue.</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="81"/>
+        <source>settings_debug_enable_logs_title</source>
+        <extracomment>&quot;Activer les traces de débogage&quot;</extracomment>
+        <translation>Hata ayıklama izlerini etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="87"/>
+        <source>settings_debug_enable_full_logs_title</source>
+        <extracomment>&quot;Activer les traces de débogage intégrales&quot;</extracomment>
+        <translation>Tam hata ayıklama izlerini etkinleştir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="97"/>
+        <source>settings_debug_delete_logs_title</source>
+        <extracomment>&quot;Supprimer les traces&quot;</extracomment>
+        <translation>İzleri sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="105"/>
+        <source>settings_debug_share_logs_title</source>
+        <extracomment>&quot;Partager les traces&quot;</extracomment>
+        <translation>İzleri paylaş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="109"/>
+        <source>settings_debug_share_logs_loading_message</source>
+        <extracomment>&quot;Téléversement des traces en cours …&quot;</extracomment>
+        <translation>İzler yükleniyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="127"/>
+        <source>settings_debug_app_version_title</source>
+        <extracomment>&quot;Version de l&apos;application&quot;</extracomment>
+        <translation>Uygulama sürümü</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="134"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="158"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="182"/>
+        <source>copied</source>
+        <extracomment>Copied</extracomment>
+        <translation>Kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="136"/>
+        <source>settings_debug_app_version_copied_message</source>
+        <extracomment>App version has been copied to clipboard</extracomment>
+        <translation>Uygulama sürümü panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="142"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="166"/>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="190"/>
+        <source>settings_debug_copy_tooltip</source>
+        <extracomment>Copy text</extracomment>
+        <translation>Metni kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="151"/>
+        <source>settings_debug_sdk_version_title</source>
+        <extracomment>&quot;Version du SDK&quot;</extracomment>
+        <translation>SDK sürümü</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="160"/>
+        <source>settings_debug_sdk_version_copied_message</source>
+        <extracomment>SDK version has been copied to clipboard</extracomment>
+        <translation>SDK sürümü panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="176"/>
+        <source>settings_debug_qt_version_title</source>
+        <extracomment>&quot;Qt Version&quot;</extracomment>
+        <translation>Qt sürümü</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="184"/>
+        <source>settings_debug_qt_version_copied_message</source>
+        <extracomment>Qt version has been copied to clipboard</extracomment>
+        <translation>Qt sürümü panoya kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="206"/>
+        <source>settings_debug_share_logs_error</source>
+        <extracomment>&quot;Le téléversement des traces a échoué. Vous pouvez partager les fichiers de trace directement depuis le répertoire suivant : %1&quot;</extracomment>
+        <translation>İzler yüklenemedi. Lütfen tekrar deneyin</translation>
+    </message>
+</context>
+<context>
+    <name>DecoratedTextField</name>
+    <message>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="60"/>
+        <source>textfield_error_message_cannot_be_empty</source>
+        <extracomment>&quot;ne peut être vide&quot;</extracomment>
+        <translation>boş olamaz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/DecoratedTextField.qml" line="63"/>
+        <source>textfield_error_message_unknown_format</source>
+        <extracomment>&quot;Format non reconnu&quot;</extracomment>
+        <translation>Tanınmayan biçim</translation>
+    </message>
+</context>
+<context>
+    <name>Dialog</name>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="26"/>
+        <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="29"/>
+        <source>dialog_confirm</source>
+        <extracomment>&quot;Confirmer&quot;</extracomment>
+        <translation>Onayla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="28"/>
+        <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="30"/>
+        <source>dialog_cancel</source>
+        <extracomment>&quot;Annuler&quot;</extracomment>
+        <translation>İptal</translation>
+    </message>
+</context>
+<context>
+    <name>DtmfPadPopup</name>
+    <message>
+        <source>call_action_show_dialer</source>
+        <extracomment>&quot;Pavé numérique&quot;</extracomment>
+        <translation>Tuş takımı</translation>
+    </message>
+    <message>
+        <source>close_numeric_pad_accessible_name</source>
+        <extracomment>&quot;Fermer le pavé numérique&quot;</extracomment>
+        <translation>Sayısal tuş takımını kapat</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_subtitle</source>
+        <extracomment>&quot;Tonalités envoyées à %1&quot;</extracomment>
+        <translation>%1 kişisine gönderilen tonlar</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_placeholder</source>
+        <extracomment>&quot;Composez un code…&quot;</extracomment>
+        <translation>Bir kod girin…</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_field_accessible_name</source>
+        <extracomment>&quot;Tonalités envoyées&quot;</extracomment>
+        <translation>Gönderilen tonlar</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_failed_accessible_description</source>
+        <extracomment>&quot;Non transmises : %1&quot;</extracomment>
+        <translation>İletilemedi: %1</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_failed_legend</source>
+        <extracomment>&quot;Les chiffres barrés en rouge n&apos;ont pas été transmis.&quot;</extracomment>
+        <translation>Kırmızı çizili rakamlar iletilemedi</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_call_paused_message</source>
+        <extracomment>&quot;Appel en pause : reprenez l&apos;appel pour envoyer des tonalités&quot;</extracomment>
+        <translation>Arama bekletildi: ton göndermek için aramayı devam ettirin</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_call_paused_by_remote_message</source>
+        <extracomment>&quot;Votre correspondant a mis l&apos;appel en pause : les tonalités ne peuvent pas être envoyées&quot;</extracomment>
+        <translation>Karşı taraf aramayı bekletti</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_waiting_media_message</source>
+        <extracomment>&quot;Tonalités pas encore disponibles&quot;</extracomment>
+        <translation>Tonlar henüz kullanılamıyor</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_resume_button</source>
+        <extracomment>&quot;Reprendre&quot;</extracomment>
+        <translation>Devam et</translation>
+    </message>
+    <message>
+        <source>call_action_resume_call</source>
+        <extracomment>&quot;Reprendre l&apos;appel&quot;</extracomment>
+        <translation>Aramayı devam ettir</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_star</source>
+        <extracomment>&quot;étoile&quot;</extracomment>
+        <translation>yıldız</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_key_hash</source>
+        <extracomment>&quot;dièse&quot;</extracomment>
+        <translation>kare</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_clear_accessible_name</source>
+        <extracomment>&quot;Effacer les tonalités affichées&quot;</extracomment>
+        <translation>Gösterilen tonları temizle</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_keyboard_inactive_hint</source>
+        <extracomment>&quot;Clavier inactif · Échap pour fermer&quot;</extracomment>
+        <translation>Klavye devre dışı · Kapatmak için Esc</translation>
+    </message>
+    <message>
+        <source>dtmf_pad_keyboard_hint</source>
+        <extracomment>&quot;Clavier actif · Échap pour fermer&quot;</extracomment>
+        <translation>Klavye aktif · Kapatmak için Esc</translation>
+    </message>
+</context>
+<context>
+    <name>EncryptionSettings</name>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="23"/>
+        <source>call_stats_media_encryption_title</source>
+        <extracomment>&quot;Encryption :&quot;</extracomment>
+        <translation>Şifreleme:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="36"/>
+        <source>call_stats_media_encryption</source>
+        <extracomment>Media encryption : %1</extracomment>
+        <translation>Medya şifrelemesi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="47"/>
+        <source>call_stats_zrtp_cipher_algo</source>
+        <extracomment>&quot;Algorithme de chiffrement : %1&quot;</extracomment>
+        <translation>Şifreleme algoritması: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="56"/>
+        <source>call_stats_zrtp_key_agreement_algo</source>
+        <extracomment>&quot;Algorithme d&apos;accord de clé : %1&quot;</extracomment>
+        <translation>Anahtar anlaşma algoritması: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="65"/>
+        <source>call_stats_zrtp_hash_algo</source>
+        <extracomment>&quot;Algorithme de hachage : %1&quot;</extracomment>
+        <translation>Hash algoritması: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="74"/>
+        <source>call_stats_zrtp_auth_tag_algo</source>
+        <extracomment>&quot;Algorithme d&apos;authentification : %1&quot;</extracomment>
+        <translation>Kimlik doğrulama algoritması: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="83"/>
+        <source>call_stats_zrtp_sas_algo</source>
+        <extracomment>&quot;Algorithme SAS : %1&quot;</extracomment>
+        <translation>SAS algoritması: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/EncryptionSettings.qml" line="99"/>
+        <source>call_zrtp_validation_button_label</source>
+        <extracomment>&quot;Validation chiffrement&quot;</extracomment>
+        <translation>Şifreleme doğrulaması</translation>
+    </message>
+</context>
+<context>
+    <name>EphemeralSettings</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <extracomment>&quot;Back&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="58"/>
+        <source>title</source>
+        <translation>Başlık</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="77"/>
+        <source>explanations</source>
+        <translation>Açıklamalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="22"/>
+        <source>one_minute</source>
+        <translation>1 dakika</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="23"/>
+        <source>one_hour</source>
+        <translation>1 saat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="24"/>
+        <source>one_day</source>
+        <translation>1 gün</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="25"/>
+        <source>one_week</source>
+        <translation>1 hafta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="26"/>
+        <source>disabled</source>
+        <translation>Devre dışı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="35"/>
+        <source>custom</source>
+        <translation>Özel </translation>
+    </message>
+</context>
+<context>
+    <name>EventLogCore</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="113"/>
+        <source>conference_created_event</source>
+        <translation>Konferans oluşturuldu</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="119"/>
+        <source>conference_created_terminated</source>
+        <translation>Konferans sonlandırıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="123"/>
+        <source>conference_participant_added_event</source>
+        <translation>Katılımcı eklendi</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="127"/>
+        <source>conference_participant_removed_event</source>
+        <translation>Katılımcı çıkarıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="164"/>
+        <source>conference_participant_set_admin_event</source>
+        <translation>Katılımcı yönetici yapıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="168"/>
+        <source>conference_participant_unset_admin_event</source>
+        <translation>Katılımcının yöneticiliği kaldırıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="136"/>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="138"/>
+        <source>conference_security_event</source>
+        <translation>Güvenlik olayı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="145"/>
+        <source>conference_ephemeral_message_enabled_event</source>
+        <translation>Geçici mesajlar etkinleştirildi</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="156"/>
+        <source>conference_ephemeral_message_disabled_event</source>
+        <translation>Geçici mesajlar devre dışı bırakıldı</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="160"/>
+        <source>conference_subject_changed_event</source>
+        <translation>Konferans konusu değiştirildi</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogCore.cpp" line="151"/>
+        <source>conference_ephemeral_message_lifetime_changed_event</source>
+        <translation>Geçici mesaj süresi değiştirildi</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="67"/>
+        <source>info_popup_reply_message_not_found_error</source>
+        <extracomment>Original message not found. It may have been deleted</extracomment>
+        <translation>Orijinal mesaj bulunamadı. Silinmiş olabilir</translation>
+    </message>
+</context>
+<context>
+    <name>FriendCore</name>
+    <message>
+        <location filename="../../core/friend/FriendCore.cpp" line="31"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="77"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="197"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="433"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="598"/>
+        <source>sip_address</source>
+        <extracomment>&quot;Adresse SIP&quot;</extracomment>
+        <translation>SIP adresi</translation>
+    </message>
+    <message>
+        <location filename="../../core/friend/FriendCore.cpp" line="33"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="85"/>
+        <location filename="../../core/friend/FriendCore.cpp" line="205"/>
+        <source>device_id</source>
+        <extracomment>&quot;Téléphone&quot;</extracomment>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location filename="../../core/friend/FriendCore.cpp" line="429"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../core/friend/FriendCore.cpp" line="431"/>
+        <source>information_popup_invalid_address_message</source>
+        <extracomment>&quot;Adresse invalide&quot;</extracomment>
+        <translation>Geçersiz adres</translation>
+    </message>
+</context>
+<context>
+    <name>GroupChatInfoParticipants</name>
+    <message>
+        <source>participant_options_accessible_name</source>
+        <extracomment>&quot;Options for %1&quot;</extracomment>
+        <translation>%1 seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="204"/>
+        <source>group_infos_manage_participants_title</source>
+        <extracomment>&quot;Gérer des participants&quot;</extracomment>
+        <translation>Katılımcıları yönet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="92"/>
+        <source>group_infos_participant_is_admin</source>
+        <translation>Yönetici</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="122"/>
+        <source>menu_see_existing_contact</source>
+        <extracomment>&quot;Show contact&quot;</extracomment>
+        <translation>Kişiyi göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="124"/>
+        <source>menu_add_address_to_contacts</source>
+        <extracomment>&quot;Add to contacts&quot;</extracomment>
+        <translation>Kişilere ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="141"/>
+        <source>group_infos_give_admin_rights</source>
+        <translation>Yönetici yetkisi ver</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="141"/>
+        <source>group_infos_remove_admin_rights</source>
+        <translation>Yönetici yetkisini kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="152"/>
+        <source>group_infos_copy_sip_address</source>
+        <translation>SIP adresini kopyala</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="172"/>
+        <source>group_infos_remove_participant</source>
+        <translation>Katılımcıyı çıkar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="179"/>
+        <source>group_infos_remove_participants_toast_title</source>
+        <translation>Katılımcı çıkarıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="180"/>
+        <source>group_infos_remove_participants_toast_message</source>
+        <translation>Katılımcı gruptan çıkarıldı</translation>
+    </message>
+</context>
+<context>
+    <name>GroupCreationFormLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="40"/>
+        <source>return_accessible_name</source>
+        <extracomment>Return</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="76"/>
+        <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="86"/>
+        <source>group_start_dialog_subject_hint</source>
+        <extracomment>&quot;Nom du groupe&quot;</extracomment>
+        <translation>Grup adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Container/GroupCreationFormLayout.qml" line="78"/>
+        <source>required</source>
+        <extracomment>&quot;Requis&quot;</extracomment>
+        <translation>Zorunlu</translation>
+    </message>
+</context>
+<context>
+    <name>HelpPage</name>
+    <message>
+        <source>help_advanced_title</source>
+        <extracomment>&quot;Advanced&quot;</extracomment>
+        <translation>Gelişmiş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
+        <source>back_previous_menu_accessible_name</source>
+        <extracomment>Back to previous menu</extracomment>
+        <translation>Önceki menüye dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="43"/>
+        <source>help_title</source>
+        <extracomment>&quot;Aide&quot;</extracomment>
+        <translation>Yardım</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="73"/>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="142"/>
+        <source>help_about_title</source>
+        <extracomment>&quot;À propos de %1&quot;</extracomment>
+        <translation>%1 hakkında</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="87"/>
+        <source>help_about_privacy_policy_title</source>
+        <extracomment>&quot;Règles de confidentialité&quot;</extracomment>
+        <translation>Gizlilik politikası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="89"/>
+        <source>help_about_privacy_policy_subtitle</source>
+        <extracomment>Quelles informations %1 collecte et utilise</extracomment>
+        <translation>%1 hangi bilgileri toplar ve kullanır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="101"/>
+        <source>help_about_version_title</source>
+        <extracomment>&quot;Version&quot;</extracomment>
+        <translation>Sürüm</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
+        <source>help_check_for_update_button_label</source>
+        <extracomment>Check update</extracomment>
+        <translation>Güncellemeleri kontrol et</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="117"/>
+        <source>help_about_gpl_licence_title</source>
+        <extracomment>&quot;Licences GPLv3&quot;</extracomment>
+        <translation>GPLv3 lisansları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="129"/>
+        <source>help_about_contribute_translations_title</source>
+        <extracomment>&quot;Contribuer à la traduction de %1&quot;</extracomment>
+        <translation>%1 çevirisine katkıda bulun</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="155"/>
+        <source>help_troubleshooting_title</source>
+        <extracomment>&quot;Dépannage&quot;</extracomment>
+        <translation>Sorun giderme</translation>
+    </message>
+</context>
+<context>
+    <name>LdapSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="17"/>
+        <source>settings_contacts_ldap_title</source>
+        <translation>LDAP dizinleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="18"/>
+        <source>settings_contacts_ldap_subtitle</source>
+        <translation>Kişileri aramak için LDAP dizinlerinizi ekleyin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="30"/>
+        <source>information_popup_success_title</source>
+        <translation>Başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="32"/>
+        <source>settings_contacts_ldap_success_toast</source>
+        <extracomment>&quot;L&apos;annuaire LDAP a été sauvegardé&quot;</extracomment>
+        <translation>LDAP dizini kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="36"/>
+        <source>settings_contacts_ldap_error_toast</source>
+        <extracomment>&quot;Une erreur s&apos;est produite, la configuration LDAP n&apos;a pas été sauvegardée !&quot;</extracomment>
+        <translation>Bir hata oluştu, yapılandırma kaydedilemedi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="34"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="56"/>
+        <source>settings_contacts_ldap_delete_confirmation_message</source>
+        <extracomment>&quot;Supprimer l&apos;annuaire LDAP ?&quot;</extracomment>
+        <translation>LDAP dizini silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="67"/>
+        <source>delete_ldap_server_accessible_name</source>
+        <extracomment>Delete LDAP server</extracomment>
+        <translation>LDAP sunucusunu sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="85"/>
+        <source>settings_contacts_ldap_server_url_title</source>
+        <extracomment>&quot;URL du serveur (ne peut être vide)&quot;</extracomment>
+        <translation>Sunucu URL’si (boş olamaz)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="93"/>
+        <source>settings_contacts_ldap_bind_dn_title</source>
+        <extracomment>&quot;Bind DN&quot;</extracomment>
+        <translation>Bind DN</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="102"/>
+        <source>settings_contacts_ldap_password_title</source>
+        <extracomment>&quot;Mot de passe&quot;</extracomment>
+        <translation>Parola</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="108"/>
+        <source>settings_contacts_ldap_use_tls_title</source>
+        <extracomment>&quot;Utiliser TLS&quot;</extracomment>
+        <translation>TLS kullan</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="116"/>
+        <source>settings_contacts_ldap_search_base_title</source>
+        <extracomment>&quot;Base de recherche (ne peut être vide)&quot;</extracomment>
+        <translation>Arama tabanı (boş olamaz)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="124"/>
+        <source>settings_contacts_ldap_search_filter_title</source>
+        <extracomment>&quot;Filtre&quot;</extracomment>
+        <translation>Filtre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="133"/>
+        <source>settings_contacts_ldap_max_results_title</source>
+        <extracomment>&quot;Nombre maximum de résultats&quot;</extracomment>
+        <translation>Maksimum sonuç sayısı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="142"/>
+        <source>settings_contacts_ldap_request_delay_title</source>
+        <extracomment>&quot;Délai entre 2 requêtes (en millisecondes)&quot;</extracomment>
+        <translation>İki istek arasındaki gecikme (milisaniye)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="150"/>
+        <source>settings_contacts_ldap_request_timeout_title</source>
+        <extracomment>&quot;Durée maximun (en secondes)&quot;</extracomment>
+        <translation>Maksimum süre (saniye)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="159"/>
+        <source>settings_contacts_ldap_min_characters_title</source>
+        <extracomment>&quot;Nombre minimum de caractères pour la requête&quot;</extracomment>
+        <translation>Arama için minimum karakter sayısı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="168"/>
+        <source>settings_contacts_ldap_name_attributes_title</source>
+        <extracomment>&quot;Attributs de nom&quot;</extracomment>
+        <translation>Ad öznitelikleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="176"/>
+        <source>settings_contacts_ldap_sip_attributes_title</source>
+        <extracomment>&quot;Attributs SIP&quot;</extracomment>
+        <translation>SIP öznitelikleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="184"/>
+        <source>settings_contacts_ldap_sip_domain_title</source>
+        <extracomment>&quot;Domaine SIP&quot;</extracomment>
+        <translation>SIP alanı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="190"/>
+        <source>settings_contacts_ldap_debug_title</source>
+        <extracomment>&quot;Débogage&quot;</extracomment>
+        <translation>Hata ayıklama</translation>
+    </message>
+</context>
+<context>
+    <name>LoadingPopup</name>
+    <message>
+        <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="42"/>
+        <source>cancel</source>
+        <translation>İptal</translation>
+    </message>
+</context>
+<context>
+    <name>LoginForm</name>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="17"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
+        <source>username</source>
+        <extracomment>Nom d&apos;utilisateur : username</extracomment>
+        <translation>Kullanıcı adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="36"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
+        <source>password</source>
+        <extracomment>Mot de passe</extracomment>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
+        <source>mandatory_field_accessible_name</source>
+        <extracomment>&quot;%1 mandatory&quot;</extracomment>
+        <translation>%1 zorunlu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="71"/>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="77"/>
+        <source>assistant_account_login</source>
+        <extracomment>&quot;Connexion&quot;</extracomment>
+        <translation>Giriş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="116"/>
+        <source>assistant_account_login_missing_username</source>
+        <extracomment>&quot;Veuillez saisir un nom d&apos;utilisateur&quot;</extracomment>
+        <translation>Lütfen bir kullanıcı adı girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="119"/>
+        <source>assistant_account_login_missing_password</source>
+        <extracomment>&quot;Veuillez saisir un mot de passe&quot;</extracomment>
+        <translation>Lütfen bir şifre girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Login/LoginForm.qml" line="133"/>
+        <source>assistant_forgotten_password</source>
+        <extracomment>&quot;Mot de passe oublié ?&quot;</extracomment>
+        <translation>Parolayı unuttunuz mu?</translation>
+    </message>
+</context>
+<context>
+    <name>LoginLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="77"/>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="141"/>
+        <source>help_about_title</source>
+        <extracomment>À propos de %1</extracomment>
+        <translation>%1 hakkında</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="87"/>
+        <source>help_about_privacy_policy_title</source>
+        <extracomment>&quot;Politique de confidentialité&quot;</extracomment>
+        <translation>Gizlilik politikası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="89"/>
+        <source>help_about_privacy_policy_link</source>
+        <extracomment>&quot;Visiter notre potilique de confidentialité&quot;</extracomment>
+        <translation>Gizlilik politikamızı ziyaret edin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="96"/>
+        <source>help_about_version_title</source>
+        <extracomment>&quot;Version&quot;</extracomment>
+        <translation>Sürüm</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="102"/>
+        <source>help_about_licence_title</source>
+        <extracomment>&quot;Licence&quot;</extracomment>
+        <translation>Lisans</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="108"/>
+        <source>help_about_copyright_title</source>
+        <extracomment>&quot;Copyright</extracomment>
+        <translation>Telif hakkı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="119"/>
+        <source>close</source>
+        <extracomment>&quot;Fermer&quot;</extracomment>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>LoginPage</name>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="31"/>
+        <source>return_accessible_name</source>
+        <extracomment>Return</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="45"/>
+        <source>assistant_account_login</source>
+        <extracomment>Connexion</extracomment>
+        <translation>Giriş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="63"/>
+        <source>assistant_no_account_yet</source>
+        <extracomment>&quot;Pas encore de compte ?&quot;</extracomment>
+        <translation>Henüz hesabınız yok mu?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="71"/>
+        <source>assistant_account_register</source>
+        <extracomment>&quot;S&apos;inscrire&quot;</extracomment>
+        <translation>Kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="97"/>
+        <source>assistant_login_third_party_sip_account_title</source>
+        <extracomment>&quot;Compte SIP tiers&quot;</extracomment>
+        <translation>Üçüncü taraf SIP hesabı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="106"/>
+        <source>assistant_login_remote_provisioning</source>
+        <extracomment>&quot;Configuration distante&quot;</extracomment>
+        <translation>Uzaktan yapılandırma</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="134"/>
+        <source>assistant_login_download_remote_config</source>
+        <extracomment>&quot;Télécharger une configuration distante&quot;</extracomment>
+        <translation>Uzaktan yapılandırma indir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="136"/>
+        <source>assistant_login_remote_provisioning_url</source>
+        <extracomment>&apos;Veuillez entrer le lien de configuration qui vous a été fourni :&apos;</extracomment>
+        <translation>Lütfen yapılandırma bağlantısını girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="138"/>
+        <source>cancel</source>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="143"/>
+        <source>validate</source>
+        <extracomment>&quot;Valider&quot;</extracomment>
+        <translation>Doğrula</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/LoginPage.qml" line="155"/>
+        <source>settings_advanced_remote_provisioning_url</source>
+        <extracomment>&apos;Lien de configuration distante&apos;</extracomment>
+        <translation>Uzaktan sağlama URL&apos;si</translation>
+    </message>
+    <message>
+        <location filename="../../core/login/LoginPage.cpp" line="86"/>
+        <source>default_account_connection_state_error_toast</source>
+        <extracomment>Erreur durant la connexion, veuillez vérifier vos paramètres</extracomment>
+        <translation>Bağlantı sırasında hata, lütfen parametrelerinizi kontrol edin</translation>
+    </message>
+</context>
+<context>
+    <name>MagicSearchList</name>
+    <message>
+        <location filename="../../core/search/MagicSearchList.cpp" line="145"/>
+        <source>device_id</source>
+        <translation>Telefon</translation>
+    </message>
+</context>
+<context>
+    <name>MainLayout</name>
+    <message>
+        <source>main_ongoing_call_banner_no_name</source>
+        <extracomment>&quot;Ongoing call&quot;</extracomment>
+        <translation>Devam eden arama</translation>
+    </message>
+    <message>
+        <source>main_ongoing_call_banner</source>
+        <extracomment>&quot;Ongoing call: %1&quot;</extracomment>
+        <translation>Devam eden arama: %1</translation>
+    </message>
+    <message>
+        <source>main_ongoing_meeting_banner</source>
+        <extracomment>&quot;Ongoing meeting: %1&quot;</extracomment>
+        <translation>Devam eden toplantı: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="356"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="363"/>
+        <source>main_auto_answer_enabled_accessible_name</source>
+        <extracomment>&quot;Réponse automatique aux appels activée&quot;</extracomment>
+        <translation>Otomatik arama yanıtlama etkin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="78"/>
+        <source>contact_editor_popup_abort_confirmation_title</source>
+        <extracomment>Modifications non enregistrées</extracomment>
+        <translation>Kaydedilmemiş değişiklikler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="80"/>
+        <source>contact_editor_popup_abort_confirmation_message</source>
+        <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
+        <translation>Kaydedilmemiş değişiklikleriniz var. Bu sayfadan çıkarsanız değişiklikleriniz kaybolacak. Devam etmeden önce değişikliklerinizi kaydetmek ister misiniz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="93"/>
+        <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
+        <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
+        <translation>Kaydetme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="95"/>
+        <source>contact_editor_dialog_abort_confirmation_save</source>
+        <extracomment>&quot;Enregistrer&quot;</extracomment>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="166"/>
+        <source>bottom_navigation_calls_label</source>
+        <extracomment>&quot;Appels&quot;</extracomment>
+        <translation>Aramalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="168"/>
+        <source>open_calls_page_accessible_name</source>
+        <extracomment>&quot;Open calls page&quot;</extracomment>
+        <translation>Aramalar sayfasını aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="174"/>
+        <source>bottom_navigation_contacts_label</source>
+        <extracomment>&quot;Contacts&quot;</extracomment>
+        <translation>Kişiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="176"/>
+        <source>open_contacts_page_accessible_name</source>
+        <extracomment>&quot;Open contacts page&quot;</extracomment>
+        <translation>Kişiler sayfasını aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="182"/>
+        <source>bottom_navigation_conversations_label</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation>Sohbetler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="184"/>
+        <source>open_conversations_page_accessible_name</source>
+        <extracomment>&quot;Open conversations page&quot;</extracomment>
+        <translation>Sohbetler sayfasını aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="191"/>
+        <source>bottom_navigation_meetings_label</source>
+        <extracomment>&quot;Réunions&quot;</extracomment>
+        <translation>Toplantılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="193"/>
+        <source>open_contact_page_accessible_name</source>
+        <extracomment>&quot;Open meetings page&quot;</extracomment>
+        <translation>Toplantılar sayfasını aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="256"/>
+        <source>searchbar_placeholder_text</source>
+        <extracomment>&quot;Rechercher un contact, appeler %1&quot;</extracomment>
+        <translation>Bir kişi ara, %1 ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="258"/>
+        <source>searchbar_placeholder_text_chat_feature_enabled</source>
+        <extracomment>&quot;ou envoyer un message …&quot;</extracomment>
+        <translation>veya mesaj gönder…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="341"/>
+        <source>searchbar_suggestions_accessible_name</source>
+        <extracomment>&quot;Searchbar suggestions&quot;</extracomment>
+        <translation>Arama çubuğu önerileri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="372"/>
+        <source>do_not_disturb_accessible_name</source>
+        <extracomment>&quot;Do not disturb&quot;</extracomment>
+        <translation>Rahatsız etme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="390"/>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="534"/>
+        <source>contact_presence_status_disable_do_not_disturb</source>
+        <extracomment>&quot;Désactiver ne pas déranger&quot;</extracomment>
+        <translation>Rahatsız etmeyin modunu kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="444"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="446"/>
+        <source>no_voicemail_uri_error_message</source>
+        <extracomment>&quot;L&apos;URI de messagerie vocale n&apos;est pas définie.&quot;</extracomment>
+        <translation>Sesli mesaj URI’si tanımlı değil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="459"/>
+        <source>account_list_accessible_name</source>
+        <extracomment>&quot;Account list&quot;</extracomment>
+        <translation>Hesap listesi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="497"/>
+        <source>application_options_accessible_name</source>
+        <extracomment>&quot;Application options&quot;</extracomment>
+        <translation>Uygulama seçenekleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="523"/>
+        <source>drawer_menu_manage_account</source>
+        <extracomment>Mon compte</extracomment>
+        <translation>Hesabım</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="536"/>
+        <source>contact_presence_status_enable_do_not_disturb</source>
+        <extracomment>&quot;Activer ne pas déranger&quot;</extracomment>
+        <translation>Rahatsız etmeyin modunu aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="551"/>
+        <source>settings_title</source>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="571"/>
+        <source>recordings_title</source>
+        <extracomment>&quot;Enregistrements&quot;</extracomment>
+        <translation>Kayıtlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="588"/>
+        <source>help_title</source>
+        <extracomment>&quot;Aide&quot;</extracomment>
+        <translation>Yardım</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="603"/>
+        <source>help_quit_title</source>
+        <extracomment>&quot;Quitter l&apos;application&quot;</extracomment>
+        <translation>Uygulamadan çık</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="608"/>
+        <source>quit_app_question</source>
+        <extracomment>&quot;Quitter %1 ?&quot;</extracomment>
+        <translation>%1 uygulamasından çıkılsın mı?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="631"/>
+        <source>drawer_menu_add_account</source>
+        <extracomment>&quot;Ajouter un compte&quot;</extracomment>
+        <translation>Hesap ekle</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="41"/>
+        <source>information_popup_connexion_succeed_title</source>
+        <extracomment>&quot;Connexion réussie&quot;</extracomment>
+        <translation>Bağlantı başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="43"/>
+        <source>information_popup_connexion_succeed_message</source>
+        <extracomment>&quot;Vous êtes connecté en mode %1&quot;</extracomment>
+        <translation>%1 modunda bağlandınız</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="45"/>
+        <source>interoperable</source>
+        <extracomment>interopérable</extracomment>
+        <translation>birlikte çalışabilir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="74"/>
+        <source>call_transfer_successful_toast_title</source>
+        <extracomment>&quot;Appel transféré&quot;</extracomment>
+        <translation>Arama aktarıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="76"/>
+        <source>call_transfer_successful_toast_message</source>
+        <extracomment>&quot;Votre correspondant a été transféré au contact sélectionné&quot;</extracomment>
+        <translation>Karşı taraf hedefe aktarıldı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="128"/>
+        <source>information_popup_success_title</source>
+        <translation>Başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="130"/>
+        <source>information_popup_changes_saved</source>
+        <extracomment>&quot;Les changements ont été sauvegardés&quot;</extracomment>
+        <translation>Değişiklikler kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="242"/>
+        <source>oidc_connection_waiting_message</source>
+        <extracomment>&quot;Trying to connect to single sign on on web page ...&quot;</extracomment>
+        <translation>Tek oturum açma sunucusuna bağlanmaya çalışılıyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="255"/>
+        <source>cancel</source>
+        <extracomment>Cancel</extracomment>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="292"/>
+        <source>captcha_validation_loading_message</source>
+        <extracomment>&quot;Veuillez valider le captcha sur la page web&quot;</extracomment>
+        <translation>Lütfen sayfadaki captcha’yı doğrulayın</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="300"/>
+        <source>assistant_register_error_title</source>
+        <extracomment>&quot;Erreur lors de la création&quot;</extracomment>
+        <translation>Oluşturma sırasında hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="320"/>
+        <source>assistant_register_success_title</source>
+        <extracomment>&quot;Compte créé&quot;</extracomment>
+        <translation>Hesap oluşturuldu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="322"/>
+        <source>assistant_register_success_message</source>
+        <extracomment>&quot;Le compte a été créé. Vous pouvez maintenant vous connecter&quot;</extracomment>
+        <translation>Hesap oluşturuldu. Artık giriş yapabilirsiniz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="327"/>
+        <source>assistant_register_error_code</source>
+        <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
+        <translation>Doğrulama kodunda hata</translation>
+    </message>
+</context>
+<context>
+    <name>ManageParticipants</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <extracomment>&quot;Back&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="30"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="32"/>
+        <source>info_popup_manage_participant_error_message</source>
+        <extracomment>Error while setting participants !</extracomment>
+        <translation>Katılımcılar ayarlanırken hata!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="35"/>
+        <source>manage_participant_waiting_popup</source>
+        <extracomment>Updating participants ...</extracomment>
+        <translation>Katılımcılar güncelleniyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="63"/>
+        <source>group_infos_manage_participants</source>
+        <translation>Katılımcıları yönet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="72"/>
+        <source>apply_button_text</source>
+        <extracomment>Apply</extracomment>
+        <translation>Uygula</translation>
+    </message>
+</context>
+<context>
+    <name>MeetingForm</name>
+    <message>
+        <source>meeting_description_accessible_name</source>
+        <extracomment>&quot;Description&quot;</extracomment>
+        <translation>Açıklama</translation>
+    </message>
+    <message>
+        <source>meeting_title_accessible_name</source>
+        <extracomment>&quot;Meeting title&quot;</extracomment>
+        <translation>Toplantı başlığı</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <extracomment>&quot;Remove participant %1&quot;</extracomment>
+        <translation>%1 katılımcıyı kaldır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="43"/>
+        <source>meeting_schedule_meeting_label</source>
+        <extracomment>&quot;Réunion&quot;</extracomment>
+        <translation>Toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="55"/>
+        <source>meeting_schedule_broadcast_label</source>
+        <extracomment>&quot;Webinar&quot;</extracomment>
+        <translation>Webinar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="78"/>
+        <source>meeting_schedule_subject_hint</source>
+        <extracomment>&quot;Ajouter un titre&quot;</extracomment>
+        <translation>Başlık ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="126"/>
+        <source>day_accessible_name</source>
+        <extracomment>Day</extracomment>
+        <translation>Gün</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="155"/>
+        <source>start_time_accessible_name</source>
+        <extracomment>Start time</extracomment>
+        <translation>Başlangıç saati</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="170"/>
+        <source>end_time_accessible_name</source>
+        <extracomment>End time</extracomment>
+        <translation>Bitiş saati</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="212"/>
+        <source>timezone_accessible_name</source>
+        <extracomment>Timezone</extracomment>
+        <translation>Saat dilimi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="234"/>
+        <source>meeting_schedule_description_hint</source>
+        <extracomment>&quot;Ajouter une description&quot;</extracomment>
+        <translation>Açıklama ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="285"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
+        <translation>Katılımcı ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="346"/>
+        <source>meeting_schedule_send_invitations_title</source>
+        <extracomment>&quot;Envoyer une invitation aux participants&quot;</extracomment>
+        <translation>Katılımcılara davet gönder</translation>
+    </message>
+</context>
+<context>
+    <name>MeetingListView</name>
+    <message>
+        <source>meeting_list_accessible_name</source>
+        <extracomment>&quot;Meetings&quot;</extracomment>
+        <translation>Toplantılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="306"/>
+        <source>meeting_info_cancelled</source>
+        <extracomment>&quot;Réunion annulée&quot;</extracomment>
+        <translation>Toplantı iptal edildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="330"/>
+        <source>meetings_list_no_meeting_for_today</source>
+        <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
+        <translation>Bugün toplantı yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="366"/>
+        <source>meeting_info_delete</source>
+        <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
+        <translation>Toplantıyı sil</translation>
+    </message>
+</context>
+<context>
+    <name>MeetingPage</name>
+    <message>
+        <source>meeting_call_address_accessible_name</source>
+        <extracomment>&quot;Call the meeting address&quot;</extracomment>
+        <translation>Toplantı adresini ara</translation>
+    </message>
+    <message>
+        <source>meeting_title_accessible_name</source>
+        <extracomment>&quot;Meeting title&quot;</extracomment>
+        <translation>Toplantı başlığı</translation>
+    </message>
+    <message>
+        <source>meeting_copy_address_accessible_name</source>
+        <extracomment>&quot;Copy the meeting address&quot;</extracomment>
+        <translation>Toplantı adresini kopyala</translation>
+    </message>
+    <message>
+        <source>meeting_options_accessible_name</source>
+        <extracomment>&quot;Meeting options&quot;</extracomment>
+        <translation>Toplantı seçenekleri</translation>
+    </message>
+    <message>
+        <source>meeting_edit_accessible_name</source>
+        <extracomment>&quot;Edit the meeting&quot;</extracomment>
+        <translation>Toplantıyı düzenle</translation>
+    </message>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <extracomment>&quot;Back&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <source>meeting_scroll_to_today_accessible_name</source>
+        <extracomment>&quot;Go to today&quot;</extracomment>
+        <translation>Bugüne git</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="18"/>
+        <source>meetings_add</source>
+        <extracomment>&quot;Créer une réunion&quot;</extracomment>
+        <translation>Toplantı oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="20"/>
+        <source>meetings_list_empty</source>
+        <extracomment>&quot;Aucune réunion&quot;</extracomment>
+        <translation>Toplantı yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="91"/>
+        <source>meeting_schedule_cancel_dialog_message</source>
+        <extracomment>&quot;Souhaitez-vous annuler cette réunion et envoyer une notification aux participants ?&quot;</extracomment>
+        <translation>Bu toplantıyı iptal edip silmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="93"/>
+        <source>meeting_schedule_delete_dialog_message</source>
+        <extracomment>Souhaitez-vous supprimer cette réunion ?</extracomment>
+        <translation>Bu toplantıyı silmek istiyor musunuz?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="106"/>
+        <source>meeting_schedule_cancel_and_delete_action</source>
+        <extracomment>&quot;Annuler et supprimer&quot;</extracomment>
+        <translation>İptal et ve sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="115"/>
+        <source>meeting_schedule_delete_only_action</source>
+        <extracomment>&quot;Supprimer seulement&quot;</extracomment>
+        <translation>Sadece sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="117"/>
+        <source>meeting_schedule_delete_action</source>
+        <extracomment>&quot;Supprimer&quot;</extracomment>
+        <translation>Sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="126"/>
+        <source>back_action</source>
+        <extracomment>Retour</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="169"/>
+        <source>meetings_list_title</source>
+        <extracomment>Réunions</extracomment>
+        <translation>Toplantılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="188"/>
+        <source>new_meeting_acccessibility_label</source>
+        <extracomment>&quot;New meeting&quot;</extracomment>
+        <translation>Yeni toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="216"/>
+        <source>meetings_search_hint</source>
+        <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
+        <translation>Toplantı ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="235"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>&quot;Aucun résultat…&quot;</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="237"/>
+        <source>meetings_empty_list</source>
+        <extracomment>&quot;Aucune réunion&quot;</extracomment>
+        <translation>Toplantı yok</translation>
+    </message>
+    <message>
+        <source>chat_list_title</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation type="obsolete">Conversations</translation>
+    </message>
+    <message>
+        <source>menu_mark_all_as_read</source>
+        <extracomment>&quot;mark all as read&quot;</extracomment>
+        <translation type="obsolete">Mark all as read</translation>
+    </message>
+    <message>
+        <source>chat_search_in_history</source>
+        <extracomment>&quot;Rechercher une conversation&quot;</extracomment>
+        <translation type="obsolete">Search for a chat</translation>
+    </message>
+    <message>
+        <source>chat_list_empty_history</source>
+        <extracomment>&quot;Aucune conversation dans votre historique&quot;</extracomment>
+        <translation type="obsolete">No conversation in history</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="312"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="373"/>
+        <source>meeting_schedule_title</source>
+        <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
+        <translation>Yeni toplantı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="323"/>
+        <source>create</source>
+        <translation>Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="330"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="334"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="385"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="488"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="491"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="542"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="332"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="489"/>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
+        <translation>Lütfen bir başlık girin ve katılımcı seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="336"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="492"/>
+        <source>meeting_schedule_duration_error_toast</source>
+        <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
+        <translation>Konferans bitiş saati başlangıçtan sonra olmalıdır</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="340"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="380"/>
+        <source>meeting_schedule_creation_in_progress</source>
+        <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
+        <translation>Toplantı oluşturuluyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="375"/>
+        <source>meeting_info_created_toast</source>
+        <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
+        <translation>Toplantı başarıyla planlandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="387"/>
+        <source>meeting_failed_to_schedule_toast</source>
+        <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
+        <translation>Toplantı oluşturulamadı!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="481"/>
+        <source>save</source>
+        <translation>Kaydet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="531"/>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="784"/>
+        <source>saved</source>
+        <extracomment>&quot;Enregistré&quot;</extracomment>
+        <translation>Kaydedildi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="533"/>
+        <source>meeting_info_updated_toast</source>
+        <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
+        <translation>Toplantı güncellendi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="538"/>
+        <source>meeting_schedule_edit_in_progress</source>
+        <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
+        <translation>Toplantı düzenleniyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="544"/>
+        <source>meeting_failed_to_edit_toast</source>
+        <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
+        <translation>Toplantı düzenlenemedi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="592"/>
+        <source>meeting_schedule_add_participants_title</source>
+        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
+        <translation>Katılımcı ekle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="606"/>
+        <source>meeting_schedule_add_participants_apply</source>
+        <translation>Uygula</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="616"/>
+        <source>group_call_participant_selected</source>
+        <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
+        <translation>
+            <numerusform>%1 selected participant</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="689"/>
+        <source>export_conference_info_ics_tooltip</source>
+        <extracomment>Export to ICS</extracomment>
+        <translation>ICS olarak dışa aktar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="723"/>
+        <source>meeting_info_delete</source>
+        <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
+        <translation>Toplantıyı sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="786"/>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
+        <translation>Toplantı adresi kopyalandı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="822"/>
+        <source>meeting_schedule_timezone_title</source>
+        <extracomment>&quot;Fuseau horaire&quot;</extracomment>
+        <translation>Saat dilimi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="905"/>
+        <source>meeting_info_organizer_label</source>
+        <extracomment>&quot;Organisateur&quot;</extracomment>
+        <translation>Organizatör</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="922"/>
+        <source>meeting_info_join_title</source>
+        <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
+        <translation>Toplantıya katıl</translation>
+    </message>
+</context>
+<context>
+    <name>MeetingsSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="16"/>
+        <source>settings_meetings_display_title</source>
+        <extracomment>&quot;Affichage&quot;</extracomment>
+        <translation>Görünüm</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="36"/>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="58"/>
+        <source>settings_meetings_default_layout_title</source>
+        <extracomment>&quot;Mode d’affichage par défaut&quot;</extracomment>
+        <translation>Varsayılan görünüm modu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="44"/>
+        <source>settings_meetings_default_layout_subtitle</source>
+        <extracomment>&quot;Le mode d’affichage des participants en réunions&quot;</extracomment>
+        <translation>Katılımcıların varsayılan görünüm modu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="63"/>
+        <source>settings_meetings_show_past_meetings_title</source>
+        <extracomment>Show past meetings</extracomment>
+        <translation>Geçmiş toplantıları göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="65"/>
+        <source>settings_meetings_show_past_meetings_subtitle</source>
+        <extracomment>Display past meetings in the meeting list</extracomment>
+        <translation>Toplantı listesinde geçmiş toplantıları göster</translation>
+    </message>
+</context>
+<context>
+    <name>MessageImdnStatusInfos</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageImdnStatusInfos.qml" line="12"/>
+        <source>message_details_status_title</source>
+        <extracomment>Message status</extracomment>
+        <translation>Mesaj durumu</translation>
+    </message>
+</context>
+<context>
+    <name>MessageReactionsInfos</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="13"/>
+        <source>message_details_reactions_title</source>
+        <extracomment>Reactions</extracomment>
+        <translation>Tepkiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="56"/>
+        <source>click_to_delete_reaction_info</source>
+        <extracomment>Click to delete</extracomment>
+        <translation>Silmek için tıkla</translation>
+    </message>
+</context>
+<context>
+    <name>MessageSharedFilesInfos</name>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="41"/>
+        <source>no_shared_medias</source>
+        <extracomment>No media</extracomment>
+        <translation>Medya yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/MessageSharedFilesInfos.qml" line="43"/>
+        <source>no_shared_documents</source>
+        <extracomment>No document</extracomment>
+        <translation>Belge yok</translation>
+    </message>
+</context>
+<context>
+    <name>MultimediaSettings</name>
+    <message>
+        <source>microphone_level_accessible_name</source>
+        <extracomment>&quot;Microphone level&quot;</extracomment>
+        <translation>Mikrofon seviyesi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="47"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="62"/>
+        <source>multimedia_settings_ringer_title</source>
+        <extracomment>Ringtone - Incoming calls</extracomment>
+        <translation>Zil sesi - Gelen aramalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="62"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="153"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
+        <source>choose_something_accessible_name</source>
+        <extracomment>Choose %1</extracomment>
+        <translation>%1 seç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="82"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="103"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="115"/>
+        <source>multimedia_settings_speaker_title</source>
+        <extracomment>&quot;Haut-parleurs&quot;</extracomment>
+        <translation>Hoparlörler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="115"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
+        <source>device_volume_accessible_name</source>
+        <extracomment>%1 volume</extracomment>
+        <translation>%1 ses seviyesi</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="132"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="153"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="165"/>
+        <source>multimedia_settings_microphone_title</source>
+        <extracomment>&quot;Microphone&quot;</extracomment>
+        <translation>Mikrofon</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="221"/>
+        <location filename="../../view/Control/Form/Settings/MultimediaSettings.qml" line="241"/>
+        <source>multimedia_settings_camera_title</source>
+        <extracomment>&quot;Caméra&quot;</extracomment>
+        <translation>Kamera</translation>
+    </message>
+</context>
+<context>
+    <name>NetworkSettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="15"/>
+        <source>settings_network_title</source>
+        <extracomment>&quot;Réseau&quot;</extracomment>
+        <translation>Ağ</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="32"/>
+        <source>settings_network_allow_ipv6</source>
+        <extracomment>&quot;Autoriser l&apos;IPv6&quot;</extracomment>
+        <translation>IPv6’ya izin ver</translation>
+    </message>
+</context>
+<context>
+    <name>NewCallForm</name>
+    <message>
+        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="24"/>
+        <source>call_transfer_active_calls_label</source>
+        <extracomment>&quot;Appels en cours&quot;</extracomment>
+        <translation>Devam eden aramalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Call/NewCallForm.qml" line="16"/>
+        <source>call_start_group_call_title</source>
+        <extracomment>Appel de groupe</extracomment>
+        <translation>Grup çağrısı</translation>
+    </message>
+</context>
+<context>
+    <name>NewChatForm</name>
+    <message>
+        <location filename="../../view/Page/Form/Chat/NewChatForm.qml" line="14"/>
+        <source>chat_start_group_chat_title</source>
+        <extracomment>Nouveau groupe</extracomment>
+        <translation>Yeni grup</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <source>info_popup_error_title</source>
+        <translation type="vanished">Error</translation>
+    </message>
+    <message>
+        <source>info_popup_error_creating_notification</source>
+        <translation type="vanished">Error creating notification</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
+        <source>incoming_call</source>
+        <translation>Gelen arama</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Kabul et</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>decline_button</source>
+        <translation>Reddet</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedCall</name>
+    <message>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="95"/>
+        <source>call_audio_incoming</source>
+        <extracomment>&quot;Appel entrant&quot;</extracomment>
+        <translation>Gelen çağrı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="118"/>
+        <source>dialog_accept</source>
+        <extracomment>&quot;Accepter&quot;</extracomment>
+        <translation>Kabul et</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="136"/>
+        <source>dialog_deny</source>
+        <extracomment>&quot;Refuser</extracomment>
+        <translation>Reddet</translation>
+    </message>
+</context>
+<context>
+    <name>Notifier</name>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="355"/>
+        <source>new_call_alert_accessible_name</source>
+        <extracomment>New call from %1</extracomment>
+        <translation>%1 kişisinden yeni arama</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="412"/>
+        <source>new_voice_message</source>
+        <extracomment>&apos;Voice message received!&apos; : message to warn the user in a notification for voice messages.</extracomment>
+        <translation>Sesli mesaj alındı!</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="413"/>
+        <source>new_file_message</source>
+        <translation>Yeni dosya</translation>
+    </message>
+    <message>
+        <source>new_conference_invitation</source>
+        <extracomment>&apos;Conference invitation received!&apos; : Notification about receiving an invitation to a conference.</extracomment>
+        <translation type="vanished">Conference invitation received !</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="443"/>
+        <source>new_chat_room_message</source>
+        <extracomment>&apos;New message received!&apos; Notification that warn the user of a new message.</extracomment>
+        <translation>Yeni mesaj alındı!</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="446"/>
+        <source>new_chat_room_messages</source>
+        <extracomment>&apos;New messages received!&apos; Notification that warn the user of new messages.</extracomment>
+        <translation>Yeni mesajlar alındı!</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/Notifier.cpp" line="481"/>
+        <source>new_message_alert_accessible_name</source>
+        <extracomment>New message on chatroom %1</extracomment>
+        <translation>%1 sohbetinde yeni mesaj</translation>
+    </message>
+</context>
+<context>
+    <name>NumericPad</name>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="173"/>
+        <source>numpad_longpress_accessible_name</source>
+        <extracomment>%1, long press for %2</extracomment>
+        <translation>%1, %2 için uzun bas</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="219"/>
+        <source>call_accessible_name</source>
+        <extracomment>Call</extracomment>
+        <translation>Ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="241"/>
+        <source>erase_accessible_name</source>
+        <extracomment>Erase</extracomment>
+        <translation>Sil</translation>
+    </message>
+</context>
+<context>
+    <name>NumericPadPopup</name>
+    <message>
+        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="60"/>
+        <source>numeric_pad_accessible_name</source>
+        <extracomment>&quot;Numeric Pad&quot;</extracomment>
+        <translation>Sayısal tuş takımı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/NumericPadPopup.qml" line="71"/>
+        <source>close_numeric_pad_accessible_name</source>
+        <extracomment>Close numeric pad</extracomment>
+        <translation>Sayısal tuş takımını kapat</translation>
+    </message>
+</context>
+<context>
+    <name>OIDCModel</name>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="61"/>
+        <source>OAuthHttpServerReplyHandler is not listening</source>
+        <translation>OAuth HTTP sunucusu dinlemiyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="126"/>
+        <location filename="../../model/auth/OIDCModel.cpp" line="294"/>
+        <source>oidc_authentication_timeout_message</source>
+        <extracomment>Timeout: Not authenticated</extracomment>
+        <translation>Zaman aşımı: Kimlik doğrulanamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="145"/>
+        <source>oidc_authentication_granted_message</source>
+        <extracomment>Authentication granted</extracomment>
+        <translation>Kimlik doğrulama başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="152"/>
+        <source>oidc_authentication_not_authenticated_message</source>
+        <extracomment>Not authenticated</extracomment>
+        <translation>Kimlik doğrulanamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="158"/>
+        <source>oidc_authentication_refresh_message</source>
+        <extracomment>Refreshing token</extracomment>
+        <translation>Jeton yenileniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="163"/>
+        <source>oidc_authentication_temporary_credentials_message</source>
+        <extracomment>Temporary credentials received</extracomment>
+        <translation>Geçici kimlik bilgileri alındı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="181"/>
+        <source>oidc_authentication_network_error</source>
+        <extracomment>Network error</extracomment>
+        <translation>Ağ hatası</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="185"/>
+        <source>oidc_authentication_server_error</source>
+        <extracomment>Server error</extracomment>
+        <translation>Sunucu hatası</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="189"/>
+        <source>oidc_authentication_token_not_found_error</source>
+        <extracomment>OAuth token not found</extracomment>
+        <translation>OAuth jetonu bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="193"/>
+        <source>oidc_authentication_token_secret_not_found_error</source>
+        <extracomment>OAuth token secret not found</extracomment>
+        <translation>OAuth jeton sırrı bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="197"/>
+        <source>oidc_authentication_callback_not_verified_error</source>
+        <extracomment>OAuth callback not verified</extracomment>
+        <translation>OAuth geri çağrısı doğrulanamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="209"/>
+        <source>oidc_authentication_request_auth_message</source>
+        <extracomment>Requesting authorization from browser</extracomment>
+        <translation>Tarayıcıdan yetkilendirme isteniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="244"/>
+        <source>oidc_authentication_no_token_found_error</source>
+        <translation>Jeton bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="256"/>
+        <source>oidc_authentication_request_token_message</source>
+        <extracomment>Requesting access token</extracomment>
+        <translation>Erişim jetonu isteniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="261"/>
+        <source>oidc_authentication_refresh_token_message</source>
+        <extracomment>Refreshing access token</extracomment>
+        <translation>Erişim jetonu yenileniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="266"/>
+        <source>oidc_authentication_request_authorization_message</source>
+        <extracomment>Requesting authorization</extracomment>
+        <translation>Yetkilendirme isteniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="271"/>
+        <source>oidc_authentication_request_temporary_credentials_message</source>
+        <extracomment>Requesting temporary credentials</extracomment>
+        <translation>Geçici kimlik bilgileri isteniyor</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="319"/>
+        <source>oidc_authentication_empty_reply_error</source>
+        <extracomment>OIDC reply is empty !</extracomment>
+        <translation>OIDC yanıtı boş!</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="329"/>
+        <source>oidc_authentication_no_auth_found_in_config_error</source>
+        <extracomment>No authorization endpoint found in OpenID configuration</extracomment>
+        <translation>OpenID yapılandırmasında yetkilendirme uç noktası bulunamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/auth/OIDCModel.cpp" line="344"/>
+        <source>oidc_authentication_no_token_found_in_config_error</source>
+        <extracomment>No token endpoint found in OpenID configuration</extracomment>
+        <translation>OpenID yapılandırmasında jeton uç noktası bulunamadı</translation>
+    </message>
+</context>
+<context>
+    <name>ParticipantListView</name>
+    <message>
+        <source>participant_list_accessible_name</source>
+        <extracomment>&quot;Participants&quot;</extracomment>
+        <translation>Katılımcılar</translation>
+    </message>
+    <message>
+        <source>remove_participant_accessible_name</source>
+        <extracomment>&quot;Remove participant %1&quot;</extracomment>
+        <translation>%1 katılımcıyı kaldır</translation>
+    </message>
+    <message>
+        <source>participant_admin_accessible_name</source>
+        <extracomment>&quot;%1 is administrator&quot;</extracomment>
+        <translation>%1 yönetici</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Participant/ParticipantListView.qml" line="82"/>
+        <source>meeting_participant_is_admin_label</source>
+        <extracomment>&quot;Admin&quot;</extracomment>
+        <translation>Yönetici</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Participant/ParticipantListView.qml" line="122"/>
+        <source>meeting_add_participants_title</source>
+        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
+        <translation>Katılımcı ekle</translation>
+    </message>
+</context>
+<context>
+    <name>PhoneNumberInput</name>
+    <message>
+        <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="62"/>
+        <source>prefix_phone_number_accessible_name</source>
+        <extracomment>%1 prefix</extracomment>
+        <translation>%1 ön ek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/PhoneNumberInput.qml" line="85"/>
+        <source>number_phone_number_accessible_name</source>
+        <extracomment>%1 number</extracomment>
+        <translation>%1 numara</translation>
+    </message>
+</context>
+<context>
+    <name>PopupButton</name>
+    <message>
+        <source>popup_button_default_accessible_name</source>
+        <extracomment>&quot;More options&quot;</extracomment>
+        <translation>Daha fazla seçenek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
+        <source>close_popup_panel_accessible_name</source>
+        <extracomment>&quot;Close %1 popup&quot;</extracomment>
+        <translation>%1 açılır penceresini kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Button/PopupButton.qml" line="21"/>
+        <source>open_popup_panel_accessible_name</source>
+        <extracomment>&quot;Open %1&quot; popup</extracomment>
+        <translation>%1 açılır penceresini aç</translation>
+    </message>
+</context>
+<context>
+    <name>Presence</name>
+    <message>
+        <source>presence_reset_accessible_name</source>
+        <extracomment>&quot;Back to automatic status&quot;</extracomment>
+        <translation>Otomatik duruma dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="30"/>
+        <source>contact_presence_reset_status</source>
+        <translation>Durumu sıfırla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="67"/>
+        <source>contact_presence_button_set_custom_status</source>
+        <translation>Özel durum ayarla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="81"/>
+        <source>contact_presence_button_edit_custom_status</source>
+        <translation>Özel durumu düzenle</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="89"/>
+        <source>contact_presence_button_delete_custom_status</source>
+        <translation>Özel durumu sil</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
+        <source>contact_presence_custom_status</source>
+        <translation>Özel durum</translation>
+    </message>
+</context>
+<context>
+    <name>PresenceNoteLayout</name>
+    <message>
+        <location filename="../../view/Control/Container/Contact/PresenceNoteLayout.qml" line="41"/>
+        <source>contact_presence_note_title</source>
+        <translation>Not</translation>
+    </message>
+</context>
+<context>
+    <name>PresenceSetCustomStatus</name>
+    <message>
+        <source>presence_custom_status_accessible_name</source>
+        <extracomment>&quot;Status message&quot;</extracomment>
+        <translation>Durum mesajı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="17"/>
+        <source>contact_presence_button_set_custom_status_title</source>
+        <translation>Özel durum ayarla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="71"/>
+        <source>contact_presence_button_save_custom_status</source>
+        <translation>Özel durumu kaydet</translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="63"/>
+        <source>media_encryption_dtls</source>
+        <translation>DTLS</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="65"/>
+        <source>media_encryption_none</source>
+        <translation>Yok</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="67"/>
+        <source>media_encryption_srtp</source>
+        <translation>SRTP</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="70"/>
+        <source>media_encryption_post_quantum</source>
+        <extracomment>&quot;ZRTP - Post quantique&quot;</extracomment>
+        <translation>ZRTP - Post kuantum</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="126"/>
+        <source>message_state_idle</source>
+        <extracomment>&quot;idle&quot;</extracomment>
+        <translation>beklemede</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="129"/>
+        <source>message_state_in_progress</source>
+        <extracomment>&quot;delivery in progress&quot;</extracomment>
+        <translation>teslim ediliyor</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="132"/>
+        <source>message_state_delivered</source>
+        <extracomment>sent</extracomment>
+        <translation>gönderildi</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="135"/>
+        <source>message_state_not_delivered</source>
+        <extracomment>error</extracomment>
+        <translation>hata</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="138"/>
+        <source>message_state_file_transfer_error</source>
+        <extracomment>cannot get file from server</extracomment>
+        <translation>dosya sunucudan alınamadı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="141"/>
+        <source>message_state_file_transfer_done</source>
+        <extracomment>file transfer has been completed successfully</extracomment>
+        <translation>dosya aktarımı başarıyla tamamlandı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="144"/>
+        <source>message_state_delivered_to_user</source>
+        <extracomment>received</extracomment>
+        <translation>alındı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="147"/>
+        <source>message_state_displayed</source>
+        <extracomment>read</extracomment>
+        <translation>okundu</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="150"/>
+        <source>message_state_file_transfer__in_progress</source>
+        <extracomment>file transfer in progress</extracomment>
+        <translation>dosya aktarımı devam ediyor</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="153"/>
+        <source>message_state_pending_delivery</source>
+        <extracomment>pending delivery</extracomment>
+        <translation>teslimat bekleniyor</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="156"/>
+        <source>message_state_file_transfer_cancelling</source>
+        <extracomment>file transfer canceled</extracomment>
+        <translation>dosya aktarımı iptal edildi</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="246"/>
+        <source>incoming</source>
+        <extracomment>&quot;Entrant&quot;</extracomment>
+        <translation>Gelen</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="249"/>
+        <source>outgoing</source>
+        <extracomment>&quot;Sortant&quot;</extracomment>
+        <translation>Giden</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="275"/>
+        <source>conference_layout_active_speaker</source>
+        <extracomment>&quot;Participant actif&quot;</extracomment>
+        <translation>Aktif konuşmacı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="277"/>
+        <source>conference_layout_grid</source>
+        <extracomment>&quot;Mosaïque&quot;</extracomment>
+        <translation>Izgara</translation>
+    </message>
+    <message>
+        <location filename="../../tool/LinphoneEnums.cpp" line="279"/>
+        <source>conference_layout_audio_only</source>
+        <extracomment>&quot;Audio uniquement&quot;</extracomment>
+        <translation>Sadece ses</translation>
+    </message>
+</context>
+<context>
+    <name>RecordListView</name>
+    <message>
+        <source>meeting_info_cancelled</source>
+        <extracomment>&quot;Réunion annulée&quot;</extracomment>
+        <translation type="vanished">Meeting canceled</translation>
+    </message>
+    <message>
+        <source>meetings_list_no_meeting_for_today</source>
+        <extracomment>&quot;Aucune réunion aujourd&apos;hui&quot;</extracomment>
+        <translation type="vanished">No meeting for today</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="23"/>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="141"/>
+        <source>record_list_empty</source>
+        <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
+        <translation>Kayıt yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="103"/>
+        <source>record_list_title</source>
+        <extracomment>&quot;Records&quot;</extracomment>
+        <translation>Kayıtlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="116"/>
+        <source>record_list_search_hint</source>
+        <extracomment>&quot;Rechercher un enregistrement&quot;</extracomment>
+        <translation>Kayıt ara</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="197"/>
+        <source>back_previous_menu_accessible_name</source>
+        <extracomment>Back to previous menu</extracomment>
+        <translation>Önceki menüye dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="243"/>
+        <source>record_export_accessible_name</source>
+        <extracomment>Export the recording</extracomment>
+        <translation>Kaydı dışa aktar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="258"/>
+        <source>record_delete_confirmation_message</source>
+        <extracomment>&quot;Supprimer cet enregistrement ?&quot;</extracomment>
+        <translation>Bu kayıt silinsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="270"/>
+        <source>record_delete_accessible_name</source>
+        <extracomment>Delete the recording</extracomment>
+        <translation>Kaydı sil</translation>
+    </message>
+    <message>
+        <source>meetings_search_hint</source>
+        <extracomment>&quot;Rechercher une réunion&quot;</extracomment>
+        <translation type="vanished">Find meeting</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="139"/>
+        <source>list_filter_no_result_found</source>
+        <extracomment>&quot;Aucun résultat…&quot;</extracomment>
+        <translation>Sonuç bulunamadı…</translation>
+    </message>
+    <message>
+        <source>meetings_empty_list</source>
+        <extracomment>&quot;Aucun enregistrement&quot;</extracomment>
+        <translation type="vanished">No meeting</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_title</source>
+        <extracomment>&quot;Nouvelle réunion&quot;</extracomment>
+        <translation type="vanished">New meeting</translation>
+    </message>
+    <message>
+        <source>create</source>
+        <translation type="vanished">Create</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="65"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_mandatory_field_not_filled_toast</source>
+        <extracomment>Veuillez saisir un titre et sélectionner au moins un participant</extracomment>
+        <translation type="vanished">Please fill the title and select at least one participant</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_duration_error_toast</source>
+        <extracomment>&quot;La fin de la conférence doit être plus récente que son début&quot;</extracomment>
+        <translation type="vanished">The end of the conference must be more recent than its beginning</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_creation_in_progress</source>
+        <extracomment>&quot;Création de la réunion en cours …&quot;</extracomment>
+        <translation type="vanished">Creation in progress…</translation>
+    </message>
+    <message>
+        <source>meeting_info_created_toast</source>
+        <extracomment>&quot;Réunion planifiée avec succès&quot;</extracomment>
+        <translation type="vanished">Meeting successfully created</translation>
+    </message>
+    <message>
+        <source>meeting_failed_to_schedule_toast</source>
+        <extracomment>&quot;Échec de création de la réunion !&quot;</extracomment>
+        <translation type="vanished">Failed to create meeting!</translation>
+    </message>
+    <message>
+        <source>save</source>
+        <translation type="vanished">Save</translation>
+    </message>
+    <message>
+        <source>saved</source>
+        <extracomment>&quot;Enregistré&quot;</extracomment>
+        <translation type="vanished">Saved</translation>
+    </message>
+    <message>
+        <source>meeting_info_updated_toast</source>
+        <extracomment>&quot;Réunion mise à jour&quot;</extracomment>
+        <translation type="vanished">Meeting updated</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_edit_in_progress</source>
+        <extracomment>&quot;Modification de la réunion en cours…&quot;</extracomment>
+        <translation type="vanished">Meeting update in progress…</translation>
+    </message>
+    <message>
+        <source>meeting_failed_to_edit_toast</source>
+        <extracomment>&quot;Échec de la modification de la réunion !&quot;</extracomment>
+        <translation type="vanished">Failed to update meeting !</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_add_participants_title</source>
+        <extracomment>&quot;Ajouter des participants&quot;</extracomment>
+        <translation type="vanished">Add participants</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_add_participants_apply</source>
+        <translation type="vanished">Apply</translation>
+    </message>
+    <message numerus="yes">
+        <source>group_call_participant_selected</source>
+        <extracomment>&quot;%n participant(s) sélectionné(s)&quot;</extracomment>
+        <translation type="vanished">
+            <numerusform>%1 selected participant</numerusform>
+            <numerusform>%1 selected participants</numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>meeting_info_delete</source>
+        <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
+        <translation type="vanished">Delete meeting</translation>
+    </message>
+    <message>
+        <source>meeting_address_copied_to_clipboard_toast</source>
+        <extracomment>&quot;Adresse de la réunion copiée&quot;</extracomment>
+        <translation type="vanished">Meeting URI copied</translation>
+    </message>
+    <message>
+        <source>meeting_schedule_timezone_title</source>
+        <extracomment>&quot;Fuseau horaire&quot;</extracomment>
+        <translation type="vanished">Timezone</translation>
+    </message>
+    <message>
+        <source>meeting_info_organizer_label</source>
+        <extracomment>&quot;Organisateur&quot;</extracomment>
+        <translation type="vanished">Organizer</translation>
+    </message>
+    <message>
+        <source>meeting_info_join_title</source>
+        <extracomment>&quot;Rejoindre la réunion&quot;</extracomment>
+        <translation type="vanished">Join meeting</translation>
+    </message>
+</context>
+<context>
+    <name>RegisterCheckingPage</name>
+    <message>
+        <source>register_code_digit_accessible_name</source>
+        <extracomment>&quot;Code digit %1 of %2&quot;</extracomment>
+        <translation>%2 kodunun %1. hanesi</translation>
+    </message>
+    <message>
+        <source>return_accessible_name</source>
+        <extracomment>&quot;Return&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="45"/>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="82"/>
+        <source>email</source>
+        <extracomment>&quot;email&quot;</extracomment>
+        <translation>e-posta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="47"/>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="82"/>
+        <source>phone_number</source>
+        <extracomment>&quot;numéro de téléphone&quot;</extracomment>
+        <translation>telefon numarası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="49"/>
+        <source>confirm_register_title</source>
+        <extracomment>&quot;Inscription | Confirmer votre %1&quot;</extracomment>
+        <translation>Kayıt | %1 doğrulayın</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="84"/>
+        <source>assistant_account_creation_confirmation_explanation</source>
+        <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2 &lt;br&gt;Merci de le saisir ci-dessous</extracomment>
+        <translation>Size bir doğrulama kodu gönderdik</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="160"/>
+        <source>assistant_account_creation_confirmation_did_not_receive_code</source>
+        <extracomment>&quot;Vous n&apos;avez pas reçu le code ?&quot;</extracomment>
+        <translation>Kodu almadınız mı?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="168"/>
+        <source>assistant_account_creation_confirmation_resend_code</source>
+        <extracomment>&quot;Renvoyer un code&quot;</extracomment>
+        <translation>Kodu tekrar gönder</translation>
+    </message>
+</context>
+<context>
+    <name>RegisterPage</name>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="21"/>
+        <source>phone_number_validation_not_available_title</source>
+        <extracomment>Phone number validation not available</extracomment>
+        <translation>Telefon numarası doğrulaması kullanılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="23"/>
+        <source>phone_number_validation_not_available_text</source>
+        <extracomment>Phone number validation is not available, please use email account creation process</extracomment>
+        <translation>Telefon numarası doğrulaması şu anda kullanılamıyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="25"/>
+        <source>register_with_email_button</source>
+        <extracomment>Register with an email</extracomment>
+        <translation>E-posta ile kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="64"/>
+        <source>return_accessible_name</source>
+        <extracomment>Return</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="76"/>
+        <source>assistant_account_register</source>
+        <extracomment>&quot;Inscription</extracomment>
+        <translation>Kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="95"/>
+        <source>assistant_already_have_an_account</source>
+        <translation>Zaten bir hesabınız var mı?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="103"/>
+        <source>assistant_account_login</source>
+        <translation>Giriş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="125"/>
+        <source>assistant_account_register_with_phone_number</source>
+        <translation>Telefon numarası ile kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="127"/>
+        <source>assistant_account_register_with_email</source>
+        <translation>E-posta ile kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="156"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="165"/>
+        <source>username</source>
+        <translation>Kullanıcı adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="165"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="200"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="214"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="238"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
+        <source>mandatory_field_accessible_name</source>
+        <extracomment>&quot;%1 mandatory&quot;</extracomment>
+        <translation>%1 zorunlu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="176"/>
+        <source>domain</source>
+        <translation>Alan adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="194"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="197"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="200"/>
+        <source>phone_number</source>
+        <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
+        <translation>telefon numarası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="206"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="214"/>
+        <source>email</source>
+        <translation>e-posta</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="228"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="238"/>
+        <source>password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="245"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="254"/>
+        <source>assistant_account_register_password_confirmation</source>
+        <extracomment>&quot;Confirmation mot de passe&quot;</extracomment>
+        <translation>Parola onayı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="290"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
+        <source>assistant_dialog_cgu_and_privacy_policy_message</source>
+        <extracomment>&quot;J&apos;accepte les %1 et la %2&quot;</extracomment>
+        <translation>%1 ve %2 kabul ediyorum</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="292"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
+        <source>assistant_dialog_general_terms_label</source>
+        <extracomment>&quot;conditions d&apos;utilisation&quot;</extracomment>
+        <translation>kullanım koşulları</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="294"/>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="297"/>
+        <source>assistant_dialog_privacy_policy_label</source>
+        <extracomment>&quot;politique de confidentialité&quot;</extracomment>
+        <translation>gizlilik politikası</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="329"/>
+        <source>assistant_account_create</source>
+        <extracomment>&quot;Créer&quot;</extracomment>
+        <translation>Oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="336"/>
+        <source>assistant_account_create_missing_username_error</source>
+        <extracomment>&quot;Veuillez entrer un nom d&apos;utilisateur&quot;</extracomment>
+        <translation>Lütfen bir kullanıcı adı girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="341"/>
+        <source>assistant_account_create_missing_password_error</source>
+        <extracomment>&quot;Veuillez entrer un mot de passe&quot;</extracomment>
+        <translation>Lütfen bir parola girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="346"/>
+        <source>assistant_account_create_confirm_password_error</source>
+        <extracomment>&quot;Les mots de passe sont différents&quot;</extracomment>
+        <translation>Parolalar eşleşmiyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="351"/>
+        <source>assistant_account_create_missing_number_error</source>
+        <extracomment>&quot;Veuillez entrer un numéro de téléphone&quot;</extracomment>
+        <translation>Lütfen bir telefon numarası girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="356"/>
+        <source>assistant_account_create_missing_email_error</source>
+        <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
+        <translation>Lütfen bir e-posta girin</translation>
+    </message>
+</context>
+<context>
+    <name>SIPLoginPage</name>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="33"/>
+        <source>return_accessible_name</source>
+        <extracomment>Return</extracomment>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="44"/>
+        <source>assistant_login_third_party_sip_account_title</source>
+        <extracomment>Compte SIP tiers</extracomment>
+        <translation>Üçüncü taraf SIP hesabı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="62"/>
+        <source>assistant_no_account_yet</source>
+        <extracomment>Pas encore de compte ?</extracomment>
+        <translation>Henüz hesabınız yok mu?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="71"/>
+        <source>assistant_account_register</source>
+        <extracomment>S&apos;inscrire</extracomment>
+        <translation>Kaydol</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="110"/>
+        <source>Certaines fonctionnalités telles que les conversations de groupe, les vidéo-conférences, etc… nécessitent un compte %1.
+
+Ces fonctionnalités seront masquées si vous utilisez un compte SIP tiers.
+
+Pour les activer dans un projet commercial, merci de nous contacter.</source>
+        <translation>Grup sohbetleri, video konferanslar vb. bazı özellikler %1 hesabı gerektirir.
+
+Üçüncü taraf bir SIP hesabı kullanıyorsanız bu özellikler gizlenecektir.
+
+Ticari bir projede bunları etkinleştirmek için lütfen bizimle iletişime geçin.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="133"/>
+        <source>assistant_third_party_sip_account_create_linphone_account</source>
+        <extracomment>&quot;Créer un compte linphone&quot;</extracomment>
+        <translation>Linphone hesabı oluştur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="145"/>
+        <source>assistant_third_party_sip_account_warning_ok</source>
+        <extracomment>&quot;Je comprends&quot;</extracomment>
+        <translation>Anladım</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="190"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
+        <source>username</source>
+        <extracomment>&quot;Nom d&apos;utilisateur&quot;</extracomment>
+        <translation>Kullanıcı adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="216"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
+        <source>mandatory_field_accessible_name</source>
+        <extracomment>&quot;%1 mandatory&quot;</extracomment>
+        <translation>%1 zorunlu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="216"/>
+        <source>password</source>
+        <translation>Şifre</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="222"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="237"/>
+        <source>sip_address_domain</source>
+        <extracomment>&quot;Domaine&quot;</extracomment>
+        <translation>Alan adı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="224"/>
+        <source>sip_address_domain_tooltip</source>
+        <extracomment>&quot;Domaine de votre identité SIP (ex: sip.example.com)&quot;</extracomment>
+        <translation>SIP kimliğinizin alan adı (örn: sip.linphone.org)</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="248"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="255"/>
+        <source>sip_address_display_name</source>
+        <extracomment>Nom d&apos;affichage</extracomment>
+        <translation>Görünen ad</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="260"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="279"/>
+        <source>transport</source>
+        <extracomment>&quot;Transport&quot;</extracomment>
+        <translation>Taşıma</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="301"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="306"/>
+        <source>assistant_account_login</source>
+        <translation>Giriş</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="357"/>
+        <source>assistant_account_login_missing_username</source>
+        <translation>Lütfen bir kullanıcı adı girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="359"/>
+        <source>assistant_account_login_missing_password</source>
+        <translation>Lütfen bir şifre girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="362"/>
+        <source>assistant_account_login_missing_domain</source>
+        <extracomment>&quot;Veuillez saisir un nom de domaine</extracomment>
+        <translation>Lütfen bir alan adı girin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="385"/>
+        <source>login_advanced_parameters_label</source>
+        <extracomment>Advanced parameters</extracomment>
+        <translation>Gelişmiş parametreler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="419"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="426"/>
+        <source>login_proxy_server_url</source>
+        <extracomment>&quot;Outbound SIP Proxy URI&quot;</extracomment>
+        <translation>Giden SIP Proxy URI</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="421"/>
+        <source>login_proxy_server_url_tooltip</source>
+        <extracomment>&quot;If this field is filled, the outbound proxy will be enabled automatically. Leave it empty to disable it.&quot;</extracomment>
+        <translation>Bu alan doldurulursa giden proxy otomatik olarak etkinleştirilir. Devre dışı bırakmak için boş bırakın.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="406"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="411"/>
+        <source>login_registrar_uri</source>
+        <extracomment>&quot;Registrar URI&quot;</extracomment>
+        <translation>Registrar URI</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="393"/>
+        <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="398"/>
+        <source>login_id</source>
+        <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
+        <translation>Kimlik doğrulama kimliği (farklıysa)</translation>
+    </message>
+</context>
+<context>
+    <name>ScreencastSettings</name>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="24"/>
+        <source>screencast_settings_choose_window_text</source>
+        <extracomment>&quot;Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants&quot;</extracomment>
+        <translation>Lütfen paylaşılacak ekranı veya pencereyi seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="34"/>
+        <source>screencast_settings_all_screen_label</source>
+        <extracomment>&quot;Ecran entier&quot;</extracomment>
+        <translation>Tüm ekran</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="36"/>
+        <source>screencast_settings_one_window_label</source>
+        <extracomment>&quot;Fenêtre&quot;</extracomment>
+        <translation>Pencere</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="94"/>
+        <source>screencast_settings_screen</source>
+        <extracomment>&quot;Ecran %1&quot;</extracomment>
+        <translation>Ekran %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="179"/>
+        <source>stop</source>
+        <extracomment>&quot;Stop</extracomment>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Form/Settings/ScreencastSettings.qml" line="181"/>
+        <source>share</source>
+        <extracomment>&quot;Partager&quot;</extracomment>
+        <translation>Paylaş</translation>
+    </message>
+</context>
+<context>
+    <name>SearchBar</name>
+    <message>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="79"/>
+        <source>search_bar_accessible_name</source>
+        <extracomment>Search bar : %1</extracomment>
+        <translation>Arama çubuğu: %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="133"/>
+        <source>open_dialer_acccessibility_label</source>
+        <extracomment>&quot;Open dialer&quot;</extracomment>
+        <translation>Tuş takımını aç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/SearchBar.qml" line="153"/>
+        <source>clear_text_input_acccessibility_label</source>
+        <extracomment>&quot;Clear text input&quot;</extracomment>
+        <translation>Metin girişini temizle</translation>
+    </message>
+</context>
+<context>
+    <name>SecurityModePage</name>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="23"/>
+        <source>manage_account_choose_mode_title</source>
+        <extracomment>&quot;Choisir votre mode&quot;</extracomment>
+        <translation>Modunuzu seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="31"/>
+        <source>manage_account_choose_mode_message</source>
+        <extracomment>&quot;Vous pourrez changer de mode plus tard.&quot;</extracomment>
+        <translation>Daha sonra modu değiştirebilirsiniz.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="51"/>
+        <source>manage_account_e2e_encrypted_mode_default_title</source>
+        <extracomment>&quot;Chiffrement de bout en bout&quot;</extracomment>
+        <translation>Uçtan uca şifreleme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="53"/>
+        <source>manage_account_e2e_encrypted_mode_default_summary</source>
+        <extracomment>&quot;Ce mode vous garanti la confidentialité de tous vos échanges. Notre technologie de chiffrement de bout en bout assure un niveau de sécurité maximal pour tous vos échanges.&quot;</extracomment>
+        <translation>Bu mod gizliliğinizi garanti eder</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="55"/>
+        <source>manage_account_e2e_encrypted_mode_interoperable_title</source>
+        <extracomment>&quot;Interoperable&quot;</extracomment>
+        <translation>Birlikte çalışabilir</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="57"/>
+        <source>manage_account_e2e_encrypted_mode_interoperable_summary</source>
+        <extracomment>&quot;Ce mode vous permet de profiter de toute les fonctionnalités de Linphone, toute en restant interopérable avec n’importe qu’elle autre service SIP.&quot;</extracomment>
+        <translation>Bu mod tüm özelliklerden yararlanmanızı sağlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="77"/>
+        <source>dialog_continue</source>
+        <extracomment>&quot;Continuer&quot;</extracomment>
+        <translation>Devam et</translation>
+    </message>
+</context>
+<context>
+    <name>SecuritySettingsLayout</name>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/SecuritySettingsLayout.qml" line="29"/>
+        <source>settings_security_enable_vfs_title</source>
+        <extracomment>&quot;Chiffrer tous les fichiers&quot;</extracomment>
+        <translation>Tüm dosyaları şifrele</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/SecuritySettingsLayout.qml" line="31"/>
+        <source>settings_security_enable_vfs_subtitle</source>
+        <extracomment>&quot;Attention, vous ne pourrez pas revenir en arrière !&quot;</extracomment>
+        <translation>Dikkat, bu işlemden sonra geri dönüş mümkün olmayabilir</translation>
+    </message>
+</context>
+<context>
+    <name>SelectedChatView</name>
+    <message>
+        <source>chat_forward_search_accessible_name</source>
+        <extracomment>&quot;Forward to&quot;</extracomment>
+        <translation>Şuraya ilet</translation>
+    </message>
+    <message>
+        <source>chat_close_details_accessible_name</source>
+        <extracomment>&quot;Close the details&quot;</extracomment>
+        <translation>Ayrıntıları kapat</translation>
+    </message>
+    <message>
+        <source>chat_remove_attachment_accessible_name</source>
+        <extracomment>&quot;Remove %1&quot;</extracomment>
+        <translation>%1 kaldır</translation>
+    </message>
+    <message>
+        <source>chat_cancel_composer_accessible_name</source>
+        <extracomment>&quot;Cancel&quot;</extracomment>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <source>chat_search_close_accessible_name</source>
+        <extracomment>&quot;Close the search&quot;</extracomment>
+        <translation>Aramayı kapat</translation>
+    </message>
+    <message>
+        <source>chat_search_next_accessible_name</source>
+        <extracomment>&quot;Next result&quot;</extracomment>
+        <translation>Sonraki sonuç</translation>
+    </message>
+    <message>
+        <source>chat_search_previous_accessible_name</source>
+        <extracomment>&quot;Previous result&quot;</extracomment>
+        <translation>Önceki sonuç</translation>
+    </message>
+    <message>
+        <source>chat_details_accessible_name</source>
+        <extracomment>&quot;Conversation details&quot;</extracomment>
+        <translation>Sohbet ayrıntıları</translation>
+    </message>
+    <message>
+        <source>chat_video_call_accessible_name</source>
+        <extracomment>&quot;Video call&quot;</extracomment>
+        <translation>Görüntülü arama</translation>
+    </message>
+    <message>
+        <source>chat_search_in_history_accessible_name</source>
+        <extracomment>&quot;Search in the conversation&quot;</extracomment>
+        <translation>Sohbette ara</translation>
+    </message>
+    <message>
+        <source>chat_call_accessible_name</source>
+        <extracomment>&quot;Call&quot;</extracomment>
+        <translation>Ara</translation>
+    </message>
+    <message>
+        <source>chat_back_accessible_name</source>
+        <extracomment>&quot;Back to the conversation list&quot;</extracomment>
+        <translation>Sohbet listesine dön</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="59"/>
+        <source>chat_view_group_call_toast_message</source>
+        <translation>Grup araması</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="492"/>
+        <source>reply_to_label</source>
+        <extracomment>Reply to %1</extracomment>
+        <translation>%1 kişisine yanıtla</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="493"/>
+        <source>conversation_editing_message_title</source>
+        <translation>Mesaj düzenleniyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="717"/>
+        <source>shared_medias_title</source>
+        <extracomment>Shared medias</extracomment>
+        <translation>Paylaşılan medyalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="719"/>
+        <source>shared_documents_title</source>
+        <extracomment>Shared documents</extracomment>
+        <translation>Paylaşılan belgeler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="748"/>
+        <source>forward_to_title</source>
+        <extracomment>Forward to…</extracomment>
+        <translation>Şuraya ilet…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="782"/>
+        <source>conversations_title</source>
+        <extracomment>Conversations</extracomment>
+        <translation>Sohbetler</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCore</name>
+    <message>
+        <location filename="../../core/setting/SettingsCore.cpp" line="494"/>
+        <source>info_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsMenuItem</name>
+    <message>
+        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
+        <source>setting_tab_accessible_name</source>
+        <extracomment>%1 settings</extracomment>
+        <translation>%1 ayarları</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsModel</name>
+    <message>
+        <location filename="../../model/setting/SettingsModel.cpp" line="382"/>
+        <source>set_capture_device_error</source>
+        <extracomment>&quot;Cannot set Capture device. The ID cannot be matched with an existant device : %1&quot;</extracomment>
+        <translation>Yakalama cihazı ayarlanamıyor. Kimlik boş olamaz</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsPage</name>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="12"/>
+        <source>settings_title</source>
+        <extracomment>&quot;Paramètres&quot;</extracomment>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="15"/>
+        <source>settings_calls_title</source>
+        <extracomment>&quot;Appels&quot;</extracomment>
+        <translation>Aramalar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
+        <source>settings_call_forward</source>
+        <extracomment>&quot;Transfert d&apos;appel&quot;</extracomment>
+        <translation>Arama yönlendirme</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
+        <source>settings_conversations_title</source>
+        <extracomment>&quot;Conversations&quot;</extracomment>
+        <translation>Sohbetler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
+        <source>settings_contacts_title</source>
+        <extracomment>&quot;Contacts&quot;</extracomment>
+        <translation>Kişiler</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="23"/>
+        <source>settings_meetings_title</source>
+        <extracomment>&quot;Réunions&quot;</extracomment>
+        <translation>Toplantılar</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
+        <source>settings_network_title</source>
+        <extracomment>&quot;Affichage&quot; &quot;Security&quot; &quot;Réseau&quot;</extracomment>
+        <translation>Ağ</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="31"/>
+        <source>settings_advanced_title</source>
+        <extracomment>&quot;Paramètres avancés&quot;</extracomment>
+        <translation>Gelişmiş ayarlar</translation>
+    </message>
+    <message>
+        <source>contact_editor_popup_abort_confirmation_title</source>
+        <extracomment>Modifications non enregistrées</extracomment>
+        <translation type="vanished">Unsaved changes</translation>
+    </message>
+    <message>
+        <source>contact_editor_popup_abort_confirmation_message</source>
+        <extracomment>Vous avez des modifications non enregistrées. Si vous quittez cette page, vos changements seront perdus. Voulez-vous enregistrer vos modifications avant de continuer ?</extracomment>
+        <translation type="vanished">You have unsaved changes. If you leave this page, your changes will be lost. Do you want to save your changes before continuing?</translation>
+    </message>
+    <message>
+        <source>contact_editor_dialog_abort_confirmation_do_not_save</source>
+        <extracomment>&quot;Ne pas enregistrer&quot;</extracomment>
+        <translation type="vanished">Do not save</translation>
+    </message>
+    <message>
+        <source>contact_editor_dialog_abort_confirmation_save</source>
+        <extracomment>&quot;Enregistrer&quot;</extracomment>
+        <translation type="vanished">Save</translation>
+    </message>
+</context>
+<context>
+    <name>SoundPlayerModel</name>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="65"/>
+        <source>sound_player_pause_error</source>
+        <extracomment>Unable to pause</extracomment>
+        <translation>Duraklatılamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="105"/>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="125"/>
+        <source>sound_player_open_error</source>
+        <extracomment>Unable to open: `%1`</extracomment>
+        <translation>Açılamadı: `%1`</translation>
+    </message>
+    <message>
+        <location filename="../../model/sound-player/SoundPlayerModel.cpp" line="110"/>
+        <source>sound_player_play_error</source>
+        <extracomment>Unable to play %1</extracomment>
+        <translation>%1 oynatılamadı</translation>
+    </message>
+</context>
+<context>
+    <name>Sticker</name>
+    <message>
+        <location filename="../../view/Control/Display/Sticker.qml" line="137"/>
+        <source>conference_participant_joining_text</source>
+        <extracomment>&quot;rejoint…&quot;</extracomment>
+        <translation>katılıyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Sticker.qml" line="163"/>
+        <source>conference_participant_paused_text</source>
+        <extracomment>&quot;En pause&quot;</extracomment>
+        <translation>Beklemede</translation>
+    </message>
+</context>
+<context>
+    <name>TextField</name>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="213"/>
+        <source>show_accessible_name</source>
+        <extracomment>Show %1</extracomment>
+        <translation>%1 göster</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="232"/>
+        <source>textfield_custom_button_accessible_name</source>
+        <extracomment>%1, %2</extracomment>
+        <translation>%1, %2</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Input/TextField.qml" line="211"/>
+        <source>hide_accessible_name</source>
+        <extracomment>Hide %1</extracomment>
+        <translation>%1 gizle</translation>
+    </message>
+</context>
+<context>
+    <name>ToolModel</name>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="341"/>
+        <source>call_error_uninterpretable_sip_address</source>
+        <extracomment>&quot;The calling address is not an interpretable SIP address : %1</extracomment>
+        <translation>Arama adresi yorumlanabilir bir SIP adresi değil</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="416"/>
+        <source>group_call_error_no_account</source>
+        <translation>Grup araması için hesap yok</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="446"/>
+        <source>group_call_error_participants_invite</source>
+        <translation>Katılımcılar davet edilemedi</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="450"/>
+        <source>group_call_error_creation</source>
+        <translation>Grup araması oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="550"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="577"/>
+        <source>voice_recording_duration</source>
+        <extracomment>&quot;Voice recording (%1)&quot; : %1 is the duration formated in mm:ss</extracomment>
+        <translation>Ses kaydı (%1)</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="659"/>
+        <source>unknown_audio_device_name</source>
+        <extracomment>&quot;Unknown device&quot;</extracomment>
+        <translation>Bilinmeyen cihaz</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="696"/>
+        <source>Dummy subject</source>
+        <extracomment>Dummy subject</extracomment>
+        <translation>Örnek konu</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="558"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="585"/>
+        <source>conference_invitation</source>
+        <translation>Konferans daveti</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="562"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="589"/>
+        <source>conference_invitation_cancelled</source>
+        <translation>Konferans daveti iptal edildi</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="560"/>
+        <location filename="../../model/tool/ToolModel.cpp" line="587"/>
+        <source>conference_invitation_updated</source>
+        <translation>Konferans daveti güncellendi</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="599"/>
+        <source>conversation_message_content_deleted_label</source>
+        <translation>Mesaj silindi</translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="598"/>
+        <source>conversation_message_content_deleted_by_us_label</source>
+        <translation>Bu mesajı sildiniz</translation>
+    </message>
+</context>
+<context>
+    <name>UnreadNotification</name>
+    <message>
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="19"/>
+        <source>unread</source>
+        <extracomment>Unread</extracomment>
+        <translation>Okunmamış</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="21"/>
+        <source>unread_notification_accessible_name</source>
+        <extracomment>%1 notification badge : %2 unread</extracomment>
+        <translation>%1 bildirim rozeti: %2 okunmamış</translation>
+    </message>
+    <message numerus="yes">
+        <source>badge_missed_calls_accessible_name</source>
+        <extracomment>&quot;%n missed calls&quot;</extracomment>
+        <translation>
+            <numerusform>%n missed call</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <source>badge_unread_messages_accessible_name</source>
+        <extracomment>&quot;%n unread messages&quot;</extracomment>
+        <translation>
+            <numerusform>%n unread message</numerusform>
+        </translation>
+    </message>
+</context>
+<context>
+    <name>Utils</name>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2441"/>
+        <source>nSeconds</source>
+        <translation>
+            <numerusform>%1 second</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2436"/>
+        <source>nMinute</source>
+        <translation>
+            <numerusform>%1 minute</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2199"/>
+        <source>chat_message_forward_error</source>
+        <extracomment>Cannot forward an invalid message</extracomment>
+        <translation>Geçersiz mesaj iletilemez</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2205"/>
+        <source>info_popup_forward_message_error</source>
+        <extracomment>Could not forward message : %1</extracomment>
+        <translation>Mesaj iletilemedi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2220"/>
+        <source>info_popup_send_forward_message_error_message</source>
+        <extracomment>Failed to create forward message</extracomment>
+        <translation>İletilecek mesaj oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2232"/>
+        <source>chat_message_reply_error</source>
+        <extracomment>Cannot reply to invalid message</extracomment>
+        <translation>Geçersiz mesaja yanıt verilemez</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2281"/>
+        <source>chat_message_edit_error</source>
+        <extracomment>Cannot edit to invalid message</extracomment>
+        <translation>Geçersiz mesaj düzenlenemez</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2238"/>
+        <source>info_popup_reply_message_error</source>
+        <extracomment>Could not send reply message : %1</extracomment>
+        <translation>Yanıt mesajı gönderilemedi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2287"/>
+        <source>info_popup_edited_message_error</source>
+        <extracomment>Could not send edited message : %1</extracomment>
+        <translation>Düzenlenen mesaj gönderilemedi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2270"/>
+        <source>info_popup_send_reply_message_error_message</source>
+        <extracomment>Failed to create reply message</extracomment>
+        <translation>Yanıt mesajı oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2314"/>
+        <source>info_popup_send_edited_message_error_message</source>
+        <extracomment>Failed to create edited message</extracomment>
+        <translation>Düzenlenen mesaj oluşturulamadı</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2437"/>
+        <source>nHour</source>
+        <translation>
+            <numerusform>%1 hour</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2438"/>
+        <location filename="../../tool/Utils.cpp" line="2439"/>
+        <source>nDay</source>
+        <translation>
+            <numerusform>%1 day</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="2440"/>
+        <source>nWeek</source>
+        <translation>
+            <numerusform>%1 week</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2013"/>
+        <source>contact_presence_status_available</source>
+        <translation>Müsait</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2019"/>
+        <source>contact_presence_status_busy</source>
+        <translation>Meşgul</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2022"/>
+        <source>contact_presence_status_do_not_disturb</source>
+        <translation>Rahatsız etme</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2025"/>
+        <source>contact_presence_status_offline</source>
+        <translation>Çevrimdışı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2016"/>
+        <source>contact_presence_status_away</source>
+        <translation>Uzakta</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="206"/>
+        <source>information_popup_call_not_created_message</source>
+        <extracomment>&quot;L&apos;appel n&apos;a pas pu être créé&quot;</extracomment>
+        <translation>Arama oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="207"/>
+        <location filename="../../tool/Utils.cpp" line="218"/>
+        <location filename="../../tool/Utils.cpp" line="1727"/>
+        <source>information_popup_error_title</source>
+        <extracomment>Failed to create 1-1 conversation with %1 !</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="217"/>
+        <source>information_popup_group_call_not_created_message</source>
+        <translation>Grup araması oluşturulamadı</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="353"/>
+        <source>number_of_years</source>
+        <extracomment>%n an(s)</extracomment>
+        <translation>
+            <numerusform>one year</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="356"/>
+        <source>number_of_month</source>
+        <extracomment>&quot;%n mois&quot;</extracomment>
+        <translation>
+            <numerusform>one month</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="359"/>
+        <source>number_of_weeks</source>
+        <extracomment>%n semaine(s)</extracomment>
+        <translation>
+            <numerusform>one week</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="362"/>
+        <source>number_of_days</source>
+        <extracomment>%n jour(s)</extracomment>
+        <translation>
+            <numerusform>one day</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="388"/>
+        <source>today</source>
+        <extracomment>&quot;Aujourd&apos;hui&quot;</extracomment>
+        <translation>Bugün</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="390"/>
+        <source>yesterday</source>
+        <extracomment>&quot;Hier</extracomment>
+        <translation>Dün</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="415"/>
+        <source>duration_tomorrow</source>
+        <extracomment>Tomorrow</extracomment>
+        <translation>Yarın</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../tool/Utils.cpp" line="418"/>
+        <source>duration_number_of_days</source>
+        <extracomment>%1 jour(s)</extracomment>
+        <translation>
+            <numerusform>%n day</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="581"/>
+        <source>call_zrtp_token_verification_possible_characters</source>
+        <extracomment>&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789&quot;</extracomment>
+        <translation>ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1728"/>
+        <source>information_popup_chatroom_creation_error_message</source>
+        <translation>Sohbet odası oluşturulamadı</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2347"/>
+        <source>recorder_error</source>
+        <extracomment>Error with the recorder</extracomment>
+        <translation>Kayıt cihazı hatası</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2201"/>
+        <location filename="../../tool/Utils.cpp" line="2234"/>
+        <location filename="../../tool/Utils.cpp" line="2283"/>
+        <location filename="../../tool/Utils.cpp" line="2349"/>
+        <source>chat_error</source>
+        <extracomment>Error creating or opening the chat
+----------
+Error in the chat</extracomment>
+        <translation>Sohbet oluşturulurken veya açılırken hata</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2203"/>
+        <location filename="../../tool/Utils.cpp" line="2218"/>
+        <location filename="../../tool/Utils.cpp" line="2236"/>
+        <location filename="../../tool/Utils.cpp" line="2268"/>
+        <location filename="../../tool/Utils.cpp" line="2285"/>
+        <location filename="../../tool/Utils.cpp" line="2312"/>
+        <location filename="../../tool/Utils.cpp" line="2351"/>
+        <location filename="../../tool/Utils.cpp" line="2365"/>
+        <source>info_popup_error_title</source>
+        <extracomment>Error</extracomment>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2353"/>
+        <source>info_popup_send_voice_message_error_message</source>
+        <extracomment>Could not send voice message : %1</extracomment>
+        <translation>Sesli mesaj gönderilemedi: %1</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="2367"/>
+        <source>info_popup_send_voice_message_sending_error_message</source>
+        <extracomment>Failed to create message from record</extracomment>
+        <translation>Kayıttan mesaj oluşturulamadı</translation>
+    </message>
+</context>
+<context>
+    <name>Voicemail</name>
+    <message>
+        <location filename="../../view/Control/Display/Contact/Voicemail.qml" line="30"/>
+        <source>voicemail_accessible_name</source>
+        <extracomment>&quot;Voicemail&quot;</extracomment>
+        <translation>Sesli mesaj</translation>
+    </message>
+</context>
+<context>
+    <name>WaitingRoom</name>
+    <message>
+        <source>call_deactivate_speaker_hint</source>
+        <extracomment>&quot;Mute speaker&quot;</extracomment>
+        <translation>Sesi kapat</translation>
+    </message>
+    <message>
+        <source>call_activate_speaker_hint</source>
+        <extracomment>&quot;Activate speaker&quot;</extracomment>
+        <translation>Sesi aç</translation>
+    </message>
+    <message>
+        <source>waiting_room_settings_accessible_name</source>
+        <extracomment>&quot;Audio and video settings&quot;</extracomment>
+        <translation>Ses ve video ayarları</translation>
+    </message>
+    <message>
+        <source>call_deactivate_microphone</source>
+        <extracomment>&quot;Mute microphone&quot;</extracomment>
+        <translation>Mikrofonu kapat</translation>
+    </message>
+    <message>
+        <source>call_activate_microphone</source>
+        <extracomment>&quot;Activate microphone&quot;</extracomment>
+        <translation>Mikrofonu aç</translation>
+    </message>
+    <message>
+        <source>call_activate_video_hint</source>
+        <extracomment>&quot;Enable video&quot;</extracomment>
+        <translation>Videoyu aç</translation>
+    </message>
+    <message>
+        <source>call_deactivate_video_hint</source>
+        <extracomment>&quot;Turn off video&quot;</extracomment>
+        <translation>Videoyu kapat</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="96"/>
+        <source>meeting_waiting_room_title</source>
+        <extracomment>Participer à :</extracomment>
+        <translation>Katıl:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="118"/>
+        <source>meeting_waiting_room_join</source>
+        <extracomment>&quot;Rejoindre&quot;</extracomment>
+        <translation>Katıl</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="129"/>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="172"/>
+        <source>cancel</source>
+        <extracomment>Cancel</extracomment>
+        <translation>İptal</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="143"/>
+        <source>meeting_waiting_room_joining_title</source>
+        <extracomment>&quot;Connexion à la réunion&quot;</extracomment>
+        <translation>Toplantıya bağlanılıyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="153"/>
+        <source>meeting_waiting_room_joining_subtitle</source>
+        <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
+        <translation>Birkaç saniye içinde toplantıya katılacaksınız</translation>
+    </message>
+</context>
+<context>
+    <name>WelcomePage</name>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="17"/>
+        <source>welcome_page_title</source>
+        <extracomment>&quot;Bienvenue&quot;</extracomment>
+        <translation>Hoş geldiniz</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="33"/>
+        <source>welcome_page_subtitle</source>
+        <extracomment>&quot;sur %1&quot;</extracomment>
+        <translation>%1 uygulamasına</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="50"/>
+        <source>welcome_carousel_skip</source>
+        <extracomment>&quot;Passer&quot;</extracomment>
+        <translation>Geç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="84"/>
+        <source>welcome_page_1_message</source>
+        <extracomment>&quot;Une application de communication &lt;b&gt;sécurisée&lt;/b&gt;,&lt;br&gt; &lt;b&gt;open source&lt;/b&gt; et &lt;b&gt;française&lt;/b&gt;.&quot;</extracomment>
+        <translation>Güvenli ve açık kaynaklı bir iletişim uygulaması</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="86"/>
+        <source>welcome_page_2_title</source>
+        <extracomment>&quot;Sécurisé&quot;</extracomment>
+        <translation>Güvenli</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="88"/>
+        <source>welcome_page_2_message</source>
+        <extracomment>&quot;Vos communications sont en sécurité grâce aux &lt;br&gt;&lt;b&gt;Chiffrement de bout en bout&lt;/b&gt;.&quot;</extracomment>
+        <translation>İletişimleriniz uçtan uca şifreleme sayesinde güvende</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="90"/>
+        <source>welcome_page_3_title</source>
+        <extracomment>&quot;Open Source&quot;</extracomment>
+        <translation>Açık Kaynak</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="92"/>
+        <source>welcome_page_3_message</source>
+        <extracomment>&quot;Une application open source et un &lt;b&gt;service gratuit&lt;/b&gt; &lt;br&gt;depuis &lt;b&gt;2001&lt;/b&gt;&quot;</extracomment>
+        <translation>Açık kaynaklı bir uygulama ve ücretsiz bir hizmet</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="125"/>
+        <source>next</source>
+        <extracomment>&quot;Suivant&quot;</extracomment>
+        <translation>İleri</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="127"/>
+        <source>start</source>
+        <extracomment>&quot;Commencer&quot;</extracomment>
+        <translation>Başla</translation>
+    </message>
+</context>
+<context>
+    <name>ZrtpAuthenticationDialog</name>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="71"/>
+        <source>call_dialog_zrtp_validate_trust_title</source>
+        <extracomment>Vérification de sécurité</extracomment>
+        <translation>Güvenlik doğrulaması</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="89"/>
+        <source>call_zrtp_sas_validation_skip</source>
+        <extracomment>&quot;Passer&quot;</extracomment>
+        <translation>Geç</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="134"/>
+        <source>call_dialog_zrtp_validate_trust_warning_message</source>
+        <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin de réauthentifier l’appareil de votre correspondant. Echangez vos codes :&quot;</extracomment>
+        <translation>Şifrelemeyi garanti altına almak için yeniden kimlik doğrulaması gerekiyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="136"/>
+        <source>call_dialog_zrtp_validate_trust_message</source>
+        <extracomment>&quot;Pour garantir le chiffrement, nous avons besoin d’authentifier l’appareil de votre correspondant. Veuillez échanger vos codes : &quot;</extracomment>
+        <translation>Şifrelemeyi garanti altına almak için kimlik doğrulaması gerekiyor</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="145"/>
+        <source>call_dialog_zrtp_validate_trust_local_code_label</source>
+        <extracomment>&quot;Votre code :&quot;</extracomment>
+        <translation>Sizin kodunuz:</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="174"/>
+        <source>call_dialog_zrtp_validate_trust_remote_code_label</source>
+        <extracomment>&quot;Code correspondant :&quot;</extracomment>
+        <translation>Karşı tarafın kodu:</translation>
+    </message>
+    <message>
+        <source>call_dialog_zrtp_remote_code_accessible_name</source>
+        <extracomment>&quot;Matching code %1 of %2: %3&quot;</extracomment>
+        <translation>Eşleşen kod %1 / %2: %3</translation>
+    </message>
+    <message>
+        <source>call_dialog_zrtp_remote_code_accessible_hint</source>
+        <extracomment>&quot;Select if this is your correspondent&apos;s code&quot;</extracomment>
+        <translation>Bu karşı tarafın koduysa seçin</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="223"/>
+        <source>call_dialog_zrtp_validate_trust_letters_do_not_match_text</source>
+        <extracomment>&quot;Le code fourni ne correspond pas.&quot;</extracomment>
+        <translation>Verilen kod eşleşmiyor.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="234"/>
+        <source>call_dialog_zrtp_security_alert_message</source>
+        <extracomment>&quot;La confidentialité de votre appel peut être compromise !&quot;</extracomment>
+        <translation>Aramanızın gizliliği tehlikeye girebilir!</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="247"/>
+        <source>call_dialog_zrtp_validate_trust_letters_do_not_match</source>
+        <extracomment>&quot;Aucune correspondance&quot;</extracomment>
+        <translation>Eşleşme yok</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/Dialog/ZrtpAuthenticationDialog.qml" line="264"/>
+        <source>call_action_hang_up</source>
+        <extracomment>&quot;Raccrocher&quot;</extracomment>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>country</name>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="677"/>
+        <source>Afghanistan</source>
+        <translation>Afganistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="681"/>
+        <source>Albania</source>
+        <translation>Arnavutluk</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="684"/>
+        <source>Algeria</source>
+        <translation>Cezayir</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="687"/>
+        <source>AmericanSamoa</source>
+        <translation>Amerikan Samoası</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="691"/>
+        <source>Andorra</source>
+        <translation>Andorra</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="694"/>
+        <source>Angola</source>
+        <translation>Angola</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="697"/>
+        <source>Anguilla</source>
+        <translation>Anguilla</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="700"/>
+        <source>AntiguaAndBarbuda</source>
+        <translation>Antigua ve Barbuda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="704"/>
+        <source>Argentina</source>
+        <translation>Arjantin</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="707"/>
+        <source>Armenia</source>
+        <translation>Ermenistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="710"/>
+        <source>Aruba</source>
+        <translation>Aruba</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="713"/>
+        <source>Australia</source>
+        <translation>Avustralya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="716"/>
+        <source>Austria</source>
+        <translation>Avusturya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="719"/>
+        <source>Azerbaijan</source>
+        <translation>Azerbaycan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="722"/>
+        <source>Bahamas</source>
+        <translation>Bahamalar</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="725"/>
+        <source>Bahrain</source>
+        <translation>Bahreyn</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="728"/>
+        <source>Bangladesh</source>
+        <translation>Bangladeş</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="731"/>
+        <source>Barbados</source>
+        <translation>Barbados</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="734"/>
+        <source>Belarus</source>
+        <translation>Belarus</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="737"/>
+        <source>Belgium</source>
+        <translation>Belçika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="740"/>
+        <source>Belize</source>
+        <translation>Belize</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="743"/>
+        <source>Benin</source>
+        <translation>Benin</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="746"/>
+        <source>Bermuda</source>
+        <translation>Bermuda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="749"/>
+        <source>Bhutan</source>
+        <translation>Butan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="752"/>
+        <source>Bolivia</source>
+        <translation>Bolivya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="755"/>
+        <source>BosniaAndHerzegowina</source>
+        <translation>Bosna-Hersek</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="760"/>
+        <source>Botswana</source>
+        <translation>Botsvana</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="763"/>
+        <source>Brazil</source>
+        <translation>Brezilya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="766"/>
+        <source>Brunei</source>
+        <translation>Brunei</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="769"/>
+        <source>Bulgaria</source>
+        <translation>Bulgaristan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="772"/>
+        <source>BurkinaFaso</source>
+        <translation>Burkina Faso</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="776"/>
+        <source>Burundi</source>
+        <translation>Burundi</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="779"/>
+        <source>Cambodia</source>
+        <translation>Kamboçya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="782"/>
+        <source>Cameroon</source>
+        <translation>Kamerun</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="785"/>
+        <source>Canada</source>
+        <translation>Kanada</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="788"/>
+        <source>CapeVerde</source>
+        <translation>Yeşil Burun</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="791"/>
+        <source>CaymanIslands</source>
+        <translation>Cayman Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="795"/>
+        <source>CentralAfricanRepublic</source>
+        <translation>Orta Afrika Cumhuriyeti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="800"/>
+        <source>Chad</source>
+        <translation>Çad</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="803"/>
+        <source>Chile</source>
+        <translation>Şili</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="806"/>
+        <source>China</source>
+        <translation>Çin</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="809"/>
+        <source>Colombia</source>
+        <translation>Kolombiya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="812"/>
+        <source>Comoros</source>
+        <translation>Komorlar</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="815"/>
+        <source>PeoplesRepublicOfCongo</source>
+        <translation>Kongo Cumhuriyeti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="825"/>
+        <source>CookIslands</source>
+        <translation>Cook Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="829"/>
+        <source>CostaRica</source>
+        <translation>Kosta Rika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="832"/>
+        <source>IvoryCoast</source>
+        <translation>Fildişi Sahili</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="835"/>
+        <source>Croatia</source>
+        <translation>Hırvatistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="838"/>
+        <source>Cuba</source>
+        <translation>Küba</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="841"/>
+        <source>Cyprus</source>
+        <translation>Kıbrıs</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="844"/>
+        <source>CzechRepublic</source>
+        <translation>Çekya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="848"/>
+        <source>Denmark</source>
+        <translation>Danimarka</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="851"/>
+        <source>Djibouti</source>
+        <translation>Cibuti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="854"/>
+        <source>Dominica</source>
+        <translation>Dominika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="857"/>
+        <source>DominicanRepublic</source>
+        <translation>Dominik Cumhuriyeti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="861"/>
+        <source>Ecuador</source>
+        <translation>Ekvador</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="864"/>
+        <source>Egypt</source>
+        <translation>Mısır</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="867"/>
+        <source>ElSalvador</source>
+        <translation>El Salvador</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="870"/>
+        <source>EquatorialGuinea</source>
+        <translation>Ekvator Ginesi</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="874"/>
+        <source>Eritrea</source>
+        <translation>Eritre</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="877"/>
+        <source>Estonia</source>
+        <translation>Estonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="880"/>
+        <source>Ethiopia</source>
+        <translation>Etiyopya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="883"/>
+        <source>FalklandIslands</source>
+        <translation>Falkland Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="887"/>
+        <source>FaroeIslands</source>
+        <translation>Faroe Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="891"/>
+        <source>Fiji</source>
+        <translation>Fiji</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="894"/>
+        <source>Finland</source>
+        <translation>Finlandiya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="897"/>
+        <source>France</source>
+        <translation>Fransa</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="900"/>
+        <source>FrenchGuiana</source>
+        <translation>Fransız Guyanası</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="904"/>
+        <source>FrenchPolynesia</source>
+        <translation>Fransız Polinezyası</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="908"/>
+        <source>Gabon</source>
+        <translation>Gabon</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="911"/>
+        <source>Gambia</source>
+        <translation>Gambiya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="914"/>
+        <source>Georgia</source>
+        <translation>Gürcistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="917"/>
+        <source>Germany</source>
+        <translation>Almanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="920"/>
+        <source>Ghana</source>
+        <translation>Gana</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="923"/>
+        <source>Gibraltar</source>
+        <translation>Cebelitarık</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="926"/>
+        <source>Greece</source>
+        <translation>Yunanistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="929"/>
+        <source>Greenland</source>
+        <translation>Grönland</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="932"/>
+        <source>Grenada</source>
+        <translation>Grenada</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="935"/>
+        <source>Guadeloupe</source>
+        <translation>Guadeloupe</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="938"/>
+        <source>Guam</source>
+        <translation>Guam</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="941"/>
+        <source>Guatemala</source>
+        <translation>Guatemala</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="944"/>
+        <source>Guinea</source>
+        <translation>Gine</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="947"/>
+        <source>GuineaBissau</source>
+        <translation>Gine-Bissau</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="951"/>
+        <source>Guyana</source>
+        <translation>Guyana</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="954"/>
+        <source>Haiti</source>
+        <translation>Haiti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="957"/>
+        <source>Honduras</source>
+        <translation>Honduras</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="820"/>
+        <source>DemocraticRepublicOfCongo</source>
+        <translation>Kongo Demokratik Cumhuriyeti</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="960"/>
+        <source>HongKong</source>
+        <translation>Hong Kong</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="963"/>
+        <source>Hungary</source>
+        <translation>Macaristan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="966"/>
+        <source>Iceland</source>
+        <translation>İzlanda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="969"/>
+        <source>India</source>
+        <translation>Hindistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="972"/>
+        <source>Indonesia</source>
+        <translation>Endonezya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="975"/>
+        <source>Iran</source>
+        <translation>İran</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="978"/>
+        <source>Iraq</source>
+        <translation>Irak</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="981"/>
+        <source>Ireland</source>
+        <translation>İrlanda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="984"/>
+        <source>Israel</source>
+        <translation>İsrail</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="987"/>
+        <source>Italy</source>
+        <translation>İtalya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="990"/>
+        <source>Jamaica</source>
+        <translation>Jamaika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="993"/>
+        <source>Japan</source>
+        <translation>Japonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="996"/>
+        <source>Jordan</source>
+        <translation>Ürdün</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="999"/>
+        <source>Kazakhstan</source>
+        <translation>Kazakistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1002"/>
+        <source>Kenya</source>
+        <translation>Kenya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1005"/>
+        <source>Kiribati</source>
+        <translation>Kiribati</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1008"/>
+        <source>DemocraticRepublicOfKorea</source>
+        <translation>Kuzey Kore</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1013"/>
+        <source>RepublicOfKorea</source>
+        <translation>Güney Kore</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1017"/>
+        <source>Kuwait</source>
+        <translation>Kuveyt</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1020"/>
+        <source>Kyrgyzstan</source>
+        <translation>Kırgızistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1023"/>
+        <source>Laos</source>
+        <translation>Laos</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1026"/>
+        <source>Latvia</source>
+        <translation>Letonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1029"/>
+        <source>Lebanon</source>
+        <translation>Lübnan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1032"/>
+        <source>Lesotho</source>
+        <translation>Lesotho</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1035"/>
+        <source>Liberia</source>
+        <translation>Liberya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1038"/>
+        <source>Libya</source>
+        <translation>Libya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1041"/>
+        <source>Liechtenstein</source>
+        <translation>Lihtenştayn</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1045"/>
+        <source>Lithuania</source>
+        <translation>Litvanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1048"/>
+        <source>Luxembourg</source>
+        <translation>Lüksemburg</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1051"/>
+        <source>Macau</source>
+        <translation>Makao</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1054"/>
+        <source>Macedonia</source>
+        <translation>Kuzey Makedonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1057"/>
+        <source>Madagascar</source>
+        <translation>Madagaskar</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1060"/>
+        <source>Malawi</source>
+        <translation>Malavi</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1063"/>
+        <source>Malaysia</source>
+        <translation>Malezya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1066"/>
+        <source>Maldives</source>
+        <translation>Maldivler</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1069"/>
+        <source>Mali</source>
+        <translation>Mali</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1072"/>
+        <source>Malta</source>
+        <translation>Malta</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1075"/>
+        <source>MarshallIslands</source>
+        <translation>Marshall Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1079"/>
+        <source>Martinique</source>
+        <translation>Martinik</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1082"/>
+        <source>Mauritania</source>
+        <translation>Moritanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1085"/>
+        <source>Mauritius</source>
+        <translation>Mauritius</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1088"/>
+        <source>Mayotte</source>
+        <translation>Mayotte</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1091"/>
+        <source>Mexico</source>
+        <translation>Meksika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1094"/>
+        <source>Micronesia</source>
+        <translation>Mikronezya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1097"/>
+        <source>Moldova</source>
+        <translation>Moldova</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1100"/>
+        <source>Monaco</source>
+        <translation>Monako</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1103"/>
+        <source>Mongolia</source>
+        <translation>Moğolistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1106"/>
+        <source>Montenegro</source>
+        <translation>Karadağ</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1109"/>
+        <source>Montserrat</source>
+        <translation>Montserrat</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1112"/>
+        <source>Morocco</source>
+        <translation>Fas</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1115"/>
+        <source>Mozambique</source>
+        <translation>Mozambik</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1118"/>
+        <source>Myanmar</source>
+        <translation>Myanmar</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1121"/>
+        <source>Namibia</source>
+        <translation>Namibya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1124"/>
+        <source>NauruCountry</source>
+        <translation>Nauru</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1128"/>
+        <source>Nepal</source>
+        <translation>Nepal</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1131"/>
+        <source>Netherlands</source>
+        <translation>Hollanda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1135"/>
+        <source>NewCaledonia</source>
+        <translation>Yeni Kaledonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1139"/>
+        <source>NewZealand</source>
+        <translation>Yeni Zelanda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1142"/>
+        <source>Nicaragua</source>
+        <translation>Nikaragua</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1145"/>
+        <source>Niger</source>
+        <translation>Nijer</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1148"/>
+        <source>Nigeria</source>
+        <translation>Nijerya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1151"/>
+        <source>Niue</source>
+        <translation>Niue</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1154"/>
+        <source>NorfolkIsland</source>
+        <translation>Norfolk Adası</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1158"/>
+        <source>NorthernMarianaIslands</source>
+        <translation>Kuzey Mariana Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1163"/>
+        <source>Norway</source>
+        <translation>Norveç</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1166"/>
+        <source>Oman</source>
+        <translation>Umman</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1169"/>
+        <source>Pakistan</source>
+        <translation>Pakistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1172"/>
+        <source>Palau</source>
+        <translation>Palau</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1175"/>
+        <source>PalestinianTerritories</source>
+        <translation>Filistin</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1180"/>
+        <source>Panama</source>
+        <translation>Panama</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1183"/>
+        <source>PapuaNewGuinea</source>
+        <translation>Papua Yeni Gine</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1187"/>
+        <source>Paraguay</source>
+        <translation>Paraguay</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1190"/>
+        <source>Peru</source>
+        <translation>Peru</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1193"/>
+        <source>Philippines</source>
+        <translation>Filipinler</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1197"/>
+        <source>Poland</source>
+        <translation>Polonya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1200"/>
+        <source>Portugal</source>
+        <translation>Portekiz</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1203"/>
+        <source>PuertoRico</source>
+        <translation>Porto Riko</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1206"/>
+        <source>Qatar</source>
+        <translation>Katar</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1209"/>
+        <source>Reunion</source>
+        <translation>Réunion</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1212"/>
+        <source>Romania</source>
+        <translation>Romanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1215"/>
+        <source>RussianFederation</source>
+        <translation>Rusya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1219"/>
+        <source>Rwanda</source>
+        <translation>Ruanda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1222"/>
+        <source>SaintHelena</source>
+        <translation>Saint Helena</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1226"/>
+        <source>SaintKittsAndNevis</source>
+        <translation>Saint Kitts ve Nevis</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1230"/>
+        <source>SaintLucia</source>
+        <translation>Saint Lucia</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1233"/>
+        <source>SaintPierreAndMiquelon</source>
+        <translation>Saint Pierre ve Miquelon</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1238"/>
+        <source>SaintVincentAndTheGrenadines</source>
+        <translation>Saint Vincent ve Grenadinler</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1243"/>
+        <source>Samoa</source>
+        <translation>Samoa</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1246"/>
+        <source>SanMarino</source>
+        <translation>San Marino</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1249"/>
+        <source>SaoTomeAndPrincipe</source>
+        <translation>São Tomé ve Príncipe</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1253"/>
+        <source>SaudiArabia</source>
+        <translation>Suudi Arabistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1257"/>
+        <source>Senegal</source>
+        <translation>Senegal</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1260"/>
+        <source>Serbia</source>
+        <translation>Sırbistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1263"/>
+        <source>Seychelles</source>
+        <translation>Seyşeller</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1266"/>
+        <source>SierraLeone</source>
+        <translation>Sierra Leone</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1270"/>
+        <source>Singapore</source>
+        <translation>Singapur</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1273"/>
+        <source>Slovakia</source>
+        <translation>Slovakya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1276"/>
+        <source>Slovenia</source>
+        <translation>Slovenya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1279"/>
+        <source>SolomonIslands</source>
+        <translation>Solomon Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1283"/>
+        <source>Somalia</source>
+        <translation>Somali</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1286"/>
+        <source>SouthAfrica</source>
+        <translation>Güney Afrika</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1290"/>
+        <source>Spain</source>
+        <translation>İspanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1293"/>
+        <source>SriLanka</source>
+        <translation>Sri Lanka</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1296"/>
+        <source>Sudan</source>
+        <translation>Sudan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1299"/>
+        <source>Suriname</source>
+        <translation>Surinam</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1302"/>
+        <source>Swaziland</source>
+        <translation>Esvatini</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1305"/>
+        <source>Sweden</source>
+        <translation>İsveç</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1308"/>
+        <source>Switzerland</source>
+        <translation>İsviçre</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1312"/>
+        <source>Syria</source>
+        <translation>Suriye</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1315"/>
+        <source>Taiwan</source>
+        <translation>Tayvan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1318"/>
+        <source>Tajikistan</source>
+        <translation>Tacikistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1321"/>
+        <source>Tanzania</source>
+        <translation>Tanzanya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1324"/>
+        <source>Thailand</source>
+        <translation>Tayland</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1327"/>
+        <source>Togo</source>
+        <translation>Togo</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1330"/>
+        <source>Tokelau</source>
+        <translation>Tokelau</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1333"/>
+        <source>Tonga</source>
+        <translation>Tonga</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1336"/>
+        <source>TrinidadAndTobago</source>
+        <translation>Trinidad ve Tobago</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1340"/>
+        <source>Tunisia</source>
+        <translation>Tunus</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1343"/>
+        <source>Turkey</source>
+        <translation>Türkiye</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1346"/>
+        <source>Turkmenistan</source>
+        <translation>Türkmenistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1350"/>
+        <source>TurksAndCaicosIslands</source>
+        <translation>Turks ve Caicos Adaları</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1355"/>
+        <source>Tuvalu</source>
+        <translation>Tuvalu</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1358"/>
+        <source>Uganda</source>
+        <translation>Uganda</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1361"/>
+        <source>Ukraine</source>
+        <translation>Ukrayna</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1364"/>
+        <source>UnitedArabEmirates</source>
+        <translation>Birleşik Arap Emirlikleri</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1368"/>
+        <source>UnitedKingdom</source>
+        <translation>Birleşik Krallık</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1372"/>
+        <source>UnitedStates</source>
+        <translation>Amerika Birleşik Devletleri</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1376"/>
+        <source>Uruguay</source>
+        <translation>Uruguay</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1379"/>
+        <source>Uzbekistan</source>
+        <translation>Özbekistan</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1382"/>
+        <source>Vanuatu</source>
+        <translation>Vanuatu</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1385"/>
+        <source>Venezuela</source>
+        <translation>Venezuela</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1388"/>
+        <source>Vietnam</source>
+        <translation>Vietnam</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1391"/>
+        <source>WallisAndFutunaIslands</source>
+        <translation>Wallis ve Futuna</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1396"/>
+        <source>Yemen</source>
+        <translation>Yemen</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1399"/>
+        <source>Zambia</source>
+        <translation>Zambiya</translation>
+    </message>
+    <message>
+        <location filename="../../tool/Utils.cpp" line="1402"/>
+        <source>Zimbabwe</source>
+        <translation>Zimbabve</translation>
+    </message>
+</context>
+<context>
+    <name>utils</name>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="491"/>
+        <source>formatYears</source>
+        <extracomment>&apos;%1 year&apos;</extracomment>
+        <translation>
+            <numerusform>one year</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="495"/>
+        <source>formatMonths</source>
+        <extracomment>&apos;%1 month&apos;</extracomment>
+        <translation>
+            <numerusform>one month</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="499"/>
+        <source>formatWeeks</source>
+        <extracomment>&apos;%1 week&apos;</extracomment>
+        <translation>
+            <numerusform>one week</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="503"/>
+        <source>formatDays</source>
+        <extracomment>&apos;%1 day&apos;</extracomment>
+        <translation>
+            <numerusform>one day</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="509"/>
+        <source>formatHours</source>
+        <extracomment>&apos;%1 hour&apos;</extracomment>
+        <translation>
+            <numerusform>one hour</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="511"/>
+        <source>formatMinutes</source>
+        <extracomment>&apos;%1 minute&apos;</extracomment>
+        <translation>
+            <numerusform>one minute</numerusform>
+        </translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="513"/>
+        <source>formatSeconds</source>
+        <extracomment>&apos;%1 second&apos;</extracomment>
+        <translation>
+            <numerusform>one second</numerusform>
+        </translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="730"/>
+        <source>codec_install</source>
+        <extracomment>&quot;Installation de codec&quot;</extracomment>
+        <translation>Codec kurulumu</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="732"/>
+        <source>download_codec</source>
+        <extracomment>&quot;Télécharger le codec %1 (%2) ?&quot;</extracomment>
+        <translation>Codec %1 (%2) indirilsin mi?</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="739"/>
+        <source>information_popup_success_title</source>
+        <extracomment>&quot;Succès&quot;</extracomment>
+        <translation>Başarılı</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="741"/>
+        <source>information_popup_codec_install_success_text</source>
+        <extracomment>&quot;Le codec a été installé avec succès.&quot;</extracomment>
+        <translation>Codec başarıyla kuruldu.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="745"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="754"/>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="762"/>
+        <source>information_popup_error_title</source>
+        <translation>Hata</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="747"/>
+        <source>information_popup_codec_install_error_text</source>
+        <extracomment>&quot;Le codec n&apos;a pas pu être installé.&quot;</extracomment>
+        <translation>Codec kurulamadı.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="756"/>
+        <source>information_popup_codec_save_error_text</source>
+        <extracomment>&quot;Le codec n&apos;a pas pu être sauvegardé.&quot;</extracomment>
+        <translation>Codec kaydedilemedi.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="764"/>
+        <source>information_popup_codec_download_error_text</source>
+        <extracomment>&quot;Le codec n&apos;a pas pu être téléchargé.&quot;</extracomment>
+        <translation>Codec indirilemedi.</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="770"/>
+        <source>loading_popup_codec_install_progress</source>
+        <extracomment>&quot;Téléchargement en cours …&quot;</extracomment>
+        <translation>İndiriliyor…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Tool/Helper/utils.js" line="805"/>
+        <source>okButton</source>
+        <translation>Tamam</translation>
+    </message>
+</context>
+<context>
+    <name>Carousel</name>
+    <message>
+        <source>carousel_page_accessible_name</source>
+        <extracomment>&quot;Page %1 of %2&quot;</extracomment>
+        <translation>Sayfa %1 / %2</translation>
+    </message>
+</context>
+<context>
+    <name>VerticalTabBar</name>
+    <message>
+        <source>tab_selected_accessible_announcement</source>
+        <extracomment>&quot;%1 tab selected&quot;</extracomment>
+        <translation>%1 sekmesi seçildi</translation>
+    </message>
+</context>
+<context>
+    <name>MessageInfosLayout</name>
+    <message>
+        <source>panel_back_accessible_name</source>
+        <extracomment>&quot;Back&quot;</extracomment>
+        <translation>Geri</translation>
+    </message>
+</context>
+<context>
+    <name>ContactStatusPopup</name>
+    <message>
+        <source>contact_status_accessible_name</source>
+        <extracomment>Status of %1: %2</extracomment>
+        <translation>%1 durumu: %2</translation>
+    </message>
+</context>
+<context>
+    <name>DetailLayout</name>
+    <message>
+        <source>more_info_accessible_name</source>
+        <extracomment>&quot;More info %1&quot;</extracomment>
+        <translation>%1 hakkında daha fazla bilgi</translation>
+    </message>
+</context>
+<context>
+    <name>MediaProgressBar</name>
+    <message>
+        <source>media_play_accessible_name</source>
+        <extracomment>&quot;Play&quot;</extracomment>
+        <translation>Oynat</translation>
+    </message>
+    <message>
+        <source>media_pause_accessible_name</source>
+        <extracomment>&quot;Pause&quot;</extracomment>
+        <translation>Duraklat</translation>
+    </message>
+    <message>
+        <source>media_stop_recording_accessible_name</source>
+        <extracomment>&quot;Stop recording&quot;</extracomment>
+        <translation>Kaydı durdur</translation>
+    </message>
+</context>
+<context>
+    <name>Calendar</name>
+    <message>
+        <source>calendar_next_month_accessible_name</source>
+        <extracomment>&quot;Next month&quot;</extracomment>
+        <translation>Sonraki ay</translation>
+    </message>
+    <message>
+        <source>calendar_previous_month_accessible_name</source>
+        <extracomment>&quot;Previous month&quot;</extracomment>
+        <translation>Önceki ay</translation>
+    </message>
+</context>
+<context>
+    <name>InformationPopup</name>
+    <message>
+        <source>close_accessible_name</source>
+        <extracomment>&quot;Close&quot;</extracomment>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationReceivedMessage</name>
+    <message>
+        <source>close_accessible_name</source>
+        <extracomment>&quot;Close&quot;</extracomment>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
+    <name>FormItemLayout</name>
+    <message>
+        <source>form_item_help_accessible_name</source>
+        <extracomment>&quot;Help about %1&quot;</extracomment>
+        <translation>%1 hakkında yardım</translation>
+    </message>
+</context>
+</TS>
