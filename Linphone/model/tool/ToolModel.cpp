@@ -726,8 +726,14 @@ ToolModel::getChatRoomParams(std::shared_ptr<linphone::Call> call, std::shared_p
 			lInfo() << "Account is in interop mode but LIME is available, requesting E2E encryption";
 			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::EndToEnd);
+		} else if (SettingsModel::getInstance()->getGroupChatEnabled()) {
+			lInfo()
+			    << "Account is in interop mode and LIME is not available, disabling E2E encryption for Flexisip Chat";
+			chatParams->setBackend(linphone::ChatRoom::Backend::FlexisipChat);
+			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
 		} else {
-			lInfo() << "Account is in interop mode and LIME is not available, disabling E2E encryption";
+			lInfo()
+			    << "Account is in interop mode and LIME is not available, disabling E2E encryption and create Basic";
 			chatParams->setBackend(linphone::ChatRoom::Backend::Basic);
 			params->setSecurityLevel(linphone::Conference::SecurityLevel::None);
 		}
