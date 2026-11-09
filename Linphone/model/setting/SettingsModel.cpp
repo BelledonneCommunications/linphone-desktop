@@ -1069,7 +1069,12 @@ int SettingsModel::getTextMessageFontSize() const {
 }
 
 QString SettingsModel::getDownloadFolder() const {
-	return Utils::coreStringToAppString(mConfig->getString(UiSection, "download_folder", ""));
+	auto folder = Utils::coreStringToAppString(mConfig->getString(UiSection, "download_folder", ""));
+	if (!folder.isEmpty()) return folder;
+	folder = Paths::getDownloadDirPath();
+	QString cleanPath = QDir::cleanPath(folder);
+	if (!cleanPath.endsWith(QDir::separator())) cleanPath.append(QDir::separator());
+	return cleanPath;
 }
 
 void SettingsModel::setDownloadFolder(const QString &downloadFolder) {

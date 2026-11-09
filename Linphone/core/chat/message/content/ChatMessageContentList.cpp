@@ -209,9 +209,9 @@ bool ChatMessageContentList::remove(QSharedPointer<QObject> itemToRemove) {
 	if (contentCore) {
 		auto path = contentCore->getFilePath();
 		if (path.startsWith(App::getInstance()->getSettings()->getDownloadFolder())) {
-			QFile fileToRemove(path);
-			lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
-			fileToRemove.remove();
+			// QFile fileToRemove(path);
+			// lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
+			// fileToRemove.remove();
 		}
 	}
 	return ListProxy::remove(itemToRemove);
@@ -222,11 +222,11 @@ void ChatMessageContentList::clearFilesFromCache() {
 		auto contentCore = item.objectCast<ChatMessageContentCore>();
 		if (contentCore) {
 			auto path = contentCore->getFilePath();
-			if (path.startsWith(App::getInstance()->getSettings()->getDownloadFolder())) {
-				QFile fileToRemove(path);
-				lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
-				fileToRemove.remove();
-			}
+			// if (path.startsWith(App::getInstance()->getSettings()->getDownloadFolder())) {
+			// 	QFile fileToRemove(path);
+			// 	lInfo() << log().arg("Removing file from cache folder %1").arg(fileToRemove.fileName());
+			// 	fileToRemove.remove();
+			// }
 		}
 	}
 	return ListProxy::clearData();
