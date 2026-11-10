@@ -206,6 +206,7 @@ ListView {
 	delegate: FocusScope {
 		id: itemDelegate
 		Accessible.ignored: true
+		Component.onCompleted: Qt.callLater(() => itemDelegate.Accessible.ignored = true)
 		visible: !mainItem.loading
         height: Utils.getSizeWithScreenRatio(63) + weekHeader.height + topOffset
 		width: mainItem.width
@@ -244,6 +245,8 @@ ListView {
 				sourceComponent: Control {
 					width: ListView.view ? ListView.view.width : 0
 					height: Utils.getSizeWithScreenRatio(19)
+					Accessible.role: Accessible.StaticText
+					Accessible.name: itemDelegate.week
 					leftPadding: Utils.getSizeWithScreenRatio(55)
 
 					contentItem: Text {

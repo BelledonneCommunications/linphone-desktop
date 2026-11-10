@@ -71,7 +71,19 @@ Item {
         settingsMenuButton.popup.close();
     }
 
-    function closeContextualMenuComponent() {
+    function finishCloseContextualMenuComponent(restoreFocus) {
+        mainStackView.pop();
+        if (mainItem.contextualMenuOpenedComponent)
+            mainItem.contextualMenuOpenedComponent.destroy();
+        mainItem.contextualMenuOpenedComponent = undefined;
+        if (restoreFocus) {
+            var target = mainItem.nextItemInFocusChain();
+            if (target)
+                target.forceActiveFocus(FocusNavigator.doesLastFocusWasKeyboard() ? Qt.TabFocusReason : Qt.OtherFocusReason);
+        }
+    }
+
+    function closeContextualMenuComponent(restoreFocus = false) {
         if (!SettingsCpp.isSaved) {
                            //: Modifications non enregistrées
         UtilsCpp.getMainWindow().showConfirmationLambdaPopup(qsTr("contact_editor_popup_abort_confirmation_title"),
@@ -84,20 +96,14 @@ Item {
 				} else {
 					SettingsCpp.undo()
 				}
-				mainStackView.pop();
-                if (mainItem.contextualMenuOpenedComponent)
-                    mainItem.contextualMenuOpenedComponent.destroy();
-                mainItem.contextualMenuOpenedComponent = undefined;
+				finishCloseContextualMenuComponent(restoreFocus);
                 //: "Ne pas enregistrer"
             }, qsTr("contact_editor_dialog_abort_confirmation_do_not_save"),
             //: "Enregistrer"
             qsTr("contact_editor_dialog_abort_confirmation_save")
 		)
 	    } else {
-            mainStackView.pop();
-            if (mainItem.contextualMenuOpenedComponent)
-                mainItem.contextualMenuOpenedComponent.destroy();
-            mainItem.contextualMenuOpenedComponent = undefined;
+            finishCloseContextualMenuComponent(restoreFocus);
         }
     }
 
@@ -753,12 +759,7 @@ Item {
                 Component {
                     id: accountSettingsPageComponent
                     AccountSettingsPage {
-                        onGoBack: {
-                            closeContextualMenuComponent()
-                            if(FocusNavigator.doesLastFocusWasKeyboard()){
-                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
-                            }
-                        }
+                        onGoBack: closeContextualMenuComponent(true)
                         onAccountRemoved: {
                             closeContextualMenuComponent();
                             mainItem.accountRemoved();
@@ -768,12 +769,7 @@ Item {
                 Component {
                     id: settingsPageComponent
                     SettingsPage {
-                        onGoBack: {
-                            closeContextualMenuComponent()
-                            if(FocusNavigator.doesLastFocusWasKeyboard()){
-                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
-                            }
-                        }
+                        onGoBack: closeContextualMenuComponent(true)
                     }
                 }
                 Component {
@@ -784,12 +780,7 @@ Item {
                 Component {
                     id: helpPageComponent
                     HelpPage {
-                        onGoBack: {
-                            closeContextualMenuComponent()
-                            if(FocusNavigator.doesLastFocusWasKeyboard()){
-                                mainItem.nextItemInFocusChain().forceActiveFocus(Qt.TabFocusReason)
-                            }
-                        }
+                        onGoBack: closeContextualMenuComponent(true)
                     }
                 }
                 Control.StackView {

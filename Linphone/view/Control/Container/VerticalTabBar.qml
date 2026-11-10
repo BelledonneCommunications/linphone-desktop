@@ -24,17 +24,25 @@ Control.TabBar {
 	function initButtons(){
 		actionsRepeater.model = mainItem.model
 	}
+	property int arrowActivationIndex: -1
 	function focusTab(fromIndex, step) {
 		for (var i = fromIndex + step; i >= 0 && i < mainItem.count; i += step) {
 			var tab = mainItem.itemAt(i)
 			if (tab && tab.visible) {
 				var entry = mainItem.model ? mainItem.model[i] : undefined
-				if (!(entry && entry.link))
-					mainItem.setCurrentIndex(i)
+				mainItem.arrowActivationIndex = entry && entry.link ? -1 : i
 				tab.forceActiveFocus(step > 0 ? Qt.TabFocusReason : Qt.BacktabFocusReason)
 				return
 			}
 		}
+	}
+	function activateArrowTarget(index) {
+		if (index < 0 || index !== mainItem.arrowActivationIndex)
+			return
+		mainItem.arrowActivationIndex = -1
+		var tab = mainItem.itemAt(index)
+		if (tab && tab.visible && tab.activeFocus && index !== mainItem.currentIndex)
+			mainItem.setCurrentIndex(index)
 	}
 	function updateVisibleCount() {
 		mainItem.visibleCount = 0
@@ -206,6 +214,7 @@ Control.TabBar {
 					event.accepted = true
 					mainItem.focusTab(TabBar.index, event.key === Qt.Key_Down || event.key === Qt.Key_Right ? 1 : -1)
 				} else if (event.key === Qt.Key_Tab || event.key === Qt.Key_Backtab) {
+					mainItem.activateArrowTarget(TabBar.index)
 					var forward = event.key === Qt.Key_Tab && !(event.modifiers & Qt.ShiftModifier)
 					var stop = mainItem.itemAt(mainItem.currentIndex) || tabButton
 					var next = stop.nextItemInFocusChain(forward)
@@ -215,6 +224,13 @@ Control.TabBar {
 					}
 				}
 			}
+			Keys.onReleased: event => {
+				if ((event.key === Qt.Key_Down || event.key === Qt.Key_Up || event.key === Qt.Key_Right || event.key === Qt.Key_Left) && !event.isAutoRepeat) {
+					event.accepted = true
+					mainItem.activateArrowTarget(TabBar.index)
+				}
+			}
+			onActiveFocusChanged: if (!activeFocus && mainItem.arrowActivationIndex === TabBar.index) mainItem.arrowActivationIndex = -1
 			Accessible.onPressAction: tabButton.clicked()
 			onClicked: {
 				mainItem.setCurrentIndex(TabBar.index)

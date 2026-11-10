@@ -194,7 +194,9 @@ ListView {
     property int lastMouseContainsIndex: -1
 
     delegate: FocusScope {
+        id: chatDelegate
         Accessible.ignored: true
+        Component.onCompleted: Qt.callLater(() => chatDelegate.Accessible.ignored = true)
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(63)

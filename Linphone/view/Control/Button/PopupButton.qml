@@ -57,11 +57,21 @@ Button {
 
     function exposeMenuItems(item) {
         if (!item || !item.visible)
-            return;
-        if (item.activeFocusOnTab && item.autoRepeat !== undefined && !item.checkable && item.Accessible.role !== Accessible.Link)
+            return 0;
+        var count = 0;
+        if (item.activeFocusOnTab && item.autoRepeat !== undefined && !item.checkable && item.Accessible.role !== Accessible.Link) {
             item.Accessible.role = Accessible.MenuItem;
+            ++count;
+        }
         for (var i = 0; i < item.children.length; ++i)
-            exposeMenuItems(item.children[i]);
+            count += exposeMenuItems(item.children[i]);
+        return count;
+    }
+
+    function announceMenu() {
+        var count = exposeMenuItems(popup.contentItem);
+        if (Qt.platform.os === "windows" && count > 0)
+            mainItem.Accessible.announce(qsTr("popup_menu_opened_accessible_announcement", "", count).arg(mainItem.Accessible.name));
     }
 
     function focusFirstItem() {
@@ -227,7 +237,11 @@ Button {
         Accessible.role: mainItem.isMenu ? Accessible.PopupMenu : Accessible.Dialog
         Accessible.name: mainItem.Accessible.name
         onAboutToShow: if (mainItem.isMenu) mainItem.exposeMenuItems(popup.contentItem)
-        onOpened: Qt.callLater(mainItem.focusFirstItem)
+        onOpened: {
+            if (mainItem.isMenu)
+                mainItem.announceMenu();
+            Qt.callLater(mainItem.focusFirstItem);
+        }
         onAboutToHide: {
             mainItem.restoreFocusOnClose = popup.activeFocus;
             var focused = mainItem.Window.activeFocusItem;

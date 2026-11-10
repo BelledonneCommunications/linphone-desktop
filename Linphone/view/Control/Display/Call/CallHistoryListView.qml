@@ -158,7 +158,9 @@ ListView {
     // So we need to use this variable to switch off all hovered items.
     property int lastMouseContainsIndex: -1
     delegate: FocusScope {
+        id: callHistoryDelegate
         Accessible.ignored: true
+        Component.onCompleted: Qt.callLater(() => callHistoryDelegate.Accessible.ignored = true)
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(56)

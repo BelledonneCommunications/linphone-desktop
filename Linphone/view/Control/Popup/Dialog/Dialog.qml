@@ -36,6 +36,7 @@ Popup {
 	property bool firstButtonAccept: true
 	property bool secondButtonAccept: false
 	property string accessibleMessage: [title, text, details].filter(function (part) { return part && part.length > 0 }).join(", ")
+	readonly property bool messageOnDialog: Qt.platform.os === "windows"
 
 	signal accepted()
 	signal rejected()
@@ -50,7 +51,9 @@ Popup {
 	}
 
 	onAboutToHide: {
-		if(mainItem.itemToFocusOnClose && mainItem.itemToFocusOnClose.visible && mainItem.quitWithKeyboard){
+		var focusItem = mainItem.contentItem.Window.activeFocusItem
+		var focusMovedOut = focusItem && focusItem.visible && focusItem.activeFocusOnTab && focusItem !== mainItem.contentItem && !Utils.isDescendant(focusItem, mainItem.contentItem)
+		if(!focusMovedOut && mainItem.itemToFocusOnClose && mainItem.itemToFocusOnClose.visible && mainItem.quitWithKeyboard){
 			// Focus last element that was focused before Dialog was opened
 			mainItem.itemToFocusOnClose.forceActiveFocus(Qt.TabFocusReason)
 		}
@@ -62,17 +65,20 @@ Popup {
 		if (!window || !window.contentItem || mainItem.visible)
 			return
 		var current = window.activeFocusItem
-		if (current && current !== window.contentItem && current.visible && !Utils.isDescendant(current, mainItem.contentItem))
+		var usable = current && current !== window.contentItem && current.visible && !Utils.isDescendant(current, mainItem.contentItem)
+		if (usable && current.activeFocusOnTab)
 			return
-		var next = window.contentItem.nextItemInFocusChain(true)
-		if (next && next !== window.contentItem)
+		var from = usable ? current : window.contentItem
+		var next = from.nextItemInFocusChain(true)
+		if (next && next !== from && next !== window.contentItem)
 			next.forceActiveFocus(withKeyboard ? Qt.TabFocusReason : Qt.OtherFocusReason)
 	}
 
 	contentItem: FocusScope {
 		Accessible.role: Accessible.Dialog
-		Accessible.name: mainItem.title.length > 0 ? mainItem.title : mainItem.text
-		Accessible.description: mainItem.details
+		Accessible.name: mainItem.messageOnDialog ? mainItem.accessibleMessage : mainItem.title.length > 0 ? mainItem.title : mainItem.text
+		Accessible.description: mainItem.messageOnDialog ? "" : mainItem.details
+		onParentChanged: if (parent) parent.Accessible.ignored = true
 		implicitWidth: child.implicitWidth
 		implicitHeight: child.implicitHeight
 		onVisibleChanged: {
@@ -164,7 +170,7 @@ Popup {
 					id:firstButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.firstButtonText
-					Accessible.name: mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
+					Accessible.name: !mainItem.messageOnDialog && mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
 					style: mainItem.firstButtonAccept ? ButtonStyle.main : ButtonStyle.secondary
 					focus: !mainItem.firstButtonAccept
 					focusPolicy: Qt.StrongFocus
@@ -187,7 +193,7 @@ Popup {
 					id: secondButtonId
 					visible: mainItem.buttons.length === 2
 					text: mainItem.secondButtonText
-					Accessible.name: !mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
+					Accessible.name: !mainItem.messageOnDialog && !mainItem.firstButtonAccept && mainItem.accessibleMessage.length > 0 ? mainItem.accessibleMessage + ", " + text : text
 					style: mainItem.firstButtonAccept ? ButtonStyle.secondary : ButtonStyle.main
 					focus: !mainItem.secondButtonAccept
 					focusPolicy: Qt.StrongFocus

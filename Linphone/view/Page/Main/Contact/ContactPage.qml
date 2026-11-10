@@ -65,6 +65,8 @@ AbstractMainPage {
             
         } else {
             rightPanelStackView.clear()
+            if (focusEditButton)
+                createContactButton.forceActiveFocus(Qt.TabFocusReason)
         }
     }
     onSelectedContactChanged: {

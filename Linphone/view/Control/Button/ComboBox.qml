@@ -74,7 +74,8 @@ Control.ComboBox {
 
     // Used for accessibility, contentItem remove value announcement from screen reader
     onCurrentTextChanged: {
-        Accessible.announce(currentText)
+        if (mainItem.activeFocus || mainItem.popup.visible)
+            Accessible.announce(currentText)
     }
 
     property bool ignoreEnterRelease: false
@@ -192,6 +193,8 @@ Control.ComboBox {
         padding: Utils.getSizeWithScreenRatio(1)
 
         onOpened: {
+            if (Qt.platform.os === "windows" && listView.count > 0)
+                mainItem.Accessible.announce(qsTr("combobox_opened_accessible_announcement", "", listView.count).arg(mainItem.accessibleLabel.length > 0 ? mainItem.accessibleLabel : mainItem.Accessible.name));
             listView.positionViewAtIndex(listView.currentIndex, ListView.Center);
             listView.forceActiveFocus();
         }
@@ -296,7 +299,9 @@ Control.ComboBox {
                 }
             }
 
-            Control.ScrollIndicator.vertical: Control.ScrollIndicator {}
+            Control.ScrollIndicator.vertical: Control.ScrollIndicator {
+                Accessible.ignored: true
+            }
         }
 
         background: Item {

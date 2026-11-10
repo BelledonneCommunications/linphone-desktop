@@ -3182,6 +3182,15 @@ Only your correspondent can decrypt them.</translation>
         <extracomment>%1 current value %2</extracomment>
         <translation>%1, %2</translation>
     </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Button/ComboBox.qml" line="196"/>
+        <source>combobox_opened_accessible_announcement</source>
+        <extracomment>&quot;%1 list, %n option(s)&quot;</extracomment>
+        <translation>
+            <numerusform>%1 list, %n option</numerusform>
+            <numerusform>%1 list, %n options</numerusform>
+        </translation>
+    </message>
 </context>
 <context>
     <name>ConferenceInfoCore</name>
@@ -6258,6 +6267,15 @@ Expiration : %1</translation>
         <location filename="../../view/Control/Button/PopupButton.qml" line="21"/>
         <source>popup_button_default_accessible_name</source>
         <translation>More options</translation>
+    </message>
+    <message numerus="yes">
+        <location filename="../../view/Control/Button/PopupButton.qml" line="76"/>
+        <source>popup_menu_opened_accessible_announcement</source>
+        <extracomment>&quot;%1 menu, %n item(s)&quot;</extracomment>
+        <translation>
+            <numerusform>%1 menu, %n item</numerusform>
+            <numerusform>%1 menu, %n items</numerusform>
+        </translation>
     </message>
     <message>
         <source>close_popup_panel_accessible_name</source>

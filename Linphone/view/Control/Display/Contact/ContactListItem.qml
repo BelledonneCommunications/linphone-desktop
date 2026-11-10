@@ -13,6 +13,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 FocusScope {
     id: mainItem
     Accessible.ignored: true
+    Component.onCompleted: Qt.callLater(() => mainItem.Accessible.ignored = true)
     implicitHeight: visible ? Utils.getSizeWithScreenRatio(56) : 0
     property var searchResultItem
     property bool showInitials: true // Display Initials of Display name.
