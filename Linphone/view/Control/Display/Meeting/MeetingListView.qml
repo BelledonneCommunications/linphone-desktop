@@ -205,6 +205,7 @@ ListView {
 	
 	delegate: FocusScope {
 		id: itemDelegate
+		Accessible.ignored: true
 		visible: !mainItem.loading
         height: Utils.getSizeWithScreenRatio(63) + weekHeader.height + topOffset
 		width: mainItem.width

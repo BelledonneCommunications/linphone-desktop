@@ -118,6 +118,7 @@ LoginLayout {
                         Layout.topMargin: Utils.getSizeWithScreenRatio(18)
 						text: "linphone.org/contact"
 						style: ButtonStyle.secondary
+						Accessible.role: Accessible.Link
 						onClicked: {
 							Qt.openUrlExternally(ConstantsCpp.ContactUrl)
 						}

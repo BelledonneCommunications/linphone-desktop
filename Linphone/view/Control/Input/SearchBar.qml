@@ -78,6 +78,8 @@ FocusScope {
 		property string searchText
 		//: Search bar : %1
 		Accessible.name: qsTr("search_bar_accessible_name").arg(mainItem.accessibleName)
+		Accessible.description: ""
+		Accessible.onDescriptionChanged: if (Accessible.description.length > 0) Accessible.description = ""
 
 		focus: true
 		placeholderText: mainItem.placeholderText

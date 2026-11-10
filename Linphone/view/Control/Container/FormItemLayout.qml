@@ -72,6 +72,7 @@ FocusScope{
 				icon.source: AppIcons.info
 				//: "Help about %1"
 				popUpTitle: qsTr("form_item_help_accessible_name").arg(mainItem.label)
+				isMenu: false
 				popup.contentItem: Text {
 					text: mainItem.tooltip
 				}

@@ -269,6 +269,11 @@ ColumnLayout {
 					onHoveredLinkChanged: {
 						mainItem.linkHovered = hoveredLink !== ""
 					}
+					AccessibleLinks {
+						anchors.fill: parent
+						richText: parent.text
+						onLinkActivated: (link) => parent.linkActivated(link)
+					}
 				}
 			}
 

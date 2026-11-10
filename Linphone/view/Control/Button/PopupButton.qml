@@ -12,6 +12,7 @@ Button {
     property alias popupBackgroundColor: popupBackground.color
     backgroundColor: checked ? pressedColor : hovered || mainItem.activeFocus ? hoveredColor : color
     property string popUpTitle: ""
+    property bool isMenu: true
     property int popupY: height
     Accessible.role: Accessible.ButtonMenu
     Accessible.onPressAction: {
@@ -52,6 +53,15 @@ Button {
                 return found;
         }
         return null;
+    }
+
+    function exposeMenuItems(item) {
+        if (!item || !item.visible)
+            return;
+        if (item.activeFocusOnTab && item.autoRepeat !== undefined && !item.checkable && item.Accessible.role !== Accessible.Link)
+            item.Accessible.role = Accessible.MenuItem;
+        for (var i = 0; i < item.children.length; ++i)
+            exposeMenuItems(item.children[i]);
     }
 
     function focusFirstItem() {
@@ -214,6 +224,9 @@ Button {
             }
         }
 
+        Accessible.role: mainItem.isMenu ? Accessible.PopupMenu : Accessible.Dialog
+        Accessible.name: mainItem.Accessible.name
+        onAboutToShow: if (mainItem.isMenu) mainItem.exposeMenuItems(popup.contentItem)
         onOpened: Qt.callLater(mainItem.focusFirstItem)
         onAboutToHide: {
             mainItem.restoreFocusOnClose = popup.activeFocus;

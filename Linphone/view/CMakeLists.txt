@@ -41,6 +41,7 @@ list(APPEND _LINPHONEAPP_QML_FILES
 	view/Control/Container/Contact/PresenceNoteLayout.qml
 	view/Control/Container/Main/MainRightPanel.qml
 
+	view/Control/Display/AccessibleLinks.qml
 	view/Control/Display/BusyIndicator.qml
 	view/Control/Display/EffectImage.qml
 	view/Control/Display/Flickable.qml

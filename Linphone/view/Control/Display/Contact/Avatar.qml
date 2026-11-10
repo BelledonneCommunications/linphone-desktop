@@ -77,6 +77,7 @@ Loader{
 			}
 			StackView {
 				id: stackView
+				Accessible.ignored: true
 				
 				initialItem: mainItem.haveAvatar ? avatar : initials
 				anchors.fill: parent

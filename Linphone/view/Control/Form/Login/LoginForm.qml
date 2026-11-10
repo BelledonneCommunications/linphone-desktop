@@ -133,6 +133,7 @@ ColumnLayout {
             //: "Mot de passe oublié ?"
             text: qsTr("assistant_forgotten_password")
 			underline: true
+			Accessible.role: Accessible.Link
 			onClicked: Qt.openUrlExternally(ConstantsCpp.PasswordRecoveryUrl)
 		}
 	

@@ -56,6 +56,18 @@ Popup {
 		}
 		mainItem.itemToFocusOnClose = null
 	}
+	onClosed: Qt.callLater(mainItem.ensureFocusAfterClose, mainItem.contentItem.Window.window, mainItem.quitWithKeyboard)
+
+	function ensureFocusAfterClose(window, withKeyboard) {
+		if (!window || !window.contentItem || mainItem.visible)
+			return
+		var current = window.activeFocusItem
+		if (current && current !== window.contentItem && current.visible && !Utils.isDescendant(current, mainItem.contentItem))
+			return
+		var next = window.contentItem.nextItemInFocusChain(true)
+		if (next && next !== window.contentItem)
+			next.forceActiveFocus(withKeyboard ? Qt.TabFocusReason : Qt.OtherFocusReason)
+	}
 
 	contentItem: FocusScope {
 		Accessible.role: Accessible.Dialog

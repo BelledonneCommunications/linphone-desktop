@@ -49,10 +49,16 @@ Rectangle {
 				text: line.text
 				color: DefaultStyle.main2_500_main
                 font.pixelSize: Utils.getSizeWithScreenRatio(14)
+				font.underline: line.enableMouseArea && activeFocus
 				horizontalAlignment: Layout.AlignLeft
+				activeFocusOnTab: line.enableMouseArea
+				Accessible.role: line.enableMouseArea ? Accessible.Link : Accessible.StaticText
+				Accessible.name: line.enableMouseArea ? line.title + ", " + text : text
+				Accessible.focusable: line.enableMouseArea
+				Accessible.onPressAction: if (line.enableMouseArea) line.contentClicked()
 				Keys.onPressed: (event)=> {
-					if (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return) {
-						line.contentClicked(undefined)
+					if (line.enableMouseArea && (event.key == Qt.Key_Space || event.key == Qt.Key_Enter || event.key == Qt.Key_Return)) {
+						line.contentClicked()
 						event.accepted = true;
 					}
 				}

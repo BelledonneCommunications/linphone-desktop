@@ -77,8 +77,12 @@ Popup {
 		id: autoClosePopup
 		interval: 5000
 		onTriggered: {
-			mainItem.close()
-		} 
+			var focusItem = mainItem.contentItem.Window.activeFocusItem
+			if (focusItem && Utils.isDescendant(focusItem, descriptionLinks))
+				restart()
+			else
+				mainItem.close()
+		}
 	}
 	contentItem: RowLayout {
         spacing: Utils.getSizeWithScreenRatio(24)
@@ -141,6 +145,13 @@ Popup {
 				font {
                     pixelSize: Utils.getSizeWithScreenRatio(12)
                     weight: Utils.getSizeWithScreenRatio(300)
+				}
+				AccessibleLinks {
+					id: descriptionLinks
+					anchors.fill: parent
+					richText: mainItem.description
+					tabStops: true
+					onLinkActivated: (link) => Qt.openUrlExternally(link)
 				}
 			}
 		}
