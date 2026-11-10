@@ -119,7 +119,7 @@ AbstractSettingsLayout {
 		ColumnLayout {
             spacing: Utils.getSizeWithScreenRatio(20)
 			HelpIconLabelButton {
-				actionable: false
+				actionable: true
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
@@ -143,7 +143,7 @@ AbstractSettingsLayout {
 				}
 			}
 			HelpIconLabelButton {
-				actionable: false
+				actionable: true
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
@@ -167,7 +167,7 @@ AbstractSettingsLayout {
 				}
 			}
 			HelpIconLabelButton {
-				actionable: false
+				actionable: true
 				// Layout.preferredWidth: width
 				// Layout.minimumWidth: width
 				iconSize: Utils.getSizeWithScreenRatio(24)
