@@ -19,6 +19,8 @@ Control.TextField {
 	// just reserve the space for the background
 	placeholderText: "0"
 	placeholderTextColor: "transparent"
+	Accessible.description: ""
+	Accessible.onDescriptionChanged: if (Accessible.description.length > 0) Accessible.description = ""
 
 	// cursorVisible is overwritten on focus change so useless to hide the cursor
 	cursorDelegate: Item{}

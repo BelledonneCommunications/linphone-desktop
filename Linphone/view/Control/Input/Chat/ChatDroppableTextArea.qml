@@ -86,6 +86,7 @@ Control.Control {
 				PopupButton {
 					id: emojiPickerButton
 					popUpTitle: qsTr("chat_emoji_picker_accessible_name")
+					isMenu: false
 					visible: !mainItem.isEditing
 					style: ButtonStyle.noBackground
 					icon.source: checked ? AppIcons.closeX : AppIcons.smiley

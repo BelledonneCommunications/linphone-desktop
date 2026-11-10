@@ -903,7 +903,7 @@ AbstractMainPage {
                                                             //: "VCard créée"
                                                             qsTr("contact_details_share_success_title"),
                                                             //: "VCard du contact enregistrée dans %1"
-                                                            qsTr("contact_details_share_success_mesage").arg(filepath))
+                                                            qsTr("contact_details_share_success_mesage").arg(Utils.buildFolderLink(filepath)))
                                             UtilsCpp.shareByEmail(
                                                         //: "Partage de contact"
                                                         qsTr("contact_details_share_email_title"),

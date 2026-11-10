@@ -323,6 +323,12 @@ LoginLayout {
                                 pixelSize: Typography.p1.pixelSize
                                 weight: Typography.p1.weight
                             }
+                            AccessibleLinks {
+                                anchors.fill: parent
+                                richText: privacyLinkText.text
+                                tabStops: true
+                                onLinkActivated: (link) => privacyLinkText.linkActivated(link)
+                            }
                             MouseArea {
                                 anchors.fill: parent
                                 acceptedButtons: Qt.LeftButton

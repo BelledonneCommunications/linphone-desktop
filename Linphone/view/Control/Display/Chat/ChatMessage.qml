@@ -627,6 +627,7 @@ Control.Control {
                         PopupButton {
                             id: emojiPickerButton
                             popUpTitle: qsTr("chat_message_more_emojis_accessible_name")
+                            isMenu: false
                             icon.source: AppIcons.plusCircle
                             popup.width: Utils.getSizeWithScreenRatio(393)
                             popup.height: Utils.getSizeWithScreenRatio(291)

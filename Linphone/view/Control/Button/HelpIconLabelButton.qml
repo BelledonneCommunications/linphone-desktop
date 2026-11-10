@@ -17,8 +17,9 @@ Control.Control {
 	property alias image: image
 	property int titleLineCount: 1
 	property bool actionable: true
+	property bool isLink: false
 	signal clicked()
-	Accessible.role: actionable ? Accessible.Button : Accessible.StaticText
+	Accessible.role: actionable ? (isLink ? Accessible.Link : Accessible.Button) : Accessible.StaticText
 	Accessible.name: subTitle.length > 0 ? title + ", " + subTitle : title
 	Accessible.onPressAction: if (actionable) mainItem.clicked()
 	width: content.implicitWidth

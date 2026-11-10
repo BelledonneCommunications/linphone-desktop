@@ -168,6 +168,7 @@ Control.Button {
 	contentItem: Control.StackView {
 		id: stacklayout
 		anchors.centerIn: parent
+		Accessible.ignored: true
 		function updateComponent(){
 			var item
 			var component = mainItem.text.length != 0 && mainItem.icon.source.toString().length != 0

@@ -12,6 +12,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 
 FocusScope {
     id: mainItem
+    Accessible.ignored: true
     implicitHeight: visible ? Utils.getSizeWithScreenRatio(56) : 0
     property var searchResultItem
     property bool showInitials: true // Display Initials of Display name.
@@ -268,7 +269,7 @@ FocusScope {
                                     //: VCard créée
                                     mainWindow.showInformationPopup(qsTr("information_popup_vcard_creation_title"),
                                                                     //: "VCard du contact enregistrée dans %1"
-                                                                    qsTr("information_popup_vcard_creation_success").arg(filepath))
+                                                                    qsTr("information_popup_vcard_creation_success").arg(Utils.buildFolderLink(filepath)))
                                 //: Partage de contact
                                 UtilsCpp.shareByEmail(qsTr("contact_sharing_email_title"),vcard, filepath)
                             }

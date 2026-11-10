@@ -28,6 +28,8 @@ TextEdit {
 	visible: contentGui && contentGui.core.isText
 	textMargin: 0
 	readOnly: true
+	Accessible.role: Accessible.StaticText
+	Accessible.name: contentGui ? contentGui.core.utf8Text : ""
 	selectByMouse: true
 	height: visible ? contentHeight: 0
 	clip: false
@@ -63,6 +65,11 @@ TextEdit {
 		}
 		else mouseArea.keepLastSelection = false
 		// deselect()
+	}
+	AccessibleLinks {
+		anchors.fill: parent
+		richText: mainItem.text
+		onLinkActivated: (link) => mainItem.linkActivated(link)
 	}
 	MouseArea {
 		id: mouseArea

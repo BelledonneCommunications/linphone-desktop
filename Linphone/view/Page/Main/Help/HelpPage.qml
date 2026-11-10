@@ -88,6 +88,7 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.detective
+				isLink: true
                 //: "Règles de confidentialité"
                 title: qsTr("help_about_privacy_policy_title")
                 //: Quelles informations %1 collecte et utilise
@@ -120,6 +121,7 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.license
+				isLink: true
                 //: "Licences GPLv3"
                 title: qsTr("help_about_gpl_licence_title")
 				subTitle: (copyrightRangeDate || applicationVendor ? '\u00A9 ': '') + (copyrightRangeDate ? copyrightRangeDate : '')+ (applicationVendor ? ' ' + applicationVendor : '')
@@ -131,6 +133,7 @@ AbstractMainPage {
 			HelpIconLabelButton {
 				Layout.fillWidth: true
 				iconSource: AppIcons.world
+				isLink: true
 				titleLineCount: 2
                 //: "Contribuer à la traduction de %1"
                 title: qsTr("help_about_contribute_translations_title").arg(applicationName)

@@ -441,6 +441,7 @@ Item {
                             popup.rightPadding: Utils.getSizeWithScreenRatio(24)
                             //: "Account list"
                             popUpTitle: qsTr("account_list_accessible_name")
+                            isMenu: false
                             contentItem: Item {
                                 Avatar {
                                     id: avatar

@@ -28,6 +28,9 @@ Control.TabBar {
 		for (var i = fromIndex + step; i >= 0 && i < mainItem.count; i += step) {
 			var tab = mainItem.itemAt(i)
 			if (tab && tab.visible) {
+				var entry = mainItem.model ? mainItem.model[i] : undefined
+				if (!(entry && entry.link))
+					mainItem.setCurrentIndex(i)
 				tab.forceActiveFocus(step > 0 ? Qt.TabFocusReason : Qt.BacktabFocusReason)
 				return
 			}

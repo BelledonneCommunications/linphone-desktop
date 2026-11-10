@@ -25,23 +25,15 @@ Control.TextField {
 
     property string accessibleName
     property string accessibleError
-    Accessible.name: accessibleName
+    Accessible.name: accessibleName.length > 0 ? accessibleName : placeholderText
     onAccessibleNameChanged: updateAccessibleDescription()
-    onAccessibleErrorChanged: {
-        if (echoMode !== TextInput.Password)
-            Accessible.description = accessibleError
-        updateAccessibleDescription()
-    }
-    onEchoModeChanged: {
-        if (echoMode !== TextInput.Password)
-            Accessible.description = accessibleError
-        updateAccessibleDescription()
-    }
+    onAccessibleErrorChanged: updateAccessibleDescription()
+    onEchoModeChanged: updateAccessibleDescription()
     Accessible.onDescriptionChanged: updateAccessibleDescription()
     function updateAccessibleDescription() {
-        if (echoMode !== TextInput.Password)
-            return
-        var description = [accessibleName, accessibleError].filter(part => part.length > 0).join(", ")
+        var description = echoMode === TextInput.Password
+            ? [accessibleName, accessibleError].filter(part => part.length > 0).join(", ")
+            : accessibleError
         if (Accessible.description !== description)
             Accessible.description = description
     }

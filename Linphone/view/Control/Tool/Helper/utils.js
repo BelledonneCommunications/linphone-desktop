@@ -708,6 +708,34 @@ function unscapeHtml (str) {
 
 // -----------------------------------------------------------------------------
 
+function buildFolderLink (filePath) {
+  var url = encodeURI(getUriFromSystemPath(dirname(filePath))).replace(/'/g, '%27')
+  var label = filePath.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+  return "<a href='" + url + "'>" + label + '</a>'
+}
+
+function extractLinks (richText) {
+  var links = []
+  if (!richText)
+    return links
+  var anchor = /<a\s[^>]*href\s*=\s*(["'])(.*?)\1[^>]*>([\s\S]*?)<\/a>/gi
+  var match
+  while ((match = anchor.exec(richText)) !== null) {
+    var label = match[3].replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&quot;/g, '"')
+      .replace(/&#0?39;/g, "'")
+      .replace(/&amp;/g, '&')
+      .replace(/\u2063/g, '')
+      .trim()
+    var url = match[2].replace(/&amp;/g, '&')
+    links.push({ url: url, label: label.length > 0 ? label : url })
+  }
+  return links
+}
+
 function write (fileName, text) {
   // TODO: Deal with async.
   var request = new XMLHttpRequest()

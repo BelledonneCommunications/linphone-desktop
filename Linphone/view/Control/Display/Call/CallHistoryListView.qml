@@ -159,6 +159,7 @@ ListView {
     property int lastMouseContainsIndex: -1
     delegate: FocusScope {
         objectName: "callHistoryEntry"
+        Accessible.ignored: true
         visible: !mainItem.loading
         width: mainItem.width
         height: Utils.getSizeWithScreenRatio(56)
