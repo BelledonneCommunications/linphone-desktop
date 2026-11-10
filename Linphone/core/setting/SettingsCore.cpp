@@ -568,7 +568,7 @@ void SettingsCore::setSelf(QSharedPointer<SettingsCore> me) {
 		auto overridenValue = SettingsModel::getInstance()->getDisableMeetingsFeature();
 		auto defaultAccount = CoreModel::getInstance()->getCore()->getDefaultAccount();
 		bool disableFeature =
-		    overridenValue || !defaultAccount || !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress();
+		    overridenValue || defaultAccount && !defaultAccount->getParams()->getAudioVideoConferenceFactoryAddress();
 		mSettingsModelConnection->invokeToCore([this, disableFeature]() { setDisableMeetingsFeature(disableFeature); });
 	});
 
