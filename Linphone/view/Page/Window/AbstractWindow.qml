@@ -137,6 +137,8 @@ ApplicationWindow {
                                 }
                                 Text {
                                     Layout.leftMargin: Utils.getSizeWithScreenRatio(5)
+                                    Layout.fillWidth: true
+                                    maximumLineCount: 1
                                     text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(modelData.address) : modelData.address
                                     font {
                                         pixelSize: Typography.p1.pixelSize
