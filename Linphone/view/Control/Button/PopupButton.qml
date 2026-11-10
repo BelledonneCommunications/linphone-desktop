@@ -83,29 +83,34 @@ Button {
         return _getNextItem(popup.contentItem instanceof FocusScope ? popup.contentItem.children[0] : popup.contentItem, index);
     }
 
+    function _isNavigable(item) {
+        return item && item.visible && isFocusable(item)
+    }
+
     function _getPreviousItem(content, index) {
-        if (!content.visible) return null
-        if (content.visibleChildren.length == 0 || !hasFocusableChild(content))
-            return null;
-        --index;
-        while (index >= 0) {
-            if (isFocusable(content.children[index]) && content.children[index].visible)
-                return content.children[index];
-            --index;
+        if (!content || !content.visible) return null
+        var count = content.children.length
+        if (count === 0) return null
+
+        for (var i = 1; i <= count; ++i) {
+            var child = content.children[((index - i) % count + count) % count]
+            if (_isNavigable(child))
+                return child
         }
-        return _getPreviousItem(content, content.visibleChildren.length);
+        return null
     }
 
     function _getNextItem(content, index) {
-        if (content.visibleChildren.length == 0 || !hasFocusableChild(content))
-            return null;
-        ++index;
-        while (index < content.children.length) {
-            if (isFocusable(content.children[index]) && content.children[index].visible)
-                return content.children[index];
-            ++index;
+        if (!content || !content.visible) return null
+        var count = content.children.length
+        if (count === 0) return null
+
+        for (var i = 1; i <= count; ++i) {
+            var child = content.children[(index + i) % count]
+            if (_isNavigable(child))
+                return child
         }
-        return _getNextItem(content, -1);
+        return null
     }
 
     Keys.onPressed: event => {

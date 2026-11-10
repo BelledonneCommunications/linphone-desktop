@@ -326,7 +326,7 @@ ListView {
 				}
 				MediumButton {
 					id: secondButtonId
-					visible: messageDeletionDialog.chatMessage.core.isOutgoing && messageDeletionDialog.chatMessage.core.isRetractable && !messageDeletionDialog.chatMessage.core.isRetracted
+					visible: messageDeletionDialog.chatMessage.core?.isOutgoing && messageDeletionDialog.chatMessage.core?.isRetractable && !messageDeletionDialog.chatMessage.core?.isRetracted || false
 					text: qsTr("conversation_dialog_delete_for_everyone_label")
 					style: ButtonStyle.main
 					onClicked: {
