@@ -148,29 +148,28 @@ void NotificationBackend::sendCallNotification(QVariantMap data) {
 	auto callDescription = tr("incoming_call").toStdWString();
 
 	QList<ToastButton> actions;
-	QString declineIcon = Utils::getIconAsPng(Utils::getAppIcon("endCall").toString());
-	QString acceptIcon = Utils::getIconAsPng(Utils::getAppIcon("phone").toString());
 	auto appIcon = Utils::getIconAsPng(Utils::getAppIcon("logo").toString()).toStdWString();
 	//: Accept
-	actions.append(ToastButton(tr("accept_button"), "accept", acceptIcon));
+	actions.append(ToastButton(tr("accept_button"), "accept"));
 	//: Decline
-	actions.append(ToastButton(tr("decline_button"), "decline", declineIcon));
+	actions.append(ToastButton(tr("decline_button"), "decline"));
 	std::wstring wActions;
 	if (!actions.isEmpty()) {
 		wActions += L"<actions>";
 		for (const auto &action : actions) {
 			std::wstring wLabel = action.label.toStdWString();
 			std::wstring wArg = action.argument.toStdWString();
-			std::wstring wIcon = action.icon.toStdWString();
-			qDebug() << "toast icon action" << wIcon;
-			wActions +=
-			    L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\" imageUri=\"" + wIcon + L"\"/>";
+			std::wstring wStyle = action.argument == "accept"    ? L"Success"
+			                      : action.argument == "decline" ? L"Critical"
+			                                                     : L"";
+			wActions += L"<action content=\"" + wLabel + L"\" arguments=\"" + wArg + L"\"" +
+			            (wStyle.empty() ? std::wstring() : L" hint-buttonStyle=\"" + wStyle + L"\"") + L"/>";
 		}
 		wActions += L"</actions>";
 	}
 
 	std::wstring xml =
-	    L"<toast scenario=\"reminder\">"
+	    L"<toast scenario=\"incomingCall\" useButtonStyle=\"true\">"
 	    L"    <visual>"
 	    L"        <binding template=\"ToastGeneric\">"
 	    L"            <image src=\"file:///" +
