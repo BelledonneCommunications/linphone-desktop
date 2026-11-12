@@ -1220,13 +1220,15 @@ AbstractWindow {
             Component {
                 id: chatPanel
                 Control.Control {
+                    id: chatPanelIn
                     objectName: "chatPanel"
                     width: parent.width
                     Component.onCompleted: chatView.forceActiveFocus()
-                    contentItem: SelectedChatView {
+                    SelectedChatView {
                         id: chatView
                         width: parent.width
                         height: rightPanel.contentItemHeight
+                        useHeaderVerticalLayout: false
                         Keys.onEscapePressed: event => {
                             rightPanel.visible = false
                             event.accepted = true

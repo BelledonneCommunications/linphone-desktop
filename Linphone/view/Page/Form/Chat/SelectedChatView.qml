@@ -20,6 +20,7 @@ FocusScope {
     property alias messagesLoading: chatMessagesListView.loading
     property CallGui call
     property alias callHeaderContent: splitPanel.header.contentItem
+    property alias useHeaderVerticalLayout: chatHeader.useVerticalLayout
     property bool replyingToMessage: false
     property bool editingMessage: false
     property bool backButtonVisible: false
