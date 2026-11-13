@@ -1455,7 +1455,7 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="78"/>
         <source>settings_calls_enable_video_title</source>
         <extracomment>&quot;Autoriser la vidéo&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar video</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
@@ -1472,7 +1472,7 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Cambiar tono de llamada</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
@@ -1727,12 +1727,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1721"/>
         <source>call_action_go_to_settings</source>
@@ -1879,7 +1873,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1442"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1443"/>
         <source>call_activate_video_hint</source>
-        <translation type="unfinished"></translation>
+        <translation>Habilitar video</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1460"/>
@@ -2037,12 +2031,12 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="97"/>
         <source>settings_contacts_carddav_server_url_title</source>
         <extracomment>&quot;URL du serveur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>URL del servidor</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="105"/>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de Usuario</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="113"/>
@@ -2077,7 +2071,7 @@
     <message>
         <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="28"/>
         <source>conference_layout_active_speaker</source>
-        <translation type="unfinished"></translation>
+        <translation>Altavoz activo</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Call/ChangeLayoutForm.qml" line="29"/>
@@ -2169,7 +2163,7 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Marcar como leído</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
@@ -2200,6 +2194,11 @@
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="15"/>
+        <source>chat_list_accessible_name</source>
+        <translation>Conversaciones</translation>
     </message>
 </context>
 <context>
@@ -2268,7 +2267,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Responder</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
@@ -2529,7 +2528,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="100"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conversaciones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="121"/>
@@ -2571,7 +2570,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="288"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="304"/>
@@ -2936,7 +2935,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="76"/>
         <source>create</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="84"/>
@@ -3549,13 +3548,13 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="133"/>
         <source>settings_debug_app_version_title</source>
         <extracomment>&quot;Version de l&apos;application&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Versión de la aplicación</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="162"/>
         <source>settings_debug_sdk_version_title</source>
         <extracomment>&quot;Version du SDK&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Versión SDK</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/DebugSettingsLayout.qml" line="191"/>
@@ -3593,7 +3592,7 @@ Error</extracomment>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="27"/>
         <source>dialog_confirm</source>
         <extracomment>&quot;Confirmer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="26"/>
@@ -3872,7 +3871,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="70"/>
@@ -3897,7 +3896,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Versión</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="104"/>
@@ -3915,12 +3914,17 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="140"/>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Solución de problemas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
         <source>help_check_for_update_button_label</source>
         <translation>Comprobar actualización</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>Avanzado</translation>
     </message>
 </context>
 <context>
@@ -4069,7 +4073,7 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>username</source>
         <extracomment>Nom d&apos;utilisateur : username</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de Usuario</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="36"/>
@@ -4135,7 +4139,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Versión</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="102"/>
@@ -4180,7 +4184,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;S&apos;inscrire&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="97"/>
@@ -4215,7 +4219,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="143"/>
         <source>validate</source>
         <extracomment>&quot;Valider&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Confirmar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="155"/>
@@ -4246,46 +4250,22 @@ Error</extracomment>
         <translation>Llamadas</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contactos</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conversaciones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reuniones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -4362,7 +4342,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="512"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ayuda</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="527"/>
@@ -4494,6 +4474,11 @@ Error</extracomment>
         <source>info_popup_error_title</source>
         <translation>Error</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="75"/>
+        <source>apply_button_text</source>
+        <translation>Aplicar</translation>
+    </message>
 </context>
 <context>
     <name>MeetingForm</name>
@@ -4558,6 +4543,11 @@ Error</extracomment>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="16"/>
+        <source>meeting_list_accessible_name</source>
+        <translation>Reuniones</translation>
+    </message>
 </context>
 <context>
     <name>MeetingPage</name>
@@ -4613,7 +4603,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="187"/>
         <source>meetings_list_title</source>
         <extracomment>Réunions</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reuniones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="226"/>
@@ -4643,7 +4633,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="331"/>
         <source>create</source>
-        <translation type="unfinished"></translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="338"/>
@@ -4727,7 +4717,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="605"/>
         <source>meeting_schedule_add_participants_apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Aplicar</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
@@ -4884,7 +4874,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="14"/>
         <source>settings_network_title</source>
         <extracomment>&quot;Réseau&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/NetworkSettingsLayout.qml" line="31"/>
@@ -4929,7 +4919,7 @@ Error</extracomment>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="117"/>
         <source>dialog_accept</source>
         <extracomment>&quot;Accepter&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Aceptar</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="135"/>
@@ -5121,18 +5111,6 @@ Error</extracomment>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -5282,7 +5260,7 @@ Error</extracomment>
         <location filename="../../tool/LinphoneEnums.cpp" line="250"/>
         <source>conference_layout_active_speaker</source>
         <extracomment>&quot;Participant actif&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Altavoz activo</translation>
     </message>
     <message>
         <location filename="../../tool/LinphoneEnums.cpp" line="252"/>
@@ -5352,7 +5330,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;Inscription</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="77"/>
@@ -5378,7 +5356,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="142"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de Usuario</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
@@ -5393,7 +5371,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
         <source>domain</source>
-        <translation type="unfinished"></translation>
+        <translation>Dominio</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="177"/>
@@ -5401,7 +5379,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="183"/>
         <source>phone_number</source>
         <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Número de teléfono</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="189"/>
@@ -5438,13 +5416,13 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="273"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>política de privacidad</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="298"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Crear</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="303"/>
@@ -5501,7 +5479,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>S&apos;inscrire</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Registrar</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="110"/>
@@ -5522,14 +5500,14 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="145"/>
         <source>assistant_third_party_sip_account_warning_ok</source>
         <extracomment>&quot;Je comprends&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Yo entiendo</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="190"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
         <source>username</source>
         <extracomment>&quot;Nom d&apos;utilisateur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de Usuario</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
@@ -5549,7 +5527,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>sip_address_domain</source>
         <extracomment>&quot;Domaine&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Dominio</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="245"/>
@@ -5563,7 +5541,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="276"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Transporte</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="298"/>
@@ -5618,7 +5596,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ID de autenticación (si es diferente)</translation>
     </message>
 </context>
 <context>
@@ -5717,7 +5695,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="76"/>
         <source>dialog_continue</source>
         <extracomment>&quot;Continuer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Continuar</translation>
     </message>
 </context>
 <context>
@@ -5732,7 +5710,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Layout/Settings/SecuritySettingsLayout.qml" line="30"/>
         <source>settings_security_enable_vfs_subtitle</source>
         <extracomment>&quot;Attention, vous ne pourrez pas revenir en arrière !&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Advertencia: una vez habilitado, ¡no se puede deshabilitar!</translation>
     </message>
 </context>
 <context>
@@ -5770,7 +5748,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conversaciones</translation>
     </message>
     <message>
         <source>chat_cancel_composer_accessible_name</source>
@@ -5787,12 +5765,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -5818,7 +5790,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Conversaciones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
@@ -5830,13 +5802,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="23"/>
         <source>settings_meetings_title</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Reuniones</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
         <source>settings_network_title</source>
         <extracomment>&quot;Affichage&quot; &quot;Security&quot; &quot;Réseau&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Red</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="31"/>
@@ -6091,13 +6063,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="354"/>
         <source>today</source>
         <extracomment>&quot;Aujourd&apos;hui&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hoy</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="356"/>
         <source>yesterday</source>
         <extracomment>&quot;Hier</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ayer</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="381"/>
@@ -6197,6 +6169,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <extracomment>&quot;Vous allez rejoindre la réunion dans quelques instants…&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="44"/>
+        <source>call_activate_video_hint</source>
+        <translation>Habilitar video</translation>
+    </message>
 </context>
 <context>
     <name>WelcomePage</name>
@@ -6204,7 +6181,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="16"/>
         <source>welcome_page_title</source>
         <extracomment>&quot;Bienvenue&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Bienvenido</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="32"/>
@@ -6228,7 +6205,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="85"/>
         <source>welcome_page_2_title</source>
         <extracomment>&quot;Sécurisé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Segura</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="87"/>
@@ -6252,7 +6229,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="122"/>
         <source>next</source>
         <extracomment>&quot;Suivant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Siguiente</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="124"/>
@@ -7635,6 +7612,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="65"/>
         <source>incoming_call</source>
         <translation>Llamada entrante</translation>
+    </message>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Aceptar</translation>
     </message>
 </context>
 <context>

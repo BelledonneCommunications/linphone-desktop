@@ -1898,12 +1898,6 @@
         <translation>Arama listesi</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1072"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation>Tüm aramaları birleştir</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="770"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1902"/>
         <source>call_action_go_to_settings</source>
@@ -5032,22 +5026,10 @@ Error</extracomment>
         <translation>Aramalar</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="168"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation>Aramalar sayfasını aç</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="174"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Kişiler</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="176"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation>Kişiler sayfasını aç</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="182"/>
@@ -5056,22 +5038,10 @@ Error</extracomment>
         <translation>Sohbetler</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="184"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation>Sohbetler sayfasını aç</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="191"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Toplantılar</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="193"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation>Toplantılar sayfasını aç</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="256"/>
@@ -6143,18 +6113,6 @@ Error</extracomment>
         <extracomment>&quot;More options&quot;</extracomment>
         <translation>Daha fazla seçenek</translation>
     </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation>%1 açılır penceresini kapat</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="21"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation>%1 açılır penceresini aç</translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -7113,12 +7071,6 @@ Ticari bir projede bunları etkinleştirmek için lütfen bizimle iletişime ge�
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation>%1 ayarları</translation>
-    </message>
 </context>
 <context>
     <name>SettingsModel</name>

@@ -501,6 +501,11 @@
         <source>voicemail_address_tooltip</source>
         <translation>SIP-адреса, набрана під час натискання кнопки голосової пошти</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="282"/>
+        <source>account_settings_ccmp_server_url_title</source>
+        <translation>URL-адреса сервера CCMP</translation>
+    </message>
 </context>
 <context>
     <name>AddParticipantsForm</name>
@@ -979,6 +984,11 @@
         <extracomment>&quot;Appel Video&quot;</extracomment>
         <translation>Відеодзвінок</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="155"/>
+        <source>contact_conversation_action</source>
+        <translation>Розмова</translation>
+    </message>
 </context>
 <context>
     <name>CallHistoryListView</name>
@@ -1002,6 +1012,11 @@
         <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="266"/>
         <source>call_audio_incoming</source>
         <translation>Вихідний виклик</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="14"/>
+        <source>call_history_list_accessible_name</source>
+        <translation>Історія дзвінків</translation>
     </message>
 </context>
 <context>
@@ -1190,7 +1205,7 @@
         <location filename="../../model/call/CallModel.cpp" line="388"/>
         <source>call_error_server_timeout_toast</source>
         <extracomment>&quot;Server timeout&quot;</extracomment>
-        <translation type="unfinished">Час очікування сервера</translation>
+        <translation>Сервер не відповідає</translation>
     </message>
 </context>
 <context>
@@ -1452,7 +1467,7 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
         <source>settings_calls_change_ringtone_title</source>
         <extracomment>&quot;Change ringtone&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Змінити мелодію дзвінка</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
@@ -1679,12 +1694,6 @@
         <source>call_action_go_to_calls_list</source>
         <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
         <translation>Список викликів</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation>Об&apos;єднати всі дзвінки</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
@@ -2077,7 +2086,7 @@
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="154"/>
         <source>chat_view_send_area_placeholder_text</source>
         <extracomment>Say something… : placeholder text for sending message text area</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Скажіть щось…</translation>
     </message>
     <message>
         <location filename="../../view/Control/Input/Chat/ChatDroppableTextArea.qml" line="190"/>
@@ -2112,7 +2121,7 @@
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
         <source>chat_room_mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути звук</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="368"/>
@@ -2124,7 +2133,7 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Позначити як прочитане</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
@@ -2173,7 +2182,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="433"/>
         <source>chat_message_copy</source>
         <extracomment>&quot;Copy&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="441"/>
@@ -2197,7 +2206,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="96"/>
         <source>chat_message_forwarded</source>
         <extracomment>Forwarded</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Перенаправлено</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="127"/>
@@ -2227,13 +2236,13 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Відповісти</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
         <source>chat_message_forward</source>
         <extracomment>Forward</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Переслати</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="467"/>
@@ -2245,6 +2254,11 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="462"/>
         <source>menu_edit_chat_message</source>
         <translation>Редагувати</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="500"/>
+        <source>chat_message_send_again</source>
+        <translation>Надіслати повторно</translation>
     </message>
 </context>
 <context>
@@ -2328,7 +2342,7 @@ Error</extracomment>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="155"/>
         <source>all_reactions_label</source>
         <extracomment>&quot;Reactions&quot;: all reactions for one message label</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Реакції</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/ChatMessageCore.cpp" line="211"/>
@@ -2359,13 +2373,13 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="63"/>
         <source>ics_bubble_meeting_modified</source>
         <extracomment>Meeting has been updated</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нараду оновлено</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="66"/>
         <source>ics_bubble_meeting_cancelled</source>
         <extracomment>Meeting has been canceled</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нараду скасовано</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="171"/>
@@ -2376,7 +2390,7 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="234"/>
         <source>ics_bubble_description_title</source>
         <extracomment>Description</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Опис</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessageInvitationBubble.qml" line="286"/>
@@ -2459,6 +2473,11 @@ Error</extracomment>
         <source>dialog_cancel</source>
         <translation>Скасувати</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="13"/>
+        <source>chat_messages_list_accessible_name</source>
+        <translation>Повідомлення</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2466,7 +2485,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="14"/>
         <source>chat_start_title</source>
         <extracomment>&quot;Nouvelle conversation&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нова розмова</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="16"/>
@@ -2520,7 +2539,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="249"/>
         <source>chat_action_start_new_chat</source>
         <extracomment>&quot;New chat&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Нова розмова</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="286"/>
@@ -3272,7 +3291,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
         <source>one_one_infos_mute</source>
-        <translation type="unfinished"></translation>
+        <translation>Вимкнути звук</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="270"/>
@@ -3295,7 +3314,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="304"/>
         <source>group_infos_shared_docs</source>
         <extracomment>Shared documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Спільні документи</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="317"/>
@@ -3317,7 +3336,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="225"/>
         <source>group_infos_meeting</source>
         <extracomment>Schedule a meeting</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Запланувати нараду</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="334"/>
@@ -3593,7 +3612,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="57"/>
         <source>title</source>
-        <translation type="unfinished"></translation>
+        <translation>Тимчасові повідомлення</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="76"/>
@@ -3603,22 +3622,22 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="21"/>
         <source>one_minute</source>
-        <translation type="unfinished"></translation>
+        <translation>1 хвилина</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="22"/>
         <source>one_hour</source>
-        <translation type="unfinished"></translation>
+        <translation>1 година</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="23"/>
         <source>one_day</source>
-        <translation type="unfinished"></translation>
+        <translation>1 доба</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="24"/>
         <source>one_week</source>
-        <translation type="unfinished"></translation>
+        <translation>1 тиждень</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="25"/>
@@ -3640,12 +3659,12 @@ Error</extracomment>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="107"/>
         <source>conference_created_event</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви приєдналися до групи</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="110"/>
         <source>conference_created_terminated</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви вийшли з групи</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/EventLogCore.cpp" line="114"/>
@@ -3754,12 +3773,12 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_give_admin_rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Надайте права адміністратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="143"/>
         <source>group_infos_remove_admin_rights</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити права адміністратора</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/GroupChatInfoParticipants.qml" line="155"/>
@@ -3859,6 +3878,11 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="109"/>
         <source>help_check_for_update_button_label</source>
         <translation>Перевірити наявність оновлень</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>Розширений</translation>
     </message>
 </context>
 <context>
@@ -4184,22 +4208,10 @@ Error</extracomment>
         <translation>Виклики</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Контакти</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
@@ -4208,22 +4220,10 @@ Error</extracomment>
         <translation>Розмови</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Наради</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -4429,7 +4429,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
-        <translation type="unfinished"></translation>
+        <translation>Учасники</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="29"/>
@@ -4439,6 +4439,11 @@ Error</extracomment>
     <message>
         <source>panel_back_accessible_name</source>
         <translation>Назад</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="75"/>
+        <source>apply_button_text</source>
+        <translation>Застосувати</translation>
     </message>
 </context>
 <context>
@@ -4487,6 +4492,11 @@ Error</extracomment>
     <message>
         <source>remove_participant_accessible_name</source>
         <translation>Видалити учасника %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Meeting/MeetingForm.qml" line="231"/>
+        <source>meeting_description_accessible_name</source>
+        <translation>Опис</translation>
     </message>
 </context>
 <context>
@@ -4682,7 +4692,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="605"/>
         <source>meeting_schedule_add_participants_apply</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати</translation>
     </message>
     <message numerus="yes">
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="615"/>
@@ -4733,6 +4743,11 @@ Error</extracomment>
         <source>panel_back_accessible_name</source>
         <translation>Назад</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="715"/>
+        <source>meeting_edit_accessible_name</source>
+        <translation>Редагувати нараду</translation>
+    </message>
 </context>
 <context>
     <name>MeetingsSettingsLayout</name>
@@ -4754,6 +4769,11 @@ Error</extracomment>
         <extracomment>&quot;Le mode d’affichage des participants en réunions&quot;</extracomment>
         <translation>Як відображаються учасники на нарадах</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="63"/>
+        <source>settings_meetings_show_past_meetings_title</source>
+        <translation>Показати минулі зустрічі</translation>
+    </message>
 </context>
 <context>
     <name>MessageImdnStatusInfos</name>
@@ -4770,7 +4790,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="12"/>
         <source>message_details_reactions_title</source>
         <extracomment>Reactions</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Реакції</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/MessageReactionsInfos.qml" line="55"/>
@@ -5068,6 +5088,11 @@ Error</extracomment>
         <source>remove_participant_accessible_name</source>
         <translation>Видалити учасника %1</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Participant/ParticipantListView.qml" line="12"/>
+        <source>participant_list_accessible_name</source>
+        <translation>Учасники</translation>
+    </message>
 </context>
 <context>
     <name>PhoneNumberInput</name>
@@ -5086,18 +5111,6 @@ Error</extracomment>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -5441,6 +5454,16 @@ Error</extracomment>
         <extracomment>&quot;Veuillez entrer un email&quot;</extracomment>
         <translation>Будь ласка, введіть email</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="24"/>
+        <source>phone_number_validation_not_available_title</source>
+        <translation>Перевірка номера телефону недоступна</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="28"/>
+        <source>register_with_email_button</source>
+        <translation>Зареєструватися за допомогою електронної пошти</translation>
+    </message>
 </context>
 <context>
     <name>SIPLoginPage</name>
@@ -5587,7 +5610,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ідентифікатор автентифікації (якщо відрізняється)</translation>
     </message>
 </context>
 <context>
@@ -5727,7 +5750,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="609"/>
         <source>shared_documents_title</source>
         <extracomment>Shared documents</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Спільні документи</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="638"/>
@@ -5756,12 +5779,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -5892,6 +5909,11 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../model/tool/ToolModel.cpp" line="527"/>
         <source>conference_invitation_updated</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../model/tool/ToolModel.cpp" line="706"/>
+        <source>Dummy subject</source>
+        <translation>Фіктивний суб&apos;єкт</translation>
     </message>
 </context>
 <context>
@@ -7663,6 +7685,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>call_action_resume_call</source>
         <translation>Відновити виклик</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="350"/>
+        <source>dtmf_pad_resume_button</source>
+        <translation>Продовжити</translation>
+    </message>
 </context>
 <context>
     <name>MessageInfosLayout</name>
@@ -7677,6 +7704,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>media_stop_recording_accessible_name</source>
         <translation>Зупинити запис</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/MediaProgressBar.qml" line="137"/>
+        <source>media_pause_accessible_name</source>
+        <translation>Пауза</translation>
+    </message>
 </context>
 <context>
     <name>InformationPopup</name>
@@ -7690,6 +7722,14 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <source>close_accessible_name</source>
         <translation>Закрити</translation>
+    </message>
+</context>
+<context>
+    <name>ContactSharedFiles</name>
+    <message>
+        <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
+        <source>contact_shared_documents_title</source>
+        <translation>Спільні документи</translation>
     </message>
 </context>
 </TS>

@@ -4358,12 +4358,12 @@ Sie sind dabei, &quot;%1&quot; anzurufen. Möchten Sie fortfahren?</translation>
     <message>
         <location filename="../../model/core/CoreModel.cpp" line="501"/>
         <source>info_popup_local_network_denied_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Zugriff auf das lokale Netzwerk verweigert</translation>
     </message>
     <message>
         <location filename="../../model/core/CoreModel.cpp" line="502"/>
         <source>info_popup_local_network_denied_message</source>
-        <translation type="unfinished"></translation>
+        <translation>Lokale Anrufe funktionieren möglicherweise nicht. Erlauben Sie %1 unter Systemeinstellungen &gt; Datenschutz &amp; Sicherheit &gt; Lokales Netzwerk und starten Sie %1 anschließend neu.</translation>
     </message>
 </context>
 <context>

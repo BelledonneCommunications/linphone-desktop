@@ -1752,12 +1752,6 @@
         <translation>ລາຍການສາຍໂທ</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1055"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation>ຮວມສາຍທັງໝົດ</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="771"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1868"/>
         <source>call_action_go_to_settings</source>
@@ -2364,7 +2358,7 @@
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="319"/>
         <source>conversation_message_edited_label</source>
-        <translation type="unfinished"></translation>
+        <translation>ແກ້ໄຂແລ້ວ</translation>
     </message>
 </context>
 <context>
@@ -2621,7 +2615,7 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="280"/>
         <source>conversation_dialog_delete_chat_message_title</source>
         <extracomment>&quot;Supprimer le message ?&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ລຶບຂໍ້ຄວາມນີ້ບໍ?</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="288"/>
@@ -2648,6 +2642,11 @@ Error</extracomment>
         <source>info_toast_deleted_message</source>
         <extracomment>The message has been deleted</extracomment>
         <translation>ຂໍ້ຄວາມຖືກລຶບແລ້ວ</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="13"/>
+        <source>chat_messages_list_accessible_name</source>
+        <translation>ຂໍ້ຄວາມ</translation>
     </message>
 </context>
 <context>
@@ -4273,6 +4272,11 @@ Error</extracomment>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation>ການແກ້ໄຂບັນຫາ</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>ຂັ້ນສູງ</translation>
+    </message>
 </context>
 <context>
     <name>LdapSettingsLayout</name>
@@ -4623,22 +4627,10 @@ Error</extracomment>
         <translation>ການໂທ</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation>ເປີດໜ້າການໂທ</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="175"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>ລາຍຊື່ຜູ້ຕິດຕໍ່</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="177"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation>ເປີດໜ້າລາຍຊື່ຜູ້ຕິດຕໍ່</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="183"/>
@@ -4647,22 +4639,10 @@ Error</extracomment>
         <translation>ການສົນທະນາ</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="185"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation>ເປີດໜ້າການສົນທະນາ</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="192"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>ການປະຊຸມ</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="194"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation>ເປີດໜ້າການປະຊຸມ</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="257"/>
@@ -5252,7 +5232,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="63"/>
         <source>settings_meetings_show_past_meetings_title</source>
         <extracomment>Show past meetings</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>ສະແດງການປະຊຸມທີ່ຜ່ານມາ</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/MeetingsSettingsLayout.qml" line="65"/>
@@ -5671,18 +5651,6 @@ Error</extracomment>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation>ປິດປັອບອັບ %1</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="21"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation>ເປີດປັອບອັບ %1</translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -6428,12 +6396,6 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation>ການຕັ້ງຄ່າ %1</translation>
-    </message>
 </context>
 <context>
     <name>SettingsModel</name>
@@ -8356,6 +8318,11 @@ Error in the chat</extracomment>
         <source>call_action_resume_call</source>
         <translation>ສົນທະນາຕໍ່</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="350"/>
+        <source>dtmf_pad_resume_button</source>
+        <translation>ລົມຕໍ່</translation>
+    </message>
 </context>
 <context>
     <name>MessageInfosLayout</name>
@@ -8376,6 +8343,11 @@ Error in the chat</extracomment>
     <message>
         <source>media_stop_recording_accessible_name</source>
         <translation>ຢຸດການບັນທຶກ</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/MediaProgressBar.qml" line="137"/>
+        <source>media_pause_accessible_name</source>
+        <translation>ພັກສາຍ</translation>
     </message>
 </context>
 <context>

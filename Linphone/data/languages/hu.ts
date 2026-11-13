@@ -42,7 +42,7 @@
         <location filename="../../core/account/AccountCore.cpp" line="446"/>
         <source>drawer_menu_account_connection_status_connected</source>
         <extracomment>&quot;Connecté&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Csatlakoztatva</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="449"/>
@@ -52,17 +52,17 @@
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="452"/>
         <source>drawer_menu_account_connection_status_progress</source>
-        <translation type="unfinished"></translation>
+        <translation>Csatlakozás…</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="455"/>
         <source>drawer_menu_account_connection_status_failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="459"/>
         <source>drawer_menu_account_connection_status_cleared</source>
-        <translation type="unfinished"></translation>
+        <translation>Letiltva</translation>
     </message>
     <message>
         <location filename="../../core/account/AccountCore.cpp" line="493"/>
@@ -98,7 +98,7 @@
         <location filename="../../view/Page/Main/Account/AccountListView.qml" line="89"/>
         <source>add_an_account</source>
         <extracomment>Add an account</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fiók hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -232,13 +232,13 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="105"/>
         <source>sip_address</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP cím</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="130"/>
         <source>sip_address_display_name</source>
         <extracomment>&quot;Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenített név</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="136"/>
@@ -279,13 +279,13 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="266"/>
         <source>error</source>
         <extracomment>Erreur</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="304"/>
         <source>manage_account_device_remove</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="313"/>
@@ -354,7 +354,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="17"/>
         <source>settings_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="21"/>
@@ -375,7 +375,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="54"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsParametersLayout.qml" line="74"/>
@@ -544,7 +544,7 @@
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
         <source>information_popup_error_title</source>
         <extracomment>Invalid URL format</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AdvancedSettingsLayout.qml" line="100"/>
@@ -594,7 +594,7 @@
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="322"/>
         <source>generic_address_picker_contacts_list_title</source>
         <extracomment>&apos;Contacts&apos;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Névjegyek</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/AllContactListView.qml" line="375"/>
@@ -616,7 +616,7 @@
         <location filename="../../core/App.cpp" line="658"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/App.cpp" line="394"/>
@@ -721,13 +721,13 @@
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="68"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="85"/>
         <source>cancel</source>
         <extracomment>&quot;Annuler</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/AuthenticationDialog.qml" line="95"/>
@@ -881,7 +881,7 @@
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="134"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívás</translation>
     </message>
     <message>
         <location filename="../../view/Control/Container/Call/CallHistoryLayout.qml" line="148"/>
@@ -903,6 +903,11 @@
         <source>call_name_accessible_button</source>
         <extracomment>Call %1</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="277"/>
+        <source>notification_missed_call_title</source>
+        <translation>Nem fogadott hívás</translation>
     </message>
 </context>
 <context>
@@ -965,7 +970,7 @@
     <message>
         <location filename="../../core/call/CallList.cpp" line="111"/>
         <source>info_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/call/CallList.cpp" line="113"/>
@@ -986,7 +991,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="61"/>
         <source>call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívás</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="66"/>
@@ -1146,7 +1151,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="147"/>
         <source>call_history_call_list_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="459"/>
@@ -1212,14 +1217,14 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="408"/>
         <source>call_action_start_group_call</source>
         <extracomment>&quot;Lancer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indítás</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="418"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="422"/>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="520"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="420"/>
@@ -1273,7 +1278,7 @@
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="642"/>
         <source>notification_missed_call_title</source>
         <extracomment>&quot;Appel manqué&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Nem fogadott hívás</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/CallPage.qml" line="645"/>
@@ -1404,7 +1409,7 @@
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="77"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="147"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="79"/>
@@ -1578,17 +1583,11 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1721"/>
         <source>call_action_go_to_settings</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="721"/>
@@ -1842,7 +1841,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="30"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="32"/>
@@ -1864,7 +1863,7 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="43"/>
         <source>settings_contacts_carddav_popup_synchronization_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
@@ -1882,7 +1881,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="88"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenített név</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="97"/>
@@ -1893,12 +1892,12 @@
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="105"/>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="113"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="121"/>
@@ -1938,7 +1937,7 @@
         <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="78"/>
         <source>information_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatAudioContent.qml" line="38"/>
@@ -1994,7 +1993,7 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="429"/>
         <source>chat_room_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="369"/>
@@ -2011,7 +2010,7 @@
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="381"/>
         <source>chat_room_mark_as_read</source>
         <extracomment>&quot;Mark as read&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jelölés olvasottnak</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="400"/>
@@ -2042,6 +2041,11 @@
         <source>chat_list_delete_chat_popup_message</source>
         <extracomment>This conversation and all its messages will be deleted. Do You want to continue ?</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatListView.qml" line="15"/>
+        <source>chat_list_accessible_name</source>
+        <translation>Üzenetek</translation>
     </message>
 </context>
 <context>
@@ -2110,7 +2114,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="418"/>
         <source>chat_message_reply</source>
         <extracomment>Reply</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Válasz</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="450"/>
@@ -2122,7 +2126,7 @@
         <location filename="../../view/Control/Display/Chat/ChatMessage.qml" line="467"/>
         <source>chat_message_delete</source>
         <extracomment>&quot;Delete&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
 </context>
 <context>
@@ -2131,13 +2135,18 @@
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="127"/>
         <source>popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="129"/>
         <source>popup_open_file_error_does_not_exist_message</source>
         <extracomment>Could not open file : unknown path %1</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../core/chat/message/content/ChatMessageContentCore.cpp" line="112"/>
+        <source>info_popup_error_title</source>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -2325,6 +2334,11 @@ Error</extracomment>
         <extracomment>%1 is writing…</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="341"/>
+        <source>dialog_cancel</source>
+        <translation>Mégse</translation>
+    </message>
 </context>
 <context>
     <name>ChatPage</name>
@@ -2356,7 +2370,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="100"/>
         <source>chat_list_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="121"/>
@@ -2398,14 +2412,14 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="288"/>
         <source>chat_action_start_group_chat</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Létrehoz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="304"/>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="322"/>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="326"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="306"/>
@@ -2430,6 +2444,12 @@ Error</extracomment>
         <source>chat_creation_in_progress</source>
         <extracomment>Creation de la conversation en cours …</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="52"/>
+        <location filename="../../view/Page/Main/Chat/ChatPage.qml" line="66"/>
+        <source>info_popup_error_title</source>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -2462,7 +2482,7 @@ Error</extracomment>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="578"/>
         <source>information_popup_error_title</source>
         <extracomment>&quot;Erreur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/conference/ConferenceInfoCore.cpp" line="580"/>
@@ -2477,7 +2497,7 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="150"/>
         <source>information_popup_error_title</source>
         <extracomment>Erreur</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Contact.qml" line="152"/>
@@ -2553,7 +2573,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="160"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="169"/>
@@ -2593,7 +2613,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="312"/>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="344"/>
         <source>sip_address</source>
-        <translation type="unfinished"></translation>
+        <translation>SIP cím</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Contact/ContactEdition.qml" line="322"/>
@@ -2661,7 +2681,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="228"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="230"/>
@@ -2691,7 +2711,7 @@ Error</extracomment>
         <location filename="../../view/Control/Display/Contact/ContactListItem.qml" line="244"/>
         <source>contact_details_delete</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
 </context>
 <context>
@@ -2732,7 +2752,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="76"/>
         <source>create</source>
-        <translation type="unfinished"></translation>
+        <translation>Létrehoz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="84"/>
@@ -2790,13 +2810,13 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="152"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="158"/>
         <source>dialog_call</source>
         <extracomment>&quot;Appeler&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívás</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="175"/>
@@ -2820,7 +2840,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="226"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Névjegyek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="268"/>
@@ -2877,7 +2897,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="395"/>
         <source>contact_call_action</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívás</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="406"/>
@@ -2985,7 +3005,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="787"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="789"/>
@@ -3117,7 +3137,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="189"/>
         <source>one_one_infos_call</source>
         <extracomment>&quot;Appel&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívás</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/ConversationInfos.qml" line="203"/>
@@ -3376,14 +3396,14 @@ Error</extracomment>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="27"/>
         <source>dialog_confirm</source>
         <extracomment>&quot;Confirmer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megerősít</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="26"/>
         <location filename="../../view/Control/Popup/Dialog/Dialog.qml" line="28"/>
         <source>dialog_cancel</source>
         <extracomment>&quot;Annuler&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
@@ -3472,7 +3492,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="25"/>
         <source>disabled</source>
-        <translation type="unfinished"></translation>
+        <translation>Letiltva</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Chat/EphemeralSettings.qml" line="34"/>
@@ -3549,7 +3569,7 @@ Error</extracomment>
         <location filename="../../core/friend/FriendCore.cpp" line="590"/>
         <source>sip_address</source>
         <extracomment>&quot;Adresse SIP&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP cím</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="33"/>
@@ -3562,7 +3582,7 @@ Error</extracomment>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="421"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../core/friend/FriendCore.cpp" line="423"/>
@@ -3655,7 +3675,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="40"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Segítség</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="70"/>
@@ -3680,7 +3700,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verzió</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="104"/>
@@ -3699,6 +3719,11 @@ Error</extracomment>
         <source>help_troubleshooting_title</source>
         <extracomment>&quot;Dépannage&quot;</extracomment>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>Haladó</translation>
     </message>
 </context>
 <context>
@@ -3733,7 +3758,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="34"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="56"/>
@@ -3763,7 +3788,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="102"/>
         <source>settings_contacts_ldap_password_title</source>
         <extracomment>&quot;Mot de passe&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/LdapSettingsLayout.qml" line="108"/>
@@ -3837,7 +3862,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Popup/Loading/LoadingPopup.qml" line="39"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
 </context>
 <context>
@@ -3847,14 +3872,14 @@ Error</extracomment>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
         <source>username</source>
         <extracomment>Nom d&apos;utilisateur : username</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="36"/>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="46"/>
         <source>password</source>
         <extracomment>Mot de passe</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Control/Form/Login/LoginForm.qml" line="27"/>
@@ -3913,7 +3938,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="96"/>
         <source>help_about_version_title</source>
         <extracomment>&quot;Version&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Verzió</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Login/LoginLayout.qml" line="102"/>
@@ -3958,7 +3983,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;S&apos;inscrire&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Regisztráció</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="97"/>
@@ -3987,13 +4012,13 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="138"/>
         <source>cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="143"/>
         <source>validate</source>
         <extracomment>&quot;Valider&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megerősít</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/LoginPage.qml" line="155"/>
@@ -4021,49 +4046,25 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="142"/>
         <source>bottom_navigation_calls_label</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Névjegyek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
         <source>bottom_navigation_conversations_label</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Meetingek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -4093,7 +4094,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="379"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="381"/>
@@ -4128,7 +4129,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="485"/>
         <source>settings_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="501"/>
@@ -4140,7 +4141,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="512"/>
         <source>help_title</source>
         <extracomment>&quot;Aide&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Segítség</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="527"/>
@@ -4158,7 +4159,7 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="555"/>
         <source>drawer_menu_add_account</source>
         <extracomment>&quot;Ajouter un compte&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Fiók hozzáadása</translation>
     </message>
 </context>
 <context>
@@ -4234,6 +4235,11 @@ Error</extracomment>
         <extracomment>&quot;Erreur dans le code de validation&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Window/Main/MainWindow.qml" line="255"/>
+        <source>cancel</source>
+        <translation>Mégse</translation>
+    </message>
 </context>
 <context>
     <name>ManageParticipants</name>
@@ -4241,6 +4247,11 @@ Error</extracomment>
         <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="44"/>
         <source>group_infos_manage_participants</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Chat/ManageParticipants.qml" line="30"/>
+        <source>info_popup_error_title</source>
+        <translation>Hiba</translation>
     </message>
 </context>
 <context>
@@ -4302,6 +4313,11 @@ Error</extracomment>
         <extracomment>&quot;Supprimer la réunion&quot;</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Meeting/MeetingListView.qml" line="16"/>
+        <source>meeting_list_accessible_name</source>
+        <translation>Meetingek</translation>
+    </message>
 </context>
 <context>
     <name>MeetingPage</name>
@@ -4345,7 +4361,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="115"/>
         <source>meeting_schedule_delete_action</source>
         <extracomment>&quot;Supprimer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="124"/>
@@ -4357,7 +4373,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="187"/>
         <source>meetings_list_title</source>
         <extracomment>Réunions</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Meetingek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="226"/>
@@ -4387,7 +4403,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="331"/>
         <source>create</source>
-        <translation type="unfinished"></translation>
+        <translation>Létrehoz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="338"/>
@@ -4397,7 +4413,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="497"/>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="545"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="340"/>
@@ -4673,7 +4689,7 @@ Error</extracomment>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="117"/>
         <source>dialog_accept</source>
         <extracomment>&quot;Accepter&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elfogad</translation>
     </message>
     <message>
         <location filename="../../view/Control/Popup/Notification/NotificationReceivedCall.qml" line="135"/>
@@ -4861,18 +4877,6 @@ Error</extracomment>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -4894,7 +4898,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="89"/>
         <source>contact_presence_button_delete_custom_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Törlés</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
@@ -5088,7 +5092,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="58"/>
         <source>assistant_account_register</source>
         <extracomment>&quot;Inscription</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Regisztráció</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="77"/>
@@ -5114,7 +5118,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="142"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
         <source>username</source>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="150"/>
@@ -5129,7 +5133,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="160"/>
         <source>domain</source>
-        <translation type="unfinished"></translation>
+        <translation>Domain cím</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="177"/>
@@ -5137,7 +5141,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="183"/>
         <source>phone_number</source>
         <extracomment>&quot;Numéro de téléphone&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Telefonszám</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="189"/>
@@ -5149,7 +5153,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="210"/>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="219"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="225"/>
@@ -5174,13 +5178,13 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="273"/>
         <source>assistant_dialog_privacy_policy_label</source>
         <extracomment>&quot;politique de confidentialité&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>biztonsági szabályok</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="298"/>
         <source>assistant_account_create</source>
         <extracomment>&quot;Créer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Létrehoz</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterPage.qml" line="303"/>
@@ -5237,7 +5241,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="71"/>
         <source>assistant_account_register</source>
         <extracomment>S&apos;inscrire</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Regisztráció</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="110"/>
@@ -5258,14 +5262,14 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="145"/>
         <source>assistant_third_party_sip_account_warning_ok</source>
         <extracomment>&quot;Je comprends&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Elfogadom</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="190"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
         <source>username</source>
         <extracomment>&quot;Nom d&apos;utilisateur&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Felhasználónév</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="200"/>
@@ -5278,28 +5282,28 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="205"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="216"/>
         <source>password</source>
-        <translation type="unfinished"></translation>
+        <translation>Jelszó</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="222"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="234"/>
         <source>sip_address_domain</source>
         <extracomment>&quot;Domaine&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Domain cím</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="245"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="252"/>
         <source>sip_address_display_name</source>
         <extracomment>Nom d&apos;affichage</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Megjelenített név</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="257"/>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="276"/>
         <source>transport</source>
         <extracomment>&quot;Transport&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>SIP átvitel</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="298"/>
@@ -5354,7 +5358,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Login/SIPLoginPage.qml" line="424"/>
         <source>login_id</source>
         <extracomment>&quot;Authentication ID (if different)&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Azonosító ID (ha különbözik)</translation>
     </message>
 </context>
 <context>
@@ -5453,7 +5457,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Security/SecurityModePage.qml" line="76"/>
         <source>dialog_continue</source>
         <extracomment>&quot;Continuer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Folytatás</translation>
     </message>
 </context>
 <context>
@@ -5506,17 +5510,21 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="672"/>
         <source>conversations_title</source>
         <extracomment>Conversations</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetek</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="465"/>
+        <source>chat_cancel_composer_accessible_name</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Form/Chat/SelectedChatView.qml" line="192"/>
+        <source>chat_call_accessible_name</source>
+        <translation>Hívás</translation>
     </message>
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -5524,13 +5532,13 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="12"/>
         <source>settings_title</source>
         <extracomment>&quot;Paramètres&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Beállítások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="15"/>
         <source>settings_calls_title</source>
         <extracomment>&quot;Appels&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hívások</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="17"/>
@@ -5542,19 +5550,19 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="19"/>
         <source>settings_conversations_title</source>
         <extracomment>&quot;Conversations&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Üzenetek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="21"/>
         <source>settings_contacts_title</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Névjegyek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="23"/>
         <source>settings_meetings_title</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Meetingek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Settings/SettingsPage.qml" line="29"/>
@@ -5768,7 +5776,7 @@ Pour les activer dans un projet commercial, merci de nous contacter.</source>
         <extracomment>Error
 ----------
 Failed to create 1-1 conversation with %1 !</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="199"/>
@@ -5815,13 +5823,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="354"/>
         <source>today</source>
         <extracomment>&quot;Aujourd&apos;hui&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Ma</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="356"/>
         <source>yesterday</source>
         <extracomment>&quot;Hier</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Tegnap</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="381"/>
@@ -5873,7 +5881,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../tool/Utils.cpp" line="2203"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="2191"/>
@@ -5907,7 +5915,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="174"/>
         <source>cancel</source>
         <extracomment>Cancel</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Mégse</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Call/WaitingRoom.qml" line="145"/>
@@ -5928,7 +5936,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="16"/>
         <source>welcome_page_title</source>
         <extracomment>&quot;Bienvenue&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Üdvözöljük</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="32"/>
@@ -5952,7 +5960,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="85"/>
         <source>welcome_page_2_title</source>
         <extracomment>&quot;Sécurisé&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Biztonságos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="87"/>
@@ -5976,13 +5984,13 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="122"/>
         <source>next</source>
         <extracomment>&quot;Suivant&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Következő</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Start/WelcomePage.qml" line="124"/>
         <source>start</source>
         <extracomment>&quot;Commencer&quot;</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Indítás</translation>
     </message>
 </context>
 <context>
@@ -7260,7 +7268,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="753"/>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="761"/>
         <source>information_popup_error_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Hiba</translation>
     </message>
     <message>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="746"/>
@@ -7290,6 +7298,46 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Control/Tool/Helper/utils.js" line="804"/>
         <source>okButton</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>NumericPad</name>
+    <message>
+        <location filename="../../view/Control/Input/NumericPad.qml" line="223"/>
+        <source>call_accessible_name</source>
+        <translation>Hívás</translation>
+    </message>
+</context>
+<context>
+    <name>RecordPage</name>
+    <message>
+        <location filename="../../view/Page/Main/Record/RecordPage.qml" line="65"/>
+        <source>information_popup_error_title</source>
+        <translation>Hiba</translation>
+    </message>
+</context>
+<context>
+    <name>NotificationBackend</name>
+    <message>
+        <location filename="../../core/notifier/SysTrayNotificationBackend.cpp" line="80"/>
+        <source>accept_button</source>
+        <translation>Elfogad</translation>
+    </message>
+</context>
+<context>
+    <name>EventLogProxy</name>
+    <message>
+        <location filename="../../core/chat/message/EventLogProxy.cpp" line="65"/>
+        <source>info_popup_error_title</source>
+        <translation>Hiba</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsCore</name>
+    <message>
+        <location filename="../../core/setting/SettingsCore.cpp" line="501"/>
+        <source>info_popup_error_title</source>
+        <translation>Hiba</translation>
     </message>
 </context>
 </TS>

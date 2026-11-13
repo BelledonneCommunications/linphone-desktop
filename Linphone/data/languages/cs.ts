@@ -1809,12 +1809,6 @@
         <translation>Seznam hovorů</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation>Sloučení všech hovorů</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="1721"/>
         <source>call_action_go_to_settings</source>
@@ -4329,6 +4323,11 @@ Expirace : %1</translation>
         <source>help_check_for_update_button_label</source>
         <translation>Zkontrolovat aktualizace</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>Pokročilé</translation>
+    </message>
 </context>
 <context>
     <name>LdapSettingsLayout</name>
@@ -4653,22 +4652,10 @@ Expirace : %1</translation>
         <translation>Hovory</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation>Otevřít stránku hovorů</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Kontakty</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation>Otevřít stránku kontaktů</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
@@ -4677,22 +4664,10 @@ Expirace : %1</translation>
         <translation>Konverzace</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation>Otevřít stránku konverzací</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Schůzky</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation>Otevřít stránku schůzek</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -5255,6 +5230,11 @@ Expirace : %1</translation>
         <source>panel_back_accessible_name</source>
         <translation>Zpět</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="715"/>
+        <source>meeting_edit_accessible_name</source>
+        <translation>Upravit tuto schůzku</translation>
+    </message>
 </context>
 <context>
     <name>MeetingsSettingsLayout</name>
@@ -5632,18 +5612,6 @@ Expirace : %1</translation>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation>Zavřít %1 oken</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation>Otevřít %1 oken</translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -6337,12 +6305,6 @@ Chcete-li je povolit v komerčním projektu, kontaktujte nás.</translation>
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation>nastavení %1</translation>
-    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -8435,6 +8397,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>media_stop_recording_accessible_name</source>
         <translation>Zastavit nahrávání</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/MediaProgressBar.qml" line="137"/>
+        <source>media_pause_accessible_name</source>
+        <translation>Pauza</translation>
+    </message>
 </context>
 <context>
     <name>DtmfPadPopup</name>
@@ -8461,6 +8428,11 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <source>dtmf_pad_field_accessible_name</source>
         <translation>Odeslané tóny</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="350"/>
+        <source>dtmf_pad_resume_button</source>
+        <translation>Obnovit</translation>
     </message>
 </context>
 <context>

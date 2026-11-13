@@ -1027,6 +1027,11 @@
         <source>call_history_entry_accessible_name</source>
         <translation>%1 - %2 - %3 - seta para a direita do botão de retornar chamada</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Display/Call/CallHistoryListView.qml" line="14"/>
+        <source>call_history_list_accessible_name</source>
+        <translation>Histórico de chamadas</translation>
+    </message>
 </context>
 <context>
     <name>CallLayout</name>
@@ -1410,6 +1415,21 @@
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Chamada recebida</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="268"/>
+        <source>history_list_filter_all</source>
+        <translation>Todas as chamadas</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="268"/>
+        <source>history_list_filter_missed</source>
+        <translation>Perdida</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="316"/>
+        <source>history_list_empty_missed_history</source>
+        <translation>Nenhuma chamada perdida…</translation>
+    </message>
 </context>
 <context>
     <name>CallSettingsLayout</name>
@@ -1703,12 +1723,6 @@
         <source>call_action_go_to_calls_list</source>
         <extracomment>&quot;Liste d&apos;appel&quot;</extracomment>
         <translation>Lista de chamadas</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="947"/>
-        <source>Merger tous les appels</source>
-        <extracomment>call_action_merge_calls</extracomment>
-        <translation>Mesclar todas as chamadas</translation>
     </message>
     <message>
         <location filename="../../view/Page/Window/Call/CallsWindow.qml" line="717"/>
@@ -2582,6 +2596,11 @@ Apenas seu correspondente pode descriptografá-las.</translation>
         <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="301"/>
         <source>conversation_dialog_delete_for_everyone_label</source>
         <translation>Para todos</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/Chat/ChatMessagesListView.qml" line="13"/>
+        <source>chat_messages_list_accessible_name</source>
+        <translation>Mensagens</translation>
     </message>
 </context>
 <context>
@@ -4091,6 +4110,11 @@ Expiração: %1</translation>
         <source>help_check_for_update_button_label</source>
         <translation>Verificar atualizações</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Help/HelpPage.qml" line="150"/>
+        <source>help_advanced_title</source>
+        <translation>Avançado</translation>
+    </message>
 </context>
 <context>
     <name>LdapSettingsLayout</name>
@@ -4415,22 +4439,10 @@ Expiração: %1</translation>
         <translation>Ligações</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="144"/>
-        <source>open_calls_page_accessible_name</source>
-        <extracomment>&quot;Open calls page&quot;</extracomment>
-        <translation>Abrir páginas de chamada</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="150"/>
         <source>bottom_navigation_contacts_label</source>
         <extracomment>&quot;Contacts&quot;</extracomment>
         <translation>Contatos</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="152"/>
-        <source>open_contacts_page_accessible_name</source>
-        <extracomment>&quot;Open contacts page&quot;</extracomment>
-        <translation>Abrir página de contatos</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="158"/>
@@ -4439,22 +4451,10 @@ Expiração: %1</translation>
         <translation>Conversas</translation>
     </message>
     <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="160"/>
-        <source>open_conversations_page_accessible_name</source>
-        <extracomment>&quot;Open conversations page&quot;</extracomment>
-        <translation>Abrir página de conversas</translation>
-    </message>
-    <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="167"/>
         <source>bottom_navigation_meetings_label</source>
         <extracomment>&quot;Réunions&quot;</extracomment>
         <translation>Conferências</translation>
-    </message>
-    <message>
-        <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="169"/>
-        <source>open_contact_page_accessible_name</source>
-        <extracomment>&quot;Open meetings page&quot;</extracomment>
-        <translation>Abrir página de conferências</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Main/MainLayout.qml" line="219"/>
@@ -5012,6 +5012,11 @@ Expiração: %1</translation>
         <source>panel_back_accessible_name</source>
         <translation>Voltar</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Meeting/MeetingPage.qml" line="715"/>
+        <source>meeting_edit_accessible_name</source>
+        <translation>Editar a reunião</translation>
+    </message>
 </context>
 <context>
     <name>MeetingsSettingsLayout</name>
@@ -5389,18 +5394,6 @@ Expiração: %1</translation>
 </context>
 <context>
     <name>PopupButton</name>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="17"/>
-        <source>close_popup_panel_accessible_name</source>
-        <extracomment>&quot;Close %1 popup&quot;</extracomment>
-        <translation>Fechar popup %1</translation>
-    </message>
-    <message>
-        <location filename="../../view/Control/Button/PopupButton.qml" line="19"/>
-        <source>open_popup_panel_accessible_name</source>
-        <extracomment>&quot;Open %1&quot; popup</extracomment>
-        <translation>Abrir popup %1</translation>
-    </message>
 </context>
 <context>
     <name>Presence</name>
@@ -6094,12 +6087,6 @@ Para habilitá-las em um projeto comercial, por favor, entre em contato conosco.
 </context>
 <context>
     <name>SettingsMenuItem</name>
-    <message>
-        <location filename="../../view/Control/Display/Settings/SettingsMenuItem.qml" line="22"/>
-        <source>setting_tab_accessible_name</source>
-        <extracomment>%1 settings</extracomment>
-        <translation>Configurações %1</translation>
-    </message>
 </context>
 <context>
     <name>SettingsPage</name>
@@ -8136,12 +8123,22 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>call_action_resume_call</source>
         <translation>Retomar chamada</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="350"/>
+        <source>dtmf_pad_resume_button</source>
+        <translation>Retomar</translation>
+    </message>
 </context>
 <context>
     <name>MediaProgressBar</name>
     <message>
         <source>media_stop_recording_accessible_name</source>
         <translation>Parar gravação</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Display/MediaProgressBar.qml" line="137"/>
+        <source>media_pause_accessible_name</source>
+        <translation>Pausar</translation>
     </message>
 </context>
 <context>
