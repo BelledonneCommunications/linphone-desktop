@@ -536,8 +536,25 @@ void CoreModel::onCallStateChanged(const std::shared_ptr<linphone::Core> &core,
 			    call->getCallLog() && call->getCallLog()->getConferenceInfo()
 			        ? Utils::coreStringToAppString(call->getCallLog()->getConferenceInfo()->getSubject())
 			        : Utils::coreStringToAppString(call->getRemoteAddress()->getDisplayName());
-			command = command.replace("$1", userName);
-			command = command.replace("$2", displayName);
+			// $1/$2 are substituted into a command line that runCommandLine()
+			// hands to /bin/sh -c (or cmd.exe /C), so they have to survive
+			// shell parsing as single values. Both come from the remote party:
+			// the SIP From user part, and the display name / conference subject.
+			auto shellQuote = [](const QString &value) -> QString {
+#ifdef Q_OS_WIN
+				// cmd.exe: wrap in double quotes, doubling any embedded quote.
+				QString out = value;
+				out.replace("\"", "\"\"");
+				return "\"" + out + "\"";
+#else
+				// POSIX sh: single quotes preserve everything except ' itself.
+				QString out = value;
+				out.replace("'", "'\\''");
+				return "'" + out + "'";
+#endif
+			};
+			command = command.replace("$1", shellQuote(userName));
+			command = command.replace("$2", shellQuote(displayName));
 			Utils::runCommandLine(command);
 		}
 	}
