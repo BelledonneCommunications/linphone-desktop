@@ -183,7 +183,7 @@ win64-ninja-vs2022-scheduled-windows:
     - if: $NIGHTLY_MASTER
     - if: $PACKAGE_WINDOWS
   variables:
-    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_BUGSPLAT_SYMBOLS_UPLOAD=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE
+    CMAKE_OPTIONS: -DENABLE_APP_PACKAGING=YES -DENABLE_G729=ON -DENABLE_PQCRYPTO=ON -DENABLE_GPL_THIRD_PARTIES=OFF -DENABLE_BUGSPLAT_SYMBOLS_UPLOAD=ON -DBUGSPLAT_CLIENT_ID=$BUGSPLAT_CLIENT_ID -DBUGSPLAT_CLIENT_SECRET=$BUGSPLAT_CLIENT_SECRET -DBUGSPLAT_DATABASE=$BUGSPLAT_DATABASE $WINDOWS_PACKAGE_CMAKE_OPTIONS
     RELEASE_FILE: -DLINPHONE_SDK_MAKE_RELEASE_FILE_URL=$MAKE_RELEASE_FILE_URL/$WINDOWS_PLATFORM/$APP_FOLDER
 
 # .vs-win64-package-cr:
@@ -201,10 +201,60 @@ win64-ninja-vs2022-package-windows:
     CMAKE_GENERATOR: "Ninja"
     CMAKE_ARCHITECTURE: ""
     PARALLEL_OPTIONS: ""
+    WINDOWS_PACKAGE_CMAKE_OPTIONS: -DENABLE_WINDOWS_MSI=OFF
   extends:
     - .windows-vs2022
     - .windows-ninja-variables
     - .vs-win64-package
+  rules:
+    - if: $SKIP_WINDOWS_NSIS
+      when: never
+    - !reference [.vs-win64-package, rules]
+  before_script:
+    - 'if ($env:WINDOWS_UPDATE_PACKAGE -eq "msi" -and -not $env:SKIP_WINDOWS_MSI) { $RELEASE_FILE = "" }'
+
+win64-ninja-vs2022-package-msi-windows:
+  variables:
+    CMAKE_GENERATOR: "Ninja"
+    CMAKE_ARCHITECTURE: ""
+    PARALLEL_OPTIONS: ""
+    WIX_VERSION: "5.0.2"
+    MSI_CMAKE_VERSION: "3.31.6"
+    WINDOWS_PACKAGE_CMAKE_OPTIONS: -DENABLE_WINDOWS_MSI=ON -DLINPHONE_WIX_VERSION=$WIX_VERSION
+  extends:
+    - .windows-vs2022
+    - .windows-ninja-variables
+    - .vs-win64-package
+  rules:
+    - if: $SKIP_WINDOWS_MSI
+      when: never
+    - !reference [.vs-win64-package, rules]
+  before_script:
+    - 'if ($env:WINDOWS_UPDATE_PACKAGE -ne "msi" -and -not $env:SKIP_WINDOWS_NSIS) { $RELEASE_FILE = "" }'
+    - $ProgressPreference = "SilentlyContinue"
+    - '[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12'
+    - $cmakeName = "cmake-$env:MSI_CMAKE_VERSION-windows-x86_64"
+    - $cmakeDir = Join-Path $env:USERPROFILE ".linphone-ci\$cmakeName"
+    - $cmakeTemp = Join-Path $env:TEMP "linphone-$cmakeName"
+    - $needCMake = -not (Test-Path (Join-Path $cmakeDir "bin\cmake.exe"))
+    - 'if ($needCMake) { Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $cmakeTemp, $cmakeDir; New-Item -ItemType Directory -Force -Path $cmakeTemp | Out-Null }'
+    - 'if ($needCMake) { $cmakeUrl = "https://github.com/Kitware/CMake/releases/download/v$env:MSI_CMAKE_VERSION"; Invoke-WebRequest -UseBasicParsing -Uri "$cmakeUrl/$cmakeName.zip" -OutFile "$cmakeTemp\$cmakeName.zip"; Invoke-WebRequest -UseBasicParsing -Uri "$cmakeUrl/cmake-$env:MSI_CMAKE_VERSION-SHA-256.txt" -OutFile "$cmakeTemp\SHA-256.txt" }'
+    - 'if ($needCMake) { $expectedHash = Get-Content "$cmakeTemp\SHA-256.txt" | ForEach-Object { if ($_ -match "^([0-9a-fA-F]{64})\s+(\S+)$" -and $Matches[2] -eq "$cmakeName.zip") { $Matches[1] } } | Select-Object -First 1; $actualHash = (Get-FileHash -Algorithm SHA256 "$cmakeTemp\$cmakeName.zip").Hash; if (-not $expectedHash -or $actualHash -ne $expectedHash) { throw "Error: CMake $env:MSI_CMAKE_VERSION archive checksum mismatch" } }'
+    - 'if ($needCMake) { Expand-Archive -Path "$cmakeTemp\$cmakeName.zip" -DestinationPath "$cmakeTemp\extract" -Force; New-Item -ItemType Directory -Force -Path (Split-Path $cmakeDir) | Out-Null; Move-Item "$cmakeTemp\extract\$cmakeName" $cmakeDir; Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $cmakeTemp }'
+    - $env:Path = "$cmakeDir\bin;$env:USERPROFILE\.dotnet\tools;$env:Path"
+    - cmake --version
+    - 'if (-not ($LastExitCode -eq 0)) { throw "Error: CMake $env:MSI_CMAKE_VERSION is not usable" }'
+    - $nugetDir = Join-Path $env:TEMP "linphone-wix-nuget"
+    - New-Item -ItemType Directory -Force -Path $nugetDir | Out-Null
+    - $nugetConfig = Join-Path $nugetDir "NuGet.Config"
+    - 'Set-Content -Encoding UTF8 -Path $nugetConfig -Value ''<?xml version="1.0" encoding="utf-8"?><configuration><packageSources><add key="nuget.org" value="https://api.nuget.org/v3/index.json" protocolVersion="3" /></packageSources></configuration>'''
+    - Push-Location $nugetDir
+    - $installedWix = if (Get-Command wix -ErrorAction SilentlyContinue) { "$(wix --version)" } else { "" }
+    - 'if (-not $installedWix.StartsWith($WIX_VERSION)) { if ($installedWix) { dotnet tool uninstall --global wix }; dotnet tool install --global wix --version $WIX_VERSION --configfile $nugetConfig; if (-not ($LastExitCode -eq 0)) { Pop-Location; throw "Error: WiX installation failed" } }'
+    - wix extension add --global "WixToolset.UI.wixext/$WIX_VERSION"
+    - 'if (-not ($LastExitCode -eq 0)) { Pop-Location; throw "Error: WiX UI extension installation failed" }'
+    - Pop-Location
+    - wix --version
 
 #Packaging for deployment (Upload symbols at the same time of the packaging)
 # win64-ninja-vs2022-package-cr-windows:
@@ -218,6 +268,41 @@ win64-ninja-vs2022-package-windows:
 #     - .vs-win64-package-cr
 
 
+.win64-msi-tests:
+  stage: test
+  needs:
+    - win64-ninja-vs2022-package-msi-windows
+  rules:
+    - if: $SKIP_WINDOWS_MSI
+      when: never
+    - if: $ENABLE_WINDOWS_MSI_TESTS && $NIGHTLY_MASTER
+    - if: $ENABLE_WINDOWS_MSI_TESTS && $PACKAGE_WINDOWS
+    - if: $ENABLE_WINDOWS_MSI_TESTS && $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: manual
+      allow_failure: true
+  script:
+    - $msi = Get-ChildItem build-desktop\OUTPUT\Packages\*.msi | Select-Object -First 1
+    - 'if (-not $msi) { throw "Error: no MSI package in build-desktop\OUTPUT\Packages" }'
+    - $workDir = Join-Path $env:CI_PROJECT_DIR "msi-tests"
+    - $testArguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "cmake\install\windows\msi\tests\Test-MsiInstaller.ps1", "-Msi", $msi.FullName, "-Suite", $env:MSI_TESTS_SUITE, "-WorkDir", $workDir, "-JUnit", (Join-Path $workDir "report.xml"), "-UninstallExisting")
+    - 'if ($env:NSIS_REFERENCE_INSTALLER_URL) { $nsis = Join-Path $env:CI_PROJECT_DIR "nsis-reference.exe"; Invoke-WebRequest -UseBasicParsing -Uri $env:NSIS_REFERENCE_INSTALLER_URL -OutFile $nsis; $testArguments += @("-NsisInstaller", $nsis) }'
+    - powershell @testArguments
+    - 'if (-not ($LastExitCode -eq 0)) { throw "Error: MSI installer tests failed" }'
+  artifacts:
+    when: always
+    paths:
+      - msi-tests\logs\*
+      - msi-tests\report.xml
+    reports:
+      junit: msi-tests/report.xml
+    expire_in: 3 days
+
+win64-msi-tests:
+  extends: .win64-msi-tests
+  tags: [ "windows-powershell-msi-tests-interactive" ]
+  variables:
+    MSI_TESTS_SUITE: Full
+
 #################################################
 #               SIGNING
 #################################################
@@ -228,16 +313,24 @@ win64-codesigning:
   extends:
     - .windows-codesigning
   needs:
-    - win64-ninja-vs2022-package-windows
+    - job: win64-ninja-vs2022-package-windows
+      optional: true
+    - job: win64-ninja-vs2022-package-msi-windows
+      optional: true
   variables:
     MINGW_TYPE: mingw64
   rules:
+    - if: $SKIP_WINDOWS_NSIS && $SKIP_WINDOWS_MSI
+      when: never
     - !reference [.rules-merge-request-manual, rules]
     - if: $PACKAGE_WINDOWS
     - if: $NIGHTLY_MASTER
   script:
     - cd build-desktop/OUTPUT/Packages/
-    - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} *.exe"
+    - $packages = @("*.exe", "*.msi") | Where-Object { Test-Path $_ }
+    - 'if (-not $packages) { throw "Error: no package to sign in build-desktop\OUTPUT\Packages" }'
+    - $signDescription = $(if ($env:APPLICATION_NAME) { $env:APPLICATION_NAME } else { "Linphone" }) -replace "'", "''"
+    - Invoke-Expression "& ${WINDOWS_SIGN_TOOL} sign /fd SHA256 /d '$signDescription' /t ${WINDOWS_SIGN_TIMESTAMP_URL} /sha1 ${WINDOWS_SIGN_HASH} $($packages -join ' ')"
     - 'if (-not ($LastExitCode -eq 0)) {throw "Error: Signature failed"}'
   artifacts:
     paths:
@@ -257,7 +350,9 @@ win64-codesigning:
     - if: $DEPLOY_WINDOWS
 
   script:
-    - rsync --perms --chmod=Fu=rw,Fg=r,Fo=r build-desktop/OUTPUT/Packages/*.exe ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
+    - $packages = @("build-desktop/OUTPUT/Packages/*.exe", "build-desktop/OUTPUT/Packages/*.msi") | Where-Object { Test-Path $_ }
+    - 'if (-not $packages) { throw "Error: no package to upload in build-desktop/OUTPUT/Packages" }'
+    - rsync --perms --chmod=Fu=rw,Fg=r,Fo=r @packages ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/${APP_FOLDER}
     - if ($MAKE_RELEASE_FILE_URL) { rsync --perms --chmod=Fu=rw,Fg=r,Fo=r build-desktop/OUTPUT/Packages/RELEASE ${DEPLOY_SERVER}:${UPLOAD_ROOT_PATH}/${WINDOWS_PLATFORM}/ }
 
 win64-ninja-vs2022-upload:

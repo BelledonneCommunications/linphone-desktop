@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WixLocalization Culture="en-US" Codepage="1252" xmlns="http://wixtoolset.org/schemas/v4/wxl">
+	<String Id="LinphoneLanguage" Value="1033"/>
+	<String Id="LinphoneDowngradeMessage" Value="A later version of [ProductName] is already installed. Setup will now exit."/>
+	<String Id="LinphoneLaunchApplication" Value="Launch [ProductName]"/>
+	<String Id="LinphonePurgeQuestion" Value="Do you also want to delete your [ProductName] data on this computer (accounts, contacts, call history, messages and settings)?&#13;&#10;&#13;&#10;This cannot be undone."/>
+</WixLocalization>

@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?include "cpack_variables.wxi"?>
+
+<Wix xmlns="http://wixtoolset.org/schemas/v4/wxs" xmlns:ui="http://wixtoolset.org/schemas/v4/wxs/ui" RequiredVersion="4.0">
+
+	<Package
+		Name="$(var.CPACK_PACKAGE_NAME)"
+		Version="$(var.CPACK_PACKAGE_VERSION)"
+		Manufacturer="$(var.CPACK_PACKAGE_VENDOR)"
+		UpgradeCode="$(var.CPACK_WIX_UPGRADE_GUID)"
+		ProductCode="$(var.CPACK_WIX_PRODUCT_GUID)"
+		Scope="perMachine"
+		InstallerVersion="500"
+		Language="!(loc.LinphoneLanguage)"
+		Compressed="yes">
+
+		<?ifndef CPACK_WIX_CAB_PER_COMPONENT?>
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes"/>
+		<?endif?>
+
+		<MajorUpgrade Schedule="afterInstallExecute" AllowSameVersionUpgrades="yes" IgnoreLanguage="yes" MigrateFeatures="yes" DowngradeErrorMessage="!(loc.LinphoneDowngradeMessage)"/>
+
+		<WixVariable Id="WixUILicenseRtf" Value="$(var.CPACK_WIX_LICENSE_RTF)"/>
+		<Property Id="WIXUI_INSTALLDIR" Value="INSTALL_ROOT"/>
+
+		<?ifdef CPACK_WIX_PRODUCT_ICON?>
+		<Property Id="ARPPRODUCTICON" Value="ProductIcon.ico"/>
+		<Icon Id="ProductIcon.ico" SourceFile="$(var.CPACK_WIX_PRODUCT_ICON)"/>
+		<?endif?>
+
+		<?ifdef CPACK_WIX_UI_BANNER?>
+		<WixVariable Id="WixUIBannerBmp" Value="$(var.CPACK_WIX_UI_BANNER)"/>
+		<?endif?>
+
+		<?ifdef CPACK_WIX_UI_DIALOG?>
+		<WixVariable Id="WixUIDialogBmp" Value="$(var.CPACK_WIX_UI_DIALOG)"/>
+		<?endif?>
+
+		<Property Id="FORCECLOSE" Value="1" Secure="yes"/>
+		<Property Id="NOFORCECLOSE" Secure="yes"/>
+		<Property Id="CLOSETIMEOUT" Value="30" Secure="yes"/>
+		<Property Id="RESTARTAPP" Value="1" Secure="yes"/>
+		<Property Id="PURGE" Secure="yes"/>
+		<Property Id="INSTALLDIR" Secure="yes"/>
+		<Property Id="LINPHONE_UI_INSTALL_ROOT" Secure="yes"/>
+		<Property Id="LINPHONE_NSIS_INSTALL_DIR" Secure="yes"/>
+		<Property Id="LINPHONE_PREVIOUS_INSTALL_ROOT" Secure="yes">
+			<RegistrySearch Id="LinphonePreviousInstallRoot" Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@" Name="InstallDir" Type="directory"/>
+		</Property>
+		<Property Id="LINPHONE_RESTART_TARGETS" Secure="yes"/>
+		<Property Id="LINPHONE_PURGE_QUESTION" Value="!(loc.LinphonePurgeQuestion)"/>
+		<Property Id="LINPHONE_APP_NAME" Value="@APPLICATION_NAME@"/>
+		<Property Id="LINPHONE_EXE_NAME" Value="@EXECUTABLE_NAME@.exe"/>
+		<Property Id="LINPHONE_EXE_RELATIVE" Value="bin\@EXECUTABLE_NAME@.exe"/>
+		<Property Id="LINPHONE_QUIT_EVENT" Value="@LINPHONE_MSI_QUIT_EVENT_PREFIX@"/>
+		<Property Id="REINSTALLMODE" Value="amus"/>
+		<Property Id="MSIRESTARTMANAGERCONTROL" Value="Disable"/>
+		<Property Id="MsiLogging" Value="voicewarmupx"/>
+		<Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1"/>
+
+		<Binary Id="LinphoneInstallerActions" SourceFile="@LINPHONE_MSI_ACTIONS_DLL@"/>
+
+		<CustomAction Id="LinphoneDetectNsisInstall" BinaryRef="LinphoneInstallerActions" DllEntry="DetectNsisInstall" Execute="immediate" Return="ignore"/>
+		<CustomAction Id="LinphoneCloseApplications" BinaryRef="LinphoneInstallerActions" DllEntry="CloseApplicationsImmediate" Execute="immediate" Return="ignore"/>
+		<CustomAction Id="LinphoneRestartApplicationsRollback" BinaryRef="LinphoneInstallerActions" DllEntry="RestartApplications" Execute="rollback" Impersonate="no" Return="ignore"/>
+		<CustomAction Id="LinphoneCloseApplicationsElevated" BinaryRef="LinphoneInstallerActions" DllEntry="CloseApplicationsDeferred" Execute="deferred" Impersonate="no" Return="ignore"/>
+		<CustomAction Id="LinphoneMigrateNsisInstall" BinaryRef="LinphoneInstallerActions" DllEntry="MigrateNsisInstall" Execute="deferred" Impersonate="no" Return="ignore"/>
+		<CustomAction Id="LinphoneAskPurgeUserData" BinaryRef="LinphoneInstallerActions" DllEntry="AskPurgeUserData" Execute="immediate" Return="ignore"/>
+		<CustomAction Id="LinphonePurgeUserData" BinaryRef="LinphoneInstallerActions" DllEntry="PurgeUserData" Execute="deferred" Impersonate="no" Return="ignore"/>
+		<CustomAction Id="LinphoneRestartApplications" BinaryRef="LinphoneInstallerActions" DllEntry="RestartApplications" Execute="deferred" Impersonate="no" Return="ignore"/>
+		<CustomAction Id="LinphoneLaunchApplication" BinaryRef="LinphoneInstallerActions" DllEntry="LaunchApplication" Execute="immediate" Return="ignore"/>
+
+		<SetProperty Id="INSTALL_ROOT" Action="LinphoneInstallRootFromCommandLine" Value="[INSTALLDIR]" After="LinphoneDetectNsisInstall" Sequence="both" Condition="INSTALLDIR AND NOT LINPHONE_UI_INSTALL_ROOT"/>
+		<SetProperty Id="INSTALL_ROOT" Action="LinphoneInstallRootFromNsis" Value="[LINPHONE_NSIS_INSTALL_DIR]" After="LinphoneInstallRootFromCommandLine" Sequence="both" Condition="LINPHONE_NSIS_INSTALL_DIR AND NOT INSTALLDIR AND NOT WIX_UPGRADE_DETECTED AND NOT LINPHONE_UI_INSTALL_ROOT"/>
+		<SetProperty Id="INSTALL_ROOT" Action="LinphoneInstallRootFromPrevious" Value="[LINPHONE_PREVIOUS_INSTALL_ROOT]" After="LinphoneInstallRootFromNsis" Sequence="both" Condition="LINPHONE_PREVIOUS_INSTALL_ROOT AND WIX_UPGRADE_DETECTED AND NOT INSTALLDIR AND NOT LINPHONE_UI_INSTALL_ROOT"/>
+		<SetProperty Id="INSTALL_ROOT" Action="LinphoneInstallRootFromUi" Value="[LINPHONE_UI_INSTALL_ROOT]" After="LinphoneInstallRootFromPrevious" Sequence="execute" Condition="LINPHONE_UI_INSTALL_ROOT"/>
+		<SetProperty Id="LINPHONE_UI_INSTALL_ROOT" Action="LinphoneRememberUiInstallRoot" Value="[INSTALL_ROOT]" Before="ExecuteAction" Sequence="ui"/>
+		<SetProperty Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Action="LinphoneSetLaunchCheckboxText" Value="!(loc.LinphoneLaunchApplication)" Before="CostInitialize" Sequence="ui" Condition="NOT Installed"/>
+		<SetProperty Id="REINSTALL" Action="LinphoneRepairWhenReinstalled" Value="ALL" Before="CostInitialize" Sequence="execute" Condition="Installed AND NOT REMOVE AND NOT REINSTALL AND NOT UPGRADINGPRODUCTCODE AND NOT ADDLOCAL AND NOT ADDSOURCE AND NOT ADDDEFAULT AND NOT ADVERTISE AND NOT PATCH"/>
+
+		<SetProperty Id="LinphoneRestartApplicationsRollback" Action="LinphoneSetRestartRollbackData" After="InstallInitialize" Sequence="execute" Value="path=[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe|exe=@EXECUTABLE_NAME@.exe|targets=[LINPHONE_RESTART_TARGETS]|state=@LINPHONE_MSI_STATE_KEY@"/>
+		<SetProperty Id="LinphoneCloseApplicationsElevated" Action="LinphoneSetCloseData" After="LinphoneRestartApplicationsRollback" Sequence="execute" Value="exe=@EXECUTABLE_NAME@.exe|event=@LINPHONE_MSI_QUIT_EVENT_PREFIX@|force=[FORCECLOSE]|noforce=[NOFORCECLOSE]|timeout=[CLOSETIMEOUT]|remove=[REMOVE]|state=@LINPHONE_MSI_STATE_KEY@"/>
+		<SetProperty Id="LinphoneMigrateNsisInstall" Action="LinphoneSetMigrateData" After="LinphoneCloseApplicationsElevated" Sequence="execute" Value="app=@APPLICATION_NAME@|exe=@EXECUTABLE_NAME@.exe|installdir=[INSTALL_ROOT]|upgrade=[WIX_UPGRADE_DETECTED]"/>
+		<SetProperty Id="LinphonePurgeUserData" Action="LinphoneSetPurgeData" After="PublishProduct" Sequence="execute" Value="app=@APPLICATION_NAME@|exe=@EXECUTABLE_NAME@|vendor=@APPLICATION_VENDOR@|installdir=[INSTALL_ROOT]|clsid=@LINPHONE_NOTIFICATION_ACTIVATOR_CLSID@|user=[LINPHONE_PURGE_USER]"/>
+		<SetProperty Id="LinphoneRestartApplications" Action="LinphoneSetRestartData" After="RemoveExistingProducts" Sequence="execute" Value="path=[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe|exe=@EXECUTABLE_NAME@.exe|targets=[LINPHONE_RESTART_TARGETS]|state=@LINPHONE_MSI_STATE_KEY@"/>
+
+		<InstallUISequence>
+			<Custom Action="LinphoneDetectNsisInstall" After="AppSearch"/>
+		</InstallUISequence>
+
+		<InstallExecuteSequence>
+			<Custom Action="LinphoneDetectNsisInstall" After="AppSearch"/>
+			<Custom Action="LinphoneAskPurgeUserData" After="InstallValidate" Condition="REMOVE~=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE AND NOT PURGE"/>
+			<Custom Action="LinphoneCloseApplications" Before="InstallValidate" Condition="NOT UPGRADINGPRODUCTCODE"/>
+			<Custom Action="LinphoneRestartApplicationsRollback" After="LinphoneSetRestartRollbackData" Condition="NOT UPGRADINGPRODUCTCODE AND RESTARTAPP &lt;&gt; &quot;0&quot;"/>
+			<Custom Action="LinphoneCloseApplicationsElevated" After="LinphoneSetCloseData" Condition="NOT UPGRADINGPRODUCTCODE"/>
+			<Custom Action="LinphoneMigrateNsisInstall" After="LinphoneSetMigrateData" Condition="NOT REMOVE~=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE"/>
+			<Custom Action="LinphonePurgeUserData" After="LinphoneSetPurgeData" Condition="REMOVE~=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE AND PURGE AND PURGE &lt;&gt; &quot;0&quot;"/>
+			<Custom Action="LinphoneRestartApplications" After="LinphoneSetRestartData" Condition="NOT REMOVE~=&quot;ALL&quot; AND NOT UPGRADINGPRODUCTCODE AND RESTARTAPP &lt;&gt; &quot;0&quot;"/>
+		</InstallExecuteSequence>
+
+		<Component Id="LinphoneSharedProtocols" Directory="INSTALL_ROOT" Guid="@LINPHONE_MSI_PROTOCOLS_GUID@" Permanent="yes">
+			<RegistryValue Root="HKCR" Key="sip" Type="string" Value="URL:sip Protocol" KeyPath="yes"/>
+			<RegistryValue Root="HKCR" Key="sip" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="sips" Type="string" Value="URL:sips Protocol"/>
+			<RegistryValue Root="HKCR" Key="sips" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="tel" Type="string" Value="URL:tel Protocol"/>
+			<RegistryValue Root="HKCR" Key="tel" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="callto" Type="string" Value="URL:callto Protocol"/>
+			<RegistryValue Root="HKCR" Key="callto" Name="URL Protocol" Type="string" Value=""/>
+		</Component>
+
+		<Component Id="LinphoneRegistration" Directory="INSTALL_ROOT" Guid="@LINPHONE_MSI_REGISTRATION_GUID@">
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@" Name="InstallDir" Type="string" Value="[INSTALL_ROOT]" KeyPath="yes"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" Name="ApplicationDescription" Type="string" Value="@APPLICATION_DESCRIPTION@"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" Name="ApplicationName" Type="string" Value="@APPLICATION_NAME@"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities" Name="FriendlyAppName" Type="string" Value="@APPLICATION_NAME@"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\RegisteredApplications" Name="@APPLICATION_NAME@" Type="string" Value="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\IM Providers\@APPLICATION_NAME@" Name="ProcessName" Type="string" Value="@EXECUTABLE_NAME@.exe"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\IM Providers\@APPLICATION_NAME@" Name="FriendlyName" Type="string" Value="@APPLICATION_NAME@"/>
+
+			<RegistryValue Root="HKCR" Key="sip-@EXECUTABLE_NAME@" Type="string" Value="URL:sip-@EXECUTABLE_NAME@ Protocol"/>
+			<RegistryValue Root="HKCR" Key="sip-@EXECUTABLE_NAME@" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-sip" Type="string" Value="URL:@EXECUTABLE_NAME@-sip Protocol"/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-sip" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-config" Type="string" Value="URL:@EXECUTABLE_NAME@-config Protocol"/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-config" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="sips-@EXECUTABLE_NAME@" Type="string" Value="URL:sips-@EXECUTABLE_NAME@ Protocol"/>
+			<RegistryValue Root="HKCR" Key="sips-@EXECUTABLE_NAME@" Name="URL Protocol" Type="string" Value=""/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-sips" Type="string" Value="URL:@EXECUTABLE_NAME@-sips Protocol"/>
+			<RegistryValue Root="HKCR" Key="@EXECUTABLE_NAME@-sips" Name="URL Protocol" Type="string" Value=""/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sip" Type="string" Value="@APPLICATION_NAME@ sip Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sip\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="sip" Type="string" Value="@APPLICATION_NAME@.sip"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@" Type="string" Value="@APPLICATION_NAME@ sip-@EXECUTABLE_NAME@ Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="sip-@EXECUTABLE_NAME@" Type="string" Value="@APPLICATION_NAME@.sip-@EXECUTABLE_NAME@"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip" Type="string" Value="@APPLICATION_NAME@ @EXECUTABLE_NAME@-sip Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="@EXECUTABLE_NAME@-sip" Type="string" Value="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sip"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sips" Type="string" Value="@APPLICATION_NAME@ sips Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sips\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="sips" Type="string" Value="@APPLICATION_NAME@.sips"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@" Type="string" Value="@APPLICATION_NAME@ sips-@EXECUTABLE_NAME@ Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="sips-@EXECUTABLE_NAME@" Type="string" Value="@APPLICATION_NAME@.sips-@EXECUTABLE_NAME@"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips" Type="string" Value="@APPLICATION_NAME@ @EXECUTABLE_NAME@-sips Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="@EXECUTABLE_NAME@-sips" Type="string" Value="@APPLICATION_NAME@.@EXECUTABLE_NAME@-sips"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-config" Type="string" Value="@APPLICATION_NAME@ @EXECUTABLE_NAME@-config Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.@EXECUTABLE_NAME@-config\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="@EXECUTABLE_NAME@-config" Type="string" Value="@APPLICATION_NAME@.@EXECUTABLE_NAME@-config"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.tel" Type="string" Value="@APPLICATION_NAME@ tel Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.tel\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="tel" Type="string" Value="@APPLICATION_NAME@.tel"/>
+
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.callto" Type="string" Value="@APPLICATION_NAME@ callto Protocol"/>
+			<RegistryValue Root="HKCR" Key="@APPLICATION_NAME@.callto\Shell\Open\Command" Type="string" Value="&quot;[INSTALL_ROOT]bin\@EXECUTABLE_NAME@.exe&quot; &quot;%1&quot;"/>
+			<RegistryValue Root="HKLM" Key="SOFTWARE\@APPLICATION_VENDOR@\@APPLICATION_NAME@\Capabilities\URLAssociations" Name="callto" Type="string" Value="@APPLICATION_NAME@.callto"/>
+		</Component>
+
+		<FeatureRef Id="ProductFeature">
+			<ComponentRef Id="LinphoneSharedProtocols"/>
+			<ComponentRef Id="LinphoneRegistration"/>
+		</FeatureRef>
+
+		<ui:WixUI Id="$(var.CPACK_WIX_UI_REF)"/>
+		<UIRef Id="WixUI_ErrorProgressText"/>
+		<UI>
+			<Publish Dialog="ExitDialog" Control="Finish" Event="DoAction" Value="LinphoneLaunchApplication" Condition="WIXUI_EXITDIALOGOPTIONALCHECKBOX = 1 AND NOT Installed"/>
+			<?if @LINPHONE_MSI_SHOW_LICENSE@ = 0 ?>
+			<Publish Dialog="WelcomeDlg" Control="Next" Event="NewDialog" Value="InstallDirDlg" Order="99" Condition="NOT Installed"/>
+			<Publish Dialog="InstallDirDlg" Control="Back" Event="NewDialog" Value="WelcomeDlg" Order="99"/>
+			<?endif?>
+		</UI>
+
+		<?include "properties.wxi"?>
+		<?include "product_fragment.wxi"?>
+	</Package>
+</Wix>

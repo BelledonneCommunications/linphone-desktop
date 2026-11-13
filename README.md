@@ -248,6 +248,20 @@ The default build is very long. It is prefered to use the Ninja generator `-G "N
 
 5. The project folder will be in the build directory and binaries should be in the OUTPUT folder.
 
+6. Packaging (`-DENABLE_APP_PACKAGING=YES`) produces an MSI installer by default. It needs CMake 3.30 or newer and the WiX .NET tool, pinned to 5.x:
+
+```
+dotnet tool install --global wix --version 5.0.2
+wix extension add --global WixToolset.UI.wixext/5.0.2
+```
+
+`-DENABLE_WINDOWS_TOOLS_CHECK=ON` installs WiX automatically and `-DENABLE_WINDOWS_MSI=OFF` builds the legacy NSIS installer instead. The installer command line options, upgrade behaviour and branding are described in [cmake/install/windows/msi/README.md](cmake/install/windows/msi/README.md).
+
+7. Troubleshooting:
+  - The SDK generates shell scripts that break when a build tool is in a path containing spaces (for example Ninja installed by winget in `C:\Program Files\WinGet\Links`). Use tools from paths without spaces, or pass `-DCMAKE_MAKE_PROGRAM=C:/path/to/ninja.exe`.
+  - Pass paths to CMake with forward slashes (`-DCMAKE_PREFIX_PATH=C:/Qt/6.10.1/msvc2022_64`): backslashes are read as escape sequences.
+  - CMake 4 dropped compatibility with old `cmake_minimum_required` versions still used by some SDK dependencies; use CMake 3.30 or a later 3.x release.
+
 ## Specific instructions for Linux
 
 ```bash

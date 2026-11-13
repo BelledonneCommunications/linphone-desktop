@@ -10,6 +10,22 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
+## [Unreleased]
+
+### Added
+- Windows MSI installer built with WiX 5, replacing the NSIS installer:
+    - silent install, uninstall and repair with the standard `msiexec` options, plus `INSTALLDIR`, `FORCECLOSE`, `NOFORCECLOSE`, `CLOSETIMEOUT`, `RESTARTAPP` and `PURGE` properties
+    - upgrades keep the install folder, refuse downgrades and replace the previous version in a single transaction
+    - running instances of every user are closed before the update and relaunched afterwards
+    - existing NSIS installations are migrated automatically
+    - branded installer dialogs
+    - English and French in a single package, chosen from the Windows display language
+- On an interactive uninstall, the user is asked whether to also delete their data (accounts, contacts, call history, messages and settings)
+
+### Changed
+- Windows packages are now `.msi` files; `-DENABLE_WINDOWS_MSI=OFF` builds the legacy NSIS installer
+
+
 ## [6.2.4] 2026-10-22
 
 ### Added
