@@ -104,6 +104,19 @@ elseif(WIN32)
         remove_file("${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*/Qt*.pdb")
     endif()
 
+    if(@ENABLE_WINDOWS_MSI@)
+        file(GLOB_RECURSE PACKAGE_DIRECTORIES LIST_DIRECTORIES true "${CPACK_TEMPORARY_INSTALL_DIRECTORY}/*")
+        list(SORT PACKAGE_DIRECTORIES ORDER DESCENDING)
+        foreach(D ${PACKAGE_DIRECTORIES})
+            if(IS_DIRECTORY "${D}")
+                file(GLOB D_CONTENT "${D}/*")
+                if(NOT D_CONTENT)
+                    file(REMOVE_RECURSE "${D}")
+                endif()
+            endif()
+        endforeach()
+    endif()
+
      # TODO: remove all pdb when CrashReporter is available. Symbols for crashing are in server so it is not needed for deployment.
      # if debugging is needed, we could rebuild it and use pdb from local build instead of using official binaries.
      # Warning: Do not remove files from here like below. NSIS have a check integrity that is done from install() commands.

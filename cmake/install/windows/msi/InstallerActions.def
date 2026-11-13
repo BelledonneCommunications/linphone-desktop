@@ -1,0 +1,11 @@
+LIBRARY InstallerActions
+EXPORTS
+	DetectNsisInstall
+	CloseApplicationsImmediate
+	CloseApplicationsDeferred
+	MigrateNsisInstall
+	RestartApplications
+	AskPurgeUserData
+	PurgeUserData
+	LaunchApplication
+	EndSessionHelperW

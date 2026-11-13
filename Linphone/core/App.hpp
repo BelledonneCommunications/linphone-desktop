@@ -42,6 +42,7 @@ class Thread;
 class Notifier;
 class QQuickWindow;
 class QSystemTrayIcon;
+class QWinEventNotifier;
 class DefaultTranslatorCore;
 #if defined(Q_OS_WIN) || defined(Q_OS_LINUX)
 class NotificationBackend;
@@ -265,6 +266,10 @@ private:
 	void setMacOSDockActions(); // Should only be called on MacOS
 	void setAutoStart(bool enabled);
 	void setLocale(QString configLocale);
+	bool consumeInstallerRestartState();
+#ifdef Q_OS_WIN
+	void listenToInstallerQuitRequests();
+#endif
 
 	QCommandLineParser *mParser = nullptr;
 	Thread *mLinphoneThread = nullptr;
@@ -280,6 +285,7 @@ private:
 	QQuickWindow *mLastActiveWindow = nullptr;
 #ifdef Q_OS_WIN
 	LockEventFilter *mLockEventFilter = nullptr;
+	QWinEventNotifier *mInstallerQuitNotifier = nullptr;
 #endif
 	// Holds the current chat displayed in the view
 	// to know if we need to display the notification

@@ -21,7 +21,10 @@
 #include "tool/LinphoneEnums.hpp"
 
 #include <QCoreApplication>
+#include <QDateTime>
 #include <QDirIterator>
+#include <QFile>
+#include <QFileInfo>
 #include <QFileSelector>
 #include <QFontDatabase>
 #include <QGuiApplication>
@@ -128,6 +131,7 @@
 
 #ifdef Q_OS_WIN
 #include "core/notifier/WindowsNotificationBackend.hpp"
+#include <QWinEventNotifier>
 #elif defined(Q_OS_LINUX)
 #include "core/notifier/SysTrayNotificationBackend.hpp"
 #endif
@@ -144,6 +148,7 @@ const QString OsascriptExecutable(QStringLiteral("osascript"));
 const QString
     AutoStartSettingsFilePath(QStringLiteral("HKEY_CURRENT_USER\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run"));
 #endif
+const QString InstallerRestartStateFile(QStringLiteral("installer-restart-state"));
 
 // -----------------------------------------------------------------------------
 //		Autostart
@@ -595,6 +600,50 @@ void App::setSelf(QSharedPointer<App>(me)) {
 	//---------------------------------------------------------------------------------------------
 	mCliModelConnection = SafeConnection<App, CliModel>::create(me, CliModel::getInstance());
 	connectCliModel();
+#ifdef Q_OS_WIN
+	listenToInstallerQuitRequests();
+#endif
+}
+
+#ifdef Q_OS_WIN
+void App::listenToInstallerQuitRequests() {
+	if (mInstallerQuitNotifier) return;
+	const std::wstring name =
+	    QStringLiteral(EXECUTABLE_NAME "-installer-quit-%1").arg(GetCurrentProcessId()).toStdWString();
+	HANDLE event = nullptr;
+	for (const wchar_t *scope : {L"Global\\", L"Local\\"}) {
+		event = CreateEventW(nullptr, TRUE, FALSE, (std::wstring(scope) + name).c_str());
+		if (event && GetLastError() != ERROR_ALREADY_EXISTS) break;
+		if (event) CloseHandle(event);
+		event = nullptr;
+	}
+	if (!event) {
+		lWarning() << log().arg("Cannot listen to installer quit requests (error %1)").arg(GetLastError());
+		return;
+	}
+	mInstallerQuitNotifier = new QWinEventNotifier(event, this);
+	connect(mInstallerQuitNotifier, &QWinEventNotifier::activated, this, [this]() {
+		lInfo() << log().arg("Quit requested by the installer");
+		mInstallerQuitNotifier->setEnabled(false);
+		auto window = getMainWindow();
+		QFile state(Paths::getAppLocalDirPath() + InstallerRestartStateFile);
+		if (state.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+			state.write(window && window->isVisible() ? "visible" : "hidden");
+			state.close();
+		}
+		quit();
+	});
+}
+#endif
+
+bool App::consumeInstallerRestartState() {
+	QFile state(Paths::getAppLocalDirPath() + InstallerRestartStateFile);
+	if (!state.exists()) return false;
+	const bool recent = QFileInfo(state).lastModified().secsTo(QDateTime::currentDateTime()) < 15 * 60;
+	const bool hidden = state.open(QIODevice::ReadOnly) && state.readAll().trimmed() == "hidden";
+	state.close();
+	state.remove();
+	return recent && hidden;
 }
 
 App *App::getInstance() {
@@ -878,7 +927,8 @@ void App::initCore() {
 #endif // if defined(__APPLE__)
 
 						        static bool firstOpen = true;
-						        if (!firstOpen || !mParser->isSet("minimized")) {
+						        const bool restartHidden = firstOpen && consumeInstallerRestartState();
+						        if (!firstOpen || !(mParser->isSet("minimized") || restartHidden)) {
 							        lDebug() << log().arg("Openning window");
 							        if (window) window->show();
 						        } else lInfo() << log().arg("Stay minimized");
@@ -1150,6 +1200,12 @@ void App::clean() {
 	mDateUpdateTimer.stop();
 #ifdef Q_OS_WIN
 	removeNativeEventFilter(mLockEventFilter);
+	if (mInstallerQuitNotifier) {
+		HANDLE event = mInstallerQuitNotifier->handle();
+		delete mInstallerQuitNotifier;
+		mInstallerQuitNotifier = nullptr;
+		CloseHandle(event);
+	}
 #endif
 	if (mEngine) {
 		mEngine->clearComponentCache();
