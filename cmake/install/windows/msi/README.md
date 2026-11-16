@@ -143,11 +143,12 @@ and upload handle whichever packages were built. When both are built, `WINDOWS_U
 The update check only shows a download link, so users install the `.msi` like they installed the `.exe`, and the MSI
 migrates their NSIS installation by itself. Recommended steps:
 
-1. Publish a release with both packages while `WINDOWS_UPDATE_PACKAGE` stays `nsis`, and check the MSI on real
-   machines, including the update of an existing NSIS installation.
-2. Set `WINDOWS_UPDATE_PACKAGE=msi` for the next release.
-3. Never offer the NSIS installer again once users are on the MSI: running it over an MSI installation leaves two
-   entries in Installed apps. Stop publishing it (`SKIP_WINDOWS_NSIS`) or at least stop linking to it.
+1. Optional validation: publish a release with the default settings, which build both packages while the update check
+   still offers the NSIS one, and check the MSI on real machines, including the update of an existing NSIS
+   installation.
+2. Set `SKIP_WINDOWS_NSIS=1`: only the MSI is built, signed, uploaded and offered by the update check.
+3. Keep it set: running the NSIS installer over an MSI installation leaves two entries in Installed apps, so the NSIS
+   installer must never be offered again.
 
 Things to keep in mind afterwards:
 
