@@ -8,7 +8,7 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 FocusScope {
 	id: mainItem
 	property var call
-	property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
+	property int conferenceLayout: call && call?.core?.conferenceVideoLayout || 0
 	signal changeLayoutRequested(int index)
 
 	RoundedPane {
@@ -30,7 +30,7 @@ FocusScope {
 					Accessible.name: modelData.text
 					Accessible.checkable: true
 					Accessible.checked: radiobutton.checked
-					enabled: mainItem.call && !mainItem.call.core.paused
+					enabled: mainItem.call && !mainItem.call?.core?.paused
 					checkOnClick: false
 					color: DefaultStyle.main1_500_main
 					indicatorSize: Utils.getSizeWithScreenRatio(20)

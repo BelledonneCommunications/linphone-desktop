@@ -21,7 +21,7 @@ Loader{
 	property var _address: account?.core
 		? account.core?.identityAddress || ""
 		: call
-			? call.core.remoteAddress
+			? call?.core?.remoteAddress
 			: contact
 				? contact.core.defaultAddress
 				: ''
@@ -51,8 +51,8 @@ Loader{
 	// override it as secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
 	property var securityLevelObj: UtilsCpp.getFriendAddressSecurityLevel(_address)
 	property var securityLevel: securityLevelObj ? securityLevelObj.value : LinphoneEnums.SecurityLevel.None
-	property bool secured: call && call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-						   ? call.core.tokenVerified
+	property bool secured: call && call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
+						   ? call?.core?.tokenVerified
 						   : contact
 							 ? contact.core.devices.length != 0 && contact.core.verifiedDeviceCount === contact.core.devices.length
 							 : false
@@ -185,7 +185,7 @@ Loader{
 					}
 					Connections {
 						target: mainItem.call?.core ? mainItem.call.core : null
-						onRemoteNameChanged: initialItem.initials = UtilsCpp.getInitials(mainItem.call.core.remoteName)
+						onRemoteNameChanged: initialItem.initials = UtilsCpp.getInitials(mainItem.call?.core?.remoteName)
 					}
 				}
 			}

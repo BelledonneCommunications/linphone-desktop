@@ -12,9 +12,9 @@ Control.Popup {
 	id: mainItem
 
 	property CallGui call
-	property var callState: call ? call.core.state : LinphoneEnums.CallState.Idle
-	property bool sendable: !!call && call.core.dtmfSendable
-	property var history: call ? call.core.dtmfHistory : []
+	property var callState: call ? call?.core?.state : LinphoneEnums.CallState.Idle
+	property bool sendable: !!call && call?.core?.dtmfSendable
+	property var history: call ? call?.core?.dtmfHistory : []
 	property var failedKeys: history.filter(entry => entry.status === "failed").map(entry => entry.key)
 	property bool clearable: history.some(entry => entry.status !== "pending")
 	property bool pausedLocally: callState === LinphoneEnums.CallState.Paused
@@ -67,7 +67,7 @@ Control.Popup {
 			unavailableBanner.Accessible.announce(unavailableMessage, Accessible.Assertive)
 			return
 		}
-		call.core.lSendDtmf(text)
+		if (call?.core) call.core.lSendDtmf(text)
 	}
 
 	function pressKey(key) {
@@ -192,7 +192,7 @@ Control.Popup {
 					Text {
 						id: subtitle
 						Layout.fillWidth: true
-						text: mainItem.call ? qsTr("dtmf_pad_subtitle").arg(mainItem.call.core.remoteName) : ""
+						text: mainItem.call ? qsTr("dtmf_pad_subtitle").arg(mainItem.call?.core?.remoteName) : ""
 						color: DefaultStyle.keypad_text_muted
 						font.family: DefaultStyle.defaultFont
 						font.pixelSize: Utils.getSizeWithScreenRatio(12)

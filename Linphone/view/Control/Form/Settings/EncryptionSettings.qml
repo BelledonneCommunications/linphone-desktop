@@ -31,9 +31,9 @@ ColumnLayout {
 				Layout.alignment: Qt.AlignHCenter
                 spacing: Utils.getSizeWithScreenRatio(7)
 				Text {
-					property bool isPostQuantum: mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainItem.call.core.zrtpStats.isPostQuantum
+					property bool isPostQuantum: mainItem.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp && mainItem.call?.core?.zrtpStats.isPostQuantum
                     //: Media encryption : %1
-                    text: qsTr("call_stats_media_encryption").arg(mainItem.call.core.encryptionString)
+                    text: qsTr("call_stats_media_encryption").arg(mainItem.call?.core?.encryptionString)
 					Layout.alignment: Qt.AlignHCenter
 					font {
                         pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -41,10 +41,10 @@ ColumnLayout {
 					}
 				}
 				ColumnLayout {
-					visible: mainItem.call && mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+					visible: mainItem.call && mainItem.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
 					Text {
                         //: "Algorithme de chiffrement : %1"
-                        text: qsTr("call_stats_zrtp_cipher_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.cipherAlgo)
+                        text: qsTr("call_stats_zrtp_cipher_algo").arg(mainItem.call && mainItem.call?.core?.zrtpStats.cipherAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -53,7 +53,7 @@ ColumnLayout {
 					}
 					Text {
                         //: "Algorithme d'accord de clé : %1"
-                        text: qsTr("call_stats_zrtp_key_agreement_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.keyAgreementAlgo)
+                        text: qsTr("call_stats_zrtp_key_agreement_algo").arg(mainItem.call && mainItem.call?.core?.zrtpStats.keyAgreementAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -62,7 +62,7 @@ ColumnLayout {
 					}
 					Text {
                         //: "Algorithme de hachage : %1"
-                        text: qsTr("call_stats_zrtp_hash_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.hashAlgo)
+                        text: qsTr("call_stats_zrtp_hash_algo").arg(mainItem.call && mainItem.call?.core?.zrtpStats.hashAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -71,7 +71,7 @@ ColumnLayout {
 					}
 					Text {
                         //: "Algorithme d'authentification : %1"
-                        text: qsTr("call_stats_zrtp_auth_tag_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.authenticationAlgo)
+                        text: qsTr("call_stats_zrtp_auth_tag_algo").arg(mainItem.call && mainItem.call?.core?.zrtpStats.authenticationAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -80,7 +80,7 @@ ColumnLayout {
 					}
 					Text {
                         //: "Algorithme SAS : %1"
-                        text: qsTr("call_stats_zrtp_sas_algo").arg(mainItem.call && mainItem.call.core.zrtpStats.sasAlgo)
+                        text: qsTr("call_stats_zrtp_sas_algo").arg(mainItem.call && mainItem.call?.core?.zrtpStats.sasAlgo)
 						Layout.alignment: Qt.AlignHCenter
 						font {
                             pixelSize: Utils.getSizeWithScreenRatio(12)
@@ -93,7 +93,7 @@ ColumnLayout {
 	}
 	Item{Layout.fillHeight: true}
 	Button {
-		visible: mainItem.call && !mainItem.call.core.conference && mainItem.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
+		visible: mainItem.call && !mainItem.call?.core?.conference && mainItem.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
 		Layout.fillWidth: true
         //: "Validation chiffrement"
         text: qsTr("call_zrtp_validation_button_label")

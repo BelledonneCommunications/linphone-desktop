@@ -233,7 +233,7 @@ ApplicationWindow {
                 addressPopup.parent = parentItem
                 addressPopup.contact = contact
                 addressPopup.addressChosen.connect(function(address) {
-                    call.core.lTransferCall(address)
+                    if (call?.core) call.core.lTransferCall(address)
                     addressPopup.close()
                 })
                 addressPopup.open()
@@ -244,7 +244,7 @@ ApplicationWindow {
                         ? ""
                         : contact.core.phoneNumbers[0].address
                     : contact.core.defaultAddress
-                if (addressToCall.length != 0) call.core.lTransferCall(addressToCall)
+                if (addressToCall.length != 0) if (call?.core) call.core.lTransferCall(addressToCall)
             }
         }
     }

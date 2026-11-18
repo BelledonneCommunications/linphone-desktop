@@ -14,24 +14,24 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Item {
 	id: mainItem
 	property CallGui call
-	property ConferenceGui conference: call && call.core.conference
+	property ConferenceGui conference: call && call?.core?.conference
 	property bool callTerminatedByUser: false
-	property bool callStarted: call? call.core.isStarted : false
+	property bool callStarted: call? call?.core?.isStarted : false
 	readonly property var callState: call?.core.state
 	onCallStateChanged: {
 		if (callState === LinphoneEnums.CallState.End || callState === LinphoneEnums.CallState.Released) preview.visible = false
 		else setConferenceLayout()
 	}
-	property int conferenceLayout: call ? call.core.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
+	property int conferenceLayout: call ? call?.core?.conferenceVideoLayout : LinphoneEnums.ConferenceLayout.ActiveSpeaker
 	property int participantDeviceCount: conference ? conference.core.participantDeviceCount : -1
 	readonly property bool joinedByRemote: !!conference && !!call
-		&& call.core.dir === LinphoneEnums.CallDir.Incoming
-	readonly property string conferenceInitiator: call ? call.core.remoteName : ""
+		&& call?.core?.dir === LinphoneEnums.CallDir.Incoming
+	readonly property string conferenceInitiator: call ? call?.core?.remoteName : ""
 	property int lastConfLayoutBeforeSharing: -1
 	property string localAddress: call 
 		? call.conference
 			? call.conference.core.me.core.sipAddress
-			: call.core.localAddress
+			: call?.core?.localAddress
 		: ""
 	onParticipantDeviceCountChanged: {
 		setConferenceLayout()
@@ -98,7 +98,7 @@ Item {
                     : mainItem.callStarted
                         //: "Votre correspondant a terminé l'appel"
                         ? qsTr("call_ended_by_remote")
-						: call && call.core.lastErrorMessage || ""
+						: call && call?.core?.lastErrorMessage || ""
 		color: DefaultStyle.grey_0
 		font {
             pixelSize: Utils.getSizeWithScreenRatio(22)

@@ -19,8 +19,8 @@ Item {
 	property bool previewEnabled
 	property bool securityBreach
 	property CallGui call: null
-	property ConferenceGui conference: call && call.core.conference || null
-	property var callState: call && call.core.state || undefined
+	property ConferenceGui conference: call && call?.core?.conference || null
+	property var callState: call && call?.core?.state || undefined
 	property AccountGui account: null
 	property ParticipantDeviceGui participantDevice: null
 	property bool displayBorder : participantDevice && participantDevice.core.isSpeaking
@@ -40,10 +40,10 @@ Item {
 		: participantDevice
 			? participantDevice.core.address
 			: call
-				? call.core.remoteAddress
+				? call?.core?.remoteAddress
 				: ""
 	property var localNameObj: previewEnabled && call
-		? UtilsCpp.getDisplayName(call.core.localAddress)
+		? UtilsCpp.getDisplayName(call?.core?.localAddress)
 		: null
 	property string localName: localNameObj ? localNameObj.value : ""
 	property string displayName: account
@@ -53,22 +53,22 @@ Item {
 			: call
 				? previewEnabled
 					? localName
-					: call.core.remoteName
+					: call?.core?.remoteName
 				: ""
 
-	property var contactObj: call ? UtilsCpp.findFriendByAddress(call.core.remoteAddress) : null
+	property var contactObj: call ? UtilsCpp.findFriendByAddress(call?.core?.remoteAddress) : null
 	property var contact: contactObj && contactObj.value || null
 	
 	property var identityAddress: account ? UtilsCpp.getDisplayName(account.core.identityAddress) : null
-    property bool videoEnabled: (previewEnabled && call && call.core.cameraEnabled)
-        || (!previewEnabled && call && call.core.remoteVideoEnabled)
+    property bool videoEnabled: (previewEnabled && call && call?.core?.cameraEnabled)
+        || (!previewEnabled && call && call?.core?.remoteVideoEnabled)
         || (participantDevice && participantDevice.core.videoEnabled)
 	property string qmlName
 	property bool displayAll : !!mainItem.call
 	property bool mutedStatus: participantDevice 
 		? participantDevice.core.isMuted 
 		: account && call
-			? call.core.conference && call.core.microphoneMuted
+			? call?.core?.conference && call?.core?.microphoneMuted
 			: false
 	clip: false
 	Rectangle {
@@ -189,7 +189,7 @@ Item {
 				Text {
 					Layout.fillWidth: true
 					horizontalAlignment: Text.AlignHCenter
-					property string _text: mainItem.call && mainItem.call.core.remoteAddress
+					property string _text: mainItem.call && mainItem.call?.core?.remoteAddress
 					text: SettingsCpp.hideSipAddresses ? UtilsCpp.getUsername(_text) : _text
 					color: DefaultStyle.grey_0
 					font {

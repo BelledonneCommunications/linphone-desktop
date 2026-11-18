@@ -132,16 +132,16 @@ Item {
             id: currentCallNotif
             background: Item {}
             closePolicy: Control.Popup.NoAutoClose
-            visible: currentCall && currentCall.core.state != LinphoneEnums.CallState.Idle && currentCall.core.state != LinphoneEnums.CallState.IncomingReceived && currentCall.core.state != LinphoneEnums.CallState.PushIncomingReceived
+            visible: currentCall && currentcall?.core?.state != LinphoneEnums.CallState.Idle && currentcall?.core?.state != LinphoneEnums.CallState.IncomingReceived && currentcall?.core?.state != LinphoneEnums.CallState.PushIncomingReceived
             x: mainItem.width / 2 - width / 2
             y: contentItem.height / 2
             property var currentCall: callsModel.currentCall ? callsModel.currentCall : null
-            property string remoteName: currentCall ? currentCall.core.remoteName : ""
+            property string remoteName: currentCall ? currentcall?.core?.remoteName : ""
             contentItem: MediumButton {
                 style: ButtonStyle.toast
                 text: currentCallNotif.currentCall
-                      ? currentCallNotif.currentCall.core.conference
-                        ? qsTr("main_ongoing_meeting_banner").arg(currentCallNotif.currentCall.core.conference.core.subject)
+                      ? currentCallNotif.currentcall?.core?.conference
+                        ? qsTr("main_ongoing_meeting_banner").arg(currentCallNotif.currentcall?.core?.conference.core.subject)
                         : qsTr("main_ongoing_call_banner").arg(currentCallNotif.remoteName)
                       : qsTr("main_ongoing_call_banner_no_name")
                 onClicked: {

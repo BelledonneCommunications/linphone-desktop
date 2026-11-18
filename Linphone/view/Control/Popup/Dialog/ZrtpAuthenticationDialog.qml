@@ -21,10 +21,10 @@ Dialog {
 
 	property var call
 	onCallChanged: if(!call) close()
-	property bool isTokenVerified: call && call.core.tokenVerified || false
-	property bool isCaseMismatch: call && call.core.isMismatch || false
+	property bool isTokenVerified: call && call?.core?.tokenVerified || false
+	property bool isCaseMismatch: call && call?.core?.isMismatch || false
 	property bool securityError: false
-	property string localToken: call && call.core.localToken || ""
+	property string localToken: call && call?.core?.localToken || ""
 	property bool localTokenIntroduced: false
 
 	function spelled(token) {
@@ -149,7 +149,7 @@ Dialog {
 				pressedTextColor: DefaultStyle.grey_200
 				underline: true
 				onClicked: {
-					call.core.lSkipZrtpAuthentication()
+					if (call?.core) call.core.lSkipZrtpAuthentication()
 					mainItem.close()
 				}
 			}
@@ -261,7 +261,7 @@ Dialog {
 						property var modelList
 						Repeater {
 							id: remoteTokensRepeater
-							model: mainItem.call && mainItem.call.core.remoteTokens || ""
+							model: mainItem.call && mainItem.call?.core?.remoteTokens || ""
 							Button {
                                 Layout.Layout.preferredWidth: Utils.getSizeWithScreenRatio(70)
                                 Layout.Layout.preferredHeight: Utils.getSizeWithScreenRatio(70)
@@ -340,7 +340,7 @@ Dialog {
 			Layout.Layout.alignment: Qt.AlignHCenter
 			visible: mainItem.securityError
 			style: ButtonStyle.phoneRed
-			onClicked: mainItem.call.core.lTerminate()
+			onClicked: if(mainItem.call) mainItem.call.core.lTerminate()
             spacing: Utils.getSizeWithScreenRatio(15)
             //: "Raccrocher"
             text: qsTr("call_action_hang_up")

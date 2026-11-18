@@ -12,7 +12,7 @@ Window {
 	width: 800
 	onWidthChanged: console.log(width)
 	property var call
-	property var callState: call && call.core.state
+	property var callState: call && call?.core?.state
 	onCallStateChanged: {
 		console.log("State:" +callState)
 		if(callState == LinphoneEnums.CallState.Released)
@@ -146,9 +146,9 @@ Window {
 				Layout.fillWidth: true
 				Layout.preferredHeight: 50
 				color: call
-						? call.core.state === LinphoneEnums.CallState.StreamsRunning 
+						? call?.core?.state === LinphoneEnums.CallState.StreamsRunning 
 							? 'green'
-							: call.core.state === LinphoneEnums.CallState.Released
+							: call?.core?.state === LinphoneEnums.CallState.Released
 								? 'pink'
 								: 'orange'
 						: 'red'

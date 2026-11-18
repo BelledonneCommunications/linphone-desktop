@@ -18,7 +18,7 @@ ListView {
 	clip: true
 
 	property bool isTransferList: false
-    property string currentRemoteAddress: AppCpp.calls.currentCall ? AppCpp.calls.currentCall.core.remoteAddress : ""
+    property string currentRemoteAddress: AppCpp.calls.currentCall ? AppCpp.calls.currentcall?.core?.remoteAddress : ""
 	signal transferCallToAnotherRequested(CallGui dest)
 	
 	onCountChanged: forceLayout()

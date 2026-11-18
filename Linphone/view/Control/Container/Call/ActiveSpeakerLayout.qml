@@ -14,12 +14,12 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 Item {
 	id: mainItem
 	property alias call: allDevices.currentCall
-	property ConferenceGui conference: call && call.core.conference || null
-	property var callState: call && call.core.state || undefined
+	property ConferenceGui conference: call && call?.core?.conference || null
+	property var callState: call && call?.core?.state || undefined
 	property string localAddress: call 
 		? call.conference
 			? call.conference.core.me.core.sipAddress
-			: call.core.localAddress
+			: call?.core?.localAddress
 		: ""
 	property bool sideStickersVisible: sideStickers.visible
 	
@@ -46,7 +46,7 @@ Item {
 			displayAll: !mainItem.conference
 			participantDevice: mainItem.conference && mainItem.conference.core.activeSpeakerDevice
 			property var address: participantDevice && participantDevice.core.address
-			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call.core.remoteVideoEnabled)
+			videoEnabled: (participantDevice && participantDevice.core.videoEnabled) || (!participantDevice && call && call?.core?.remoteVideoEnabled)
 			qmlName: 'AS'
 			securityBreach: !mainItem.conference && mainItem.call?.core.isMismatch || false
 			displayPresence: false
@@ -78,8 +78,8 @@ Item {
                     anchors.bottomMargin: Utils.getSizeWithScreenRatio(15)// Spacing
 					qmlName: 'S_'+index
 					visible: parent.visible
-					videoEnabled: (index === 0 && mainItem.call.core.cameraEnabled)
-						|| (!previewEnabled && call && call.core.remoteVideoEnabled)
+					videoEnabled: (index === 0 && mainItem.call?.core?.cameraEnabled)
+						|| (!previewEnabled && call && call?.core?.remoteVideoEnabled)
 						|| (!previewEnabled && participantDevice && participantDevice.core.videoEnabled)
 					participantDevice: $modelData
 					displayAll: false

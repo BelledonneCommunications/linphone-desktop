@@ -65,16 +65,16 @@ ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(8)
 				Layout.alignment: Qt.AlignHCenter
 				StatText {
-					text: mainItem.call ? mainItem.call.core.audioStats.codec : ""
+					text: mainItem.call ? mainItem.call?.core?.audioStats.codec : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.audioStats.bandwidth : ""
+					text: mainItem.call ? mainItem.call?.core?.audioStats.bandwidth : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.audioStats.lossRate : ""
+					text: mainItem.call ? mainItem.call?.core?.audioStats.lossRate : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.audioStats.jitterBufferSize : ""
+					text: mainItem.call ? mainItem.call?.core?.audioStats.jitterBufferSize : ""
 				}
 			}
 		}
@@ -89,7 +89,7 @@ ColumnLayout {
         Layout.leftMargin: Utils.getSizeWithScreenRatio(16)
         Layout.rightMargin: Utils.getSizeWithScreenRatio(16)
 
-		visible: mainItem.call && (mainItem.call.core.localVideoEnabled || mainItem.call.core.remoteVideoEnabled)
+		visible: mainItem.call && (mainItem.call?.core?.localVideoEnabled || mainItem.call?.core?.remoteVideoEnabled)
 
 		contentItem: ColumnLayout {
             spacing: Utils.getSizeWithScreenRatio(12)
@@ -109,19 +109,19 @@ ColumnLayout {
                 spacing: Utils.getSizeWithScreenRatio(8)
 				Layout.alignment: Qt.AlignHCenter
 				StatText {
-					text: mainItem.call ? mainItem.call.core.videoStats.codec : ""
+					text: mainItem.call ? mainItem.call?.core?.videoStats.codec : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.videoStats.bandwidth : ""
+					text: mainItem.call ? mainItem.call?.core?.videoStats.bandwidth : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.videoStats.lossRate : ""
+					text: mainItem.call ? mainItem.call?.core?.videoStats.lossRate : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.videoStats.resolution : ""
+					text: mainItem.call ? mainItem.call?.core?.videoStats.resolution : ""
 				}
 				StatText {
-					text: mainItem.call ? mainItem.call.core.videoStats.fps : ""
+					text: mainItem.call ? mainItem.call?.core?.videoStats.fps : ""
 				}
 			}
 		}

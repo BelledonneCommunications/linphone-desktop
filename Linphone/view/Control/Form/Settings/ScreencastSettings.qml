@@ -10,14 +10,17 @@ import "qrc:/qt/qml/Linphone/view/Control/Tool/Helper/utils.js" as Utils
 ColumnLayout {
 	id: mainItem
 	property CallGui call
-	property ConferenceGui conference: call.core.conference
-	property var desc: call.core.videoSourceDescriptor
-	property bool isLocalScreenSharing : conference?.core.isLocalScreenSharing || false
+	property ConferenceGui conference: call?.core?.conference
+	property var desc: call?.core?.videoSourceDescriptor
+	property bool isLocalScreenSharing : conference?.core?.isLocalScreenSharing || false
 	property bool screenSharingAvailable: !!conference && (!conference.core.isScreenSharingEnabled || isLocalScreenSharing)
 
     spacing: Utils.getSizeWithScreenRatio(12)
 
-	onIsLocalScreenSharingChanged:  {if(isLocalScreenSharing) mainItem.call.core.videoSourceDescriptor = mainItem.desc }
+	onIsLocalScreenSharingChanged:  {
+		if (isLocalScreenSharing && mainItem.call?.core && mainItem.desc)
+        	mainItem.call.core.videoSourceDescriptor = mainItem.desc 
+	}
 	Text {
 		Layout.fillWidth: true
         //: "Veuillez choisir l’écran ou la fenêtre que vous souihaitez partager au autres participants"
@@ -126,7 +129,7 @@ ColumnLayout {
 				onClicked: {//screensLayout.selectedIndex = index
 					screensLayout.currentIndex = index
 					mainItem.desc.core.screenSharingIndex = index
-					if( mainItem.conference.core.isLocalScreenSharing)
+					if( mainItem.conference.core.isLocalScreenSharing && mainItem.call?.core)
 							mainItem.call.core.videoSourceDescriptor = mainItem.desc
 				}
 				selected: mainItem.desc.core.screenSharingIndex === index
@@ -161,7 +164,7 @@ ColumnLayout {
 					onClicked: {
 						windowsLayout.currentIndex = index
 						mainItem.desc.core.windowId = $modelData.windowId
-						if( mainItem.conference.core.isLocalScreenSharing)
+						if( mainItem.conference.core.isLocalScreenSharing && mainItem.call?.core)
 							mainItem.call.core.videoSourceDescriptor = mainItem.desc
 					}
 					selected: mainItem.desc.core.windowId == $modelData.windowId

@@ -18,17 +18,14 @@ Notification {
 	readonly property var call: notificationData && notificationData.call
 	readonly property var displayName: notificationData && notificationData.displayName
 	title: (displayName ? displayName + ", " : "") + qsTr("call_audio_incoming")
-	property var state: call.core.state
-	property var status: call.core.status
-	property var conference: call.core.conference
+	property var state: call?.core?.state
+	property var status: call?.core?.status
+	property var conference: call?.core?.conference
 
 	onStateChanged:{
 		if (state != LinphoneEnums.CallState.IncomingReceived){
 			close()
 		}
-	}
-	onStatusChanged:{
-		console.log("status", status)
 	}
 	
 	Popup {
@@ -73,7 +70,7 @@ Notification {
 						call: mainItem.call
 						displayNameVal: mainItem.displayName
 						secured: securityLevel === LinphoneEnums.SecurityLevel.EndToEndEncryptedAndVerified
-						isConference: mainItem.call && mainItem.call.core.isConference
+						isConference: mainItem.call && mainItem.call?.core?.isConference
 					}
 					ColumnLayout {
 						spacing: 0
@@ -122,7 +119,7 @@ Notification {
 						onClicked: {
 							console.debug("[NotificationReceivedCall] Accept click")
 							UtilsCpp.openCallsWindow(mainItem.call)
-							mainItem.call.core.lAccept(false)
+							if (mainItem.call) mainItem.call.core.lAccept(false)
 						}
 					}
 					Button {
@@ -139,7 +136,7 @@ Notification {
                         textWeight: Utils.getSizeWithScreenRatio(500)
 						onClicked: {
 							console.debug("[NotificationReceivedCall] Decline click")
-							mainItem.call.core.lDecline()
+							if (mainItem.call) mainItem.call.core.lDecline()
 						}
 					}
 				}

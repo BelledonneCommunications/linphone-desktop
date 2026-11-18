@@ -270,30 +270,30 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 	});
 	mCallModelConnection->makeConnectToModel(
 	    &CallModel::errorMessageChanged, [this](const QString &errorMessage) { setLastErrorMessage(errorMessage); });
-	mCallModelConnection->makeConnectToModel(&CallModel::stateChanged, [this](std::shared_ptr<linphone::Call> call,
-	                                                                          linphone::Call::State state,
-	                                                                          const std::string &message) {
-		bool isConf = call && call->getConference() != nullptr;
-		auto subject = call->getConference() ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
-		if (state == linphone::Call::State::Connected) {
-			auto micMuted = call->getMicrophoneMuted();
-			auto speakerMuted = call->getSpeakerMuted();
-			mCallModelConnection->invokeToCore([this, micMuted, speakerMuted]() {
-				setMicrophoneMuted(micMuted);
-				setSpeakerMuted(speakerMuted);
-			});
-		}
-		mCallModelConnection->invokeToCore([this, state, subject, isConf]() {
-			lDebug() << log().arg("::onStateChanged") << LinphoneEnums::fromLinphone(state);
-			setRecordable(state == linphone::Call::State::StreamsRunning);
-			setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
-			if (mConference) mConference->setSubject(subject);
-			// The conference object is not ready until the StreamRunning status,
-			// so it can't be used at this point
-			setIsConference(isConf);
-		});
-		mCallModelConnection->invokeToCore([this, state, message]() { setState(LinphoneEnums::fromLinphone(state)); });
-	});
+	mCallModelConnection->makeConnectToModel(
+	    &CallModel::stateChanged,
+	    [this](std::shared_ptr<linphone::Call> call, linphone::Call::State state, const std::string &message) {
+		    auto conference = call ? call->getConference() : nullptr;
+		    bool isConf = conference != nullptr;
+		    auto subject = conference ? Utils::coreStringToAppString(call->getConference()->getSubject()) : "";
+		    auto micMuted = call->getMicrophoneMuted();
+		    auto speakerMuted = call->getSpeakerMuted();
+		    mCallModelConnection->invokeToCore([this, state, subject, isConf, micMuted, speakerMuted]() {
+			    lInfo() << log().arg("::onStateChanged") << LinphoneEnums::fromLinphone(state);
+			    if (state == linphone::Call::State::Connected) {
+				    mCallModelConnection->invokeToCore([this, micMuted, speakerMuted]() {
+					    setMicrophoneMuted(micMuted);
+					    setSpeakerMuted(speakerMuted);
+				    });
+			    }
+			    setRecordable(state == linphone::Call::State::StreamsRunning);
+			    setPaused(state == linphone::Call::State::Paused || state == linphone::Call::State::PausedByRemote);
+			    if (mConference) mConference->setSubject(subject);
+			    // The conference object is not ready until the StreamRunning status
+			    setIsConference(isConf);
+			    setState(LinphoneEnums::fromLinphone(state));
+		    });
+	    });
 	mCallModelConnection->makeConnectToModel(&CallModel::statusChanged, [this](linphone::Call::Status status) {
 		mCallModelConnection->invokeToCore([this, status]() { setStatus(LinphoneEnums::fromLinphone(status)); });
 	});
@@ -372,8 +372,8 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 		    // Force enable video if in conference to handle screen sharing
 		    if (conference && !mCallModel->videoEnabled()) mCallModel->enableVideo(true);
 		    QSharedPointer<ConferenceCore> core = conference ? ConferenceCore::create(conference) : nullptr;
+		    LinphoneEnums::ConferenceSecurityLevel level;
 		    if (conference) {
-			    LinphoneEnums::ConferenceSecurityLevel level;
 			    lInfo() << log().arg("Conference changed %1, security level is")
 			            << (conference->getCurrentParams()
 			                    ? LinphoneEnums::toString(conference->getCurrentParams()->getSecurityLevel())
@@ -384,9 +384,12 @@ void CallCore::setSelf(QSharedPointer<CallCore> me) {
 			    else level = LinphoneEnums::ConferenceSecurityLevel::PointToPoint;
 			    mCallModelConnection->invokeToCore([this, level]() { setConferenceSecurityLevel(level); });
 		    }
-		    mCallModelConnection->invokeToCore([this, core]() {
+		    mCallModelConnection->invokeToCore([this, core, level]() {
 			    setConference(core);
-			    if (core) App::getInstance()->getCallList()->updateHaveNonAdminMeeting();
+			    if (core) {
+				    setConferenceSecurityLevel(level);
+				    App::getInstance()->getCallList()->updateHaveNonAdminMeeting();
+			    }
 		    });
 	    });
 	mCallModelConnection->makeConnectToCore(&CallCore::lAccept, [this](bool withVideo) {

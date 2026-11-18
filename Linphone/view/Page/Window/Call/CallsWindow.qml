@@ -18,7 +18,7 @@ AbstractWindow {
     title: call
            ? isConference && (conference || joiningConferenceInfo)
              ? qsTr("call_window_conference_title").arg(applicationName).arg(conference ? conference.core.subject : joiningConferenceInfo.core.subject)
-             : qsTr("call_window_title").arg(applicationName).arg(call.core.remoteName)
+             : qsTr("call_window_title").arg(applicationName).arg(call?.core?.remoteName)
            : joiningConferenceInfo
              ? qsTr("call_window_conference_title").arg(applicationName).arg(joiningConferenceInfo.core.subject)
              : applicationName
@@ -28,21 +28,21 @@ AbstractWindow {
     // modality: Qt.WindowModal
     property CallGui call
 
-    property ConferenceGui conference: call && call.core.conference || null
-    property bool isConference: call ? call.core.isConference : false
+    property ConferenceGui conference: call && call?.core?.conference || null
+    property bool isConference: call ? call?.core?.isConference : false
     property ConferenceInfoGui joiningConferenceInfo: null
 
     // Chat related to call
     property var chatObj
     property ChatGui chat: chatObj && chatObj.value || null
 
-    property int conferenceLayout: call && call.core.conferenceVideoLayout || 0
-    property bool cameraEnabled: call && call.core.cameraEnabled
-    property bool remoteVideoEnabled: call && call.core.remoteVideoEnabled
+    property int conferenceLayout: call && call?.core?.conferenceVideoLayout || 0
+    property bool cameraEnabled: call && call?.core?.cameraEnabled
+    property bool remoteVideoEnabled: call && call?.core?.remoteVideoEnabled
 
     property bool callTerminatedByUser: false
-    property var callState: call ? call.core.state : LinphoneEnums.CallState.Idle
-    property var transferState: call && call.core.transferState
+    property var callState: call ? call?.core?.state : LinphoneEnums.CallState.Idle
+    property var transferState: call && call?.core?.transferState
     property bool startingCall: mainWindow.callState == LinphoneEnums.CallState.OutgoingInit
         || mainWindow.callState
         == LinphoneEnums.CallState.OutgoingProgress
@@ -134,9 +134,9 @@ AbstractWindow {
                 middleItemStackView.replace(inCallItem)
                 bottomButtonsLayout.visible = true
             }
-            if (call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                    && !mainWindow.isConference && (!call.core.tokenVerified
-                                                    || call.core.isMismatch)) {
+            if (call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                    && !mainWindow.isConference && (!call?.core?.tokenVerified
+                                                    || call?.core?.isMismatch)) {
                 zrtpValidation.open()
             }
         } else if (callState === LinphoneEnums.CallState.StreamsRunning) {
@@ -212,7 +212,7 @@ AbstractWindow {
             return
         if (!/^[0-9*#]$/.test(event.text) || isInPopup(activeFocusItem))
             return
-        if (call.core.dtmfSendable)
+        if (call?.core && call?.core?.dtmfSendable)
             call.core.lSendDtmf(event.text)
         else
             dtmfPadButton.Accessible.announce(dtmfPadPopup.unavailableMessage, Accessible.Assertive)
@@ -230,13 +230,13 @@ AbstractWindow {
     function changeLayout(layoutIndex) {
         if (layoutIndex == 0) {
             console.log("Set Grid layout")
-            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.Grid)
+            if (call?.core) call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.Grid)
         } else if (layoutIndex == 1) {
             console.log("Set AS layout")
-            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.ActiveSpeaker)
+            if (call?.core) call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.ActiveSpeaker)
         } else {
             console.log("Set audio-only layout", layoutIndex)
-            call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.AudioOnly)
+            if (call?.core) call.core.lSetConferenceVideoLayout(LinphoneEnums.ConferenceLayout.AudioOnly)
         }
     }
 
@@ -252,11 +252,11 @@ AbstractWindow {
         // mainWin.goToCallHistory()
     }
     function callEnded(call) {
-        if (call && call.core.state === LinphoneEnums.CallState.Error) {
+        if (call && call?.core?.state === LinphoneEnums.CallState.Error) {
             middleItemStackView.replace(inCallItem)
         }
         if (!callsModel.haveCall) {
-            if (call && call.core.isConference)
+            if (call && call?.core?.isConference)
                 UtilsCpp.closeCallsWindow()
             else {
                 bottomButtonsLayout.setButtonsEnabled(false)
@@ -303,8 +303,8 @@ AbstractWindow {
         enabled: !!mainWindow.call
         target: mainWindow.call ? mainWindow.call.core : null
         function onSecurityUpdated() {
-            if (mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
-                if (call.core.tokenVerified) {
+            if (mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp) {
+                if (mainWindow.call?.core?.tokenVerified) {
                     zrtpValidation.close()
                     zrtpValidationToast.open()
                 } else {
@@ -334,7 +334,7 @@ AbstractWindow {
         id: terminateAllCallsDialog
         onAccepted: {
             mainWindow.callTerminatedByUser = true
-            call.core.lTerminateAllCalls()
+            if (call?.core) call.core.lTerminateAllCalls()
         }
         width: Utils.getSizeWithScreenRatio(278)
         //: "Terminer tous les appels en cours ?"
@@ -502,15 +502,15 @@ AbstractWindow {
                                     ? AppIcons.meeting
                                     : (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
                                         ? AppIcons.endCall
-                                        : (mainWindow.call.core.paused || mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
+                                        : (mainWindow.call?.core?.paused || mainWindow.callState === LinphoneEnums.CallState.Paused || mainWindow.callState === LinphoneEnums.CallState.PausedByRemote)
                                             ? AppIcons.pause
                                             : mainWindow.conference
                                                 ? AppIcons.videoconference
-                                                : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing
+                                                : mainWindow.call?.core?.dir === LinphoneEnums.CallDir.Outgoing
                                                     ? AppIcons.arrowUpRight
                                                     : AppIcons.arrowDownLeft
                                 colorizationColor: !mainWindow.call
-                                                || mainWindow.call.core.paused
+                                                || mainWindow.call?.core?.paused
                                                 || mainWindow.callState
                                                 === LinphoneEnums.CallState.Paused
                                                 || mainWindow.callState
@@ -519,7 +519,7 @@ AbstractWindow {
                                                 === LinphoneEnums.CallState.End
                                                 || mainWindow.callState
                                                 === LinphoneEnums.CallState.Released
-                                                || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call.core.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
+                                                || mainWindow.conference ? DefaultStyle.danger_500_main : mainWindow.call?.core?.dir === LinphoneEnums.CallDir.Outgoing ? DefaultStyle.info_500_main : DefaultStyle.success_500_main
                                 
                                 Binding {
                                     target: callStatusIcon
@@ -544,19 +544,19 @@ AbstractWindow {
                                     id: callStatusText
                                     Accessible.role: Accessible.StaticText
                                     Accessible.name: text
-                                    property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call.core.dir)) : ""
+                                    property string remoteName: mainWindow.call ? qsTr("call_dir").arg(EnumsToStringCpp.dirToString(mainWindow.call?.core?.dir)) : ""
                                     Connections {
                                         target: mainWindow
                                         onCallStateChanged: {
                                             if (mainWindow.callState === LinphoneEnums.CallState.Connected || mainWindow.callState === LinphoneEnums.CallState.StreamsRunning)
-                                               callStatusText.remoteName = mainWindow.call.core.remoteName
+                                               callStatusText.remoteName = mainWindow.call?.core?.remoteName
                                         }
                                     }
 
                                     text: (mainWindow.callState === LinphoneEnums.CallState.End || mainWindow.callState === LinphoneEnums.CallState.Released)
                                         //: Appel terminé
                                         ? qsTr("call_ended")
-                                        : mainWindow.call && (mainWindow.call.core.paused)
+                                        : mainWindow.call && (mainWindow.call?.core?.paused)
                                             ? (mainWindow.conference
                                                //: Meeting paused
                                                 ? qsTr("conference_paused")
@@ -587,7 +587,7 @@ AbstractWindow {
                                     color: DefaultStyle.grey_0
                                 }
                                 Text {
-                                    text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call.core.duration) : ""
+                                    text: mainWindow.call ? UtilsCpp.formatElapsedTime(mainWindow.call?.core?.duration) : ""
                                     Accessible.role: Accessible.StaticText
                                     Accessible.name: text
                                     color: DefaultStyle.grey_0
@@ -644,10 +644,10 @@ AbstractWindow {
                                     colorizationColor: mainWindow.conference
                                         ?  DefaultStyle.info_500_main
                                         : mainWindow.call 
-                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp 
+                                            ? mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Srtp 
                                                 ? DefaultStyle.info_500_main 
-                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp 
-                                                    ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified 
+                                                : mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp 
+                                                    ? mainWindow.call?.core?.isMismatch || !mainWindow.call?.core?.tokenVerified 
                                                         ? DefaultStyle.warning_600 
                                                         : DefaultStyle.info_500_main 
                                                     : DefaultStyle.grey_0 
@@ -656,10 +656,10 @@ AbstractWindow {
                                     imageSource: mainWindow.conference
                                         ?  AppIcons.lockKey
                                         : mainWindow.call
-                                        ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                        ? mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Srtp
                                             ? AppIcons.lockSimple
-                                            : mainWindow.call && mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                            : mainWindow.call && mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call?.core?.isMismatch || !mainWindow.call?.core?.tokenVerified
                                                     ? AppIcons.warningCircle
                                                     : AppIcons.lockKey
                                                 : AppIcons.lockSimpleOpen
@@ -699,22 +699,22 @@ AbstractWindow {
                                         visible: encryptionStatusText.activeFocus
                                     }
                                     text: mainWindow.conference
-                                        ? mainWindow.call.core.conferenceSecurityLevel === LinphoneEnums.ConferenceSecurityLevel.EndToEnd
+                                        ? mainWindow.call?.core?.conferenceSecurityLevel === LinphoneEnums.ConferenceSecurityLevel.EndToEnd
                                             //: End to end encrypted meeting
                                             ? qsTr("conference_end_to_end_encrypted")
                                             //: Point to point encrypted meeting
                                             : qsTr("conference_srtp_point_to_point_encrypted")
                                         : mainWindow.call
-                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Srtp
+                                            ? mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Srtp
                                             //: Appel chiffré de point à point
                                                 ? qsTr("call_srtp_point_to_point_encrypted")
-                                                : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                                    ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                                : mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                    ? mainWindow.call?.core?.isMismatch || !mainWindow.call?.core?.tokenVerified
                                                     //: Vérification nécessaire
                                                         ? qsTr("call_zrtp_sas_validation_required")
                                                         //: Appel chiffré de bout en bout
                                                         : qsTr("call_zrtp_end_to_end_encrypted")
-                                                    : mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.None
+                                                    : mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.None
                                                         //: "Appel non chiffré"
                                                         ? qsTr("call_not_encrypted")
                                                         : qsTr("call_waiting_for_encryption_info")
@@ -722,8 +722,8 @@ AbstractWindow {
                                     color: mainWindow.conference || mainWindow.call?.core.encryption === LinphoneEnums.MediaEncryption.Srtp
                                         ? DefaultStyle.info_500_main
                                         : mainWindow.call
-                                            ? mainWindow.call.core.encryption === LinphoneEnums.MediaEncryption.Zrtp
-                                                ? mainWindow.call.core.isMismatch || !mainWindow.call.core.tokenVerified
+                                            ? mainWindow.call?.core?.encryption === LinphoneEnums.MediaEncryption.Zrtp
+                                                ? mainWindow.call?.core?.isMismatch || !mainWindow.call?.core?.tokenVerified
                                                     ? DefaultStyle.warning_600
                                                     : DefaultStyle.info_500_main
                                                 : DefaultStyle.grey_0
@@ -752,7 +752,7 @@ AbstractWindow {
                     // Button open statistics panel
                     Button {
                         id: openStatisticPanelButton
-                        property int quality: mainWindow.call ? mainWindow.call.core.quality : 0
+                        property int quality: mainWindow.call ? mainWindow.call?.core?.quality : 0
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(40)
@@ -783,7 +783,7 @@ AbstractWindow {
                     visible: mainWindow.call
                         ? !!mainWindow.conference 
                             ? mainWindow.conference.core.isRecording || isScreenSharing//mainWindow.conference.core.isLocalScreenSharing
-                            : (mainWindow.call.core.recording || mainWindow.call.core.remoteRecording) 
+                            : (mainWindow.call?.core?.recording || mainWindow.call?.core?.remoteRecording) 
                         : false
                     anchors.centerIn: parent
                     leftPadding: Utils.getSizeWithScreenRatio(14)
@@ -818,7 +818,7 @@ AbstractWindow {
                                         ? screenSharingOrRecordBanner.isScreenSharing
                                             //: "You are sharing your screen"
                                             ? qsTr("conference_user_is_sharing_screen")
-                                            : mainWindow.call.core.recording
+                                            : mainWindow.call?.core?.recording
                                                 ? mainWindow.conference
                                                     //: "You are recording the meeting"
                                                     ? qsTr("conference_user_is_recording")
@@ -828,13 +828,13 @@ AbstractWindow {
                                                     //: "Someone is recording the meeting"
                                                     ? qsTr("conference_remote_is_recording")
                                                     //: "%1 is recording the call"
-                                                    : qsTr("call_remote_recording").arg(mainWindow.call.core.remoteName)
+                                                    : qsTr("call_remote_recording").arg(mainWindow.call?.core?.remoteName)
                                         : ""
                             }
                         }
                         MediumButton {
                             visible: mainWindow.call
-                                     && mainWindow.call.core.recording || screenSharingOrRecordBanner.isScreenSharing
+                                     && mainWindow.call?.core?.recording || screenSharingOrRecordBanner.isScreenSharing
                             
                             text: screenSharingOrRecordBanner.isScreenSharing
                             //: "Stop sharing"
@@ -849,7 +849,7 @@ AbstractWindow {
                             style: ButtonStyle.mainLightBorder
                             onPressed: {
                                 if (screenSharingOrRecordBanner.isScreenSharing) mainWindow.conference.core.lToggleScreenSharing()
-                                else mainWindow.call.core.lStopRecording()
+                                else if (mainWindow.call?.core) mainWindow.call.core.lStopRecording()
                             }
                         }
                     }
@@ -963,7 +963,7 @@ AbstractWindow {
                             if (rightPanel.contentLoader.item) {
                                 if (rightPanel.contentLoader.item.objectName === "callTransferPanel") {
                                     //: "Transférer %1 à…"
-                                    rightPanel.headerTitleText = qsTr("call_transfer_current_call_title").arg(mainWindow.call.core.remoteName)
+                                    rightPanel.headerTitleText = qsTr("call_transfer_current_call_title").arg(mainWindow.call?.core?.remoteName)
                                 }
                                 else if (rightPanel.contentLoader.item.objectName === "newCallPanel") {
                                     //: "Nouvel appel"
@@ -1061,7 +1061,7 @@ AbstractWindow {
                             //: "Confirmer le transfert"
                             callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
                                                                 //: "Vous allez transférer %1 à %2."
-                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(contact.core.fullName), "",
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call?.core?.remoteName).arg(contact.core.fullName), "",
                                 function (confirmed) {
                                     if (confirmed) {
                                         mainWindow.transferCallToContact(mainWindow.call,contact,newCallForm)
@@ -1072,9 +1072,9 @@ AbstractWindow {
                             var callsWin = UtilsCpp.getOrCreateCallsWindow()
                             console.log("transfer to",dest)
                             callsWin.showConfirmationLambdaPopup(qsTr("call_transfer_confirm_dialog_tittle"),
-                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call.core.remoteName).arg(dest.core.remoteName),"",
+                                                                qsTr("call_transfer_confirm_dialog_message").arg(mainWindow.call?.core?.remoteName).arg(dest.core.remoteName),"",
                                 function (confirmed) {
-                                if (confirmed) {
+                                if (confirmed && mainWindow.call?.core) {
                                     mainWindow.call.core.lTransferCallToAnother(dest.core.remoteAddress)
                                 }
                             })
@@ -1352,7 +1352,7 @@ AbstractWindow {
                                             //: Partager le lien de la réunion
                                             text: qsTr("conference_share_link_title")
                                             onClicked: {
-                                                UtilsCpp.copyToClipboard(mainWindow.conference ? mainWindow.conference.core.uri : mainWindow.call.core.remoteAddress)
+                                                UtilsCpp.copyToClipboard(mainWindow.conference ? mainWindow.conference.core.uri : mainWindow.call?.core?.remoteAddress)
                                                 //: Copié
                                                 showInformationPopup(qsTr("copied"),
                                                 //: Le lien de la réunion a été copié dans le presse-papier
@@ -1562,7 +1562,7 @@ AbstractWindow {
                         KeyNavigation.tab: mainWindow.startingCall ? (videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : audioMicrophoneButton) : encryptionStatusText.activeFocusOnTab ? encryptionStatusText : openStatisticPanelButton
                         KeyNavigation.backtab:endCallButton
                         onClicked: {
-                            mainWindow.call.core.lAccept(false)
+                            if (mainWindow.call?.core) mainWindow.call.core.lAccept(false)
                         }
                     }
                     BigButton {
@@ -1627,7 +1627,7 @@ AbstractWindow {
                         pressedColor: enabled ? DefaultStyle.success_500_main : DefaultStyle.grey_600
                         hoveredColor: enabled ? DefaultStyle.main2_400 : DefaultStyle.grey_600
                         onClicked: {
-                            mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
+                            if (mainWindow.call?.core) mainWindow.call.core.lSetPaused(!mainWindow.call.core.paused)
                         }
                         KeyNavigation.backtab: moreOptionsButton
                     }
@@ -1733,7 +1733,7 @@ AbstractWindow {
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
-                        onClicked: mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
+                        onClicked: if (mainWindow.call?.core) mainWindow.call.core.lSetCameraEnabled(!mainWindow.call.core.cameraEnabled)
                     }
 
                     // Audio microphone button
@@ -1741,27 +1741,27 @@ AbstractWindow {
                         id: audioMicrophoneButton
                         iconUrl: AppIcons.microphone
                         checkedIconUrl: AppIcons.microphoneSlash
-                        ToolTip.text: mainWindow.call && mainWindow.call.core.microphoneMuted
+                        ToolTip.text: mainWindow.call && mainWindow.call?.core?.microphoneMuted
                             //: "Activer le micro"
                             ? qsTr("call_activate_microphone")
                             //: "Désactiver le micro"
                             : qsTr("call_deactivate_microphone")
-                        Accessible.name: mainWindow.call && mainWindow.call.core.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
+                        Accessible.name: mainWindow.call && mainWindow.call?.core?.microphoneMuted ? qsTr("call_activate_microphone") : qsTr("call_deactivate_microphone")
                         accessibleCheckedState: false
-                        checked: mainWindow.call && mainWindow.call.core.microphoneMuted
+                        checked: mainWindow.call && mainWindow.call?.core?.microphoneMuted
                         Layout.preferredWidth: Utils.getSizeWithScreenRatio(55)
                         Layout.preferredHeight: Utils.getSizeWithScreenRatio(55)
                         icon.width: Utils.getSizeWithScreenRatio(32)
                         icon.height: Utils.getSizeWithScreenRatio(32)
-                        onClicked: mainWindow.call.core.lSetMicrophoneMuted(
-                                       !mainWindow.call.core.microphoneMuted)
+                        onClicked: mainWindow.call?.core?.lSetMicrophoneMuted(
+                                       !mainWindow.call?.core?.microphoneMuted)
                         KeyNavigation.backtab: videoCameraButton.visible && videoCameraButton.enabled ? videoCameraButton : nextItemInFocusChain(false)
                         Connections {
                             target: mainWindow.call ? mainWindow.call.core : null
                             function onMicrophoneMutedChanged() {
                                 if (audioMicrophoneButton.keyboardFocus)
                                     return
-                                audioMicrophoneButton.Accessible.announce(mainWindow.call.core.microphoneMuted
+                                audioMicrophoneButton.Accessible.announce(mainWindow.call?.core?.microphoneMuted
                                                                           ? qsTr("call_microphone_muted_announcement")
                                                                           : qsTr("call_microphone_unmuted_announcement"))
                             }
@@ -1989,28 +1989,28 @@ AbstractWindow {
                                          && !mainWindow.conference
                                          && !SettingsCpp.disableCallRecordings
                                 enabled: mainWindow.call
-                                         && mainWindow.call.core.recordable
+                                         && mainWindow.call?.core?.recordable
                                 icon.source: AppIcons.recordFill
                                 checked: mainWindow.call
-                                         && mainWindow.call.core.recording
+                                         && mainWindow.call?.core?.recording
                                 hoveredImageColor: contentImageColor
                                 contentImageColor: mainWindow.call
-                                                   && mainWindow.call.core.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
-                                text: mainWindow.call && mainWindow.call.core.recording
+                                                   && mainWindow.call?.core?.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                text: mainWindow.call && mainWindow.call?.core?.recording
                                     //: "Terminer l'enregistrement"
                                     ? qsTr("call_action_stop_recording")
                                     //: "Enregistrer l'appel"
                                     : qsTr("call_action_record")
                                 textColor: mainWindow.call
-                                           && mainWindow.call.core.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                           && mainWindow.call?.core?.recording ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredTextColor: textColor
                                 onToggled: {
                                     if (mainWindow.call)
-                                        if (mainWindow.call.core.recording)
-                                            mainWindow.call.core.lStopRecording(
+                                        if (mainWindow.call?.core?.recording)
+                                            mainWindow.call?.core?.lStopRecording(
                                                         )
                                         else
-                                            mainWindow.call.core.lStartRecording()
+                                            mainWindow.call?.core?.lStartRecording()
                                 }
                                 KeyNavigation.up: visibleChildren.length != 0 ? moreOptionsButton.getPreviousItem(2) : null
                                 KeyNavigation.down: visibleChildren.length != 0 ? moreOptionsButton.getNextItem(2) : null
@@ -2022,20 +2022,20 @@ AbstractWindow {
                                 icon.width: Utils.getSizeWithScreenRatio(32)
                                 icon.height: Utils.getSizeWithScreenRatio(32)
                                 icon.source: !mainWindow.call
-                                             || mainWindow.call.core.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
+                                             || mainWindow.call?.core?.speakerMuted ? AppIcons.speakerSlash : AppIcons.speaker
                                 contentImageColor: mainWindow.call
-                                                   && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                                   && mainWindow.call?.core?.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredImageColor: contentImageColor
-                                text: mainWindow.call && mainWindow.call.core.speakerMuted
+                                text: mainWindow.call && mainWindow.call?.core?.speakerMuted
                                     //: "Activer le son"
                                     ? qsTr("call_activate_speaker_hint")
                                     //: "Désactiver le son"
                                     : qsTr("call_deactivate_speaker_hint")
                                 textColor: mainWindow.call
-                                           && mainWindow.call.core.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
+                                           && mainWindow.call?.core?.speakerMuted ? DefaultStyle.danger_500_main : DefaultStyle.main2_500_main
                                 hoveredTextColor: textColor
                                 onCheckedChanged: {
-                                    if (mainWindow.call)
+                                    if (mainWindow.call?.core)
                                         mainWindow.call.core.lSetSpeakerMuted(
                                                     !mainWindow.call.core.speakerMuted)
                                 }
