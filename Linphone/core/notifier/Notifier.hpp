@@ -64,25 +64,17 @@ public slots:
 
 private:
 	struct Notification {
-		Notification(const int &type = 0, const QString &filename = QString(""), int timeout = 0) {
+		Notification(const int &type = 0, const QString &filename = QString("")) {
 			this->type = type;
 			this->filename = filename;
-			this->timeout = timeout;
-		}
-		int getTimeout() const {
-			if (type == AbstractNotificationBackend::ReceivedCall) {
-				// return CoreManager::getInstance()->getSettingsModel()->getIncomingCallTimeout();
-				return 30;
-			} else return timeout;
 		}
 		QString filename;
 
 	private:
-		int timeout;
 		int type;
 	};
 
-	bool createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data);
+	bool createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data, int timeout);
 	void showNotification(QQuickWindow *notification, int timeout);
 
 	QHash<QString, int> mScreenHeightOffset;

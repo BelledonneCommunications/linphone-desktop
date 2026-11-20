@@ -90,11 +90,11 @@ void setProperty(QObject &object, const char *property, const T &value) {
 
 const QHash<int, Notifier::Notification> Notifier::Notifications = {
     {AbstractNotificationBackend::ReceivedMessage,
-     {AbstractNotificationBackend::ReceivedMessage, "NotificationReceivedMessage.qml", 10}},
+     {AbstractNotificationBackend::ReceivedMessage, "NotificationReceivedMessage.qml"}},
     //{AbstractNotificationBackend::ReceivedFileMessage, {AbstractNotificationBackend::ReceivedFileMessage,
     //"NotificationReceivedFileMessage.qml", 10}},
     {AbstractNotificationBackend::ReceivedCall,
-     {AbstractNotificationBackend::ReceivedCall, "NotificationReceivedCall.qml", 30}}
+     {AbstractNotificationBackend::ReceivedCall, "NotificationReceivedCall.qml"}}
     //{Notifier::NewVersionAvailable, {Notifier::NewVersionAvailable, "NotificationNewVersionAvailable.qml", 30}},
     //{Notifier::SnapshotWasTaken, {Notifier::SnapshotWasTaken, "NotificationSnapshotWasTaken.qml", 10}},
     //{Notifier::RecordingCompleted, {Notifier::RecordingCompleted, "NotificationRecordingCompleted.qml", 10}}
@@ -131,7 +131,7 @@ Notifier::~Notifier() {
 
 // -----------------------------------------------------------------------------
 
-bool Notifier::createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data) {
+bool Notifier::createNotification(AbstractNotificationBackend::NotificationType type, QVariantMap data, int timeout) {
 	mMutex->lock();
 	mustBeInMainThread(log().arg(Q_FUNC_INFO));
 	lInfo() << log().arg("Create notification");
@@ -177,7 +177,7 @@ bool Notifier::createNotification(AbstractNotificationBackend::NotificationType 
 			const QUrl url(QString(NotificationsPath) + Notifier::Notifications[type].filename);
 			QObject::connect(
 			    engine, &QQmlApplicationEngine::objectCreated, this,
-			    [this, url, screen, engine, type, data, showAsTool](QObject *obj, const QUrl &objUrl) {
+			    [this, url, screen, engine, type, data, showAsTool, timeout](QObject *obj, const QUrl &objUrl) {
 				    if (!obj && url == objUrl) {
 					    lCritical() << "[App] Notifier.qml couldn't be load.";
 					    engine->deleteLater();
@@ -195,7 +195,6 @@ bool Notifier::createNotification(AbstractNotificationBackend::NotificationType 
 						    window->setFlag(Qt::WindowDoesNotAcceptFocus);
 						    //						    for (auto it = data.begin(); it != data.end(); ++it)
 						    //							    window->setProperty(it.key().toLatin1(), it.value());
-						    const int timeout = Notifications[type].getTimeout() * 1000;
 						    auto updateNotificationCoordinates = [this, window, screen](int width, int height) {
 							    auto screenHeightOffset =
 							        screen ? mScreenHeightOffset.value(screen->name()) : 0; // Access optimization
@@ -312,10 +311,10 @@ void Notifier::deleteNotification(QVariant notification) {
 
 // =============================================================================
 
-#define CREATE_NOTIFICATION(TYPE, DATA)                                                                                \
+#define CREATE_NOTIFICATION(TYPE, DATA, TIMEOUT)                                                                       \
 	auto settings = App::getInstance()->getSettings();                                                                 \
 	if (settings && settings->dndEnabled()) return;                                                                    \
-	createNotification(TYPE, DATA);
+	createNotification(TYPE, DATA, TIMEOUT);
 
 // -----------------------------------------------------------------------------
 // Notification functions.
@@ -358,7 +357,9 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 	//: New call from %1
 	AccessibilityHelper::announceMessage(tr("new_call_alert_accessible_name").arg(displayName));
 
-	App::postCoreAsync([this, model, displayName, remoteAddrString]() {
+	auto timeout = CoreModel::getInstance()->getCore()->getIncTimeout() * 1000;
+
+	App::postCoreAsync([this, model, displayName, remoteAddrString, timeout]() {
 		mustBeInMainThread(getClassName());
 		lInfo() << log().arg("Display call notification");
 		QVariantMap map;
@@ -366,8 +367,7 @@ void Notifier::notifyReceivedCall(const shared_ptr<linphone::Call> &call) {
 		map["displayName"].setValue(displayName);
 		map["remoteAddress"].setValue(remoteAddrString);
 		map["call"].setValue(gui);
-
-		CREATE_NOTIFICATION(AbstractNotificationBackend::ReceivedCall, map)
+		CREATE_NOTIFICATION(AbstractNotificationBackend::ReceivedCall, map, timeout)
 	});
 }
 
@@ -492,7 +492,7 @@ void Notifier::notifyReceivedMessages(const std::shared_ptr<linphone::ChatRoom> 
 			map["avatarUri"] = chatCore->getAvatarUri();
 			map["isGroupChat"] = chatCore->isGroupChat();
 			map["chat"] = QVariant::fromValue(chatCore ? new ChatGui(chatCore) : nullptr);
-			CREATE_NOTIFICATION(AbstractNotificationBackend::ReceivedMessage, map)
+			CREATE_NOTIFICATION(AbstractNotificationBackend::ReceivedMessage, map, 10000);
 		});
 	}
 }
