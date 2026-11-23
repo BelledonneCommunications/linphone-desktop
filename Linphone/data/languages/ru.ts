@@ -19,7 +19,7 @@
         <location filename="../../view/Page/Layout/Settings/AbstractSettingsLayout.qml" line="90"/>
         <source>save_settings_accessible_name</source>
         <extracomment>Save %1 settings</extracomment>
-        <translation type="unfinished">Сохранить %1 настройки</translation>
+        <translation>Сохранить: %1 настройки</translation>
     </message>
 </context>
 <context>
@@ -93,7 +93,7 @@
         <location filename="../../core/account/AccountDeviceList.cpp" line="156"/>
         <source>manage_account_no_device_found_error_message</source>
         <extracomment>&quot;Erreur lors de la récupération des appareils&quot;</extracomment>
-        <translation type="unfinished">Ошибка опроса устройств</translation>
+        <translation>Ошибка опроса устройств: %1</translation>
     </message>
 </context>
 <context>
@@ -148,6 +148,11 @@
         <source>assistant_account_add_error</source>
         <extracomment>&quot;Unable to add account.&quot;</extracomment>
         <translation>Не удалось добавить учетную запись.</translation>
+    </message>
+    <message>
+        <location filename="../../model/account/AccountManager.cpp" line="147"/>
+        <source>assistant_account_login_outbound_proxy_uri_error</source>
+        <translation>Адрес прокси для исходящих подключений некорректный. Верный формат: sip:&lt;host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; не обязательно)</translation>
     </message>
 </context>
 <context>
@@ -260,7 +265,7 @@
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="180"/>
         <source>manage_account_delete</source>
         <extracomment>&quot;Déconnecter mon compte&quot;</extracomment>
-        <translation type="unfinished">Отключить мою учётную запись</translation>
+        <translation>Удалить учётную запись</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/AccountSettingsGeneralLayout.qml" line="188"/>
@@ -720,7 +725,7 @@
     <message>
         <location filename="../../core/App.cpp" line="1448"/>
         <source>mark_all_read_action</source>
-        <translation type="unfinished"></translation>
+        <translation>Отметить все как прочитанное</translation>
     </message>
 </context>
 <context>
@@ -1042,7 +1047,7 @@
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="68"/>
         <source>ongoing_call_or_meeting</source>
         <extracomment>&quot;%1 en cours&quot;</extracomment>
-        <translation type="unfinished">Непрерывный</translation>
+        <translation>%1 выполняется</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Call/CallListView.qml" line="88"/>
@@ -1331,6 +1336,21 @@
         <extracomment>&quot;Appel entrant&quot;</extracomment>
         <translation>Входящий звонок</translation>
     </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="268"/>
+        <source>history_list_filter_all</source>
+        <translation>Все звонки</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="268"/>
+        <source>history_list_filter_missed</source>
+        <translation>Пропущенные</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Main/Call/CallPage.qml" line="316"/>
+        <source>history_list_empty_missed_history</source>
+        <translation>Нет пропущенных звонков…</translation>
+    </message>
 </context>
 <context>
     <name>CallSettingsLayout</name>
@@ -1386,12 +1406,12 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
         <source>settings_calls_command_line_title</source>
         <extracomment>Command line</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Команда, которая будет выполняться при входящем звонке</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="89"/>
         <source>settings_calls_command_line_title_place_holder</source>
-        <translation type="unfinished"></translation>
+        <translation>command &quot;https://example.com/?phone=$1&amp;displayName=$2&quot;</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
@@ -1403,13 +1423,53 @@
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="105"/>
         <source>settings_calls_current_ringtone_filename</source>
         <extracomment>Current ringtone :</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Текущий рингтон:</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="130"/>
         <source>choose_ringtone_file_accessible_name</source>
         <extracomment>Choose ringtone file</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Выберите файл рингтона</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="79"/>
+        <source>settings_calls_auto_answer_title</source>
+        <translation>Автоматический ответ на входящие звонки</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="81"/>
+        <source>settings_calls_auto_answer_subtitle</source>
+        <translation>Входящие звонки будут приниматься автоматически</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="62"/>
+        <source>settings_calls_noise_suppressor_title</source>
+        <translation>Шумоподавление</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="64"/>
+        <source>settings_calls_noise_suppressor_subtitle</source>
+        <translation>Заглушает нежелательный фоновый шум</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="88"/>
+        <source>settings_calls_call_view_in_background_title</source>
+        <translation>Окно звонка на заднем фоне</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="90"/>
+        <source>settings_calls_call_view_in_background_subtitle</source>
+        <translation>Окно звонка не будет переводиться на передний план</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="97"/>
+        <source>settings_calls_hid_title</source>
+        <translation>Управление гарнитурой через USB/HID</translation>
+    </message>
+    <message>
+        <location filename="../../view/Page/Layout/Settings/CallSettingsLayout.qml" line="99"/>
+        <source>settings_calls_hid_subtitle</source>
+        <translation>Управление звонком (прием и отбой вызова, отключение микрофона) с помощью кнопок гарнитуры</translation>
     </message>
 </context>
 <context>
@@ -1913,7 +1973,7 @@
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="45"/>
         <source>settings_contacts_carddav_popup_synchronization_error_message</source>
         <extracomment>&quot;Erreur de synchronisation!&quot;</extracomment>
-        <translation type="unfinished">Ошибка синхронизации!</translation>
+        <translation>Ошибка синхронизации: %1</translation>
     </message>
     <message>
         <location filename="../../view/Page/Layout/Settings/CarddavSettingsLayout.qml" line="62"/>
@@ -2872,7 +2932,8 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="128"/>
         <source>contact_dialog_devices_trust_popup_message</source>
         <extracomment>&quot;Pour augmenter le niveau de confiance vous devez appeler les différents appareils de votre contact et valider un code.&lt;br&gt;&lt;br&gt;Vous êtes sur le point d’appeler “%1” voulez vous continuer ?&quot;</extracomment>
-        <translation type="unfinished">Чтобы повысить уровень доверия, вы должны позвонить на устройства вашего контакта и подтвердить код.&lt;br&gt;&lt;br&gt;Вы собираетесь набрать &quot;% 1&quot;, хотите продолжить?</translation>
+        <translation>Чтобы повысить уровень доверия, вы должны позвонить на устройства вашего контакта и подтвердить код.
+Вы собираетесь набрать &quot;% 1&quot;, хотите продолжить?</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Contact/ContactPage.qml" line="137"/>
@@ -3778,7 +3839,7 @@ Error</extracomment>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="86"/>
         <source>help_about_privacy_policy_subtitle</source>
         <extracomment>Quelles informations %1 collecte et utilise</extracomment>
-        <translation>Какую информацию % 1 собирает и использует</translation>
+        <translation>Какую информацию %1 собирает и использует</translation>
     </message>
     <message>
         <location filename="../../view/Page/Main/Help/HelpPage.qml" line="96"/>
@@ -5054,7 +5115,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/Presence.qml" line="56"/>
         <source>contact_presence_custom_status</source>
-        <translation type="unfinished"></translation>
+        <translation>Свой статус</translation>
     </message>
 </context>
 <context>
@@ -5070,7 +5131,7 @@ Error</extracomment>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="16"/>
         <source>contact_presence_button_set_custom_status_title</source>
-        <translation type="unfinished"></translation>
+        <translation>Впишите описание статуса</translation>
     </message>
     <message>
         <location filename="../../view/Control/Display/Contact/PresenceSetCustomStatus.qml" line="70"/>
@@ -5216,7 +5277,7 @@ Error</extracomment>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="77"/>
         <source>assistant_account_creation_confirmation_explanation</source>
         <extracomment>Nous vous avons envoyé un code de vérification sur votre %1 %2&lt;br&gt; Merci de le saisir ci-dessous</extracomment>
-        <translation type="unfinished">Мы отправили вам проверочный код на ваш адрес %1 %2&lt;br&gt; Пожалуйста, введите его ниже</translation>
+        <translation>Мы отправили вам проверочный код на %1 %2 \n Пожалуйста, введите его ниже</translation>
     </message>
     <message>
         <location filename="../../view/Page/Form/Register/RegisterCheckingPage.qml" line="149"/>
@@ -6756,7 +6817,7 @@ Failed to create 1-1 conversation with %1 !</extracomment>
     <message>
         <location filename="../../tool/Utils.cpp" line="926"/>
         <source>Italy</source>
-        <translation type="unfinished">Италия</translation>
+        <translation>Италия</translation>
     </message>
     <message>
         <location filename="../../tool/Utils.cpp" line="929"/>
@@ -7604,6 +7665,32 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <source>dtmf_pad_resume_button</source>
         <translation>Продолжить</translation>
     </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="152"/>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="186"/>
+        <source>call_action_show_dialer</source>
+        <translation>Номеронабиратель</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="195"/>
+        <source>dtmf_pad_subtitle</source>
+        <translation>Тоновые команды отправляются на %1</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="247"/>
+        <source>dtmf_pad_placeholder</source>
+        <translation>Наберите код…</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="416"/>
+        <source>dtmf_pad_keyboard_inactive_hint</source>
+        <translation>Клавиши активны - Esc для выхода</translation>
+    </message>
+    <message>
+        <location filename="../../view/Control/Popup/DtmfPadPopup.qml" line="416"/>
+        <source>dtmf_pad_keyboard_hint</source>
+        <translation>Клавиши активны - Esc для выхода</translation>
+    </message>
 </context>
 <context>
     <name>MessageInfosLayout</name>
@@ -7644,6 +7731,26 @@ Failed to create 1-1 conversation with %1 !</extracomment>
         <location filename="../../view/Page/Form/Contact/ContactSharedFiles.qml" line="24"/>
         <source>contact_shared_documents_title</source>
         <translation>Общие документы</translation>
+    </message>
+</context>
+<context>
+    <name>AbstractSettingsMenu</name>
+    <message>
+        <location filename="../../view/Page/Form/Settings/AbstractSettingsMenu.qml" line="52"/>
+        <source>back_previous_menu_accessible_name</source>
+        <translation>К предыдущему пункту меню</translation>
+    </message>
+</context>
+<context>
+    <name>UnreadNotification</name>
+    <message numerus="yes">
+        <location filename="../../view/Control/Display/UnreadNotification.qml" line="24"/>
+        <source>badge_missed_calls_accessible_name</source>
+        <translation>
+            <numerusform>%n пропущенный звонок</numerusform>
+            <numerusform>%n пропущенных звонка</numerusform>
+            <numerusform>%n пропущенных звонков</numerusform>
+        </translation>
     </message>
 </context>
 </TS>
