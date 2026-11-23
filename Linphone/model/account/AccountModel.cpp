@@ -329,6 +329,7 @@ void AccountModel::setOutboundProxyUri(QString value) {
 	} else {
 		auto params = mMonitor->getParams()->clone();
 		params->setRoutesAddresses({linOutboundProxyAddress});
+		mMonitor->setParams(params);
 		emit outboundProxyUriChanged(value);
 	}
 }
