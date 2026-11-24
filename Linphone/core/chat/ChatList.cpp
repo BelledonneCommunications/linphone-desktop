@@ -142,10 +142,16 @@ void ChatList::setSelf(QSharedPointer<ChatList> me) {
 				    state == linphone::ChatRoom::State::CreationPending ||
 				    state == linphone::ChatRoom::State::TerminationPending ||
 				    state == linphone::ChatRoom::State::Instantiated) {
-					lWarning() << log().arg("Chatroom %1 is in state %2, ignore it.").arg(subject).arg((int)state);
+					lWarning() << log()
+					                  .arg("Chatroom %1 is in state %2, ignore it.")
+					                  .arg(Utils::coreStringToAppString(subject))
+					                  .arg((int)state);
 					continue;
 				}
-				lInfo() << log().arg("Add %1 chatroom to list : %2").arg(type).arg(subject);
+				lInfo() << log()
+				               .arg("Add %1 chatroom to list : %2")
+				               .arg(type)
+				               .arg(Utils::coreStringToAppString(subject));
 				auto model = createChatCore(it);
 				chats->push_back(model);
 			}
