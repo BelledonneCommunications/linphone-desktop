@@ -1592,15 +1592,20 @@ bool Utils::isInteger(const QString &text) {
 }
 
 QString Utils::boldTextPart(const QString &text, const QString &regex) {
-	int regexIndex = text.indexOf(regex, 0, Qt::CaseInsensitive);
-	if (regex.isEmpty() || regexIndex == -1) return text;
+	if (regex.isEmpty()) return text;
 	QString result;
-	QStringList splittedText = text.split(regex, Qt::KeepEmptyParts, Qt::CaseInsensitive);
-	for (int i = 0; i < splittedText.size() - 1; ++i) {
-		result.append(splittedText[i]);
-		result.append("<b>" + regex + "</b>");
+	qsizetype lastPos = 0;
+	qsizetype matchPos = 0;
+	const qsizetype regexLen = regex.length();
+	while ((matchPos = text.indexOf(regex, lastPos, Qt::CaseInsensitive)) != -1) {
+		result.append(text.mid(lastPos, matchPos - lastPos));
+		result.append("<b>");
+		result.append(text.mid(matchPos, regexLen));
+		result.append("</b>");
+		lastPos = matchPos + regexLen;
 	}
-	if (splittedText.size() > 0) result.append(splittedText[splittedText.size() - 1]);
+	if (lastPos == 0) return text;
+	result.append(text.mid(lastPos));
 	return result;
 }
 
