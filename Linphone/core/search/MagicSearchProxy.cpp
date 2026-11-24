@@ -235,7 +235,7 @@ bool MagicSearchProxy::SortFilterList::lessThan(const QModelIndex &sourceLeft, c
 	auto l = getItemAtSource<MagicSearchList, FriendCore>(sourceLeft.row());
 	auto r = getItemAtSource<MagicSearchList, FriendCore>(sourceRight.row());
 	auto list = dynamic_cast<MagicSearchList *>(sourceModel());
-	QString filter = list ? list->getSearch() : QString();
+	QString filter = list ? list->getSearch().toLower() : QString();
 
 	if (l && r) {
 		bool lIsStored = l->getIsStored() || l->isLdap() || l->isCardDAV();
