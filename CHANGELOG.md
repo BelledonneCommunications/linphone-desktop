@@ -10,7 +10,7 @@ Group changes to describe their impact on the project, as follows:
     Fixed for any bug fixes.
     Security to invite users to upgrade in case of vulnerabilities.
 
-## [Unreleased]
+## [6.2.5] 2026-11-24
 
 ### Added
 - Windows MSI installer built with WiX 5, replacing the NSIS installer:
@@ -21,9 +21,26 @@ Group changes to describe their impact on the project, as follows:
     - branded installer dialogs
     - English and French in a single package, chosen from the Windows display language
 - On an interactive uninstall, the user is asked whether to also delete their data (accounts, contacts, call history, messages and settings)
+- Troubleshooting: the version informations can be copied
+- Migration of the video accept direction for 5.3 configurations (rc_version 8)
+
+### Fixed
+- Accessibility :
+    - screen reader issues
+- UI and warning fixes
+- Return to login page when the last account is removed
+- Fix call history order after switching between "All" and "Missed" filters
+- Default download folder
+- Copy file in app cache before sending it so the attached file is not removed from the computer when the user deletes a message
+- macOS: restore disappearing notification badge
+- Use SDK config value for incoming call notification timeout
 
 ### Changed
+- Use Windows native buttons for incoming call notification
 - Windows packages are now `.msi` files; `-DENABLE_WINDOWS_MSI=OFF` builds the legacy NSIS installer
+- Chatroom creation updated to enable 1-1 chat rooms with a Flexisip backend without LIME
+- Translations update
+- SDK version is now 5.5.42
 
 
 ## [6.2.4] 2026-10-22
