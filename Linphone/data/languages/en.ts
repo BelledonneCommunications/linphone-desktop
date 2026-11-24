@@ -199,19 +199,19 @@
         <translation>Unable to set outbound proxy uri from address %1. Please make sure it matches the following format : sip:host&gt;:&lt;port&gt;;transport=&lt;transport&gt; (:&lt;port&gt; is optional)</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="436"/>
+        <location filename="../../model/account/AccountModel.cpp" line="437"/>
         <source>set_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the conversation server address, failed creating address from %1&quot;</extracomment>
         <translation>Unable to set the conversation server address, failed creating address from %1</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="458"/>
+        <location filename="../../model/account/AccountModel.cpp" line="459"/>
         <source>set_audio_conference_factory_address_failed_error_message</source>
         <extracomment>&quot;Unable to set the meeting server address, failed creating address from %1&quot;</extracomment>
         <translation>Unable to set the meeting server address, failed creating address from %1</translation>
     </message>
     <message>
-        <location filename="../../model/account/AccountModel.cpp" line="505"/>
+        <location filename="../../model/account/AccountModel.cpp" line="506"/>
         <source>set_voicemail_address_failed_error_message</source>
         <extracomment>Unable to set voicemail address, failed creating address from %1</extracomment>
         <translation>Unable to set voicemail address, failed creating address from %1</translation>
@@ -731,145 +731,145 @@
 <context>
     <name>App</name>
     <message>
-        <location filename="../../core/App.cpp" line="379"/>
+        <location filename="../../core/App.cpp" line="384"/>
         <source>remote_provisioning_dialog</source>
         <extracomment>Voulez-vous télécharger et appliquer la configuration depuis cette adresse ?</extracomment>
         <translation>Do you want to download and apply remote provisioning from this address ?</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="428"/>
-        <location filename="../../core/App.cpp" line="437"/>
-        <location filename="../../core/App.cpp" line="441"/>
-        <location filename="../../core/App.cpp" line="499"/>
-        <location filename="../../core/App.cpp" line="877"/>
+        <location filename="../../core/App.cpp" line="433"/>
+        <location filename="../../core/App.cpp" line="442"/>
+        <location filename="../../core/App.cpp" line="446"/>
+        <location filename="../../core/App.cpp" line="504"/>
+        <location filename="../../core/App.cpp" line="927"/>
         <source>info_popup_error_title</source>
         <extracomment>Error</extracomment>
         <translation>Error</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="429"/>
-        <location filename="../../core/App.cpp" line="879"/>
+        <location filename="../../core/App.cpp" line="434"/>
+        <location filename="../../core/App.cpp" line="929"/>
         <source>info_popup_configuration_failed_message</source>
         <extracomment>Remote provisioning failed : %1</extracomment>
         <translation>Remote provisioning failed : %1</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="502"/>
+        <location filename="../../core/App.cpp" line="507"/>
         <source>info_popup_error_checking_update</source>
         <extracomment>An error occured while trying to check update. Please try again later or contact support team.</extracomment>
         <translation>An error occured while trying to check update. Please try again later or contact support team.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="509"/>
+        <location filename="../../core/App.cpp" line="514"/>
         <source>info_popup_new_version_download_label</source>
         <extracomment>Download it !</extracomment>
         <translation>Download it !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="512"/>
+        <location filename="../../core/App.cpp" line="517"/>
         <source>info_popup_new_version_available_title</source>
         <extracomment>New version available !</extracomment>
         <translation>New version available !</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="514"/>
+        <location filename="../../core/App.cpp" line="519"/>
         <source>info_popup_new_version_available_message</source>
         <extracomment>A new version of Linphone (%1) is available. %2</extracomment>
         <translation>A new version of Linphone (%1) is available. %2</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="522"/>
+        <location filename="../../core/App.cpp" line="527"/>
         <source>info_popup_version_up_to_date_title</source>
         <extracomment>Up to date</extracomment>
         <translation>Up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="524"/>
+        <location filename="../../core/App.cpp" line="529"/>
         <source>info_popup_version_up_to_date_message</source>
         <extracomment>Your version is up to date</extracomment>
         <translation>Up to date Your version is up to date</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="872"/>
+        <location filename="../../core/App.cpp" line="922"/>
         <source>configuration_error_detail</source>
         <extracomment>not reachable</extracomment>
         <translation>not reachable</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1179"/>
+        <location filename="../../core/App.cpp" line="1235"/>
         <source>application_description</source>
         <extracomment>&quot;A free and open source SIP video-phone.&quot;</extracomment>
         <translation>A free and open source SIP video-phone.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1181"/>
+        <location filename="../../core/App.cpp" line="1237"/>
         <source>command_line_arg_order</source>
         <extracomment>&quot;Send an order to the application towards a command line&quot;</extracomment>
         <translation>Send an order to the application towards a command line</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1185"/>
+        <location filename="../../core/App.cpp" line="1241"/>
         <source>command_line_option_show_help</source>
         <translation>Show this help</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1190"/>
+        <location filename="../../core/App.cpp" line="1246"/>
         <source>command_line_option_show_app_version</source>
         <translation>Show app version</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1198"/>
+        <location filename="../../core/App.cpp" line="1254"/>
         <source>command_line_option_config_to_fetch</source>
         <extracomment>&quot;Specify the linphone configuration file to be fetched. It will be merged with the current configuration.&quot;</extracomment>
         <translation>Specify the linphone configuration file to be fetched. It will be merged with the current configuration.</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1200"/>
+        <location filename="../../core/App.cpp" line="1256"/>
         <source>command_line_option_config_to_fetch_arg</source>
         <extracomment>&quot;URL, path or file&quot;</extracomment>
         <translation>URL, path or file</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1205"/>
+        <location filename="../../core/App.cpp" line="1261"/>
         <source>command_line_option_minimized</source>
         <translation>Minimize</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1208"/>
+        <location filename="../../core/App.cpp" line="1264"/>
         <source>command_line_option_log_to_stdout</source>
         <translation>Log to stdout some debug information while running</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1211"/>
+        <location filename="../../core/App.cpp" line="1267"/>
         <source>command_line_option_print_app_logs_only</source>
         <extracomment>&quot;Print only logs from the application&quot;</extracomment>
         <translation>Print only logs from the application</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1711"/>
+        <location filename="../../core/App.cpp" line="1767"/>
         <source>hide_action</source>
         <extracomment>&quot;Cacher&quot; &quot;Afficher&quot;</extracomment>
         <translation>Hide</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1711"/>
+        <location filename="../../core/App.cpp" line="1767"/>
         <source>show_action</source>
         <translation>Show</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1726"/>
+        <location filename="../../core/App.cpp" line="1782"/>
         <source>quit_action</source>
         <extracomment>&quot;Quitter&quot;</extracomment>
         <translation>Quit</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1744"/>
+        <location filename="../../core/App.cpp" line="1800"/>
         <source>check_for_update</source>
         <extracomment>Check for update</extracomment>
         <translation>Check for update</translation>
     </message>
     <message>
-        <location filename="../../core/App.cpp" line="1894"/>
+        <location filename="../../core/App.cpp" line="1950"/>
         <source>mark_all_read_action</source>
         <translation>Marquer tout comme lu</translation>
     </message>
@@ -6017,7 +6017,7 @@ Expiration : %1</translation>
 <context>
     <name>Notifier</name>
     <message>
-        <location filename="../../core/notifier/Notifier.cpp" line="359"/>
+        <location filename="../../core/notifier/Notifier.cpp" line="358"/>
         <source>new_call_alert_accessible_name</source>
         <extracomment>New call from %1</extracomment>
         <translation>New call from %1</translation>
