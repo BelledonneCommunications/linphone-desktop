@@ -1,7 +1,7 @@
 // ******************************************************************
 // Copyright (c) Microsoft. All rights reserved.
 // This code is licensed under the MIT License (MIT).
-// THE CODE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+// THE CODE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
 // INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
 // IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
@@ -61,7 +61,7 @@ HRESULT CreateStartMenuShortcut(const wchar_t *aumid, GUID clsid) {
 	SHGetFolderPathW(nullptr, CSIDL_PROGRAMS, nullptr, 0, shortcutPath);
 	wcsncat_s(shortcutPath, L"\\" APPLICATION_NAME L".lnk", MAX_PATH);
 
-	// Créer le IShellLink
+	// CrÃ©er le IShellLink
 	ComPtr<IShellLinkW> shellLink;
 	HRESULT hr = CoCreateInstance(CLSID_ShellLink, nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&shellLink));
 	if (FAILED(hr)) return hr;
@@ -73,7 +73,7 @@ HRESULT CreateStartMenuShortcut(const wchar_t *aumid, GUID clsid) {
 	shellLink->SetPath(exePath);
 	shellLink->SetArguments(L"");
 
-	// Définir les propriétés AUMID + ToastActivatorCLSID
+	// DÃ©finir les propriÃ©tÃ©s AUMID + ToastActivatorCLSID
 	ComPtr<IPropertyStore> propStore;
 	hr = shellLink.As(&propStore);
 	if (FAILED(hr)) return hr;
@@ -202,7 +202,7 @@ HRESULT RegisterActivator() {
 	qInfo() << "RegisterObjects result:" << Qt::hex << hr;
 
 	if (FAILED(hr)) {
-		qWarning() << "CoRegisterClassObject ÉCHOUÉ ? Activate() jamais appelé !";
+		qWarning() << "CoRegisterClassObject Ã‰CHOUÃ‰ ? Activate() jamais appelÃ© !";
 		return hr;
 	}
 
